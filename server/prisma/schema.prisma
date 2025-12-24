@@ -1,0 +1,289 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// User roles enum
+enum UserRole {
+  user // Regular user
+  builder // Project owner/builder
+  moderator // Content moderator
+  admin // System administrator
+}
+
+// Submission status enum
+enum SubmissionStatus {
+  pending // Awaiting moderation
+  approved // Approved and published
+  rejected // Rejected by moderator
+  draft // Draft/saved but not submitted
+}
+
+// Audit log action types
+enum AuditAction {
+  create
+  update
+  delete
+  approve
+  reject
+  publish
+  unpublish
+}
+
+// User model - Authentication and authorization
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String?
+  name         String?
+  avatar       String?
+  role         UserRole @default(user)
+
+  // OAuth fields
+  googleId    String? @unique
+  nostrPubkey String? @unique
+
+  // Timestamps
+  emailVerified DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  lastLoginAt   DateTime?
+
+  // Relations
+  projects    Project[]
+  reviews     Review[]
+  submissions Submission[]
+  auditLogs   AuditLog[]   @relation("AuditLogUser")
+
+  @@index([email])
+  @@index([role])
+  @@map("users")
+}
+
+// Category model - High-level project categories
+model Category {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  slug        String   @unique
+  description String?
+  icon        String?
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  projects Project[]
+
+  @@index([slug])
+  @@index([order])
+  @@map("categories")
+}
+
+// Country model - African countries using ISO codes
+model Country {
+  id        String   @id @default(cuid())
+  code      String   @unique // ISO 3166-1 alpha-2 code (e.g., "NG", "ZA", "KE")
+  name      String   @unique
+  flag      String? // Flag emoji or URL
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  projects Project[]
+
+  @@index([code])
+  @@map("countries")
+}
+
+// Tag model - Flexible project tagging
+model Tag {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  slug      String   @unique
+  createdAt DateTime @default(now())
+
+  // Relations
+  projects ProjectTag[]
+
+  @@index([slug])
+  @@map("tags")
+}
+
+// Project model - Listed Bitcoin business or project
+model Project {
+  id          String  @id @default(cuid())
+  name        String
+  slug        String  @unique
+  description String
+  website     String?
+  logo        String?
+  coverImage  String?
+
+  // Status
+  published Boolean @default(false)
+  featured  Boolean @default(false)
+  verified  Boolean @default(false)
+
+  // Location
+  countryId String
+  country   Country @relation(fields: [countryId], references: [id], onDelete: Restrict)
+  city      String?
+  address   String?
+
+  // Classification
+  categoryId String
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+
+  // Ownership
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Timestamps
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  publishedAt DateTime?
+
+  // Relations
+  details     ProjectDetails?
+  tags        ProjectTag[]
+  submissions Submission[]
+  reviews     Review[]
+
+  @@index([slug])
+  @@index([published])
+  @@index([featured])
+  @@index([countryId])
+  @@index([categoryId])
+  @@index([userId])
+  @@index([createdAt])
+  @@index([published, featured, createdAt(sort: Desc)]) // For listing queries
+  // Note: Full-text search can be implemented using PostgreSQL native functions via raw queries
+  @@map("projects")
+}
+
+// ProjectDetails model - Extended profile information
+model ProjectDetails {
+  id        String  @id @default(cuid())
+  projectId String  @unique
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  // Extended info
+  longDescription String? @db.Text
+  socialLinks     Json? // { twitter, github, linkedin, telegram, etc. }
+  contactEmail    String?
+  contactPhone    String?
+
+  // Additional metadata
+  foundedYear      Int?
+  teamSize         String?
+  fundingStage     String?
+  bitcoinOnly      Boolean @default(false)
+  lightningNetwork Boolean @default(false)
+
+  // SEO
+  metaTitle       String?
+  metaDescription String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("project_details")
+}
+
+// ProjectTag - Many-to-many relationship
+model ProjectTag {
+  id        String  @id @default(cuid())
+  projectId String
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  tagId     String
+  tag       Tag     @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@unique([projectId, tagId])
+  @@index([projectId])
+  @@index([tagId])
+  @@map("project_tags")
+}
+
+// Submission model - Tracks project submissions and moderation
+model Submission {
+  id        String  @id @default(cuid())
+  projectId String
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  status SubmissionStatus @default(pending)
+  notes  String?          @db.Text
+
+  // Moderation
+  moderatedBy     String?
+  moderatedAt     DateTime?
+  rejectionReason String?   @db.Text
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([projectId])
+  @@index([userId])
+  @@index([status])
+  @@index([createdAt])
+  @@map("submissions")
+}
+
+// Review model - Community feedback and ratings
+model Review {
+  id        String  @id @default(cuid())
+  projectId String
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  rating  Int // 1-5 stars
+  title   String?
+  comment String? @db.Text
+
+  // Moderation
+  published Boolean @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([projectId, userId]) // One review per user per project
+  @@index([projectId])
+  @@index([userId])
+  @@index([published, createdAt(sort: Desc)])
+  @@index([rating])
+  @@map("reviews")
+}
+
+// AuditLog model - Admin and moderator actions for traceability
+model AuditLog {
+  id     String @id @default(cuid())
+  userId String
+  user   User   @relation("AuditLogUser", fields: [userId], references: [id], onDelete: Restrict)
+
+  action       AuditAction
+  resourceType String // e.g., "project", "submission", "review"
+  resourceId   String
+
+  details   Json? // Additional context
+  ipAddress String?
+  userAgent String?
+
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@index([action])
+  @@index([resourceType, resourceId])
+  @@index([createdAt(sort: Desc)])
+  @@map("audit_logs")
+}

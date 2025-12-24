@@ -1,0 +1,235 @@
+### REST Client Test File for VS Code REST Client Extension
+### Install: https://marketplace.visualstudio.com/items?itemName=humao.rest-client
+
+@baseUrl = http://localhost:3000/api
+@accessToken = your_access_token_here
+@projectId = project_id_here
+@categoryId = category_id_here
+@countryId = country_id_here
+
+### Variables (set these after getting real values)
+@userId = user_id_here
+@submissionId = submission_id_here
+
+### Health Check
+GET {{baseUrl}}/health
+
+### ============================================
+### Authentication Endpoints
+### ============================================
+
+### Register User
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "password": "Test123!@#",
+  "name": "Test User"
+}
+
+### Login
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "password": "Test123!@#"
+}
+
+### Google OAuth (when implemented)
+POST {{baseUrl}}/auth/google
+Content-Type: application/json
+
+{
+  "idToken": "google-id-token"
+}
+
+### Refresh Token
+POST {{baseUrl}}/auth/refresh
+Cookie: refreshToken=your_refresh_token
+
+### Logout
+POST {{baseUrl}}/auth/logout
+Authorization: Bearer {{accessToken}}
+Cookie: refreshToken=your_refresh_token
+
+### ============================================
+### User Endpoints
+### ============================================
+
+### Get Current User
+GET {{baseUrl}}/users/me
+Authorization: Bearer {{accessToken}}
+
+### Update Current User
+PATCH {{baseUrl}}/users/me
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "name": "Updated Name",
+  "avatar": "https://example.com/avatar.jpg"
+}
+
+### ============================================
+### Metadata Endpoints (Public)
+### ============================================
+
+### Get Categories
+GET {{baseUrl}}/categories
+
+### Get Countries
+GET {{baseUrl}}/countries
+
+### Get Tags
+GET {{baseUrl}}/tags
+
+### ============================================
+### Project Endpoints (Public)
+### ============================================
+
+### List Projects (all)
+GET {{baseUrl}}/projects
+
+### List Projects (paginated)
+GET {{baseUrl}}/projects?page=1&limit=10
+
+### List Projects (filtered by category)
+GET {{baseUrl}}/projects?category=exchange
+
+### List Projects (filtered by country)
+GET {{baseUrl}}/projects?country=NG
+
+### List Projects (filtered by tag)
+GET {{baseUrl}}/projects?tag=lightning-network
+
+### List Projects (search)
+GET {{baseUrl}}/projects?search=bitcoin
+
+### List Featured Projects
+GET {{baseUrl}}/projects?featured=true
+
+### Get Project by ID
+GET {{baseUrl}}/projects/{{projectId}}
+
+### ============================================
+### Project Builder Endpoints (Authenticated)
+### ============================================
+
+### Create Project
+POST {{baseUrl}}/projects
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "name": "My Bitcoin Project",
+  "description": "A great Bitcoin project in Africa",
+  "website": "https://example.com",
+  "countryId": "{{countryId}}",
+  "categoryId": "{{categoryId}}",
+  "city": "Lagos",
+  "address": "123 Main Street"
+}
+
+### Update Project
+PATCH {{baseUrl}}/projects/{{projectId}}
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "name": "Updated Project Name",
+  "description": "Updated description"
+}
+
+### Submit Project for Review
+POST {{baseUrl}}/projects/{{projectId}}/submit
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "notes": "Please review this project"
+}
+
+### Delete Project
+DELETE {{baseUrl}}/projects/{{projectId}}
+Authorization: Bearer {{accessToken}}
+
+### ============================================
+### Search Endpoint
+### ============================================
+
+### Search Projects
+GET {{baseUrl}}/search?q=bitcoin
+
+### Search with filters
+GET {{baseUrl}}/search?q=exchange&category=exchange&country=NG
+
+### ============================================
+### Review Endpoints
+### ============================================
+
+### Get Project Reviews
+GET {{baseUrl}}/projects/{{projectId}}/reviews
+
+### Get Project Reviews (paginated)
+GET {{baseUrl}}/projects/{{projectId}}/reviews?page=1&limit=10
+
+### Create Review
+POST {{baseUrl}}/projects/{{projectId}}/reviews
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "rating": 5,
+  "title": "Great project!",
+  "comment": "Really impressed with this service"
+}
+
+### ============================================
+### Admin/Moderation Endpoints
+### ============================================
+
+### Get Submissions
+GET {{baseUrl}}/admin/submissions
+Authorization: Bearer {{accessToken}}
+
+### Get Submissions (filtered)
+GET {{baseUrl}}/admin/submissions?status=pending
+Authorization: Bearer {{accessToken}}
+
+### Approve Submission
+POST {{baseUrl}}/admin/submissions/{{submissionId}}/approve
+Authorization: Bearer {{accessToken}}
+
+### Reject Submission
+POST {{baseUrl}}/admin/submissions/{{submissionId}}/reject
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "reason": "Project does not meet our guidelines"
+}
+
+### ============================================
+### Analytics Endpoints
+### ============================================
+
+### Track Project View
+POST {{baseUrl}}/analytics/view
+Content-Type: application/json
+
+{
+  "projectId": "{{projectId}}",
+  "referrer": "https://google.com"
+}
+
+### Track Project Click
+POST {{baseUrl}}/analytics/click
+Content-Type: application/json
+
+{
+  "projectId": "{{projectId}}",
+  "url": "https://example.com"
+}
+
