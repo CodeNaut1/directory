@@ -1,0 +1,3239 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [7.395816, 9.062861]
+          
+        },
+        "properties": {
+          "name": "Shugamine ltd",
+          "description": "Bitcoin mining company that uses stranded energy for computational power, like flare gas and we are community development centric.",
+          "country_code": "ng",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2024/06/Shuga-Mine.jpg",
+          "location": "Abuja, Nigeria",
+          "link": "https://www.shugamine.com",
+          "twitter": "https://x.com/shugamines",
+          "category": "Mining",
+          "active": true,
+          "founder": "Okuku udomah (Shugadaddii)"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [8.318758019203207, 4.985219040432253]
+          
+        },
+        "properties": {
+          "name": "Calabar Bitcoin Club",
+          "description": "The Calabar Bitcoin Club was founded to introduce a parallel financial ecosystem where residents could address their daily financial challenges.",
+          "country_code": "ng",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2025/04/Y5ZPhTwP_400x400.jpg",
+          "location": "Calabar, Nigeria",
+          "link": "https://bitcoinconfederation.org/hub/calabar-bitcoin-club/",
+          "twitter": "https://x.com/bitcoincalabar",
+          "category": "Community",
+          "active": true,
+          "founder": "James Otudor"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [18.440386, -33.905319]
+        
+        },
+        "properties": {
+          "name": "Orange",
+          "description": "Orange is building the future of cross-border payments in Africa.",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2025/01/Orange.jpg",
+          "country_code": "za",
+          "location": "Cape Town, South Africa",
+          "link": "https://www.useorange.com",
+          "twitter": "https://x.com/OrangeSaaS",
+          "category": "Payments",
+          "active": true,
+          "founder": "Ricki Allardice, Meyer Blignaut, Taariq Mullins",
+          "founder_twitter": "https://x.com/ricki_allardice?s=21"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [18.660003, -34.015468]
+         
+        },
+        "properties": {
+          "name": "BitcoinLoxion",
+          "description": "BitcoinLoxion is a grassroots initiative based in Khayelitsha, South Africa, that aims to build a circular economy using Bitcoin.",
+          "country_code": "za",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2024/06/Bitcoin-Loxion.png",
+          "location": "Cape Town, South Africa",
+          "link": "https://BitcoinLoxion.com",
+          "twitter": "https://x.com/bitcoinloxion",
+          "category": "Community",
+          "active": true,
+          "founder": "Thulisa Sikolpati"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [36.813663, -1.310406]
+          
+        
+        },
+        "properties": {
+          "name": "Tando",
+          "description": "Tando allows anyone to easily spend bitcoin, anywhere in Kenya.",
+          "country_code": "ke",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2024/07/Tando.me_.jpg",
+          "location": "Nairobi, Kenya",
+          "link": "https://tando.me/",
+          "twitter": "https://x.com/tando_me",
+          "linkedin": "https://www.linkedin.com/company/tando-me",
+          "instagram": "https://www.instagram.com/tando_to/",
+          "nostr": "https://primal.net/p/npub1tand04svfdhrt7lhg6687fh0y2xvxfpr9nkkj27rqfrxfpeklldsp48sax",
+          "category": "Retail",
+          "active": true,
+          "founder": "Sabina Gitau",
+          "founder_twitter": "https://x.com/waithiraah"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [36.836111, -1.279034]
+          
+        },
+        "properties": {
+          "name": "Bitsavers Eduhub",
+          "description": "Bitsavers Eduhub is a project dedicated to bridging the financial literacy gap for youth aged 18-30 through Bitcoin education, emphasizing its role as a store of value.",
+          "country_code": "ke",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2024/10/Bitsavers-Eduhub.jpg",
+          "location": "Nairobi, Kenya",
+          "twitter": "https://x.com/BitEduhub",
+          "linkedin": "https://linkedin.com/company/bitsavers-eduhub/",
+          "instagram": "https://instagram.com/biteduhub?igsh=MTJudzgwNXF1cTg1ag==",
+          "category": "Education",
+          "active": true,
+          "founder": "Linda kariuki",
+          "founder_twitter": "https://x.com/LindaKariu54810"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-17.443162, 14.770485]
+          
+        },
+        "properties": {
+          "name": "Bitcoin Sénégal",
+          "description": "We are trying to educate our population on what is Bitcoin, and most importantly, what it is not.",
+          "country_code": "sn",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2024/03/African-Bitcoiners_Bitcoin-Senegal-Community-logo.jpg",
+          "location": "Dakar, Senegal",
+          "twitter": "https://x.com/bitcoin_sen",
+          "category": "Education",
+          "active": true,
+          "founder": "Nourou",
+          "founder_twitter": "https://x.com/nourou4them"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [23.37693005762553, -34.04315441439352]
+        },
+        "properties": {
+          "name": "Bitcoin Plett",
+          "description": "A circular economy. We create awareness and provide information.",
+          "country_code": "za",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2025/04/plett.jpeg",
+          "location": "Plettenberg Bay, South Africa",
+          "twitter": "https://x.com/BitcoinPlett",
+          "category": "Community",
+          "active": true
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [20.85298503274233, -34.3993159652963]
+          
+        },
+        "properties": {
+          "name": "Bitcoin Witsand",
+          "description": "A circular economy. We create awareness and provide information.",
+          "country_code": "za",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2024/03/African-Bitcoiners_Bitcoin-Witsand-logo.jpg",
+          "location": "Witsand, South Africa",
+          "twitter": "https://x.com/BitcoinWitsand",
+          "category": "Community",
+          "active": true,
+          "founder": "Edwin Jones"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-0.00292348523890543, -0.002034605934792948]
+        },
+        "properties": {
+          "name": "School of bitcoin",
+          "description": "Bitcoin education that everyone can understand 👊",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2024/10/School-Of-Bitcoin.png",
+          "location": "Global",
+          "link": "https://schoolofbitcoin.com/",
+          "twitter": "https://x.com/schoolofbitcoin",
+          "category": "Education",
+          "active": true
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [29.927695452329456, -3.4317399627800405]
+          
+        },
+        "properties": {
+          "name": "BTC Shule",
+          "description": "BTC Shule is building a Bitcoin circular economy to foster financial autonomy in Gitegae, while educating Burundians on Bitcoin through meetups and online training",
+          "country_code": "bi",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2025/01/BTC-Shule.jpg",
+          "location": "Gitega, Burundi",
+          "email": "btcshule@gmail.com",
+          "twitter": "https://x.com/btcshule",
+          "category": "Education",
+          "active": true,
+          "founder": "₿elyï No₿el ⚡",
+          "founder_twitter": "https://x.com/belyi_nobel"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [33.743589616103755, 0.5801665107414221]
+          
+        },
+        "properties": {
+          "name": "Orphans of Uganda Children Center",
+          "description": "Orphans of 🇺🇬Uganda Children Center, is a none profit/religious organizations taking care of 77 orphaned children. The Orphans of Uganda Children Center cares for 77 vulnerable orphans, providing them with food, shelter, education, and emotional support. In a country with limited resources and few funding options, the center sustains itself through Bitcoin donations, which help cover essential expenses. This innovative use of cryptocurrency allows the center to receive direct support from donors worldwide, ensuring these children have a brighter future despite challenging circumstances.",
+          "country_code": "ug",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2025/01/Orphans-of-Uganda-Children-Center.jpg",
+          "location": "Bugiri, Uganda",
+          "link": "https://www.orphans-of-uganda.org/",
+          "twitter": "https://x.com/orphansofuganda",
+          "instagram": "https://instagram.com/orphanofuganda_center",
+          "nostr": "npub1mdggrkkjvr4k33ylk230c6qwnz9ewahsxsa55ygvdc54w2jkrrmq48k309",
+          "category": "Charity",
+          "active": true,
+          "founder": "Byarugaba isma",
+          "founder_twitter": "https://x.com/AwakulaEnnume"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [18.866158, -34.076436]
+         
+        },
+        "properties": {
+          "name": "Bit-Fitness",
+          "description": "Bitcoin education including sports and fitness for health, wealth and socials",
+           "country_code": "za",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2025/03/bit-fitness.jpg",
+          "location": "Somerset West, Cape Town, South Africa",
+          "twitter": "https://x.com/bit_fitnes21000",
+          "category": "Education",
+          "active": true,
+          "founder": "Blaise Peter",
+          "founder_twitter": "https://x.com/blaisepeter6?s=21"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [4.559847797411036, 8.49952609057171]
+         
+        },
+        "properties": {
+          "name": "BitKwa",
+          "description": "BitKwa is a leading non-profit organization based in Kwara State, Nigeria, committed to advancing Bitcoin education, financial literacy, and global relevance for individuals and businesses.",
+           "country_code": "ng",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2025/03/bitkwa.jpg",
+          "location": "Kwara, Nigeria",
+          "twitter": "https://x.com/bitkwaofficial",
+          "linkedin": "https://linkedin.com/company/bitkwa",
+          "category": "Education",
+          "active": true,
+          "founder": "Ayobami Atolagbe",
+          "founder_twitter": "https://x.com/thecoachayobami"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [18.434246, -33.905331]
+         
+        },
+        "properties": {
+          "name": "Bitcoin Badger",
+          "description": "Onboarding retail and vendors to bitcoin. Extensive review with live demo's of all the possible ways to accept bitcoin lightning in your shop, market, business or online.",
+           "country_code": "za",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2024/10/MoneyBadger.jpg",
+          "location": "Cape Town, South Africa",
+          "link": "https://www.bitcoinbadger.net",
+          "twitter": "https://x.com/badger",
+          "category": "Retail",
+          "active": true,
+          "founder": "Danie"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [18.427419, -33.908457]
+         
+        },
+        "properties": {
+          "name": "Cardware Wallet",
+          "description": "Cardware Wallet is the ultimate secure hardware wallet designed for Bitcoiners and crypto enthusiasts alike.",
+           "country_code": "za",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2025/03/Cardware.jpg",
+          "location": "Cape Town, South Africa",
+          "link": "https://cardwarewallet.com",
+          "twitter": "https://x.com/cardwarewallet",
+          "facebook": "https://facebook.com/cardwarewallet",
+          "telegram": "https://t.me/cardwarewallet",
+          "category": "Wallet",
+          "active": true,
+          "founder": "Craig Stack",
+          "founder_twitter": "https://x.com/craig_stack?s=21"
+        }
+      },
+      
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [5.2489415138179565, 7.657766583976504]
+          
+        },
+        "properties": {
+          "name": "Bitcoin Ekiti",
+          "description": "This initiative seeks to establish a thriving Bitcoin Circular Economy in Ekiti State, Nigeria, by promoting Bitcoin adoption among businesses, fostering financial inclusion, and driving sustainable development.",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2025/03/Bitcoin-Ekiti.jpg",
+          "country_code": "ng",
+          "location": "Ekiti State, Nigeria",
+          "twitter": "https://x.com/BitcoinEkiti",
+          "category": "Community",
+          "active": true,
+          "founder": "Glory Ademilua",
+          "founder_twitter": "nil"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [7.380576, 9.077355]
+          
+        },
+        "properties": {
+          "name": "Blocc Media and Advertising",
+          "description": "We want to empower and educate through storytelling and show you how Bitcoin is transforming lives and economies in Africa.",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2025/01/Blocc.jpg",
+          "country_code": "ng",
+          "location": "Abuja, Nigeria",
+          "twitter": "https://x.com/helloblocc",
+          "category": "Media",
+          "active": true,
+          "founder": "Paul Eke",
+          "founder_twitter": "https://x.com/ekepaul_"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [36.694477, -3.350423]
+        },
+        "properties": {
+          "name": "BitWild Safaris",
+          "description": "We curate a web-based platform that connects Bitcoiners with African safari planning and booking companies that accept Bitcoin.",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2025/01/BitWild-Safaris.jpg",
+          "location": "Acornhoek, Africa Wide",
+          "link": "https://BitWild.co.za",
+          "nostr": "npub1zf0v9t55yk59n8kje3w94cyzwnk8c0zc80smfnusn0rk9eek9cmscv5zkg",
+          "category": "Tourism",
+          "active": true,
+          "founder": "Wayne Twine",
+          "founder_twitter": "https://x.com/WayneTwine"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [22.82581904194013, -34.02633306623401]
+          
+        },
+        "properties": {
+          "name": "WeDoBitcoin",
+          "description": "Business directory and map of owner operated and small businesses in South Africa that accept bitcoin for payment.",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2025/03/WeDoBitcoin.jpg",
+          "location": "Sedgefield, South Africa",
+          "country_code": "za",
+          "link": "https://wedobitcoin.co.za",
+          "twitter": "https://x.com/wedobtc",
+          "category": "Directory",
+          "active": true,
+          "founder": "Francois Harris"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [32.595777, 0.335121]
+         
+        },
+        "properties": {
+          "name": "Juicy B",
+          "description": "Juicy B is on a mission to help people discover #Bitcoin through the best juice in Uganda.",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2025/01/Juicy-B.jpg",
+           "country_code": "ug",
+          "location": "Kampala, Uganda",
+          "twitter": "https://x.com/juicyb_shop",
+          "category": "Retail",
+          "active": true,
+          "founder": "Time Chain Holdings"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [29.934806662531187, -3.42878077041011]
+          
+        },
+        "properties": {
+          "name": "Free Tech Institute",
+          "description": "Free Tech Institute (FREETI) is a non-profit think tank. We advocate for a libertarian philosophy focused on technology and entrepreneurship based on digital.",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2025/01/Free-Tech-Institute.jpg",
+          "location": "Gitega, Burundi",
+          "country_code": "bi",
+          "link": "https://www.freeti.org/",
+          "twitter": "https://x.com/Freeti_Bdi",
+          "category": "Education",
+          "active": true,
+          "founder": "KUBWAYO BELYÏ NOBEL AND BARAKANA GUY EUDES"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [36.8200, -1.3000]
+        },
+        "properties": {
+          "name": "Btrust Developer Day",
+          "description": "The Btrust Developer Day offers an exclusive platform for developers, technologists, and Bitcoin enthusiasts to explore the latest technical advancements in Bitcoin and its applications in Africa.",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2025/06/btrust-1.png",
+          "location": "Africa Wide",
+          "link": "https://btrust.tech",
+          "twitter": "https://x.com/btrustteam",
+          "linkedin": "https://linkedin.com/company/btrust",
+          "category": "Conference",
+          "active": true
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [28.051698587670245, -26.212192989382118]
+          
+        },
+        "properties": {
+          "name": "Bitcoin El Zera",
+          "description": "Small private school Introducing bitcoin education to learners, teachers and school parents",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2025/01/Bitcoin-El-Zera.jpg",
+          "location": "Johannesburg, South Africa",
+          "country_code": "za",
+          "link": "https://www.elzeraprivaatskool.co.za",
+          "twitter": "https://x.com/BitcoinElZera",
+          "category": "Education",
+          "active": true,
+          "founder": "Catherine Jones"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-17.438815, 14.750329]
+          
+        },
+        "properties": {
+          "name": "Xamlé Bitcoin",
+          "description": "The Xamlé Bitcoin project was designed to address a crucial need for financial education and awareness in Senegal, particularly regarding Bitcoin, blockchain, and cryptocurrencies.",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2025/04/Xamle-Bitcoin.jpg",
+          "location": "Dakar, Senegal",
+          "twitter": "https://x.com/Xamlebitcoin",
+          "country_code": "sn",
+          "category": "Education",
+          "active": true,
+          "founder": "Idrissa SECK",
+          "founder_twitter": "https://x.com/SeckIdrissa"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [36.832965, -1.278973]
+          
+        },
+        "properties": {
+          "name": "Bitsacco",
+          "description": "Bitsacco is a template for how Savings and Credit Cooperative Organisations (SACCOs) and similar financial institutions in Africa, can and should be built on Bitcoin.",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2025/01/Bitsacco.jpg",
+          "country_code": "ke",
+          "location": "Nairobi, Kenya",
+          "link": "https://bitsacco.com",
+          "twitter": "https://x.com/bitsacco",
+          "category": "Finance",
+          "active": true,
+          "founder": "Jodom",
+          "founder_twitter": "https://x.com/okjodom"
+        }
+      },
+      
+  
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [36.815727, -1.297903]
+          
+        },
+        "properties": {
+          "name": "Bitcoin Nairobi",
+          "description": "Bitcoin Nairobi is a Bitcoin Circular Economy in Nairobi, Kenya. Our mission is to empower Bitcoin Education through Bitcoin School Kenya to underserved community in Kenya and Communities and also to drive Bitcoin Adoption through onboarding merchants to accept Bitcoin after also through helping communities build Bitcoin Circular Economies such communities are like Afribit Kibera and Bitcoin Mombasa. We also partner with Bitcoin Tech companies like Btrust Fedimint and TBD to train our students on Bitcoin development and to build bitcoin based solutions for Bitcoiners",
+          "country_code": "ke",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2024/10/Bitcoin-Nairobi.jpg",
+          "location": "Nairobi, Kenya",
+          "link": "https://www.btcnairobi.com",
+          "twitter": "https://x.com/btcnairobi",
+          "category": "Community",
+          "active": true,
+          "founder": "Martin Mutonga",
+          "founder_twitter": "https://x.com/martinmutonga21"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [25.931723015432567, -24.630532475754908]
+         
+        },
+        "properties": {
+          "name": "Ola Bitcoin",
+          "description": "Promote Bitcoin adoption and free education in Botswana. Advocate for merchant adoption. Spread the ethos and ideology of Bitcoin not only in Botswana but across the SADC region as a means for individuals, businesses, and even nations to regain sovereignty and self-determination.",
+           "country_code": "bw",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2025/01/Ola-Bitcoin.webp",
+          "location": "Gaborone, Botswana",
+          "link": "https://www.olabitcoin.org",
+          "twitter": "https://x.com/olabitcoinbw",
+          "personal_twitter": "https://x.com/JoshVazzzzz",
+          "category": "Education",
+          "active": true,
+          "founder": "Josh and Kea Vazquez",
+          "founder_twitter": "https://x.com/JoshVazzzzz"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [36.810169, -1.301614]
+         
+        },
+        "properties": {
+          "name": "MulaStack",
+          "description": "MulaStack is Kenya's first Bitcoin on-ramp and off-ramp solution, designed to make saving, investing and transacting in Bitcoin effortless across Africa. We address the growing demand for Bitcoin as a reliable way to diversify portfolios and preserve wealth. Our platform enables users to seamlessly convert KES into Bitcoin via Mpesa, making it easy to save, invest and withdraw Bitcoin using just a mobile phone. MulaStack bridges the gap between local currencies and Bitcoin, empowering Africans to participate in the global Bitcoin economy without barriers.",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2025/01/Mulastack.jpg",
+          "location": "Nairobi, Kenya",
+           "country_code": "ke",
+          "link": "https://mulastack.com/",
+          "linkedin": "https://www.linkedin.com/company/mulastack/",
+          "category": "Exchange",
+          "active": true,
+          "founder": "Michael Thuita",
+          "founder_twitter": "https://x.com/mike_thuita"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [18.431342, -33.911165]
+        },
+        "properties": {
+          "name": "Airbtc",
+          "description": "Airbtc is a Bitcoin-only property booking platform! By Bitcoiners for Bitcoiners",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2024/10/AirBTC.jpg",
+          "location": "Cape Town, Global",
+          "link": "https://airbtc.online",
+          "twitter": "https://x.com/Airbtconline",
+          "category": "Travel",
+          "active": true,
+          "founder": "Handre van Heerden",
+          "founder_twitter": "https://x.com/handrev?s=21"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [36.840560, -1.276948]
+          
+        },
+        "properties": {
+          "name": "Afribit",
+          "description": "Our mission is to promote, educate, and onboard merchants and consumers in the Kibera informal settlement to adopt the bitcoin/lightning network with a plan to develop a blockchain community bank model based on the software stack by Galoy",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2024/10/AfriBit.jpg",
+          "country_code": "ke",
+          "location": "Nairobi, Kenya",
+          "link": "https://afribit.africa/",
+          "twitter": "https://x.com/AfribitKibera",
+          "category": "Community",
+          "active": true,
+          "founder": "Ronnie and Yogi"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [32.59022384127385, 0.3068306580527511]
+         
+        },
+        "properties": {
+          "name": "BITCOIN FRENZY STACK",
+          "description": "Community of youths empowering themselves using bitcoin",
+           "country_code": "ug",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2025/01/Bitcoin-Frenzy.jpg",
+          "location": "Najyanankumbi, Uganda",
+          "twitter": "https://x.com/BTC_FrenzyStack",
+          "category": "Community",
+          "active": true,
+          "founder": "Samuel Meta"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [7.411965, 9.053633]
+         
+        },
+        "properties": {
+          "name": "Women Bitcoin Club",
+          "description": "Women Bitcoin Club is a nonprofit organization designed to educate and empower African Girls and Women in Bitcoin and Bitcoin Technology.",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2024/10/Women-Bitcoin-Club.jpg",
+          "location": "Abuja, Nigeria",
+           "country_code": "ng",
+          "twitter": "https://x.com/womenbtcclub",
+          "linkedin": "https://linkedin.com/company/women-bitcoin-club",
+          "instagram": "https://instagram.com/womenbitcoinclub",
+          "category": "Education",
+          "active": true,
+          "founder": "Tochi Onyia",
+          "founder_twitter": "https://x.com/tochionyiah"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [36.803103, -1.304090]
+          
+        },
+        "properties": {
+          "name": "Bitcoin Nomads",
+          "description": "Bitcoin Nomads is a community dedicated to raising awareness about Bitcoin and educating people on its benefits as we travel, camp, hike and explore different places in Africa starting with Kenya. Our goal is to create a financially secure and literate community by sharing knowledge and experiences. Join us and explore great adventures as we spread Bitcoin awareness in Africa",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2024/10/Bitcoin-Nomads.jpg",
+          "location": "Nairobi, Kenya",
+          "country_code": "ke",
+          "link": "https://bitcoinomads.africa",
+          "twitter": "https://x.com/bitcoinomads",
+          "category": "Community",
+          "active": true,
+          "founder": "Eric Michubu",
+          "founder_twitter": "https://x.com/michubu_eric"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [38.74601062219925, 9.010927006490478]
+          
+        },
+        "properties": {
+          "name": "West Data Group",
+          "description": "West Data Group (WDG) is a Hong Kong-based company under United International Engineering, specializing in the investment and construction of data centers. With a focus on sectors such as telecommunications, cryptocurrency mining, and AI training, WDG has developed strong partnerships with global leaders like HUAWEI, ZTE, and Canaan Inc., as well as key organizations in Ethiopia, including Ethio Telecom and Ethiopia Electric Power. In 2023, WDG expanded into Ethiopia, establishing Wes Data Center Service PLC and launching a significant 30MW data center project, positioning itself as a leader in data processing and digitalization efforts.",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2024/10/West-Data-Group-logo.jpg",
+          "country_code": "et",
+          "location": "Addis Ababa, Ethiopia",
+          "link": "http://www.westdataholding.com/",
+          "twitter": "https://x.com/WestDataGroup",
+          "category": "Mining",
+          "active": true,
+          "founder": "Han Yuan"
+        }
+      },
+      
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [1.241009, 6.136399]
+         
+        },
+        "properties": {
+          "name": "Bitcoin Dua",
+          "description": "Bitcoin Dua is a Bitcoin community based in Agbazome, Ghana, focused on Bitcoin education and fostering a Bitcoin circular economy within the locality. The goal is to increase Bitcoin adoption for daily use, strengthening its role in the local economy",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2024/06/Bitcoin-dua.jpg",
+          "location": "Agbazome, Ghana",
+          "country_code": "gh",
+          "twitter": "https://x.com/bitcoin_dua",
+          "category": "Community / Education / Circular Economy",
+          "active": "Yes",
+          "founder": "Mawufemor Kofi Folivi",
+          "founder_twitter": "https://x.com/MawufemorFoli"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [36.809968, -1.292725]
+          
+        },
+        "properties": {
+          "name": "Bitika",
+          "description": "We make Bitcoin accessible to Kenyans by providing a platform to buy bitcoin via M-Pesa with as low as KES 10",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2025/06/bitika.jpg",
+          "location": "Nairobi, Kenya",
+          "link": "bitika.xyz",
+          "country_code": "ke",
+          "twitter": "https://x.com/bitika_KE",
+          "category": "Hodl",
+          "active": "true",
+          "founder": "Fidel Otieno",
+          "founder_twitter": "https://x.com/Fideltodayy"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [28.31918747759545, -15.38588936609954]
+         
+        },
+        "properties": {
+          "name": "Bitcoin for HER",
+          "description": "Bitcoin for HER is a non governmental organization which is created to empower educate and adopt women in Bitcoin not only zambia but Africa at large",
+          "country_code": "zm",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2025/06/bitcoin_for_her.jpg",
+          "location": "Lusaka, Zambia",
+          "facebook": "https://www.facebook.com/profile.php?id=61573545457829",
+          "category": "Community",
+          "active": "true",
+          "founder": "Agness chinkoti"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [1.212582552152573, 6.1366898010726345]
+          
+        },
+        "properties": {
+          "name": "Satoshi Leaners",
+          "description": "Empowering communities in Togo and Francophone Africa to learn, use, and build with Bitcoin through education, grassroots adoption, and circular economy initiatives.",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2025/06/satoshi_leaners.jpg",
+          "location": "LOME, Togo",
+          "twitter": "https://x.com/SatoshiLeaners",
+          "country_code": "tg",
+          "category": "Circular Economy",
+          "active": "true",
+          "founder": "AGBETSISSI KODJO LABORE"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [3.371638014236334, 6.522352345904887]
+          
+        },
+        "properties": {
+          "name": "Briing Financial Services (Shekel App)",
+          "description": "Simple bitcoin-only on/off ramp in Nigeria. Planning to build a financial services platform around Bitcoin that will focus on earning, saving and spending.",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2025/06/shekel.jpg",
+          "location": "Lagos, Nigeria",
+          "link": "https://useshekel.com",
+          "country_code": "ng",
+          "twitter": "https://x.com/UseShekel",
+          "category": "Circular Economy",
+          "active": "true",
+          "founder": "AGBETSISSI KODJO LABORE"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [36.813102846233114, -1.2940895604151232]
+          
+        },
+        "properties": {
+          "name": "Beyond Adversity BTC Podcast",
+          "description": "Theme: Empowerment through Bitcoin Beyond Adversity BTC podcast likely revolves around providing support, inspiration, and practical advice for individuals facing various challenges in their lives through telling stories on bitcoin impacts.",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2025/06/beyond_adversity.jpg",
+          "location": "Nairobi, Kenya",
+          "link": "https://beyondadversitybtc.com/",
+           "country_code": "ke",
+          "twitter": "https://x.com/b_adversity",
+          "category": "Media",
+          "active": "true",
+          "founder": "Alfonce Ouma",
+          "founder_twitter": "https://x.com/alfonce_ouma"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [1.221009, 6.116399]
+         
+        },
+        "properties": {
+          "name": "BITCOIN AVES",
+          "description": "\"Bitcoin Aves is a grassroots Bitcoin initiative based in Akatsi, Ghana. We focus on building a sustainable Circular Economy, teaching Bitcoin in a way that connects with local culture and needs. Our goal is to drive grassroots adoption through clear, accessible learning. At the heart of it all are values like decentralization, financial freedom, and sovereignty.\nRooted in the belief that true empowerment begins with understanding, Bitcoin Aves simplifies the complex, challenges the status quo, and champions economic independence, starting from Akatsi and rippling outward.\"",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2025/06/bitcoin_aves.jpg",
+           "country_code": "gh",
+          "location": "Akatsi, Ghana",
+          "twitter": "https://x.com/bitcoin_aves",
+          "category": "Circular Economy",
+          "active": "true",
+          "founder": "Kingsley Lavoe"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [7.063170863749398, 6.331611598087287]
+          
+        },
+        "properties": {
+          "name": "Bitwriters",
+          "description": "Bitwriters is an EdTech marketplace that allows everyone to receive and spend Bitcoin.",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2025/06/bitwriters.jpg",
+          "location": "Jos, Nigeria",
+          "country_code": "ng",
+          "link": "bitwriters.xyz",
+          "twitter": "https://x.com/BitwritersXYZ",
+          "category": "Circular Economy",
+          "active": "true",
+          "founder": "Onyekachi Onyeukwu and Franca Perekpo",
+          "founder_twitter": "https://x.com/EzeOcso"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [37.36058682203345, -3.059452304724275]
+          
+        },
+        "properties": {
+          "name": "EcoBitz",
+          "description": "EcoBitz is a waste management initiative that up cycles and recycles solid waste, glass, plastics and soon e_waste.",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2025/06/@EcoBitz.jpg",
+          "country_code": "ke",
+          "location": "Machakos, Kenya",
+          "twitter": "https://x.com/EcoBitz",
+          "category": "Circular Economy",
+          "active": "true",
+          "founder": "Kevin Makini",
+          "founder_twitter": "https://x.com/kevmakini"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [0.004065732337911286, 0.002705127266379681]
+        },
+        "properties": {
+          "name": "NeoWealth",
+          "description": "NeoWealth helps governments, family offices, startups, and established businesses across Africa and the Middle East adopt secure, strategic Bitcoin solutions.",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2025/06/neo.png",
+          "location": "Global",
+          "link": "www.neowealth.xyz",
+          "twitter": "https://x.com/Soolyprimal.net",
+          "category": "Business",
+          "active": "true",
+          "founder": "Sooly Kobayashi"
+        }
+      },
+     
+     
+   
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [31.025433051117354, -24.39209951869569]
+          
+        },
+        "properties": {
+          "name": "Zivo Labs",
+          "description": "Zivo Labs is a Bitcoin education organization with the aim of introducing children (6-9 yrs) to the fundamentals of Bitcoin through engaging and educational resources.",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2025/06/zivo.jpg",
+          "location": "Zimbabwe",
+          "country_code": "zw",
+          "twitter": "https://x.com/ZivoLabs",
+          "category": "Education",
+          "active": "true"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [33.7930749340435, -13.99126230341247]
+         
+        },
+        "properties": {
+          "name": "Women of Satoshi Cooperative",
+          "description": "The Women of Satoshi Cooperative (WSC) is a transformative initiative empowering teenage mothers and marginalized women in Malawi by leveraging Bitcoin.",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2025/06/women_of_satoshi.jpg",
+           "country_code": "mw",
+          "location": "Lilongwe, Malawi",
+          "twitter": "https://x.com/codaMW",
+          "category": "Circular Economy",
+          "active": "true",
+          "founder": "Yankho Ngolleka"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [28.235615379014515, -25.749254052125046]
+        },
+        "properties": {
+          "name": "Exonumia Africa",
+          "description": "Exonumia is an open source platform that allows its contributors to translate and publish content about Bitcoin into Native African languages.",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2025/06/exonumia.jpg",
+          "location": "Africa Wide",
+          "link": "https://exonumia.africa/",
+          "twitter": "https://x.com/ExonumiaAfrica",
+          "category": "Education",
+          "active": "true",
+          "founder": "Momo Rakgatjane"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [47.5162, -18.8792]
+          
+        },
+        "properties": {
+          "name": "Angovo",
+          "description": "Providing clean and sustainable energy to Madagascans et providing Bitcoin circular economies",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2025/06/madagascar_for_bitcoin.jpg",
+          "country_code": "mg",
+          "location": "Antsirabe, Madagascar",
+          "link": "https://www.angovo.ngo",
+          "twitter": "https://x.com/MadaGasBit",
+          "category": "Circular Economy",
+          "active": "true",
+          "founder": "Pascal R "
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [2.422537, 6.348548]
+          
+        },
+        "properties": {
+          "name": "Hope With ₿itcoin",
+          "description": "Hope With Bitcoin is a humanitarian initiative that uses Bitcoin to finance solidarity actions, such as distributing food to the underprivileged. The project relies on transparency, direct impact and the power of decentralized technologies to restore hope to those who need it most.",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2025/06/hope_with_tc.jpg",
+          "location": "COTONOU, Benin",
+          "country_code": "bj",
+          "link": "https://geyser.fund/project/hopewithbitcoin",
+          "twitter": "https://linktr.ee/hopewithbtc",
+          "category": " Non Profit",
+          "active": "true",
+          "founder": "Audel TOSSOU - KPABA"
+        }
+      },
+      
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [32.593376, 0.318314]
+          
+        },
+        "properties": {
+          "name": "Gorilla sats",
+          "description": "Gorilla sat is a Bitcoin tourism agency based in Uganda.",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2024/03/African-Bitcoiners_Gorilla-Sats-logo.jpg",
+          "country_code": "ug",
+          "location": "Kampala, Uganda",
+          "link": "https://www.gorilla-sats.com/",
+          "twitter": "https://x.com/GorillaSats",
+          "category": "Business",
+          "active": "true",
+          "founder": "Brindon Mwiine - Babu Afan",
+          "founder_twitter": "https://x.com/BrindonMwiine"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [31.025433051117354, -24.39209951869569]
+          
+        },
+        "properties": {
+          "name": "Bitcoin for Wildlife Conservation Project",
+          "description": "Our organization promotes Bitcoin adoption in wildlife and nature conservation.",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2024/10/Bitcoin-WildLife-Conservation.jpg",
+          "location": "Hoedspruit, South Africa",
+          "link": "https://izindlovu.org/bitcoin-for-wildlife-conservation/",
+          "country_code": "za",
+          "twitter": "https://x.com/btcconservation",
+          "category": " Non Profit",
+          "active": "true",
+          "founder": "Izindlovu Fund",
+          "founder_twitter": "https://x.com/izindlovufund"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [0.0028639723213513004, -0.003722732170829204]
+          
+        },
+        "properties": {
+          "name": "Sparrow Wallet",
+          "description": "Sparrow wallet is a Bitcoin Desktop wallet. One of the best Bitcoin desktop wallets in the world.",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2023/01/Sparrow-wallet.png",
+          "country_code": "za",
+          "location": "South Africa",
+          "link": "https://sparrowwallet.com/",
+          "twitter": "https://x.com/SparrowWallet",
+          "category": "Hold",
+          "active": "true",
+          "founder": "Craig Raw",
+          "founder_twitter": "https://x.com/craigraw"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [0.007160178453913697, 0.008861542101897841]
+          
+        },
+        "properties": {
+          "name": "Bitcoin Only",
+          "description": "Bitcoin Only is a Bitcoin services provider based in South Africa.",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2024/03/African-Bitcoiners_Bitcoin-Only-logo.webp",
+          "location": "South Africa",
+          "country_code": "za",
+          "link": "https://bitcoinonly.io/",
+          "twitter": "https://x.com/BitcoinOnlyZA",
+          "category": "Business",
+          "active": "true",
+          "founder": "Rick Allardice",
+          "founder_twitter": "https://x.com/rickallardice?s=21"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [3.378259314912132, 6.521353713411415]
+          
+        },
+        "properties": {
+          "name": "BitDevs Lagos",
+          "description": "Bitdevs Lagos is a community of Bitcoin developers based in Lagos.",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2025/03/bitdevs-lagos.jpg",
+          "country_code": "ng",
+          "location": "Lagos, Nigeria",
+          "link": "https://www.bitdevslagos.org/",
+          "twitter": "https://x.com/BitDevsLagos",
+          "category": "Tech Meetup",
+          "active": "true",
+          "founder": "Bitdevs Global"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [3.3700261114969456, 6.518388990454684]
+          
+        },
+        "properties": {
+          "name": "Mavapay",
+          "description": "Mavapay Money is a consumer app that makes payments simple with Bitcoin, enabling users to buy, sell, and send money seamlessly across African borders.",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2025/09/Mavapay_logo.jpg",
+          "location": "Lagos, Nigeria",
+          "country_code": "ng",
+          "link": "https://app.mavapay.money/",
+          "twitter": "https://x.com/mavapay_money",
+          "category": "Business",
+          "active": "true",
+          "founder": "Theophilus Isah, Emmanuel Itakpe, Oluwatobi Bamidele",
+          "founder_twitter": "https://x.com/N0nNull"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [7.393134857235462, 9.050500396035385]
+          
+        },
+        "properties": {
+          "name": "Digi Oats",
+          "description": "DigiOats facilitates Bitcoin education, research, development, and general consultation.",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2024/03/African-Bitcoiners_Digioats_logo.jpg",
+          "location": "Abuja, Akure & Lagos, Nigeria",
+          "country_code": "ng",
+          "link": "https://digioats.io/",
+          "twitter": "https://x.com/DigiOats",
+          "category": "Education",
+          "active": "true",
+          "founder": "Heritage Falodun",
+          "founder_twitter": "https://x.com/herrytheeagle"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [0.008583587239319734, 0.002183755973434549]
+          
+        },
+        "properties": {
+          "name": "Bitnob",
+          "description": "Bitnob is a cutting edge Bitcoin platform that facilitates all kinds of Bitcoin financially related businesses.",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2024/03/African-Bitcoiners_bitnob_logo.jpg",
+          "location": "Nigeria",
+          "link": "https://bitnob.com/",
+          "country_code": "ng",
+          "twitter": "https://x.com/Bitnob_official",
+          "category": "Hodl",
+          "active": "true",
+          "founder": "Bernard Parah and Edwaed Amenu",
+          "founder_twitter": "https://x.com/bernard_parah"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [3.373901618714729, 6.5203889235708035]
+          
+        },
+        "properties": {
+          "name": "BotmeCash",
+          "description": "BotmeCash is a P2P Bitcoin Exchange Platform that allows users to Buy, Spend, Save Bitcoin.",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2024/06/botmecash.jpg",
+          "country_code": "ng",
+          "location": "Lagos, Nigeria",
+          "link": "https://www.botmecash.com/",
+          "twitter": "https://x.com/Botmecash",
+          "category": "Hodl",
+          "active": "true",
+          "founder": "Oluwasegun Kosemani",
+          "founder_twitter": "https://x.com/MrlamilamiKosch"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [3.371638014236334, 6.522352345904887]
+         
+        },
+        "properties": {
+          "name": "Cashwyre",
+          "description": "Cashwyre is a Bitcoin financial platform based out of Nigeria.",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2024/03/African-Bitcoiners_Cashwyre-logo.jpg",
+         "country_code": "ng",
+          "location": "Lagos, Nigeria",
+          "link": "https://cashwyre.io/",
+          "twitter": "https://x.com/Cashwyre_HQ",
+          "category": "Hodl",
+          "active": "true"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-17.440569, 14.747285]
+          
+        },
+        "properties": {
+          "name": "Dakar Bitcoin Days",
+          "description": "Bitcoin Dakar is an event in form of a conference held once in a year in Dakar.",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2025/04/dakar.jpg",
+          "country_code": "sn",
+          "location": "Dakar, Senegal",
+          "link": "https://dakarbitcoindays.com/",
+          "twitter": "https://x.com/dakarbtcdays",
+          "category": "Community",
+          "active": "true",
+          "founder": "Nourou",
+          "founder_twitter": "https://x.com/nourou4them"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [3.37360961772174, 6.533943703630912]
+        },
+        "properties": {
+          "name": "Stealth Money",
+          "description": "A platform simplifying Bitcoin self-custody via hardware wallets and Bitcoin-backed loans.",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2024/07/Stealth-Money.svg",
+          "location": "Lagos, Africa Wide",
+          "link": "https://www.stealth.money",
+          "twitter": "",
+          "category": "Hodl",
+          "active": "true",
+          "founder": "Theophilus Isah"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [28.2916, -13.1333]
+        },
+        "properties": {
+          "name": "Bitcoin Zambia",
+          "description": "A community dedicated to spreading Bitcoin education and adoption through meetups, workshops, and grassroots initiatives.",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2025/01/Bitcoin-for-Fairness-Zambia.jpg",
+          "country_code": "zm",
+          "location": "Lusaka, Zambia",
+          "link": "https://bitcoinzambia.org",
+          "twitter": "https://x.com/BitcoinZambia",
+          "category": "Community ",
+          "active": "true",
+          "founder": "Ndesanjo Macha",
+          "founder_twitter": "https://x.com/ndesanjo"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [38.75463408436213, 9.012887181194808]
+          
+        },
+        "properties": {
+          "name": "African Bitcoin Mining Summit",
+          "description": "The African Bitcoin Mining Summit brings together African Bitcoin miners and investors.",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2024/10/GAMA-African-Bitcoin-Mining-Summit.jpg",
+          "country_code": "et",
+          "location": "Addis Ababa, Ethiopia",
+          "link": "https://africanbitcoinmining.com/",
+          "twitter": "https://x.com/gama_alliance",
+          "category": "Conference",
+          "active": "true",
+          "founder": "GAMA",
+          "founder_twitter": "https://x.com/gama_alliance"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [0.006076751626572849, 0.007240327862444662]
+        },
+        "properties": {
+          "name": "Volt Wallet",
+          "description": "Volt Wallet is on a mission to revolutionize Bitcoin access and security in Africa.",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2025/01/Volt-Wallet.jpg",
+          "location": "Africa",
+          "twitter": "https://x.com/voltbtc",
+          "category": "Hodl",
+          "active": "true"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [28.0500, -26.2000]
+        },
+        "properties": {
+          "name": "Geyser",
+          "description": "Geyser is a global Bitcoin funding platform. Geyser helps Bitcoin projects, charities etc raise funding and donations for their works.",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2022/11/Geyser.jpg",
+          "location": "Global",
+          "link": "https://geyser.fund/about",
+          "twitter": "https://x.com/geyserfund",
+          "category": " Non Profit",
+          "active": "true",
+          "founder": "Mick Morucci",
+          "founder_twitter": "https://twitter.com/metamick14"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-0.004759398128480121, 0.0049637322710156]
+        },
+        "properties": {
+          "name": "BTrust Team",
+          "description": "BTrust Team is a Bitcoin VC funding agency that funds African Bitcoin start ups and solutions.",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2024/10/Btrust-Team.jpg",
+          "location": "Africa",
+          "link": "https://github.com/btrustteam/board-book",
+          "twitter": "https://x.com/btrustteam",
+          "category": " Non Profit",
+          "active": "true"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [17.0, 1.0]
+        },
+        "properties": {
+          "name": "The Bitcoiner Test",
+          "description": "The Bitcoiner Test is an industry standard Bitcoin test designed for Bitcoin firms for the sole purpose of testing employees and help ease hiring processes.",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2025/04/Start-Here-The-Bitcoiner-Test.png",
+          "location": "Global",
+          "link": "https://bitcoinertest.com/",
+          "twitter": "https://x.com/BitcoinerTest",
+          "category": "Business",
+          "active": "true",
+          "founder": "African Bitcoiners",
+          "founder_twitter": "https://x.com/afribitcoiners"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [3.369953806767322, 6.518593903655816]
+         
+        },
+        "properties": {
+          "name": "Africa Free Routing",
+          "description": "Africa free routing is the biggest Bitcoin lightning routing service in Africa based out of Lagos Nigeria.",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2024/03/African-Bitcoiners_Africa-Free-Routing_logo.png",
+         "country_code": "ng",
+          "location": "Lagos, Nigeria",
+          "link": "https://freerouting.africa/",
+          "twitter": "https://x.com/FreeRoutingAf",
+          "category": "Business",
+          "active": "true",
+          "founder": "Megasley",
+          "founder_twitter": "https://x.com/megasley?s=21"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-0.005482207836360768, 0.0022156556282437044]
+        },
+        "properties": {
+          "name": "Bitcoin For Fairness",
+          "description": "Bitcoin for Fairness is a global initiative raising knowledge and understanding of Bitcoin with a focus on civil and human rights.",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2022/10/bitcoin-for-fairness-1.jpg",
+          "location": "Global",
+          "link": "https://bffbtc.org",
+          "twitter": "https://x.com/BFFbtc",
+          "category": "Education",
+          "active": "true",
+          "founder": "Anita Posch",
+          "founder_twitter": "https://twitter.com/anitaposch"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-0.007944010767286099, -0.004827610780933485]
+        },
+        "properties": {
+          "name": "Fedi",
+          "description": "Fedi is on a mission to empower humanity through freedom technology by building the world's first decentralized super app.",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2024/10/Fedi.jpg",
+          "location": "Global",
+          "link": "https://www.fedi.xyz/",
+          "twitter": "https://x.com/fedibtc",
+          "category": "Community",
+          "active": "true",
+          "founder": "Obi Nwosu",
+          "founder_twitter": "https://twitter.com/obi"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [0.004065732337911286, 0.002705127266379681]
+        },
+        "properties": {
+          "name": "Trezor Academy",
+          "description": "Securely store, manage, and protect your coins with Trezor hardware wallets, app & backup solutions.",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2024/10/Trezor_Academy_Logo_Black.svg",
+          "location": "Global",
+          "link": "https://academy.trezor.io",
+          "twitter": "https://x.com/TrezorAcademy",
+          "category": "Education",
+          "active": "true",
+          "founder": "Josef Tětek",
+          "founder_twitter": "https://x.com/JosefTetek"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [3.3834952108373804, 6.531349598332191]
+          
+        },
+        "properties": {
+          "name": "Crack The Orange",
+          "description": "Crack the orange is an online Bitcoin Education Mastery platform that coaches advanced Bitcoiners.",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2024/03/African-Bitcoiners_Anita_Posch_Crack_The_Orange.jpeg",
+          "location": "Nigeria",
+          "country_code": "ng",
+          "link": "https://my.cracktheorange.com/",
+          "twitter": "https://x.com/cracktheorange",
+          "category": "Education",
+          "active": "true",
+          "founder": "Anita Posch",
+          "founder_twitter": "https://x.com/AnitaPosch"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [0.007261182719080193, -0.0005419109889685436]
+          
+        },
+        "properties": {
+          "name": "Recursive capital",
+          "description": "Recursive Capital is a Nigerian based Bitcoin Funding agency providing grants to Bitcoin startups across Africa.",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2024/10/Recursive-Capital.jpg",
+          "location": "West Africa Region",
+          "country_code": "ng",
+          "link": "https://rcrsv.xyz/",
+          "twitter": "https://x.com/RcrsvCapital",
+          "category": "Funding",
+          "active": "true",
+          "founder": "Abubakar Nur Khalil",
+          "founder_twitter": "https://x.com/ihate1999"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [17.0, 1.0]
+        },
+        "properties": {
+          "name": "Sats2Data",
+          "description": "Sats to Data is a Bitcoin online platform where users can top up their mobile phones and buy data using Bitcoin lightning technology.",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2024/03/African-Bitcoiners_Sats2data-logo-white-1.png",
+          "location": "Africa Wide",
+          "link": "https://sats2data.africa/",
+          "twitter": "https://x.com/Sats2data_",
+          "category": "Retail",
+          "active": "true",
+          "founder": "African Bitcoiners",
+          "founder_twitter": "https://x.com/afribitcoiners"
+        }
+      },  
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [32.56167092814353, 15.499928980943297]
+          
+        },
+        "properties": {
+          "name": "BTC_Sudan",
+          "description": "BTC_Sudan, founded by Sudan Hodl, is dedicated to educating Sudanese youth about Bitcoin. In our journey, we have successfully assisted hundreds of individuals, businesses, and NGOs in adopting Bitcoin,",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2024/03/African-Bitcoiners_BTC-Sudan-community-logo.jpg",
+          "country_code": "sd",
+          "location": "Khartoum, Sudan",
+          "twitter": "https://x.com/BTC_Sudan",
+          "category": "Community",
+          "active": "true",
+          "founder": "Sudan HODL",
+          "founder_twitter": "https://x.com/SudanHODL"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [22.152591646276935, -34.187624100058294]
+          
+        },
+        "properties": {
+          "name": "Bitcoin Ekasi",
+          "description": "Building a Bitcoin Circular Economy in a South African township. Inspired by Bitcoin Beach, El Salvador.",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2024/03/African-Bitcoiners_Bitcoin-Ekasi_logo.jpg",
+          "country_code": "za",
+          "location": "Mossel Bay, South Africa",
+          "link": "https://bitcoinekasi.com",
+          "twitter": "https://x.com/BitcoinEkasi",
+          "category": "Circular Economy",
+          "active": "true",
+          "founder": "Hermann Vievir"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [0.0016966999783379966, 0.0003203486899587271]
+        },
+        "properties": {
+          "name": "The Orange Sun",
+          "description": "The Orange Sun is an unsponsored Bitcoin Space hosted on X by volunteers @ToxiKat27 @Bitshack @BitcoinUbuntu, weekdays 6-8am UTC. Founded in 2021 by @SatoshisJournal.",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2024/07/Orange-Sun-Spaces.jpg",
+          "location": "Global",
+          "twitter": "https://x.com/OrangeSunSpaces",
+          "category": "Media",
+          "active": "true",
+          "founder": "Satoshi's Journal",
+          "founder_twitter": "https://x.com/SatoshisJournal"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-106.73485948158064, 34.794301698092816]
+        },
+        "properties": {
+          "name": "Satoshi's Journal",
+          "description": "We provide Bitcoin news and education",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2024/07/Satoshis-Journal.jpg",
+          "location": "Los Lunas, Global",
+          "link": "https://www.satoshisjournal.com",
+          "twitter": "https://x.com/satoshisjournal",
+          "category": "Media",
+          "active": "true",
+          "founder": "Jeremy Garcia",
+          "founder_twitter": "https://x.com/jerimican5445?s=21"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [28.578471129491906, -20.168091230008848]
+          
+        },
+        "properties": {
+          "name": "Bitcoin Reach",
+          "description": "Bitcoin reach is the only Bitcoin community in Zimbabwe. Aspiring to cultivate adoption and now take it one more step further, in working towards building a circular Bitcoin economy. Bitcoin reach has been reaching out to",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2024/06/Bitcoin-Reach.jpg",
+          "location": "Bulawayo, Zimbabwe",
+          "country_code": "zw",
+          "twitter": "https://x.com/alesander97",
+          "category": "Education",
+          "active": "true",
+          "founder": "Alexandria",
+          "founder_twitter": "https://x.com/alesander97"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [33.7930749340435, -13.99126230341247]
+          
+  
+        },
+        "properties": {
+          "name": "Bitcoin Boma Coalition",
+          "description": "We are a Not-for-profit organization ||Education|| building awareness of the economic, social and environmental benefits of Bitcoin for Malawi",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2024/07/Bitcoin-Boma-Coalition.jpg",
+          "country_code": "mw",
+          "location": "Lilongwe, Malawi",
+          "link": "https://geyser.fund/project/bitcoinboma",
+          "twitter": "https://x.com/BitcoinBoma",
+          "category": "Education",
+          "active": "true",
+          "founder": "Grant Gombwa, Nick Twyman and Ian foster",
+          "founder_twitter": "https://x.com/GrantGombwa3"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [3.382528095688951, 6.517208121643008]
+          
+        },
+        "properties": {
+          "name": "Bitcoin in Nigeria Media",
+          "description": "Bitcoin in Nigeria Media is focused on sensitizing the people on the concept of inflation proof, financial freedom, through the use of Bitcoin.",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2024/06/media.png",
+          "location": "Lagos, Nigeria",
+          "country_code": "ng",
+          "link": "https://www.binmedia.xyz",
+          "youtube": "https://www.youtube.com/channel/UCAYQ0-KeZkSLigVZTL9edog",
+          "category": "Media",
+          "active": "true",
+          "founder": "HERITAGE FALODUN",
+          "founder_twitter": "https://x.com/herrytheeagle"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-1.286389, 36.817223]
+        },
+        "properties": {
+          "name": "Bitcoin DADA",
+          "description": "Bitcoin Dada is a Non profit organisation that aims to empower African women through financial education with a focus on bitcoin",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2022/10/bitcoindada-1.jpg",
+          "location": "Africa",
+          "link": "https://www.btcdada.com",
+          "twitter": "https://x.com/btc_dada",
+          "category": "Education",
+          "active": "true",
+          "founder": "Marcel Lorraine",
+          "founder_twitter": "https://x.com/marcelorraine"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-3.9992817857190337, 5.310878110790099]
+         
+        },
+        "properties": {
+          "name": "Abidjan Bitcoin Meetup",
+          "description": "Bitcoin Community from Ivory Coast",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2024/06/Abidjan-Bitcoin.jpg",
+         "country_code": "ci",
+          "location": "Abidjan, Cote d'Ivoire",
+          "link": "https://btcmap.org/community/abidjan-bitcoin",
+          "twitter": "https://x.com/AbidjanBTC",
+          "category": "Community",
+          "active": "true",
+          "founder": "Science Genial",
+          "founder_twitter": "https://x.com/science_genial"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [28.055589625657408, -26.194633902239136]
+          
+        },
+        "properties": {
+          "name": "BitcoinJHB",
+          "description": "BitcoinJHB is simply a group of bitcoiners who organise meetings in Johannesburg with the goal of connecting bitcoiners and helping sats flow in a circular economy",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2024/06/Bitcoin-Johannesburg.png",
+          "country_code": "za",
+          "location": "Johannesburg, South Africa",
+          "twitter": "https://x.com/BitcoinJHB",
+          "category": "Regular Meetup",
+          "active": "true",
+          "founder": "ColeTU",
+          "founder_twitter": "https://x.com/coletu?s=21"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-0.0059976413788794345, 0.0025786103310100252]
+          
+        },
+        "properties": {
+          "name": "BitcoinZAR",
+          "description": "Bitcoin information, education and support",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2024/03/African-Bitcoiners_BitcoinZAR-Community_logo.jpg",
+          "location": "South Africa",
+          "country_code": "za",
+          "link": "https://bitcoinzar.co.za",
+          "twitter": "https://x.com/bitcoinzar",
+          "category": "Community",
+          "active": "true",
+          "founder": "MJ Kweyama"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [2.442537, 6.368548]
+          
+        },
+        "properties": {
+          "name": "Bitcoin Mastermind",
+          "description": "Bitcoin Mastermind is the first Bitcoin conference since 2021 to bring together the French-speaking African Bitcoin community in a single environment.",
+          "country_code": "bj",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2024/06/African-Bitcoiners_Bitcoin_Mastermind.jpg",
+          "location": "Cotonou, Benin",
+          "link": "https://btcmastermind.xyz/",
+          "twitter": "https://x.com/btcmastermind_",
+          "category": "Conference",
+          "active": "true",
+          "founder": "Loïc Kassa",
+          "founder_twitter": "https://x.com/Loicbtc"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [2.425947, 6.351971]
+         
+        },
+        "properties": {
+          "name": "Bitcoin Benin",
+          "description": "Bitcoin Bénin is Benin's community of Bitcoiners. It brings together the local community but is working to reach a much wider audience.",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2024/03/African-Bitcoiners_Bitcoin-Benin-Community_logo.jpg",
+          "location": "Cotonou, Benin",
+          "country_code": "bj",
+          "link": "https://x.com/bitcoinbenin",
+          "twitter": "https://x.com/BitcoinBenin",
+          "category": "Community ",
+          "active": "true",
+          "founder": "Alphonse,Loic, Samadou",
+          "founder_twitter": "https://x.com/Loicbtc"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [2.364555, 6.503410]
+          
+        },
+        "properties": {
+          "name": "Flash",
+          "description": "Flash is a startup introducing people in Benin, Togo, Burkina-Faso and Côte d'Ivoire to Bitcoin by building a simple platform that help them easily Buy and Sell Bitcoin via LN and Mobile Money starting from 100 XOF and also helping companies in Benin accept Bitcoin Payment.",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2024/10/Bitcoin-flash.jpg",
+          "location": "Cotonou - Abomey-Calavi, Benin",
+          "country_code": "bj",
+          "link": "https://bitcoinflash.xyz/",
+          "twitter": "https://x.com/_bitcoinflash",
+          "category": "Hodl",
+          "active": "true",
+          "founder": "Alphonse Mehounme",
+          "founder_twitter": "https://x.com/mehounme"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [28.052254206456023, -26.202849224518378]
+          
+        },
+        "properties": {
+          "name": "Bitcoin Vending Africa",
+          "description": "BTC ATMs and other ramps from fiat to BTC.",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2024/10/Bitcoin-Vending-Africa.jpg",
+          "location": "Johannesburg, South Africa",
+          "country_code": "za",
+          "link": "https://www.BitcoinVendingAfrica.com",
+          "twitter": "https://x.com/BVendingAfrica",
+          "category": "Business",
+          "active": "true",
+          "founder": "Spiro"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [22.136529179342663, -34.19234096863101]
+          
+        },
+        "properties": {
+          "name": "Simply Sow",
+          "description": "At the heart of our just cause lies a commitment to supporting the most vulnerable among us; newborns, babies, and toddlers, whose lives are sometimes negatively impacted by circumstances beyond their control.",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2024/07/Simply-Sow.jpg",
+          "location": "Mossel Bay, South Africa",
+          "country_code": "za",
+          "link": "https://simplysow.org/",
+          "twitter": "https://x.com/SimplySowB",
+          "category": "Education",
+          "active":"true",
+          "founder": "René Mouton",
+          "founder_twitter": "https://x.com/renexpressed?s=21"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [36.674477, -3.370423]
+          
+        },
+        "properties": {
+          "name": "PROOF OF WORK ACADEMY",
+          "description": "Bitcoin Education for Schools and Communities in Kilimanjaro and Arusha Region, Tanzania",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2024/07/Proof-of-Work-Academy.jpg",
+          "location": "Arusha, Tanzania",
+          "country_code": "tz",
+          "link": "https://geyser.fund/project/powa",
+          "twitter": "https://x.com/powa255",
+          "category": "Education",
+          "active": "true",
+          "founder": "Man Like Kweks",
+          "founder_twitter": "https://x.com/manlikekweks"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [36.8141177402766, -1.29890740206755]
+          
+        },
+        "properties": {
+          "name": "Satoshify Me",
+          "description": "Online education website focused on learning about Bitcoin.",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2024/06/Satoshify-me.jpg",
+          "country_code": "ke",
+          "location": "Nairobi, Kenya",
+          "twitter": "https://x.com/satoshifyme",
+          "category": "Education",
+          "active": "true",
+          "founder": "Mumo",
+          "founder_twitter": "https://twitter.com/mumo_mumo_"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [3.3887022550815913, 6.517624014128345]
+          
+        },
+        "properties": {
+          "name": "iPayBTC",
+          "description": "A purpose driven company with a laser focused goal to contribute our iron rods to help build bridges over the huge payment gap in sub saharan africa and making sure that cash becomes a fleeting fashion accessory, using bitcoin and the future of money and payments.",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2024/03/African-Bitcoiners_ipayBTC-logo.jpg",
+          "country_code": "ng",
+          "location": "Lagos, Nigeria",
+          "link": "https://ipaybtc.app",
+          "twitter": "https://x.com/ipaybtcapp",
+          "category": "Hodl",
+          "active": "true",
+          "founder": "Everyone and No-one"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [29.907419419133344, -18.330342014135486]
+          
+        },
+        "properties": {
+          "name": "The Metamorphosis Hub",
+          "description": "The Metamorphosis Hub is an educational platform for freedom activism and human rights that is advocating for Bitcoin as a shining city of refuge both social and economic and political affairs.",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2024/07/The-Metamorphosis-Hub.jpg",
+          "country_code": "zw",
+          "location": "Kadoma, Zimbabwe",
+          "link": "https://www.themetamorphosishub.com",
+          "twitter": "https://x.com/the_meta_hub",
+          "category": "Education",
+          "active": "true",
+          "founder": "Tavonga Majoni"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [3.379747851714139, 6.528831810583471]
+          
+        },
+        "properties": {
+          "name": "Trojan mining",
+          "description": "A company focused on decentralizing bitcoin mining by utilising green waste energy in the african echo system",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2024/03/African-Bitcoiners_Trojan-Mining-Nigeria-logo.jpg",
+          "location": "Lagos, Nigeria",
+          "country_code": "ng",
+          "link": "https://www.trojanmining.com/",
+          "twitter": "https://x.com/trojanmining",
+          "category": "Mining",
+          "active": "true",
+          "founder": "Siyanbola yassar"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [27.867118218958083, -26.271369152703848]
+          
+        },
+        "properties": {
+          "name": "SowetoBtc",
+          "description": "SowetoBtc is a non-profit initiative that aims to provide Bitcoin financial education to underprivileged South African communities.",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2024/07/SowetoBtc.jpg",
+          "country_code": "za",
+          "location": "Soweto, Johannesburg, South Africa",
+          "link": "https://sowetobtc.com",
+          "twitter": "https://x.com/SowetoBtc",
+          "category": "Education",
+          "active": "true",
+          "founder": "Michael Rathebe"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [17.08681784662829, -22.57186641469668]
+          
+        },
+        "properties": {
+          "name": "Bitcoin Mining Namibia",
+          "description": "Bitcoin Mining Namibia facilitates Bitcoin Mining in Namibia by assisting various interest groups & individuals to obtain their own mining hardware directly from suppliers.",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2024/03/African-Bitcoiners_Bitcoin-Mining-Namibia_logo.jpg",
+          "country_code": "na",
+          "location": "Windhoek, Namibia",
+          "link": "https://okinent.org",
+          "twitter": "https://x.com/BTCMiningNam",
+          "category": "Mining",
+          "active": "true",
+          "founder": "OKIN | Nikolai Tjongarero",
+          "founder_twitter": "http://x.com/OKIN_17"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [36.846101, -1.278891]
+          
+        },
+        "properties": {
+          "name": "BitBiashara",
+          "description": "Bitbiashara is geared towards educating business owner's on Bitcoin and explore ways to leverage Bitcoin on the day to day activities of the business.",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2024/06/BitBiashara.jpg",
+          "country_code": "ke",
+          "location": "Nairobi, Kenya",
+          "twitter": "https://x.com/bitbiashara",
+          "category": "Community ",
+          "active": "true",
+          "founder": "Rosaline Wangui",
+          "founder_twitter": "https://x.com/rmurathime"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [17.086558925331857, -22.570341813897013]
+         
+        },
+        "properties": {
+          "name": "EasySats",
+          "description": "A Bitcoin Only initiative on a mission to make Bitcoin easily accessible to everyone.",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2024/03/African-Bitcoiners_Easy-Sats-Logo.webp",
+          "country_code": "na",
+          "location": "Windhoek, Namibia",
+          "link": "https://okinent.org",
+          "twitter": "https://x.com/easysats",
+          "category": "Business",
+          "active": "true",
+          "founder": "OKIN | Nikolai Tjongarero",
+          "founder_twitter": "http://x.com/OKIN_17"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [25.84931323128867, -17.84391229297255]
+         
+        },
+        "properties": {
+          "name": "Bitcoin Victoria Falls",
+          "description": "A Bitcoin Circular Economy in Livingstone, Zambia focused on education, merchant adoption, and financial empowerment.",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2024/06/Bitcoin-Victoria-Falls.jpg",
+          "location": "Livingstone, Zambia",
+          "country_code": "zm",
+          "twitter": "https://x.com/bitcoinvicfalls",
+          "category": "Community ",
+          "active": "true",
+          "founder": "Humphrey Simwinga & Adam Cowperthwait"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-4.015937012789003, 5.311290853810186]
+          
+        },
+        "properties": {
+          "name": "L'Afrique parle Bitcoin",
+          "description": "L'Afrique parle Bitcoin is a francophone podcast that try to change the preconceived ideas that people in our community have about Bitcoin.",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2024/06/LAfrique-Parle-Bitcoin.jpg",
+          "country_code": "ci",
+          "location": "Abidjan, Cote d'Ivoire",
+          "twitter": "https://x.com/Afrique_Bitcoin",
+          "category": "Media",
+          "active": "true",
+          "founder": "Prince Don",
+          "founder_twitter": "https://x.com/PrinceDonK"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [3.3896570962871464, 7.108303992051638]
+          
+        },
+        "properties": {
+          "name": "Luminous Exchange",
+          "description": "The organization is build to promote Bitcoin education across Nigeria by creating Bitcoin awareness on all social media, hosting conference and events to promote Bitcoin adopting.",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2024/06/Luminous-exchange.jpg",
+          "country_code": "ng",
+          "location": "Atan, Ogun state, Nigeria",
+          "twitter": "https://x.com/lumiexc",
+          "category": "Community ",
+          "active": "true",
+          "founder": "Apata Johnson",
+          "founder_twitter": "https://x.com/apataj"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [18.438051, -33.906469]
+          
+        },
+        "properties": {
+          "name": "Tri Bitcoin",
+          "description": "Marrying Bitcoin with the multi sport called triathlon. Brining awareness of Bitcoin while competing in various triathlon events and an IronMan 70.3 in Mossel Bay in Nov this year.",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2024/07/Tri-Bitcoin.jpg",
+          "country_code": "za",
+          "location": "Cape Town, South Africa",
+          "link": "https://linktr.ee/tribitcoin",
+          "twitter": "https://x.com/tri_bitcoinza",
+          "category": "Education",
+          "active": "true",
+          "founder": "Max Ng"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [7.410875, 9.038842]
+          
+        },
+        "properties": {
+          "name": "BitDevs Abuja",
+          "description": "BitDevs is a community for Bitcoin developers or individuals in Bitcoin Development to come together to discuss and participate in technical discussions.",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2024/06/Bitdevs-abuja.jpg",
+          "location": "Abuja, Nigeria",
+          "country_code": "ng",
+          "link": "https://bitdevsabuja.org/",
+          "twitter": "https://x.com/BitDevsAbuja",
+          "category": "Tech Meetup",
+          "active": "true",
+          "founder": "Bitdevs Global"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-0.004642639952045893, 0.006697781727134087]
+        },
+        "properties": {
+          "name": "Btrust Builders",
+          "description": "Btrust Builders is a comprehensive engineering programme designed to train experienced software developers in Africa and the Global South to contribute to open-source Bitcoin and Lightning Development.",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2024/03/African-Bitcoiners_Btrust-builders-logo.jpg",
+          "location": "Africa",
+          "link": "https://builders.btrust.tech/",
+          "twitter": "https://x.com/btrust_builders",
+          "category": "Education",
+          "active": "true"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [36.816192, -1.294759]
+          
+        },
+        "properties": {
+          "name": "BitcoinBabies",
+          "description": "We are a non-profit organization that aims to empower mothers around the world. We take a holistic approach where we address financial empowerment through Bitcoin education, infant nutrition, and most importantly, postpartum mental wellness.",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2024/06/Bitcoin-Babies.jpg",
+          "location": "Nairobi, Kenya",
+          "country_code": "ke",
+          "link": "https://www.bitcoinbabies.com",
+          "twitter": "https://x.com/btcbabies",
+          "category": " Non Profit",
+          "active": "true",
+          "founder": "Naomi Wambui",
+          "founder_twitter": "https://x.com/NgachaNaomi1"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [7.066360455605527, 6.196590357841886]
+          
+        },
+        "properties": {
+          "name": "Bitcoin Pidgin",
+          "description": "We demystify Bitcoin Education into smaller words and educate the rural areas in Nigeria with Pidgin language.",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2024/06/Bitcoin-pidgin.jpg",
+          "location": "Awka, Nigeria",
+          "country_code": "ng",
+          "twitter": "https://x.com/bitcoin_pidgin",
+          "category": "Education",
+          "active": "true",
+          "founder": "Kester Ejikeme",
+          "founder_twitter": "https://x.com/kesterbils"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [20.44178747154048, -34.02650390341895]
+          
+        },
+        "properties": {
+          "name": "Bitcoin Ubuntu",
+          "description": "Bitcoin-only education initiative.",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2023/11/Bitcoin-Ubuntu.png",
+          "country_code": "za",
+          "location": "Swellendam, South Africa",
+          "link": "https://bitcoinubuntu.org",
+          "twitter": "https://x.com/bitcoinubuntu",
+          "category": "Education",
+          "active": "true",
+          "founder": "Glenn Jooste"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [36.817050295709215, -1.3012793061753953]
+          
+        },
+        "properties": {
+          "name": "Dada Devs",
+          "description": "At the heart of Bitcoin adoption lies education, and DadaDevs is actively making this a reality.",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2025/01/Dada-Devs.jpg",
+          "location": "Nairobi, Kenya",
+          "country_code": "ke",
+          "link": "https://www.btcdada.com",
+          "twitter": "https://x.com/DadaDevs",
+          "category": "Education",
+          "active": "true",
+          "founder": "Mercel Lorraine",
+          "founder_twitter": "ttps://x.com/marcelorraine"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [36.840801, -1.286805]
+          
+        },
+        "properties": {
+          "name": "BitDevs Nairobi",
+          "description": "Bitdevs Nairobi is a community of Bitcoin developers and Bitcoin tech enthusiasts from Kenya.",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2024/06/Bitdevs-nairobi.jpg",
+          "country_code": "ke",
+          "location": "Nairobi, Kenya",
+          "link": "https://www.bitdevsnbo.org/",
+          "twitter": "https://x.com/BitDevsNBO",
+          "category": "Tech Meetup",
+          "active": "true",
+          "founder": "Simon Njeru and Jodom Konuko",
+          "founder_twitter": "https://x.com/dzeg5"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [1.2310087741173261, 6.126398823798104]
+          
+        },
+        "properties": {
+          "name": "TOGO BITCOIN COMMUNITY",
+          "description": "togo's first bitcoin training center through Conference, Developer Community,Education and Bitcoin payments for goods",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2024/10/Togo-Bitcoin-Community.jpg",
+          "location": "Togo, Lomé",
+          "country_code": "tg",
+          "twitter": "https://x.com/togobitcoin",
+          "category": "Community",
+          "active": "true",
+          "founder": "AGBETSIASSI KODJO LABORE & Lopez Ahligo",
+          "founder_twitter": "https://x.com/lopezbaz1"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [7.063170863749398, 6.331611598087287]
+          
+        },
+        "properties": {
+          "name": "Bitcoin Anambra",
+          "description": "We're building a Bitcoin circular economy in Anambra State, Nigeria.",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2024/10/Bitcoin-Anambra.jpg",
+          "location": "Anambra State, Nigeria",
+          "country_code": "ng",
+          "twitter": "https://x.com/bitcoinanambra",
+          "category": "Community ",
+          "active": "true",
+          "founder": "Kester Ejikeme",
+          "founder_twitter": "https://x.com/kesterbils"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [38.91998035977294, 15.32418680685645]
+          
+        },
+        "properties": {
+          "name": "BitcoinNakfa",
+          "description": "Bitcoin education",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2024/06/Bitcoin-nakfa.jpg",
+          "country_code": "sd",
+          "location": "Asmara, Eritrea",
+          "twitter": "https://twitter.com/bitcoinnakfa",
+          "category": "Community ",
+          "active": "true",
+          "founder": "Kal Kassa",
+          "founder_twitter": "https://x.com/KalKassa"
+        }
+      },    
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [4.048270, 9.704300]
+          
+        },
+        "properties": {
+          "name": "BitcoinKids",
+          "description": "Bitcoin kids is a Bitcoin platform dedicated to teaching kids about Bitcoin. They produce Bitcoin materials suitable for children and kids, helping to orange pill them young.",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2025/03/bitcoin-kids.png",
+          "location": "Douala, Cameroon",
+          "country_code": "cm",
+          "link": "https://thebitcoinkids.com/",
+          "twitter": "https://twitter.com/KidsBitcoin",
+          "category": "Education",
+          "active": "true",
+          "founder": "Nzonda Fotsing"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [38.75515209251331, 9.006216527415372]
+         
+  
+        },
+        "properties": {
+          "name": "BitcoinBirr",
+          "description": "Free bitcoin education using open source tools and community-led resources.",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2024/06/bitcoin-birr.png",
+          "location": "Addis Ababa, Ethiopia",
+           "country_code": "et",
+          "link": "https://bitcoinbirr.org",
+          "twitter": "https://twitter.com/bitcoinbirr",
+          "category": "Education",
+          "active": "true",
+          "founder": "Kal Kassa",
+          "founder_twitter": "https://x.com/KalKassa"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [32.578839, 0.298427]
+          
+        },
+        "properties": {
+          "name": "META COFFEE",
+          "description": "A coffee brand and business dealing in processing, packing and marketing coffee ☕",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2025/01/Meta-Coffee.jpg",
+          "country_code": "ug",
+          "location": "Kampala, Uganda",
+          "twitter": "https://x.com/MetaCoffeeShop",
+          "category": "Business",
+          "active": "true",
+          "founder": "Samuel Meta"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [28.23093715578754, -25.7487524091699]
+         
+        },
+        "properties": {
+          "name": "Bitcoin Business Network",
+          "description": "The Bitcoin Business Network (BBN) is a dynamic platform that connects businesses and consumers through the power of Bitcoin. Our mission is to grow and support a circular economy where Bitcoin is not only accepted but thrives as a standard means of exchange.",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2024/10/Bitcoin-Business-Network.jpg",
+           "country_code": "za",
+          "location": "Pretoria, South Africa",
+          "twitter": "https://x.com/bbn_21M",
+          "category": "Community ",
+          "active": "true",
+          "founder": "Pieter Kemp",
+          "founder_twitter": "https://x.com/plkemp?s=21"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [28.235615379014515, -25.749254052125046]
+          
+        },
+        "properties": {
+          "name": "Bitcoin For Business",
+          "description": "We help modern business owners understand how Bitcoin can work for you",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2024/10/Bitcoin-For-Business.jpg",
+          "country_code": "za",
+          "location": "Pretoria, South Africa",
+          "link": "https://bitcoinforbusiness.io/",
+          "twitter": "https://x.com/BTC_4_Biz",
+          "category": "Business",
+          "active": "true",
+          "founder": "Gavin Green"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [22.821979064284825, -34.007507185092486]
+         
+        },
+        "properties": {
+          "name": "SimplB",
+          "description": "Simple Bitcoin is a Bitcoin only brokerage, family office and consulting firm in South Africa. We deliver MultiSig Institutional custody for clients. Simplb (Pty) Ltd is a juristic representative of CAEP Asset Managers, FSP #33933.",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2024/07/SimplB.png",
+         "country_code": "za",
+          "location": "Sedgefield, South Africa",
+          "link": "https://www.simplb.com",
+          "twitter": "https://x.com/simplbitcoin",
+          "category": "Education",
+          "active": "true",
+          "founder": "James Caw",
+          "founder_twitter": "https://x.com/jamescaw?s=21"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [38.750179783939664, 9.016682454914358]
+          
+        },
+        "properties": {
+          "name": "QRB Labs",
+          "description": "QRB Labs ICT Solutions PLC, a company established in Addis Abeba, Ethiopia, was founded in 2021 by entrepreneurs of Ethiopian origin. We offer data center services to international clients, focusing on location-agnostic high-energy computations such as Bitcoin mining, and AI model training.",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2024/06/QRB_logo.png",
+          "location": "Ethiopia",
+          "link": "https://www.qrb-labs.com",
+          "country_code": "et",
+          "twitter": "https://x.com/qrb_labs",
+          "category": "Mining",
+          "active": "true",
+          "founder": "Nemo Semret & Tessema Getachew",
+          "founder_twitter": "https://x.com/nemozen"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [17.081045138478338, -22.57461345145458]
+          
+        },
+        "properties": {
+          "name": "Bitcoin Studio",
+          "description": "Bitcoin Studio serves as a music recording space where artists can learn about Bitcoin and its advantages.",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2024/10/Bitcoin-Studio.jpg",
+          "country_code": "na",
+          "location": "Windhoek, Namibia",
+          "twitter": "https://x.com/Bitcoinstuu",
+          "category": "Education",
+          "active": "true",
+          "founder": "Lamek Ndjaba",
+          "founder_twitter": "https://x.com/LamekNdjaba"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-0.005295683214470948, 0.008173421261979506]
+        },
+        "properties": {
+          "name": "Citrusrate",
+          "description": "Citrusrate is a bitcoin price tracker. On citrusrate, users can find real-time bitcoin price in various African currencies. Our plan is to expand and add more features. Currently, we have earn features where users can participate in giveaway to earn free sats, blog to educate users about bitcoin.",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2025/06/Citrusrate-1.png",
+          "location": "Africa Wide",
+          "link": "https://citrusrate.com",
+          "twitter": "https://x.com/malkrite",
+          "category": "Education",
+          "active": "true",
+          "founder": "Balogun Malik",
+          "founder_twitter": "https://x.com/malkrite"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [36.81996816906018, -1.2827249543063266]
+          
+        },
+        "properties": {
+          "name": "Bitcoin Chama",
+          "description": "We are a Rural based Bitcoin community in Rural Kenya and our main goal is to create a self reliant Bitcoin community.",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2024/10/Bitcoin-Chama.jpg",
+          "country_code": "ke",
+          "location": "Nairobi, Kenya",
+          "twitter": "https://x.com/Bitcoinchama",
+          "category": "Education",
+          "active": "true",
+          "founder": "Kelvin Omari",
+          "founder_twitter": "https://x.com/Kelvinomari_"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [37.370587, -3.049452]
+          
+        },
+        "properties": {
+          "name": "CHAPSMART",
+          "description": "Chapsmart disrupts traditional financial services by offering a direct, peer-to-peer Bitcoin exchange using Tanzanian Shillings. This platform simplifies access to Bitcoin, supports educational resources, and promotes Bitcoin projects, making Bitcoin more accessible and fostering financial inclusion for Tanzanian citizens.",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2024/10/Chapsmart.jpg",
+          "country_code": "tz",
+          "location": "Kilimanjaro Tanzania, Tanzania",
+          "twitter": "https://x.com/Chapsmart_tz",
+          "category": "Education",
+          "active": "true",
+          "founder": "Kijana_btc"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [31.019114836097852, -24.37667070021978]
+          
+        },
+        "properties": {
+          "name": "BTC Elephant Fund",
+          "description": "An organisation looking after elephants orphaned or displaced due to human-elephant conflict, giving them a safe space to rehabilitate and integrate into a herd with their own species once again.",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2024/10/Bitcoin-Elephant-Fund.jpg",
+          "country_code": "za",
+          "location": "Hoedspruit, South Africa",
+          "link": "https://herd.org.za/cryptocurrency-donations/",
+          "twitter": "https://x.com/BTCElephantFund",
+          "category": " Non Profit",
+          "active": "true",
+          "founder": "Adine Roode"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [1.212582552152573, 6.1366898010726345]
+         
+        },
+        "properties": {
+          "name": "Bitcoin Togo",
+          "description": "is a community for Bitcoin developers or individuals in Bitcoin Development to come together to discuss and participate in technical discussions.",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2024/10/Togo-Bitcoin-Community.jpg",
+          "country_code": "tg",
+          "location": "Lomé, Togo",
+          "twitter": "https://x.com/togobitcoin",
+          "category": "Community ",
+          "active": "true",
+          "founder": "Chef Lopez "
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-0.172594, 5.614034]
+          
+        },
+        "properties": {
+          "name": "Bitdevs Accra",
+          "description": "BitDevsAccra is a community in Accra, Ghana, for those interested in discussing and participating in the research and development of Bitcoin and related protocols and software.",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2025/03/bitdevs-accra.jpg",
+          "location": "Accra, Ghana",
+          "country_code": "gh",
+          "twitter": "https://x.com/bitdevsAccra",
+          "category": "Tech Meetup",
+          "active": "true",
+          "founder": "Bitdevs Global"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [3.378816357826635, 6.5252002310637165]
+          
+        },
+        "properties": {
+          "name": "Bitcoin Africa Story",
+          "description": "We aim to facilitate the adoption of Bitcoin through Bitcoin Education",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2025/05/Bitcoin-africa-story.jpg",
+          "country_code": "ng",
+          "location": "Lagos, Nigeria",
+          "link": "https://geyser.fund/project/bitcoinafricastory",
+          "twitter": "https://x.com/story_bitcoin",
+          "category": "Media",
+          "active": "true",
+          "founder": "Destiny Smart",
+          "founder_twitter": "https://x.com/Destinysmart_"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-0.182048, 5.622924]
+          
+        },
+        "properties": {
+          "name": "Bitfiasi Initiative",
+          "description": "Bitfiasi Initiative is a nonprofit organization dedicated to providing comprehensive financial education to women in Africa, emphasizing the use and mastery of bitcoin as a means for achieving financial empowerment and independence.",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2024/07/Bitfiasi-Initiative.jpg",
+          "location": "Accra, Ghana",
+          "country_code": "gh",
+          "link": "https://bitfiasi.org",
+          "twitter": "https://x.com/bitfiasi",
+          "category": "Education",
+          "active": "true",
+          "founder": "Gideon Kombian and Lydia Sena Kudowor",
+          "founder_twitter": "https://x.com/FinallyGidkom"
+        }
+      },      
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [30.3723741, -30.8458684]
+          
+        },
+        "properties": {
+          "name": "Bitshack",
+          "description": "Bitshack is a platform dedicated to promoting Bitcoin adoption through hands-on education and community building.",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2025/10/Bitshack-logo.png",
+          "country_code": "za",
+          "location": "Margate, South Africa",
+          "link": "https://x.com/bitshack?s=21",
+          "twitter": "https://x.com/bitshack?s=21",
+          "category": "Community",
+          "active": true
+        }
+      },      
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [7.0134, 4.7774]
+          
+        },
+        "properties": {
+          "name": "BitDevsPH",
+          "description": "BitDevsPH is a community focused on Bitcoin development in the Port Harcourt (or \u201cPH\u201d). We center around research, development, discussions, meetups related to Bitcoin and related protocols (like Lightning).",
+          "country_code": "ng",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2025/10/Bitdevsph-logo.jpg",
+          "location": "Port Harcourt, Nigeria",
+          "link": "https://x.com/bitdevph?s=21",
+          "twitter": "https://x.com/bitdevph?s=21",
+          "category": "Developer Community",
+          "active": true,
+          "founder": "Manuchim Chris",
+          "founder_twitter": "https://x.com/uli_boy1?s=21"
+        }
+      },      
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [8.6753, 9.082]
+          
+        },
+        "properties": {
+          "name": "Tapnob",
+          "description": "Tapnob is a Bitcoin-powered payment platform designed to simplify everyday financial transactions across Africa. We bridge the gap between Bitcoin and local banking systems by enabling instant bank transfers, fast on- and off-ramps, and seamless payments without the complexity of traditional exchanges.",
+          "country_code": "ng",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2025/10/tapnob-logo.jpg",
+          "location": "Nigeria",
+          "link": "https://www.tapnob.com/",
+          "twitter": "https://x.com/tap_nob",
+          "linkedin": "https://www.linkedin.com/company/tapnob/",
+          "instagram": "https://www.instagram.com/tap_nob",
+          "category": "Circular Economy",
+          "active": true,
+          "founder": "Mubarak  Muhammad Aminu",
+          "founder_email": "mubarakaminu340@gmail.com"
+        }
+      },      
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [0.012345, -0.009876]
+        },
+        "properties": {
+          "name": "Gridless Inc",
+          "description": "Gridless uses Bitcoin mining to monetize excess renewable energy and expand rural electrification in Africa",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2025/10/Gridless-Inc-logo.png",
+          "location": "Rural Africa, Africa Wide",
+          "link": "https://gridlesscompute.com/",
+          "twitter": "https://x.com/gridlesscompute?s=21",
+          "category": "Mining",
+          "active": true,
+          "founder": "Janet Maingi",
+          "founder_twitter": "https://x.com/nduku_jay?s=21"
+        }
+      },      
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [36.829, -1.301]
+          
+        },
+        "properties": {
+          "name": "thecore21m",
+          "description": "EcoBitz is dedicated to achieve zero waste in glass, educate merchants who sale drinks and beverages about recycling their glass, then pay them in sats for their recycling efforts. We then resale the glass bottles after sorting and cleaning them for repackaging, making upcycled products like drinking glasses, ash trays and vaces. We are Bitcoin a Bitcoin circular economy and reaching my area recyclers to teach them about Bitcoin and how we can use it in our daily lives.",
+          "country_code": "ke",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2025/10/thecore21m-logo.png",
+          "location": "Kenya, Nairobi",
+          "link": "https://x.com/ecobitz_21m?s=21",
+          "twitter": "https://x.com/ecobitz_21m?s=21",
+          "category": "Circular Economy",
+          "active": true,
+          "founder": "Kevin Makini",
+          "founder_twitter": "https://x.com/kevmakini?s=21"
+        }
+      },      
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [28.2937, -15.3875]
+          
+        },
+        "properties": {
+          "name": "Bantu Bitcoin",
+          "description": "Bantu Bitcoin is a Bitcoin-only education podcast based in rural Zambia, in both English and Bemba, making Bitcoin education and discussions more accessible to local communities.",
+          "country_code": "zm",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2024/06/Bantu-Bitcoin.jpg",
+          "location": "Zambia",
+          "link": "https://BantuBitcoin.github.io/",
+          "twitter": "https://x.com/BantuBitcoin",
+          "nostr": "https://primal.net/p/npub1phtnmz6nu0gef7e4hk9p9789ju4jjpgr9ytac5rewyx9tw5ldzzsfzzl90",
+          "category": "Podcast",
+          "active": true,
+          "founder": "5atoshiNakamoto",
+          "founder_email": "BantuBitcoin@protonmail.com"
+        }
+      },      
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [32.5825, 0.3476]
+          
+        },
+        "properties": {
+          "name": "Bitcoin Innovation Hub",
+          "description": "The Bitcoin Innovation Hub aims to empower individuals, businesses, and communities across the region to harness the transformative potential of Bitcoin. Our focus is to empower as many refugees as possible with skills that enable them to earn, build, innovate, lead, and not just be beneficiaries in their host country.",
+          "country_code": "ug",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2025/10/Bitcoin-Innovation-Hub-logo.png",
+          "location": "Kampala, Uganda",
+          "link": "https://btchubafrica.com",
+          "twitter": "https://x.com/btchubafrica",
+          "category": "Community",
+          "active": true,
+          "founder": "Meron Estefanos, Pauloes Berhe",
+          "founder_email": "pauloes@btchubafrica.com"
+        }
+      },      
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [28.3228, -15.3875]
+          
+        },
+        "properties": {
+          "name": "Bitcoin Banamayo",
+          "description": "An education focused community where we educate women about Bitcoin",
+          "country_code": "zm",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2025/10/Btc_Banamayo-logo.jpeg",
+          "location": "Lusaka, Zambia",
+          "link": "https://x.com/BtcBanamayo",
+          "twitter": "https://x.com/BtcBanamayo",
+          "category": "Community",
+          "active": true,
+          "founder": "Tilo and Tamara Lupili",
+          "founder_twitter": "https://x.com/tilo_nurse",
+          "founder_email": "tilolupili20@gmail.com"
+        }
+      },      
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [29.2284, -1.6792]
+          
+        },
+        "properties": {
+          "name": "Gwensas Mining",
+          "description": "Gwensas Mining is a French-based company specializing in Bitcoin mining and energy valorization. Since 2017, the company has been developing large-scale mining infrastructures worldwide, with projects in France, Kazakhstan, Paraguay, Oman, Congo-Brazzaville, Brazil, and particularly in the Democratic Republic of Congo, within the Virunga National Park.",
+          "country_code": "cd",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2025/10/Gwensas-Mining-logo.png",
+          "location": "Goma, Democratic Republic of Congo",
+          "link": "https://www.gwensas.com",
+          "twitter": "https://x.com/GwensasM",
+          "category": "Mining",
+          "active": true,
+          "founder": "Thomas Charbonnel & Adrien Gombert",
+          "founder_email": "thomas.charbonnel@gwensas.com"
+        }
+      },      
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [18.8500, -34.3833]
+          
+        },
+        "properties": {
+          "name": "Bitcoin Witsand",
+          "description": "Circular economy movement",
+          "country_code": "za",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2025/10/Bitcoin-Witsand-logo.png",
+          "location": "Witsand, South Africa",
+          "link": "https://x.com/BitcoinWitsand",
+          "twitter": "https://x.com/BitcoinWitsand",
+          "category": "Circular Economy",
+          "active": true,
+          "founder": "Edwin",
+          "founder_email": "mrjonesza@gmail.com"
+        }
+      },      
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [8.3188, 4.9852]
+          
+        },
+        "properties": {
+          "name": "Bitcoin Unical",
+          "description": "BITCOINUNICAL is a student-led community at the University of Calabar (UNICAL) focused on Bitcoin education, research, and practical innovation. Our goals include teaching Bitcoin's tech and philosophy, exploring circular economies, and building the first Bitcoin Antminer from scratch on campus.",
+          "country_code": "ng",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2025/10/Bitcoin-Unical.png",
+          "location": "Calabar, Nigeria",
+          "link": "https://x.com/BITCOINUNICAL",
+          "twitter": "https://x.com/BITCOINUNICAL",
+          "category": "Education",
+          "active": true,
+          "founder": "Jeremiah Nwosu & Ekemini Uko",
+          "founder_email": "chibuikemiwuchukwu@gmail.com"
+        }
+      },      
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [38.0106, -1.3667]
+          
+        },
+        "properties": {
+          "name": "Bitcoin Kitui",
+          "description": "Bitcoin Kitui is an education initiative aimed at educating mostly Campus students on Bitcoin alongside building a Bitcoin circular economy at Kwa Vonza Town Kitui where i have a population of over 3000 University students residents for two Universities.",
+          "country_code": "ke",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2025/10/Bitcoin-Kitui-logo.jpg",
+          "location": "Kitui, Kenya",
+          "link": "https://x.com/bitcointrades_",
+          "twitter": "https://x.com/bitcointrades_",
+          "instagram": "https://www.instagram.com/trader_darius",
+          "category": "Circular Economy",
+          "active": true,
+          "founder": "Darius Simon",
+          "founder_email": "chsimonngei@gmail.com"
+        }
+      },      
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [8.5167, 12.0000]
+          
+        },
+        "properties": {
+          "name": "Bitcoin Hausa",
+          "description": "Spreading Bitcoin awareness in Hausa- a language spoken by 250+ million. Empowering our people with Bitcoin knowledge and freedom.",
+          "country_code": "ng",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2025/10/Bitcoin-Hausa-logo.jpg",
+          "location": "Kano, Nigeria",
+          "link": "https://x.com/BitcoinHausa",
+          "twitter": "https://x.com/BitcoinHausa",
+          "category": "Community",
+          "active": true,
+          "founder": "Fucha Web3",
+          "founder_email": "aleeyumuhd4ever2020@gmail.com"
+        }
+      },      
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-1.5197, 12.3714]
+          
+        },
+        "properties": {
+          "name": "Bitcoin Burkina Faso",
+          "description": "Promouvoir l'éducation, l'adoption et l'utilisation responsable du Bitcoin au Burkina Faso pour renforcer l'indépendance financière, l'inclusion économique et la souveraineté numérique.",
+          "country_code": "bf",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2025/10/Bitcoin-Burkina-Faso-logo.jpeg",
+          "location": "Ouagadougou, Burkina Faso",
+          "link": "https://x.com/Bitcoin_Burkina",
+          "twitter": "https://x.com/Bitcoin_Burkina",
+          "category": "Education",
+          "active": true,
+          "founder": "Faris Zafir SAWADOGO",
+          "founder_twitter": "https://x.com/CryptoBillions9",
+          "founder_email": "zafirsawadogo@gmail.com"
+        }
+      },      
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [22.5333, -33.4667]
+          
+        },
+        "properties": {
+          "name": "Bitcoin Karoo",
+          "description": "Bitcoin Circular Economy in the heart of the Karoo",
+          "country_code": "za",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2025/10/Bitcoin-Karoo-logo.jpg",
+          "location": "De Rust, South Africa",
+          "link": "https://x.com/bitcoinkaroo",
+          "twitter": "https://x.com/bitcoinkaroo",
+          "linkedin": "https://www.linkedin.com/company/bitcoin-karoo/",
+          "category": "Community",
+          "active": true,
+          "founder": "Sarah Joubert & Josh Joubert",
+          "founder_email": "bitcoinkaroo@gmail.com"
+        }
+      },      
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [29.9244, -3.4278]
+          
+        },
+        "properties": {
+          "name": "Bitdevs Gitega",
+          "description": "BitDevs Gitega is a community of Bitcoin developers, educators, builders, and technically curious enthusiasts based in Gitega. Inspired by the original BitDevs NYC, we explore the inner workings of Bitcoin through meetups, workshops, study groups, and Socratic Seminars.",
+          "country_code": "bi",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2025/10/Bitdevs-Gitega.jpg",
+          "location": "Gitega, Burundi",
+          "link": "https://bitdevsgtga.org/",
+          "twitter": "https://x.com/bitdevsgtga",
+          "category": "Developer Community",
+          "active": true,
+          "founder": "Belyï",
+          "founder_email": "kbelyinobel@gmail.com"
+        }
+      },      
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [27.9267, -26.2041]
+          
+        },
+        "properties": {
+          "name": "Bitcoin Sisonke",
+          "description": "We are a Bitcoin circular economy in the west of Johannesburg, we are focused on educating individuals and onboarding merchants and provide bitcoin use cases and it's economic benefits.",
+          "country_code": "za",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2025/10/Bitcoin-Sisonke-logo.jpg",
+          "location": "Johannesburg, South Africa",
+          "link": "https://x.com/SisonkeBTC",
+          "twitter": "https://x.com/SisonkeBTC",
+          "category": "Circular Economy",
+          "active": true,
+          "founder": "Retshepile",
+          "founder_email": "Bitcoin21Vuselela@gmail.com"
+        }
+      },      
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-0.1869, 5.6037]
+          
+        },
+        "properties": {
+          "name": "BitSpenda",
+          "description": "BitSpenda is a Bitcoin-powered payment platform that makes it easy for anyone to convert Bitcoin into mobile money and spend it locally. We're focused on bridging the gap between Bitcoin and everyday use in Africa, starting with fast, simple transactions that help people actually use Bitcoin in real life.",
+          "country_code": "gh",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2025/10/BitSpenda-logo.jpg",
+          "location": "Accra, Ghana",
+          "link": "https://bitspenda.app",
+          "twitter": "https://x.com/bitspenda",
+          "category": "Retail",
+          "active": true,
+          "founder": "Bright Kportiklah",
+          "founder_email": "bitspenda@gmail.com"
+        }
+      },      
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-0.1969, 5.6137]
+          
+        },
+        "properties": {
+          "name": "College BTC",
+          "description": "We are a grassroots organization focused on driving Bitcoin adoption, education, and utility within local communities, especially among students and young innovators. Through meetups, workshops, and real-world use cases, we empower individuals to understand and utilize Bitcoin as a tool for financial freedom, economic inclusion, and digital innovation.",
+          "country_code": "gh",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2025/10/College-BTC-logo.jpg",
+          "location": "Accra, Ghana",
+          "link": "https://collegebtc.org",
+          "twitter": "https://x.com/collegebtc",
+          "category": "Developer Community",
+          "active": true,
+          "founder": "Bright Kportiklah",
+          "founder_email": "collegebtcofficials@gmail.com"
+        }
+      },      
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [28.0473, -26.2041]
+          
+        },
+        "properties": {
+          "name": "Altvest Capital",
+          "description": "Altvest Capital is a publicly listed South African investment group and the first African company to adopt a Bitcoin reserve strategy. Inspired by global leaders like MicroStrategy and MetaPlanet, Altvest is now transitioning into a Bitcoin Treasury company.",
+          "country_code": "za",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2025/10/Altvest-Capital-logo.png",
+          "location": "Johannesburg, South Africa",
+          "link": "https://altvestcapital.co.za",
+          "twitter": "https://x.com/CapitalAltvest",
+          "instagram": "https://www.instagram.com/altvestcapital",
+          "category": "Funding",
+          "active": true,
+          "founder": "Warren Wheatley",
+          "founder_email": "tatum@altvestcapital.co.za"
+        }
+      },      
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [32.5831, -25.9692]
+          
+        },
+        "properties": {
+          "name": "Bitcoin Famba",
+          "description": "Comunidade ₿itcoin em Maputo Moçambique 🇲🇿 | Workshops | Meet-ups | Educação",
+          "country_code": "mz",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2025/10/Bitcoin-Famba-logo.jpg",
+          "location": "Maputo, Mozambique",
+          "link": "https://linktr.ee/BitcoinFamba",
+          "twitter": "https://x.com/BitcoinFamba",
+          "category": "Education",
+          "active": true,
+          "founder": "Daniel Taju",
+          "founder_email": "bitcoinfamba@gmail.com"
+        }
+      },      
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [29.2184, -1.6692]
+          
+        },
+        "properties": {
+          "name": "Mwasi na bitcoin",
+          "description": "Mwasi na Bitcoin is a community-led initiative focused on empowering Congolese women through Bitcoin education and grassroots microfinance. The project offers hands-on workshops, practical training on using Bitcoin in daily life, and mentorships to encourage broad and lasting adoption.",
+          "country_code": "cd",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2025/10/Mwasi-na-bitcoin-logo.jpg",
+          "location": "Goma, Democratic Republic of Congo",
+          "link": "https://x.com/mwasi_na49644",
+          "twitter": "https://x.com/mwasi_na49644",
+          "linkedin": "https://www.linkedin.com/company/mwasi-na-bitcoin/",
+          "category": "Education",
+          "active": true,
+          "founder": "Patricia Zamwana",
+          "founder_email": "mwasinabitcoin301@gmail.com"
+        }
+      },      
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [37.0206, -1.1000]
+          
+        },
+        "properties": {
+          "name": "Bitsavers Eduhub",
+          "description": "Bitsavers EduHub is a pan-African initiative powered by the Africa Students For Liberty Liberty Lab, dedicated to bridging the financial literacy gap among youth aged 18–30. Through a curriculum rooted in Bitcoin education and decentralized saving practices like Dollar Cost Averaging (DCA), Bitsavers empowers students and recent graduates to overcome inflation, embrace financial sovereignty, and make informed financial choices.",
+          "country_code": "ke",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2025/10/Bitsavers-Eduhub-logo.jpg",
+          "location": "Juja, Kenya",
+          "link": "https://biteduhub.com",
+          "twitter": "https://x.com/BitEduhub",
+          "instagram": "https://www.instagram.com/biteduhub",
+          "linkedin": "https://www.linkedin.com/company/bitsavers-eduhub/",
+          "telegram": "https://t.me/+l7R9g92ZQcMwNjVk",
+          "category": "Education",
+          "active": true,
+          "founder": "Linda Kariuki",
+          "founder_email": "info@biteduhub.com"
+        }
+      },      
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [32.5731, -25.9592]
+          
+        },
+        "properties": {
+          "name": "Bitcoin Dombo",
+          "description": "Bitcoin Dombo is a Bitcoin Circular Economy initiative under the umbrella of Maputo Skate and Education. We run a skateboarding social project that empowers youth through skate classes and creative activities. Our main goal is to help students stay focused on their studies instead of getting into trouble, gangs, drugs, or alcohol.",
+          "country_code": "mz",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2025/10/Bitcoin-Dombo-logo.jpg",
+          "location": "Maputo, Mozambique",
+          "link": "https://www.maputoskate.org",
+          "twitter": "https://x.com/BitcoinDombo",
+          "category": "Circular Economy",
+          "active": true,
+          "founder": "Francisco Luis Vinho",
+          "founder_email": "luisvinho.skateboard@gmail.com"
+        }
+      },      
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [0.8000, 6.1000]
+          
+        },
+        "properties": {
+          "name": "Bitcoin Aves",
+          "description": "Bitcoin Aves is a Bitcoin-Only and Non-Governmental Organization in a local community called Akatsi located in the Volta Region of Ghana. We are focused on building a sustainable circular economy and promoting grassroots Bitcoin adoption through Bitcoin education and merchant onboarding.",
+          "country_code": "gh",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2025/10/Bitcoin-Aves-logo.jpeg",
+          "location": "Akatsi, Ghana",
+          "link": "https://x.com/bitcoin_aves",
+          "twitter": "https://x.com/bitcoin_aves",
+          "category": "Circular Economy",
+          "active": true,
+          "founder": "Kingsley Lavoe",
+          "founder_email": "couragbe05@gmail.com"
+        }
+      },      
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [39.2083, -6.7924]
+          
+        },
+        "properties": {
+          "name": "BitcoinsafariTz",
+          "description": "BitcoinSafariTz is a grassroots Bitcoin-focused initiative based in Tanzania that aims to educate, empower, and onboard communities into the Bitcoin ecosystem. Founded by Graysatoshi, the project runs programs like Bitcoin Diploma Courses, Bitcoin meetups, and developer training to spread Bitcoin awareness and technical knowledge.",
+          "country_code": "tz",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2025/10/BitcoinsafariTz-logo.jpeg",
+          "location": "Dar es salaam, Tanzania",
+          "link": "https://bitcoinsafaritz.com",
+          "twitter": "https://x.com/BitcoinSafariTz",
+          "category": "Education",
+          "active": true,
+          "founder": "Graysatoshi (Grayson Heaven)",
+          "founder_email": "bitcoinsafaritz@gmail.com"
+        }
+      },      
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [28.3128, -15.3775]
+          
+        },
+        "properties": {
+          "name": "Bitcoin for aliyense Zambia",
+          "description": "Bitcoin for aliyense is an initiative which was created to empower educate and adopt women in Bitcoin education",
+          "country_code": "zm",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2025/10/Bitcoin-for-aliyense-logo.jpg",
+          "location": "Lusaka, Zambia",
+          "link": "https://x.com/BitcoinHer37188",
+          "twitter": "https://x.com/BitcoinHer37188",
+          "category": "Education",
+          "active": true,
+          "founder": "Agness chinkoti",
+          "founder_email": "bitcoinforher418@gmail.com"
+        }
+      },      
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [28.3028, -15.3975]
+          
+        },
+        "properties": {
+          "name": "BitDevs Zambia",
+          "description": "BitDevs Zambia is a community of Bitcoin developers, educators, builders, and technically curious enthusiasts based in Zambia. It explores the inner workings of Bitcoin through meetups, workshops, bootcamps, study groups, and Socratic Seminars.",
+          "country_code": "zm",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2025/10/Bitdevs-Zambia-logo.jpeg",
+          "location": "Lusaka, Zambia",
+          "link": "https://bitdevszambia.org/",
+          "twitter": "https://x.com/BitDevsZambia",
+          "category": "Developer Community",
+          "active": true,
+          "founder": "Emmanuel Mangalashi & Ndesa",
+          "founder_email": "ndesanjo@gmail.com"
+        }
+      },      
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [7.405816, 9.072861]
+          
+        },
+        "properties": {
+          "name": "Shugamine",
+          "description": "Sales of mining rigs, set up and power brokage. We are currently setting up a mining site using flare gas.",
+          "country_code": "ng",
+          "image": "https://bitcoiners.africa/wp-content/uploads/2025/10/Shugamine-logo.jpeg",
+          "location": "Abuja, Nigeria",
+          "link": "https://shugamine.com",
+          "twitter": "https://x.com/shugamines",
+          "category": "Mining",
+          "active": true,
+          "founder": "Okuku udomah",
+          "founder_email": "oudomah372@gmail.com"
+        }
+      }      
+    ]
+  }
+  
