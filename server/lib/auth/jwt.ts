@@ -7,7 +7,7 @@ import { SignJWT, jwtVerify } from 'jose';
 import { AuthenticatedUser } from './middleware';
 
 const JWT_SECRET = new TextEncoder().encode(
-  process.env.JWT_SECRET || 'your-secret-key-change-in-production'
+  process.env.JWT_ACCESS_SECRET || 'your-secret-key-change-in-production'
 );
 
 const JWT_REFRESH_SECRET = new TextEncoder().encode(
@@ -73,7 +73,7 @@ export async function generateRefreshToken(user: AuthenticatedUser): Promise<str
 export async function verifyRefreshToken(token: string): Promise<TokenPayload> {
   try {
     const { payload } = await jwtVerify(token, JWT_REFRESH_SECRET);
-    
+
     if (!payload.sub || !payload.email || !payload.role) {
       throw new Error('Invalid token payload');
     }

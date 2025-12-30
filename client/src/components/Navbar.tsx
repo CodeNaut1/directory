@@ -1,14 +1,24 @@
 import { NavLink } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 import logoUrl from '../assets/African-Bitcoiners-official_logo.png';
 import '../styles/global.css';
 
 export default function Navbar() {
+  const { isLoggedIn, logout } = useAuth();
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+      // Optionally redirect to home
+      window.location.href = '/';
+    } catch (error) {
+      console.error('Logout failed:', error);
+    }
+  };
+
   return (
     <header
       style={{
-        position: 'sticky',
-        top: 0,
-        zIndex: 50,
         backgroundColor: '#FFFFFF',
         borderBottom: '1px solid rgba(229, 231, 235, 0.5)',
         boxShadow: '0 1px 3px rgba(0, 0, 0, 0.04)',
@@ -19,11 +29,11 @@ export default function Navbar() {
         style={{
           maxWidth: 1400,
           margin: '0 auto',
-          padding: '0 2rem',
+          padding: '0.5rem 2rem',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          height: 80,
+          minHeight: 'fit-content',
           position: 'relative',
         }}
       >
@@ -32,8 +42,8 @@ export default function Navbar() {
             src={logoUrl}
             alt="African Bitcoiners"
             style={{
-              height: 50,
-              width: 50,
+              height: 80,
+              width: 80,
               borderRadius: '50%',
               objectFit: 'cover',
             }}
@@ -60,10 +70,10 @@ export default function Navbar() {
             HOME
           </NavLink>
           <NavLink
-            to="/infographic-q1-2026"
+            to="/infographic"
             className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
           >
-            INFOGRAPHIC Q1 2026
+            INFOGRAPHIC
           </NavLink>
           <NavLink
             to="/live-map"
@@ -71,21 +81,36 @@ export default function Navbar() {
           >
             LIVE MAP
           </NavLink>
-        </nav>
-
-        <div style={{ flexShrink: 0, zIndex: 1 }}>
-          <a
-            href="https://bitcoiners.africa"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="nav-link-external"
+          <NavLink
+            to="/african-bitcoiners"
+            className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
           >
-            VISIT AFRICAN BITCOINERS WEBSITE
-          </a>
-        </div>
+            AFRICAN BITCOINERS
+          </NavLink>
+          {isLoggedIn ? (
+            <button
+              onClick={handleLogout}
+              className="nav-link"
+              style={{
+                background: 'none',
+                border: 'none',
+                cursor: 'pointer',
+                padding: 0,
+                font: 'inherit',
+              }}
+            >
+              LOGOUT
+            </button>
+          ) : (
+            <NavLink
+              to="/login"
+              className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
+            >
+              LOGIN
+            </NavLink>
+          )}
+        </nav>
       </div>
     </header>
   );
 }
-
-
