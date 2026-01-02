@@ -83,7 +83,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 18px 40px;
+  padding: 25px 45px;
   background: #FD5A47;
   color: #fff;
   border-top-left-radius: 8px;
@@ -95,25 +95,39 @@
   margin: 0;
   color: white;
   font-size: 24px;
+  font-weight: 700;
   cursor: pointer;
   background: none;
   border: none;
 }
 
 .bitcoin-livemap-popup .close-popup {
-  font-size: 1.5rem;
+  font-size: 24px;
   background: none;
   border: none;
   color: #fff;
   cursor: pointer;
 }
 
+.bitcoin-livemap-popup .close-popup:hover {
+  color: #ddd;
+}
+
 /* CONTENT WRAPPER */
 .bitcoin-livemap-popup .popup-content-wrapper {
-  padding: 20px 30px;
+  max-height: 70vh;
+  overflow-y: auto;
+  padding: 10px 30px 80px;
   display: flex;
   flex-direction: column;
   gap: 20px;
+}
+
+/* POPUP HEADER */
+.popup-header {
+  display: block;
+  align-items: center;
+  padding: 20px;
 }
 
 /* PROJECT TITLE ROW */
@@ -129,12 +143,15 @@
   height: 40px;
   border-radius: 50%;
   object-fit: cover;
+  vertical-align: middle;
+  margin-right: 10px;
 }
 
 .project-name {
-  font-size: 26px;
+  font-size: 28px;
   font-weight: 700;
   color: #344054;
+  letter-spacing: -0.4px;
   margin: 0;
 }
 
@@ -145,18 +162,26 @@
 }
 
 /* DESCRIPTION */
+.project-description {
+  padding: 0 20px;
+}
+
 .project-description p {
   margin: 0;
-  font-size: 0.95rem;
-  line-height: 1.6;
+  font-size: 15px;
+  line-height: 1.7;
+  font-weight: 400;
+  letter-spacing: -0.4px;
   color: #344054;
 }
 
 /* SOCIALS */
 .project-socials {
   display: flex;
+  align-items: center;
   flex-wrap: wrap;
-  gap: 15px;
+  gap: 20px;
+  padding: 30px 20px;
 }
 
 .project-socials>div {
@@ -164,19 +189,38 @@
   align-items: center;
   gap: 8px;
   background: rgba(255, 197, 103, 0.1);
-  padding: 8px 12px;
+  padding: 10px 15px;
   border-radius: 6px;
 }
 
 .project-socials img {
   width: 16px;
   height: 16px;
+  padding-right: 5px;
 }
 
 .project-socials p {
   margin: 0;
-  font-size: 0.85rem;
+  font-size: 13px;
   color: #B54708;
+  line-height: 1.7;
+  font-weight: 500;
+  letter-spacing: -0.4px;
+}
+
+.project-socials a {
+  display: flex;
+  align-items: center;
+  font-size: 13px;
+  color: #f27202;
+  line-height: 1.7;
+  font-weight: 500;
+  letter-spacing: -0.4px;
+  text-decoration: none;
+}
+
+.project-socials a:hover {
+  color: #d95e00;
 }
 
 /* DETAILS GRID */
@@ -184,6 +228,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 15px;
+  padding: 0 20px 20px;
 }
 
 .detail-item {
@@ -192,13 +237,29 @@
   gap: 4px;
 }
 
+/* FOUNDER SECTION */
+.detail-item.founder {
+  margin: 0 20px;
+  background-color: #FFFCF5;
+  padding: 15px 20px;
+  border-radius: 8px;
+}
+
+/* ACTIVITY SECTION */
+.detail-item.activity {
+  margin: 30px 20px 5px;
+  display: inline-block;
+}
+
 .detail-label {
   display: flex;
   align-items: center;
   gap: 6px;
-  font-size: 0.85rem;
+  font-size: 14px;
   font-weight: 500;
   color: #344054;
+  letter-spacing: 0.2px;
+  margin-bottom: 8px;
 }
 
 .detail-label img {
@@ -207,27 +268,36 @@
 }
 
 .detail-value {
-  font-size: 0.95rem;
+  font-size: 15px;
   font-weight: 700;
   color: #344054;
+  letter-spacing: -0.4px;
   margin: 0;
 }
 
 .detail-item a {
-  font-size: 0.85rem;
+  font-size: 13px;
   color: #FD5A47;
   text-decoration: none;
+  font-weight: 500;
+  letter-spacing: -0.4px;
+}
+
+.detail-item a:hover {
+  text-decoration: underline;
 }
 
 /* ACTIVITY BADGES */
 .status-active,
 .status-inactive {
-  display: inline-flex;
+  display: flex;
   align-items: center;
   gap: 6px;
   padding: 5px 10px;
-  border-radius: 6px;
-  font-size: 0.85rem;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 400;
+  margin-bottom: 40px;
 }
 
 .status-active {
@@ -238,6 +308,16 @@
 .status-inactive {
   background: #FEF3F2;
   color: #B42318;
+  margin-bottom: 12px;
+}
+
+.status-active i,
+.status-inactive i {
+  font-size: 16px;
+}
+
+.status-active i {
+  color: #027A48;
 }
 
 /* MAPBOX CONTROLS GROUP */
@@ -255,7 +335,7 @@
   background: #fff !important;
 }
 
-/* RESPONSIVE */
+/* RESPONSIVE - TABLET */
 @media (max-width: 768px) {
   .bitcoin-livemap {
     height: 400px;
@@ -277,19 +357,76 @@
     padding: 8px;
   }
 
+  /* Popup */
+  .bitcoin-livemap-popup {
+    width: 90%;
+    max-width: 600px;
+    max-height: 85vh;
+  }
+
+  .bitcoin-livemap-popup .popup-content-wrapper {
+    max-height: 65vh;
+    padding: 10px 20px 50px;
+  }
+
+  .bitcoin-livemap-popup .popup-header-top {
+    padding: 15px 25px;
+  }
+
+  .bitcoin-livemap-popup .popup-header-top .header-title {
+    font-size: 20px;
+  }
+
+  .bitcoin-livemap-popup .close-popup {
+    font-size: 20px;
+  }
+
+  /* Project Details */
+  .project-name {
+    font-size: 24px;
+  }
+
+  .project-flag {
+    width: 24px;
+    height: 24px;
+  }
+
+  .project-socials {
+    flex-direction: column;
+    gap: 10px;
+    padding: 20px;
+  }
+
+  .project-socials>div {
+    width: 100%;
+    text-align: center;
+  }
+
+  .project-description p {
+    font-size: 14px;
+  }
+
   .project-details {
     grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 0 15px 15px;
   }
 
-  .popup-content-wrapper {
-    padding: 15px 20px;
+  .detail-item.activity {
+    margin: 20px 15px;
+    width: 100%;
   }
 
-  .popup-header-top {
-    padding: 12px 20px;
+  .detail-label {
+    font-size: 13px;
+  }
+
+  .detail-value {
+    font-size: 14px;
   }
 }
 
+/* RESPONSIVE - MOBILE */
 @media (max-width: 480px) {
   .bitcoin-livemap {
     height: 300px;
@@ -301,15 +438,65 @@
     padding: 6px;
   }
 
-  .popup-content-wrapper {
+  /* Popup */
+  .bitcoin-livemap-popup {
+    width: 95%;
+    max-width: 400px;
+    max-height: 80vh;
+  }
+
+  .bitcoin-livemap-popup .popup-content-wrapper {
+    max-height: 60vh;
+    padding: 10px 15px 40px;
+  }
+
+  .bitcoin-livemap-popup .popup-header-top {
     padding: 10px 15px;
   }
 
-  .popup-header-top {
-    font-size: 0.9rem;
+  .bitcoin-livemap-popup .popup-header-top .header-title {
+    font-size: 18px;
   }
 
+  .bitcoin-livemap-popup .close-popup {
+    font-size: 18px;
+  }
+
+  /* Project Details */
   .project-name {
-    font-size: 1.5rem;
+    font-size: 20px;
+  }
+
+  .project-flag {
+    width: 20px;
+    height: 20px;
+  }
+
+  .project-socials {
+    padding: 15px;
+  }
+
+  .project-socials a {
+    font-size: 12px;
+  }
+
+  .project-description p {
+    font-size: 13px;
+  }
+
+  .project-details {
+    padding: 0 10px 10px;
+  }
+
+  .detail-item.activity {
+    margin: 15px 10px;
+  }
+
+  .detail-label {
+    font-size: 12px;
+  }
+
+  .detail-value {
+    font-size: 13px;
   }
 }
