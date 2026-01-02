@@ -14,7 +14,7 @@ import {
   ValidationError,
 } from './errors';
 import { logError, logRequest } from './logger';
-import { getAuthenticatedUser, hasRole, AuthenticatedUser } from '../auth/middleware';
+import { getAuthenticatedUser, hasRole, AuthenticatedUser, getCorsHeaders } from '../auth/middleware';
 
 type Handler = (req: NextRequest, context?: any) => Promise<NextResponse | Response>;
 
@@ -26,6 +26,20 @@ interface HandlerOptions {
 }
 
 /**
+ * Add CORS headers to response
+ */
+function addCorsHeaders(response: NextResponse, req: NextRequest): NextResponse {
+  const origin = req.headers.get('origin');
+  const corsHeaders = getCorsHeaders(origin);
+
+  Object.entries(corsHeaders).forEach(([key, value]) => {
+    response.headers.set(key, value);
+  });
+
+  return response;
+}
+
+/**
  * Wraps an API route handler with error handling, validation, and logging
  */
 export function createApiHandler(
@@ -33,6 +47,15 @@ export function createApiHandler(
   options: HandlerOptions = {}
 ): Handler {
   return async (req: NextRequest, context?: any) => {
+    // Handle OPTIONS preflight request
+    if (req.method === 'OPTIONS') {
+      const origin = req.headers.get('origin');
+      return addCorsHeaders(
+        NextResponse.json({}, { status: 200 }),
+        req
+      );
+    }
+
     const startTime = Date.now();
     const method = req.method;
     const path = req.nextUrl.pathname;
@@ -84,7 +107,8 @@ export function createApiHandler(
       const duration = Date.now() - startTime;
       // logRequest(method, path, response.status, duration);
 
-      return response;
+      // Add CORS headers to response
+      return addCorsHeaders(response as NextResponse, req);
     } catch (error) {
       const duration = Date.now() - startTime;
 
@@ -95,31 +119,40 @@ export function createApiHandler(
           error.errors.map((e) => `${e.path.join('.')}: ${e.message}`).join(', ')
         );
         logError(validationError, { method, path, duration });
-        return NextResponse.json(errorResponse(validationError.message, 'VALIDATION_ERROR'), {
-          status: validationError.statusCode,
-        });
+        return addCorsHeaders(
+          NextResponse.json(errorResponse(validationError.message, 'VALIDATION_ERROR'), {
+            status: validationError.statusCode,
+          }),
+          req
+        );
       }
 
       if (error instanceof AppError) {
         // Known application error
         // logError(error, { method, path, duration, code: error.code });
-        return NextResponse.json(errorResponse(error.message, error.code), {
-          status: error.statusCode,
-        });
+        return addCorsHeaders(
+          NextResponse.json(errorResponse(error.message, error.code), {
+            status: error.statusCode,
+          }),
+          req
+        );
       }
 
       // Unknown error
       const unknownError = error instanceof Error ? error : new Error('Unknown error');
       logError(unknownError, { method, path, duration });
 
-      return NextResponse.json(
-        errorResponse(
-          process.env.NODE_ENV === 'production'
-            ? 'Internal server error'
-            : unknownError.message,
-          'INTERNAL_ERROR'
+      return addCorsHeaders(
+        NextResponse.json(
+          errorResponse(
+            process.env.NODE_ENV === 'production'
+              ? 'Internal server error'
+              : unknownError.message,
+            'INTERNAL_ERROR'
+          ),
+          { status: 500 }
         ),
-        { status: 500 }
+        req
       );
     }
   };
