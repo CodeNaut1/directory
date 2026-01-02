@@ -100,18 +100,18 @@ export default function ViewProject() {
               const props = feature.properties || {};
               const featureSlug = props.name
                 ? props.name
-                    .toLowerCase()
-                    .replace(/\s+/g, '-')
-                    .replace(/[^a-z0-9-]/g, '')
+                  .toLowerCase()
+                  .replace(/\s+/g, '-')
+                  .replace(/[^a-z0-9-]/g, '')
                 : '';
               const featureId = feature.id || '';
-              
+
               return featureSlug === id || featureId === id || featureId.toString() === id;
             });
 
             if (found) {
               const props = found.properties || {};
-              
+
               // Extract city and country from location string (format: "City, Country")
               let city = '';
               let countryName = '';
@@ -120,36 +120,36 @@ export default function ViewProject() {
                 city = locationParts[0] || '';
                 countryName = locationParts[1] || '';
               }
-              
+
               const transformedProject: ProjectData = {
                 name: props.name || 'Unnamed Project',
                 description: props.description,
-                logo: props.image || props.logo, // Use 'image' from locations.json
-                website: props.link || props.website, // Use 'link' from locations.json
-                verified: props.verified || props.active === true || props.active === 'true',
+                logo: (props as any).image || (props as any).logo, // Use 'image' from locations.json (type assertion)
+                website: (props as any).link || (props as any).website, // Use 'link' from locations.json (type assertion)
+                verified: (props as any).verified || props.active === true || props.active === 'true',
                 category: props.category
                   ? {
-                      id: props.category.toLowerCase().replace(/\s+/g, '-'),
-                      name: props.category,
-                      slug: props.category.toLowerCase().replace(/\s+/g, '-'),
-                    }
+                    id: props.category.toLowerCase().replace(/\s+/g, '-'),
+                    name: props.category,
+                    slug: props.category.toLowerCase().replace(/\s+/g, '-'),
+                  }
                   : undefined,
                 country: props.country_code || countryName
                   ? {
-                      id: props.country_code || countryName.toLowerCase().replace(/\s+/g, '-'),
-                      name: countryName || props.country || '',
-                      code: props.country_code || '',
-                    }
+                    id: props.country_code || countryName.toLowerCase().replace(/\s+/g, '-'),
+                    name: countryName || (props as any).country || '',
+                    code: props.country_code || '',
+                  }
                   : undefined,
-                city: city || props.city,
+                city: city || (props as any).city,
                 details: {
-                  contactEmail: props.email || props.founder_email,
+                  contactEmail: (props as any).email || (props as any).founder_email,
                   socialLinks: {
-                    twitter: props.twitter || props.founder_twitter || props.personal_twitter,
-                    linkedin: props.linkedin,
-                    facebook: props.facebook,
-                    instagram: props.instagram,
-                    nostr: props.nostr,
+                    twitter: (props as any).twitter || (props as any).founder_twitter || (props as any).personal_twitter,
+                    linkedin: (props as any).linkedin,
+                    facebook: (props as any).facebook,
+                    instagram: (props as any).instagram,
+                    nostr: (props as any).nostr,
                   },
                   bitcoinOnly: true, // All projects in locations.json are Bitcoin-only
                   lightningNetwork: false, // Not specified in locations.json
