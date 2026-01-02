@@ -4,7 +4,9 @@ node_modules/
 .pnp.js
 .pnpm-store/
 
-# Build outputs
+# Next.js build outputs
+/.next/
+.next/
 /dist
 /build
 
