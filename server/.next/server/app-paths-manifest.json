@@ -1,6 +1,1 @@
-{
-  "/api/projects/my-projects/route": "app/api/projects/my-projects/route.js",
-  "/_not-found/page": "app/_not-found/page.js",
-  "/api/users/me/route": "app/api/users/me/route.js",
-  "/page": "app/page.js"
-}
+{}
