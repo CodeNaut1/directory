@@ -14,8 +14,10 @@ const JWT_REFRESH_SECRET = new TextEncoder().encode(
   process.env.JWT_REFRESH_SECRET || 'your-refresh-secret-key-change-in-production'
 );
 
-const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || '15m';
+const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || '1d';
 const JWT_REFRESH_EXPIRES_IN = process.env.JWT_REFRESH_EXPIRES_IN || '7d';
+
+console.log('🔑 JWT_EXPIRES_IN:', JWT_EXPIRES_IN, '| JWT_REFRESH_EXPIRES_IN:', JWT_REFRESH_EXPIRES_IN);
 
 export interface TokenPayload {
   sub: string; // User ID

@@ -22,6 +22,9 @@ interface CategoryCounts {
 
 export default function HomePage() {
   const navigate = useNavigate();
+
+  const API_URL = import.meta.env.VITE_API_URL || '';
+
   const [categoryCounts, setCategoryCounts] = useState<CategoryCounts>({
     businesses: 300,
     education: 400,
@@ -32,38 +35,30 @@ export default function HomePage() {
   const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
-    const fetchCategoryCounts = async () => {
-      try {
-        const response = await fetch('/api/locations');
-        if (response.ok) {
-          const data = await response.json();
-          if (data.success && data.data?.features) {
-            const counts: CategoryCounts = {
-              businesses: 0,
-              education: 0,
-              circularEconomy: 0,
-              miners: 0,
-              communities: 0,
-            };
+    // Import locations data statically
+    import('../data/locations.json').then((module) => {
+      const data = module.default;
+      if (data?.features) {
+        const counts: CategoryCounts = {
+          businesses: 0,
+          education: 0,
+          circularEconomy: 0,
+          miners: 0,
+          communities: 0,
+        };
 
-            data.data.features.forEach((feature: any) => {
-              const category = (feature.properties?.category || '').toLowerCase();
-              if (category.includes('business')) counts.businesses++;
-              else if (category.includes('education')) counts.education++;
-              else if (category.includes('circular')) counts.circularEconomy++;
-              else if (category.includes('mining') || category.includes('miner')) counts.miners++;
-              else if (category.includes('community')) counts.communities++;
-            });
+        data.features.forEach((feature: any) => {
+          const category = (feature.properties?.category || '').toLowerCase();
+          if (category.includes('business')) counts.businesses++;
+          else if (category.includes('education')) counts.education++;
+          else if (category.includes('circular')) counts.circularEconomy++;
+          else if (category.includes('mining') || category.includes('miner')) counts.miners++;
+          else if (category.includes('community')) counts.communities++;
+        });
 
-            setCategoryCounts(counts);
-          }
-        }
-      } catch (error) {
-        console.error('Error fetching category counts:', error);
+        setCategoryCounts(counts);
       }
-    };
-
-    fetchCategoryCounts();
+    });
   }, []);
 
   const handleSearch = async (e: React.FormEvent) => {
@@ -71,7 +66,7 @@ export default function HomePage() {
     if (!searchQuery.trim()) return;
 
     try {
-      const response = await fetch('/api/locations');
+      const response = await fetch(`${API_URL}/api/locations`);
       if (response.ok) {
         const data = await response.json();
         if (data.success && data.data?.features) {

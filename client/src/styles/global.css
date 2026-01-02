@@ -292,7 +292,7 @@ button {
 }
 
 .nav-link {
-  font-size: 0.95rem;
+  font-size: 0.85rem;
   font-weight: 500;
   color: #1F2937;
   text-decoration: none;
@@ -311,7 +311,7 @@ button {
 }
 
 .nav-link-external {
-  font-size: 0.95rem;
+  font-size: 0.85rem;
   font-weight: 500;
   color: #1F2937;
   text-decoration: none;
@@ -328,10 +328,10 @@ button {
   .navbar-nav {
     gap: 1.5rem !important;
   }
-  
+
   .nav-link,
   .nav-link-external {
-    font-size: 0.85rem !important;
+    font-size: 0.75rem !important;
   }
 }
 
@@ -340,16 +340,16 @@ button {
     padding: 0 1rem !important;
     height: 70px !important;
   }
-  
+
   .navbar-nav {
     gap: 1rem !important;
   }
-  
+
   .nav-link,
   .nav-link-external {
-    font-size: 0.75rem !important;
+    font-size: 0.65rem !important;
   }
-  
+
   .nav-link-external {
     display: none;
   }
@@ -359,10 +359,8 @@ button {
   .navbar-nav {
     gap: 0.75rem !important;
   }
-  
+
   .nav-link {
-    font-size: 0.7rem !important;
+    font-size: 0.6rem !important;
   }
 }
-
-

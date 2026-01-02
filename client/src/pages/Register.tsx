@@ -1,4 +1,4 @@
-import { useState, FormEvent } from 'react';
+import { useState, useEffect, FormEvent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 
@@ -56,6 +56,11 @@ export default function RegisterPage() {
       setLoading(false);
     }
   };
+
+  // Set document title
+  useEffect(() => {
+    document.title = "Register - African Bitcoin Directory";
+  }, []);
 
   return (
     <section className="auth-page app-main">

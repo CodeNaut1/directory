@@ -11,6 +11,19 @@ import { AuthenticatedUser } from '@/lib/auth/middleware';
 // @ts-ignore - slugify doesn't have types
 import slugify from 'slugify';
 
+
+/**
+ * Helper function to Check if project update data has actual changes
+ */
+function hasActualChanges(updateData: any): boolean {
+  // Check if any meaningful fields are being updated
+  const meaningfulFields = [
+    'name', 'description', 'website', 'countryId', 'categoryId',
+    'city', 'address', 'logo', 'coverImage', 'tags', 'details'
+  ];
+  return meaningfulFields.some(field => updateData[field] !== undefined);
+}
+
 /**
  * Generate a unique slug from name
  */
@@ -169,6 +182,34 @@ export async function listProjects(query: ProjectListQuery) {
 }
 
 /**
+ * Get all projects for a specific user (including unpublished)
+ * Used for user dashboard
+ */
+export async function getUserProjects(userId: string) {
+  const projects = await prisma.project.findMany({
+    where: {
+      userId,
+    },
+    orderBy: {
+      createdAt: 'desc',
+    },
+    select: {
+      id: true,
+      name: true,
+      slug: true,
+      published: true,
+      verified: true,
+      featured: true,
+      updatedAt: true,
+      createdAt: true,
+    },
+  });
+
+  return projects;
+}
+
+
+/**
  * Get project by ID or slug
  */
 export async function getProjectById(idOrSlug: string) {
@@ -325,7 +366,7 @@ export async function updateProject(
 
   // Build update data
   const updateData: any = {};
-  
+
   if (input.name) {
     updateData.name = input.name;
     updateData.slug = slug;
@@ -362,7 +403,7 @@ export async function updateProject(
       })),
     };
   }
-  
+
   if (input.details) {
     const detailsData: any = {
       create: {
@@ -382,7 +423,7 @@ export async function updateProject(
       },
       update: {},
     };
-    
+
     if (input.details.longDescription !== undefined) {
       detailsData.update.longDescription = input.details.longDescription || null;
     }
@@ -416,12 +457,18 @@ export async function updateProject(
     if (input.details.metaDescription !== undefined) {
       detailsData.update.metaDescription = input.details.metaDescription || null;
     }
-    
+
     updateData.details = {
       upsert: detailsData,
     };
   }
-  
+
+  // Only unpublish project if there are actual changes (requires re-review)
+  if (hasActualChanges(updateData)) {
+    updateData.published = false;
+    updateData.publishedAt = null;
+  }
+
   // Update project
   const updated = await prisma.project.update({
     where: { id: projectId },

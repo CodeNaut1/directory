@@ -1,24 +1,16 @@
 /**
  * Logging utilities
- * Uses Pino for request logging and Winston for system logs
+ * Uses Pino for request logging
  */
 
 import pino from 'pino';
 
 // Pino logger for request/response logging
+// IMPORTANT: Removed pino-pretty transport to avoid worker thread crashes in Next.js
 export const requestLogger = pino({
   level: process.env.LOG_LEVEL || 'info',
-  transport:
-    process.env.NODE_ENV === 'development'
-      ? {
-          target: 'pino-pretty',
-          options: {
-            colorize: true,
-            translateTime: 'HH:MM:ss Z',
-            ignore: 'pid,hostname',
-          },
-        }
-      : undefined,
+  // Removed transport to fix "Cannot find module worker.js" error
+  // Use basic pino output instead
   base: {
     env: process.env.NODE_ENV,
   },
@@ -58,4 +50,3 @@ export function logError(error: Error, context?: Record<string, unknown>) {
     error.message
   );
 }
-

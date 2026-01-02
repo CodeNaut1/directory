@@ -7,68 +7,35 @@ async function main() {
 
   // Seed Categories
   console.log('📁 Seeding categories...');
-  const categories = await Promise.all([
-    prisma.category.upsert({
-      where: { slug: 'exchange' },
-      update: {},
-      create: {
-        name: 'Exchange',
-        slug: 'exchange',
-        description: 'Bitcoin exchanges and trading platforms',
-        order: 1,
-      },
-    }),
-    prisma.category.upsert({
-      where: { slug: 'wallet' },
-      update: {},
-      create: {
-        name: 'Wallet',
-        slug: 'wallet',
-        description: 'Bitcoin wallets and custody solutions',
-        order: 2,
-      },
-    }),
-    prisma.category.upsert({
-      where: { slug: 'merchant' },
-      update: {},
-      create: {
-        name: 'Merchant Services',
-        slug: 'merchant',
-        description: 'Payment processors and merchant solutions',
-        order: 3,
-      },
-    }),
-    prisma.category.upsert({
-      where: { slug: 'education' },
-      update: {},
-      create: {
-        name: 'Education',
-        slug: 'education',
-        description: 'Educational platforms and resources',
-        order: 4,
-      },
-    }),
-    prisma.category.upsert({
-      where: { slug: 'community' },
-      update: {},
-      create: {
-        name: 'Community',
-        slug: 'community',
-        description: 'Community organizations and meetups',
-        order: 5,
-      },
-    }),
-    prisma.category.upsert({
-      where: { slug: 'developer' },
-      update: {},
-      create: {
-        name: 'Developer Tools',
-        slug: 'developer',
-        description: 'Development tools and infrastructure',
-        order: 6,
-      },
-    }),
-  ]);
+  const categoriesData = [
+    { name: 'Business', slug: 'business', description: 'Bitcoin businesses and enterprises', order: 1 },
+    { name: 'Education', slug: 'education', description: 'Educational platforms and resources', order: 2 },
+    { name: 'Circular Economy', slug: 'circular-economy', description: 'Circular economy projects', order: 3 },
+    { name: 'Mining', slug: 'mining', description: 'Bitcoin mining operations', order: 4 },
+    { name: 'Community', slug: 'community', description: 'Community organizations and meetups', order: 5 },
+    { name: 'Retail', slug: 'retail', description: 'Retail and e-commerce', order: 6 },
+    { name: 'Non Profit', slug: 'non-profit', description: 'Non-profit organizations', order: 7 },
+    { name: 'Hodl', slug: 'hodl', description: 'Bitcoin holders and savings', order: 8 },
+    { name: 'Funding', slug: 'funding', description: 'Funding and investment', order: 9 },
+    { name: 'Conference', slug: 'conference', description: 'Bitcoin conferences and events', order: 10 },
+    { name: 'Media', slug: 'media', description: 'Media and content creation', order: 11 },
+    { name: 'Tech Meetup', slug: 'tech-meetup', description: 'Technical meetups and workshops', order: 12 },
+    { name: 'Regular Meetup', slug: 'regular-meetup', description: 'Regular community meetups', order: 13 },
+    { name: 'Developer Community', slug: 'developer-community', description: 'Developer communities and tools', order: 14 },
+    { name: 'Tourism', slug: 'tourism', description: 'Tourism and travel services', order: 15 },
+    { name: 'Exchange', slug: 'exchange', description: 'Bitcoin exchanges and trading platforms', order: 16 },
+    { name: 'Wallet', slug: 'wallet', description: 'Bitcoin wallets and custody solutions', order: 17 },
+  ];
+
+  const categories = await Promise.all(
+    categoriesData.map((cat) =>
+      prisma.category.upsert({
+        where: { slug: cat.slug },
+        update: {},
+        create: cat,
+      })
+    )
+  );
 
   console.log(`✅ Created ${categories.length} categories`);
 
@@ -179,22 +146,29 @@ async function main() {
 
   console.log(`✅ Created ${tags.length} tags`);
 
-  // Seed Admin User
-  console.log('👤 Seeding admin user...');
-  const adminUser = await prisma.user.upsert({
-    where: { email: 'megasley@freerouting.africa' },
-    update: {},
-    create: {
-      email: 'megasley@freerouting.africa',
-      name: 'Admin User',
-      role: 'admin',
-      // Note: In production, use a secure password hash
-      // For seed, you should set this via environment variable
-      passwordHash: '$2a$10$dummy.hash.for.seed.only.change.in.production',
-    },
-  });
+  // Mark existing users as admins (don't create new accounts)
+  console.log('👤 Updating admin users...');
+  const adminEmails = process.env.ADMIN_EMAIL?.split(',').map(email => email.trim()).filter(Boolean) || [];
 
-  console.log(`✅ Created admin user: ${adminUser.email}`);
+  if (adminEmails.length > 0) {
+    let updatedCount = 0;
+    for (const email of adminEmails) {
+      const existingUser = await prisma.user.findUnique({ where: { email } });
+      if (existingUser) {
+        await prisma.user.update({
+          where: { email },
+          data: { role: 'admin' },
+        });
+        updatedCount++;
+        console.log(`✅ Updated ${email} to admin`);
+      } else {
+        console.log(`⚠️  User ${email} not found - they need to register first`);
+      }
+    }
+    console.log(`✅ Updated ${updatedCount} users to admin role`);
+  } else {
+    console.log('⚠️  No admin emails found in ADMIN_EMAIL env variable');
+  }
 
   console.log('🎉 Database seed completed successfully!');
 }
@@ -207,4 +181,3 @@ main()
   .finally(async () => {
     await prisma.$disconnect();
   });
-

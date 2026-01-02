@@ -42,13 +42,18 @@ export async function registerUser(input: RegisterInput): Promise<AuthResponse> 
   // Hash password
   const passwordHash = await hashPassword(input.password);
 
+  // Check if user is an admin based on ADMIN_EMAIL env variable
+  const adminEmails = process.env.ADMIN_EMAIL?.split(',').map(email => email.trim().toLowerCase()).filter(Boolean) || [];
+  const isAdmin = adminEmails.includes(input.email.toLowerCase());
+  const userRole = isAdmin ? 'admin' : 'user';
+
   // Create user
   const user = await prisma.user.create({
     data: {
       email: input.email,
       passwordHash,
       name: input.name,
-      role: 'user', // Default role
+      role: userRole,
     },
     select: {
       id: true,
@@ -136,4 +141,3 @@ export async function loginUser(input: LoginInput): Promise<AuthResponse> {
     refreshToken,
   };
 }
-

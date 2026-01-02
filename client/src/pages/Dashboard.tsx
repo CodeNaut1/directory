@@ -1,34 +1,32 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { authenticatedFetch, getCurrentUser } from '../utils/api';
+import { useAuth } from '../contexts/AuthContext';
 
 interface Project {
   id: string;
   name: string;
-  status: 'verified' | 'under_review' | 'needs_update';
-  latestUpdate: string | null;
+  published: boolean;
+  verified: boolean;
+  updatedAt: string;
 }
 
-interface User {
-  id: string;
-  email: string;
-  name?: string;
-  projectName?: string;
-}
+type ProjectStatus = 'verified' | 'under_review' | 'needs_update';
 
 export default function Dashboard() {
   const navigate = useNavigate();
-  const [user, setUser] = useState<User | null>(null);
+  const { user: authUser } = useAuth();
+
+  const API_URL = import.meta.env.VITE_API_URL || '';
+
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  
+
   const [activeTab, setActiveTab] = useState<'projects' | 'account'>('projects');
   const [emailForm, setEmailForm] = useState({ newEmail: '', password: '' });
-  const [passwordForm, setPasswordForm] = useState({ 
-    currentPassword: '', 
-    newPassword: '', 
-    confirmPassword: '' 
+  const [passwordForm, setPasswordForm] = useState({
+    currentPassword: '',
+    newPassword: '',
+    confirmPassword: ''
   });
   const [emailError, setEmailError] = useState<string | null>(null);
   const [passwordError, setPasswordError] = useState<string | null>(null);
@@ -37,22 +35,47 @@ export default function Dashboard() {
   const [isUpdatingEmail, setIsUpdatingEmail] = useState(false);
   const [isUpdatingPassword, setIsUpdatingPassword] = useState(false);
 
+  // Derive status from database fields
+  const getProjectStatus = (project: Project): ProjectStatus => {
+    if (project.published && project.verified) {
+      return 'verified';
+    } else if (!project.published) {
+      return 'under_review';
+    } else {
+      return 'verified'; // Published but not verified yet
+    }
+  };
+
+  // Extract first name from full name
+  const getFirstName = (fullName: string | null | undefined): string => {
+    if (!fullName) return 'User';
+    const firstName = fullName.trim().split(' ')[0];
+    return firstName || 'User';
+  };
+
+  const displayName = getFirstName(authUser?.name);
+
+  // Set document title
   useEffect(() => {
-    const fetchUserData = async () => {
+    document.title = "Dashboard - African Bitcoin Directory";
+  }, []);
+
+  // Fetch projects
+  useEffect(() => {
+    const fetchProjects = async () => {
       try {
-        const userData = await getCurrentUser();
-        if (userData) {
-          setUser({
-            id: userData.id,
-            email: userData.email,
-            name: userData.name || userData.projectName || userData.email.split('@')[0],
-            projectName: userData.projectName,
-          });
-        } else {
-          setError('Failed to load user data');
+        const token = localStorage.getItem('access_token');
+        if (!token) {
+          setLoading(false);
+          return;
         }
 
-        const response = await authenticatedFetch('/api/user/projects');
+        const response = await fetch(`${API_URL}/api/projects/my-projects`, {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+          },
+        });
+
         if (response.ok) {
           const data = await response.json();
           if (data.success && data.data) {
@@ -64,17 +87,17 @@ export default function Dashboard() {
           setProjects([]);
         }
       } catch (error) {
-        console.error('Error fetching user data:', error);
-        setError('Failed to load dashboard data');
+        console.error('Error fetching projects:', error);
+        setProjects([]);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchUserData();
+    fetchProjects();
   }, []);
 
-  const getStatusBadge = (status: Project['status']) => {
+  const getStatusBadge = (status: ProjectStatus) => {
     switch (status) {
       case 'verified':
         return {
@@ -124,6 +147,11 @@ export default function Dashboard() {
     }
   };
 
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+  };
+
   const handleEmailChange = async (e: React.FormEvent) => {
     e.preventDefault();
     setEmailError(null);
@@ -149,8 +177,13 @@ export default function Dashboard() {
     }
 
     try {
-      const response = await authenticatedFetch('/api/auth/update-email', {
+      const token = localStorage.getItem('access_token');
+      const response = await fetch(`${API_URL}/api/auth/update-email`, {
         method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
         body: JSON.stringify({
           newEmail: emailForm.newEmail,
           password: emailForm.password,
@@ -158,16 +191,12 @@ export default function Dashboard() {
       });
 
       if (response.ok) {
-        const data = await response.json();
         setEmailSuccess(true);
         setEmailForm({ newEmail: '', password: '' });
-        if (user) {
-          setUser({ ...user, email: emailForm.newEmail });
-        }
         setTimeout(() => setEmailSuccess(false), 3000);
       } else {
         const data = await response.json();
-        setEmailError(data.error || 'Failed to update email. Please try again.');
+        setEmailError(data.error?.message || data.error || 'Failed to update email. Please try again.');
       }
     } catch (error) {
       console.error('Error updating email:', error);
@@ -208,8 +237,13 @@ export default function Dashboard() {
     }
 
     try {
-      const response = await authenticatedFetch('/api/auth/update-password', {
+      const token = localStorage.getItem('access_token');
+      const response = await fetch(`${API_URL}/api/auth/update-password`, {
         method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
         body: JSON.stringify({
           currentPassword: passwordForm.currentPassword,
           newPassword: passwordForm.newPassword,
@@ -222,7 +256,7 @@ export default function Dashboard() {
         setTimeout(() => setPasswordSuccess(false), 3000);
       } else {
         const data = await response.json();
-        setPasswordError(data.error || 'Failed to update password. Please check your current password.');
+        setPasswordError(data.error?.message || data.error || 'Failed to update password. Please check your current password.');
       }
     } catch (error) {
       console.error('Error updating password:', error);
@@ -232,7 +266,7 @@ export default function Dashboard() {
     }
   };
 
-  const getActionButton = (status: Project['status'], projectId: string) => {
+  const getActionButton = (status: ProjectStatus, projectId: string) => {
     switch (status) {
       case 'verified':
         return (
@@ -264,7 +298,7 @@ export default function Dashboard() {
       case 'under_review':
         return (
           <button
-            onClick={() => navigate(`/view-submission/${projectId}`)}
+            onClick={() => navigate(`/project/${projectId}`)}
             style={{
               padding: '0.5rem 1rem',
               background: '#FFFFFF',
@@ -338,7 +372,7 @@ export default function Dashboard() {
                 margin: '0 0 0.5rem 0',
               }}
             >
-              Welcome Back, {user?.name || 'User'}
+              Welcome Back, {displayName}
             </h1>
             <p
               style={{
@@ -355,7 +389,7 @@ export default function Dashboard() {
           </div>
           {activeTab === 'projects' && (
             <Link
-              to="/list-project"
+              to="/create-project"
               style={{
                 display: 'inline-flex',
                 alignItems: 'center',
@@ -433,184 +467,167 @@ export default function Dashboard() {
               boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
             }}
           >
-          {loading ? (
-            <div style={{ textAlign: 'center', padding: '3rem' }}>
-              <p style={{ color: '#4B5563' }}>Loading projects...</p>
-            </div>
-          ) : error ? (
-            <div style={{ textAlign: 'center', padding: '3rem' }}>
-              <p style={{ color: '#B42318', marginBottom: '1rem' }}>{error}</p>
-              <button
-                onClick={() => window.location.reload()}
+            {loading ? (
+              <div style={{ textAlign: 'center', padding: '3rem' }}>
+                <p style={{ color: '#4B5563' }}>Loading projects...</p>
+              </div>
+            ) : projects.length === 0 ? (
+              <div style={{ textAlign: 'center', padding: '3rem' }}>
+                <p style={{ color: '#4B5563', marginBottom: '1rem' }}>
+                  You haven't submitted any projects yet.
+                </p>
+                <Link
+                  to="/create-project"
+                  style={{
+                    display: 'inline-block',
+                    padding: '0.75rem 1.5rem',
+                    background: '#FD5A47',
+                    color: '#FFFFFF',
+                    borderRadius: '8px',
+                    fontSize: '0.9375rem',
+                    fontWeight: 600,
+                    textDecoration: 'none',
+                  }}
+                >
+                  Submit Your First Project
+                </Link>
+              </div>
+            ) : (
+              <table
                 style={{
-                  padding: '0.75rem 1.5rem',
-                  background: '#FD5A47',
-                  color: '#FFFFFF',
-                  border: 'none',
-                  borderRadius: '8px',
-                  fontSize: '0.9375rem',
-                  fontWeight: 600,
-                  cursor: 'pointer',
+                  width: '100%',
+                  borderCollapse: 'collapse',
                 }}
               >
-                Retry
-              </button>
-            </div>
-          ) : projects.length === 0 ? (
-            <div style={{ textAlign: 'center', padding: '3rem' }}>
-              <p style={{ color: '#4B5563', marginBottom: '1rem' }}>
-                You haven't submitted any projects yet.
-              </p>
-              <Link
-                to="/list-project"
-                style={{
-                  display: 'inline-block',
-                  padding: '0.75rem 1.5rem',
-                  background: '#FD5A47',
-                  color: '#FFFFFF',
-                  borderRadius: '8px',
-                  fontSize: '0.9375rem',
-                  fontWeight: 600,
-                  textDecoration: 'none',
-                }}
-              >
-                Submit Your First Project
-              </Link>
-            </div>
-          ) : (
-            <table
-              style={{
-                width: '100%',
-                borderCollapse: 'collapse',
-              }}
-            >
-              <thead>
-                <tr>
-                  <th
-                    style={{
-                      textAlign: 'left',
-                      padding: '0.75rem 1rem',
-                      fontSize: '0.875rem',
-                      fontWeight: 600,
-                      color: '#6B7280',
-                      textTransform: 'uppercase',
-                      letterSpacing: '0.05em',
-                      borderBottom: '1px solid #E5E7EB',
-                    }}
-                  >
-                    Project Name
-                  </th>
-                  <th
-                    style={{
-                      textAlign: 'left',
-                      padding: '0.75rem 1rem',
-                      fontSize: '0.875rem',
-                      fontWeight: 600,
-                      color: '#6B7280',
-                      textTransform: 'uppercase',
-                      letterSpacing: '0.05em',
-                      borderBottom: '1px solid #E5E7EB',
-                    }}
-                  >
-                    Status
-                  </th>
-                  <th
-                    style={{
-                      textAlign: 'left',
-                      padding: '0.75rem 1rem',
-                      fontSize: '0.875rem',
-                      fontWeight: 600,
-                      color: '#6B7280',
-                      textTransform: 'uppercase',
-                      letterSpacing: '0.05em',
-                      borderBottom: '1px solid #E5E7EB',
-                    }}
-                  >
-                    Latest Update
-                  </th>
-                  <th
-                    style={{
-                      textAlign: 'left',
-                      padding: '0.75rem 1rem',
-                      fontSize: '0.875rem',
-                      fontWeight: 600,
-                      color: '#6B7280',
-                      textTransform: 'uppercase',
-                      letterSpacing: '0.05em',
-                      borderBottom: '1px solid #E5E7EB',
-                    }}
-                  >
-                    Action
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {projects.map((project) => {
-                  const statusBadge = getStatusBadge(project.status);
-                  return (
-                    <tr
-                      key={project.id}
+                <thead>
+                  <tr>
+                    <th
                       style={{
-                        borderBottom: '1px solid #F3F4F6',
+                        textAlign: 'left',
+                        padding: '0.75rem 1rem',
+                        fontSize: '0.875rem',
+                        fontWeight: 600,
+                        color: '#6B7280',
+                        textTransform: 'uppercase',
+                        letterSpacing: '0.05em',
+                        borderBottom: '1px solid #E5E7EB',
                       }}
                     >
-                      <td
+                      Project Name
+                    </th>
+                    <th
+                      style={{
+                        textAlign: 'left',
+                        padding: '0.75rem 1rem',
+                        fontSize: '0.875rem',
+                        fontWeight: 600,
+                        color: '#6B7280',
+                        textTransform: 'uppercase',
+                        letterSpacing: '0.05em',
+                        borderBottom: '1px solid #E5E7EB',
+                      }}
+                    >
+                      Status
+                    </th>
+                    <th
+                      style={{
+                        textAlign: 'left',
+                        padding: '0.75rem 1rem',
+                        fontSize: '0.875rem',
+                        fontWeight: 600,
+                        color: '#6B7280',
+                        textTransform: 'uppercase',
+                        letterSpacing: '0.05em',
+                        borderBottom: '1px solid #E5E7EB',
+                      }}
+                    >
+                      Latest Update
+                    </th>
+                    <th
+                      style={{
+                        textAlign: 'left',
+                        padding: '0.75rem 1rem',
+                        fontSize: '0.875rem',
+                        fontWeight: 600,
+                        color: '#6B7280',
+                        textTransform: 'uppercase',
+                        letterSpacing: '0.05em',
+                        borderBottom: '1px solid #E5E7EB',
+                      }}
+                    >
+                      Action
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {projects.map((project) => {
+                    const status = getProjectStatus(project);
+                    const statusBadge = getStatusBadge(status);
+                    return (
+                      <tr
+                        key={project.id}
                         style={{
-                          padding: '1rem',
-                          fontSize: '0.9375rem',
-                          color: '#1F2937',
-                          fontWeight: 500,
+                          borderBottom: '1px solid #F3F4F6',
                         }}
                       >
-                        {project.name}
-                      </td>
-                      <td
-                        style={{
-                          padding: '1rem',
-                        }}
-                      >
-                        <span
+                        <td
                           style={{
-                            display: 'inline-flex',
-                            alignItems: 'center',
-                            gap: '0.375rem',
-                            padding: '0.375rem 0.75rem',
-                            background: statusBadge.background,
-                            color: statusBadge.color,
-                            borderRadius: '9999px',
-                            fontSize: '0.875rem',
-                            fontWeight: 600,
+                            padding: '1rem',
+                            fontSize: '0.9375rem',
+                            color: '#1F2937',
+                            fontWeight: 500,
                           }}
                         >
-                          {statusBadge.icon}
-                          {statusBadge.text}
-                        </span>
-                      </td>
-                      <td
-                        style={{
-                          padding: '1rem',
-                          fontSize: '0.9375rem',
-                          color: '#4B5563',
-                        }}
-                      >
-                        {project.latestUpdate || '-'}
-                      </td>
-                      <td
-                        style={{
-                          padding: '1rem',
-                        }}
-                      >
-                        {getActionButton(project.status, project.id)}
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          )}
+                          {project.name}
+                        </td>
+                        <td
+                          style={{
+                            padding: '1rem',
+                          }}
+                        >
+                          <span
+                            style={{
+                              display: 'inline-flex',
+                              alignItems: 'center',
+                              gap: '0.375rem',
+                              padding: '0.375rem 0.75rem',
+                              background: statusBadge.background,
+                              color: statusBadge.color,
+                              borderRadius: '9999px',
+                              fontSize: '0.875rem',
+                              fontWeight: 600,
+                            }}
+                          >
+                            {statusBadge.icon}
+                            {statusBadge.text}
+                          </span>
+                        </td>
+                        <td
+                          style={{
+                            padding: '1rem',
+                            fontSize: '0.9375rem',
+                            color: '#4B5563',
+                          }}
+                        >
+                          {formatDate(project.updatedAt)}
+                        </td>
+                        <td
+                          style={{
+                            padding: '1rem',
+                          }}
+                        >
+                          {getActionButton(status, project.id)}
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            )}
           </div>
         )}
 
+        {/* Account Settings Tab */}
         {activeTab === 'account' && (
           <div
             style={{
@@ -663,7 +680,7 @@ export default function Dashboard() {
                   <input
                     type="email"
                     id="currentEmail"
-                    value={user?.email || ''}
+                    value={authUser?.email || ''}
                     disabled
                     style={{
                       width: '100%',
@@ -1024,4 +1041,3 @@ export default function Dashboard() {
     </main>
   );
 }
-

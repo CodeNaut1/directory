@@ -18,29 +18,84 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-const API_URL = 'http://localhost:3000/api'; // Your server URL
+const API_URL = 'http://localhost:3000/api';
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [accessToken, setAccessToken] = useState<string | null>(
-    localStorage.getItem('accessToken')
+    localStorage.getItem('access_token')
   );
+
+  // Refresh access token using refresh token
+  const refreshAccessToken = async (): Promise<string | null> => {
+    try {
+      const response = await fetch(`${API_URL}/auth/refresh`, {
+        method: 'POST',
+        credentials: 'include', // Send refresh token cookie
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        if (data.data?.accessToken) {
+          localStorage.setItem('access_token', data.data.accessToken);
+          setAccessToken(data.data.accessToken);
+          return data.data.accessToken;
+        }
+      }
+      return null;
+    } catch (error) {
+      console.error('Token refresh failed:', error);
+      return null;
+    }
+  };
 
   // Check if user is authenticated on mount
   useEffect(() => {
     const checkAuth = async () => {
-      const token = localStorage.getItem('accessToken');
+      let token = localStorage.getItem('access_token');
+
       if (token) {
         try {
-          // TODO: Add a /api/auth/me endpoint to verify token and get user info
-          // For now, we'll just assume token is valid
-          setAccessToken(token);
-          // You might want to decode the JWT to get user info
-          // or call an endpoint to verify
+          // Try to get user data with current token
+          let response = await fetch(`${API_URL}/users/me`, {
+            headers: {
+              'Authorization': `Bearer ${token}`,
+            },
+          });
+
+          // If token expired (401), try to refresh it
+          if (response.status === 401) {
+            token = await refreshAccessToken();
+
+            if (token) {
+              // Retry with new token
+              response = await fetch(`${API_URL}/users/me`, {
+                headers: {
+                  'Authorization': `Bearer ${token}`,
+                },
+              });
+            } else {
+              throw new Error('Token refresh failed');
+            }
+          }
+
+          if (response.ok) {
+            const data = await response.json();
+            if (data.success && data.data) {
+              setUser(data.data);
+              setAccessToken(token);
+            } else {
+              throw new Error('Invalid user data');
+            }
+          } else {
+            throw new Error('Failed to fetch user');
+          }
         } catch (error) {
-          localStorage.removeItem('accessToken');
+          console.error('Auth check failed:', error);
+          localStorage.removeItem('access_token');
           setAccessToken(null);
+          setUser(null);
         }
       }
       setIsLoading(false);
@@ -56,24 +111,27 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         headers: {
           'Content-Type': 'application/json',
         },
-        credentials: 'include', // Important: sends cookies
+        credentials: 'include',
         body: JSON.stringify({ email, password }),
       });
 
-      if (!response.ok) {
-        throw new Error('Login failed');
-      }
-
       const data = await response.json();
 
-      // Store access token
-      localStorage.setItem('accessToken', data.data.accessToken);
+      if (!response.ok) {
+        // Throw specific error from backend (handle both string and object)
+        const errorMessage = typeof data.error === 'string'
+          ? data.error
+          : data.error?.message || 'Login failed';
+        throw new Error(errorMessage);
+      }
+
+      localStorage.setItem('access_token', data.data.accessToken);
       setAccessToken(data.data.accessToken);
 
-      // Store user info if returned
       if (data.data.user) {
         setUser(data.data.user);
       }
+
     } catch (error) {
       console.error('Login error:', error);
       throw error;
@@ -89,8 +147,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     } catch (error) {
       console.error('Logout error:', error);
     } finally {
-      // Clear local state regardless of API call success
-      localStorage.removeItem('accessToken');
+      localStorage.removeItem('access_token');
       setAccessToken(null);
       setUser(null);
     }
@@ -107,17 +164,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         body: JSON.stringify({ name, email, password }),
       });
 
-      if (!response.ok) {
-        throw new Error('Registration failed');
-      }
-
       const data = await response.json();
 
-      // Store access token
-      localStorage.setItem('accessToken', data.data.accessToken);
+      if (!response.ok) {
+        // Throw specific error from backend (handle both string and object)
+        const errorMessage = typeof data.error === 'string'
+          ? data.error
+          : data.error?.message || 'Registration failed';
+        throw new Error(errorMessage);
+      }
+
+      localStorage.setItem('access_token', data.data.accessToken);
       setAccessToken(data.data.accessToken);
 
-      // Store user info if returned
       if (data.data.user) {
         setUser(data.data.user);
       }

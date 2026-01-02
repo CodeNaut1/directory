@@ -82,7 +82,7 @@ export function createApiHandler(
 
       // Log successful request
       const duration = Date.now() - startTime;
-      logRequest(method, path, response.status, duration);
+      // logRequest(method, path, response.status, duration);
 
       return response;
     } catch (error) {
@@ -102,7 +102,7 @@ export function createApiHandler(
 
       if (error instanceof AppError) {
         // Known application error
-        logError(error, { method, path, duration, code: error.code });
+        // logError(error, { method, path, duration, code: error.code });
         return NextResponse.json(errorResponse(error.message, error.code), {
           status: error.statusCode,
         });
@@ -111,7 +111,7 @@ export function createApiHandler(
       // Unknown error
       const unknownError = error instanceof Error ? error : new Error('Unknown error');
       logError(unknownError, { method, path, duration });
-      
+
       return NextResponse.json(
         errorResponse(
           process.env.NODE_ENV === 'production'
@@ -184,4 +184,3 @@ export function createPatchHandler(
 export function createDeleteHandler(handler: Handler, options?: HandlerOptions): Handler {
   return createApiHandler(handler, options);
 }
-

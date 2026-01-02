@@ -1,19 +1,25 @@
-import { useState, FormEvent } from 'react';
+import { useState, useEffect, FormEvent } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 
 export default function LoginPage() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { login } = useAuth();
+  const { login, user } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const from = (location.state as any)?.from?.pathname || '/';
+  const from = (location.state as any)?.from?.pathname || '/dashboard';
 
+  // Set document title
+  useEffect(() => {
+    document.title = "Login - African Bitcoin Directory";
+  }, []);
+
+  // Handle submit
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setError('');
@@ -21,7 +27,15 @@ export default function LoginPage() {
 
     try {
       await login(email, password);
-      navigate(from === '/login' ? '/' : from, { replace: true });
+
+      // Get user data from the login response
+      // The user data is now in the AuthContext after login
+      // We need to wait a tick for the context to update
+      setTimeout(() => {
+        const isAdmin = user?.role === 'admin';
+        const redirectPath = isAdmin ? '/admin' : (from === '/login' ? '/dashboard' : from);
+        navigate(redirectPath, { replace: true });
+      }, 100);
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : 'Authentication failed';
       setError(message);

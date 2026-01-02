@@ -8,7 +8,7 @@ import { jwtVerify } from 'jose';
 import { AuthenticationError } from '../utils/errors';
 
 function getJwtSecret() {
-  const secret = process.env.JWT_SECRET || 'your-secret-key-change-in-production';
+  const secret = process.env.JWT_ACCESS_SECRET || 'your-secret-key-change-in-production';
   if (!secret || secret === 'your-secret-key-change-in-production') {
     console.warn('⚠️  WARNING: Using default JWT_SECRET. Change this in production!');
   }
@@ -36,7 +36,7 @@ export async function getAuthenticatedUser(req: NextRequest): Promise<Authentica
 
   try {
     const { payload } = await jwtVerify(token, getJwtSecret());
-    
+
     // Validate payload structure
     if (!payload.sub || !payload.email || !payload.role) {
       throw new AuthenticationError('Invalid token payload');
@@ -86,11 +86,11 @@ export async function requireRole(
   roles: AuthenticatedUser['role'][]
 ): Promise<AuthenticatedUser> {
   const user = await getAuthenticatedUser(req);
-  
+
   if (!hasRole(user, roles)) {
     throw new AuthenticationError('Insufficient permissions');
   }
-  
+
   return user;
 }
 

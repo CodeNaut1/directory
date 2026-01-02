@@ -1,0 +1,315 @@
+/* Hide Mapbox logo, attribution & bottom-left controls */
+.mapboxgl-ctrl-bottom-left,
+.mapboxgl-ctrl-logo,
+.mapboxgl-ctrl-attrib-inner {
+  display: none !important;
+}
+
+/* CONTAINER & MAP */
+.bitcoin-livemap-container {
+  position: relative;
+  margin: 0;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background: #f8f9fa;
+}
+
+.bitcoin-livemap {
+  width: 100%;
+  height: 600px;
+}
+
+/* CONTROLS */
+.bitcoin-livemap-controls {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 1000;
+}
+
+.bitcoin-livemap-control-btn {
+  padding: 10px;
+  font-size: 12px;
+  font-weight: 500;
+  background: rgba(255, 255, 255, 0.95);
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.bitcoin-livemap-control-btn:hover {
+  background: #fff;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* POPUP OVERLAY */
+.bitcoin-livemap-popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+}
+
+/* POPUP BOX */
+.bitcoin-livemap-popup {
+  position: fixed;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-width: 800px;
+  max-height: 75vh;
+  overflow-y: auto;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  font-family: 'Satoshi Variable', sans-serif;
+  z-index: 10000;
+}
+
+/* HEADER */
+.bitcoin-livemap-popup .popup-header-top {
+  position: sticky;
+  top: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 40px;
+  background: #FD5A47;
+  color: #fff;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  z-index: 1;
+}
+
+.bitcoin-livemap-popup .popup-header-top .header-title {
+  margin: 0;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+
+.bitcoin-livemap-popup .close-popup {
+  font-size: 1.5rem;
+  background: none;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+}
+
+/* CONTENT WRAPPER */
+.bitcoin-livemap-popup .popup-content-wrapper {
+  padding: 20px 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* PROJECT TITLE ROW */
+.project-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.project-logo {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.project-name {
+  font-size: 26px;
+  font-weight: 700;
+  color: #344054;
+  margin: 0;
+}
+
+.project-flag {
+  margin-left: auto;
+  width: 30px;
+  height: 30px;
+}
+
+/* DESCRIPTION */
+.project-description p {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #344054;
+}
+
+/* SOCIALS */
+.project-socials {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.project-socials>div {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 197, 103, 0.1);
+  padding: 8px 12px;
+  border-radius: 6px;
+}
+
+.project-socials img {
+  width: 16px;
+  height: 16px;
+}
+
+.project-socials p {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #B54708;
+}
+
+/* DETAILS GRID */
+.project-details {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+.detail-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.detail-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #344054;
+}
+
+.detail-label img {
+  width: 16px;
+  height: 16px;
+}
+
+.detail-value {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #344054;
+  margin: 0;
+}
+
+.detail-item a {
+  font-size: 0.85rem;
+  color: #FD5A47;
+  text-decoration: none;
+}
+
+/* ACTIVITY BADGES */
+.status-active,
+.status-inactive {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+}
+
+.status-active {
+  background: #ECFDF3;
+  color: #027A48;
+}
+
+.status-inactive {
+  background: #FEF3F2;
+  color: #B42318;
+}
+
+/* MAPBOX CONTROLS GROUP */
+.mapboxgl-ctrl-group {
+  border-radius: 6px !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) !important;
+}
+
+.mapboxgl-ctrl-group>button {
+  background: rgba(255, 255, 255, 0.95) !important;
+  border: none !important;
+}
+
+.mapboxgl-ctrl-group>button:hover {
+  background: #fff !important;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .bitcoin-livemap {
+    height: 400px;
+  }
+
+  .bitcoin-livemap-controls {
+    position: static;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 10px;
+    gap: 6px;
+  }
+
+  .bitcoin-livemap-control-btn {
+    flex: 1;
+    min-width: 100px;
+    font-size: 11px;
+    padding: 8px;
+  }
+
+  .project-details {
+    grid-template-columns: 1fr;
+  }
+
+  .popup-content-wrapper {
+    padding: 15px 20px;
+  }
+
+  .popup-header-top {
+    padding: 12px 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .bitcoin-livemap {
+    height: 300px;
+    border-radius: 4px;
+  }
+
+  .bitcoin-livemap-control-btn {
+    font-size: 10px;
+    padding: 6px;
+  }
+
+  .popup-content-wrapper {
+    padding: 10px 15px;
+  }
+
+  .popup-header-top {
+    font-size: 0.9rem;
+  }
+
+  .project-name {
+    font-size: 1.5rem;
+  }
+}
