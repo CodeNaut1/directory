@@ -5,6 +5,79 @@
   display: none !important;
 }
 
+/* INSTRUCTION MODAL */
+.instruction-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 10001;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 400px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.modal-content p {
+  font-family: 'Satoshi Variable', sans-serif;
+  font-size: 16px;
+  color: #344054;
+  margin: 0 0 20px 0;
+  line-height: 1.5;
+}
+
+.got-it-btn {
+  background-color: #FD5A47;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-family: 'Satoshi Variable', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.got-it-btn:hover {
+  background-color: #f94833;
+}
+
+/* INFOGRAPHIC CONTAINER */
+.infographic-container {
+  position: relative;
+}
+
+/* SVG HOVER EFFECTS */
+.image-mapper-shape {
+  fill: rgba(0, 0, 0, 0);
+  transition: all 0.2s ease;
+}
+
+.image-mapper-shape:hover,
+g:hover .image-mapper-shape,
+g:hover>.image-mapper-shape,
+g:hover>rect.image-mapper-shape,
+g:hover>polygon.image-mapper-shape,
+g:hover>circle.image-mapper-shape {
+  stroke: white !important;
+  fill: #000 !important;
+  stroke-width: 7px !important;
+  opacity: 0.2 !important;
+  cursor: pointer !important;
+}
+
 /* CONTAINER & MAP */
 .bitcoin-livemap-container {
   position: relative;
@@ -139,12 +212,47 @@
 }
 
 .project-logo {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  object-fit: cover;
-  vertical-align: middle;
-  margin-right: 10px;
+  width: 40px !important;
+  height: 40px !important;
+  min-width: 40px !important;
+  min-height: 40px !important;
+  max-width: 40px !important;
+  max-height: 40px !important;
+  border-radius: 50% !important;
+  object-fit: cover !important;
+  vertical-align: middle !important;
+  margin-right: 10px !important;
+  display: inline-block !important;
+}
+
+.infograph-click {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.infograph-click:last-child {
+  border-bottom: none;
+}
+
+.infograph-click img.project-logo {
+  flex-shrink: 0;
+}
+
+.infograph-click a {
+  color: #FD5A47;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.infograph-click a:hover {
+  text-decoration: underline;
 }
 
 .project-name {

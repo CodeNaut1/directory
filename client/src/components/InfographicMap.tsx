@@ -4,6 +4,16 @@ import locationsData from '../data/locations.json';
 import { countryRegions } from '../data/countryRegions';
 import type { LocationFeature } from '../data/locations.types';
 
+// Import all project coordinates (158 individual projects)
+import projectCoords from '../data/all-projects.json';
+
+interface ProjectCoord {
+  id: string;
+  name: string;
+  type: 'rect' | 'polygon' | 'circle';
+  coords: string;
+}
+
 export default function InfographicMap() {
   const [activePopup, setActivePopup] = useState<string | null>(null);
   const [popupData, setPopupData] = useState<any>(null);
@@ -11,12 +21,41 @@ export default function InfographicMap() {
   const navigate = useNavigate();
 
   // Group projects by country code
-  const projectsByCountry = (locationsData.features as LocationFeature[]).reduce((acc, feature) => {
-    const countryCode = feature.properties.country_code?.toLowerCase() || 'global';
-    if (!acc[countryCode]) acc[countryCode] = [];
-    acc[countryCode].push(feature);
-    return acc;
-  }, {} as Record<string, LocationFeature[]>);
+  const projectsByCountry = (locationsData.features as LocationFeature[]).reduce(
+    (acc, feature) => {
+      const countryCode = feature.properties.country_code?.toLowerCase() || 'global';
+      if (!acc[countryCode]) acc[countryCode] = [];
+      acc[countryCode].push(feature);
+      return acc;
+    },
+    {} as Record<string, LocationFeature[]>
+  );
+
+  // Helper to find project by name (fuzzy match)
+  const findProjectByName = (searchName: string): LocationFeature | null => {
+    const normalized = searchName.toLowerCase().trim();
+
+    // Try exact match first
+    let found = (locationsData.features as LocationFeature[]).find(
+      (f) => f.properties.name.toLowerCase() === normalized
+    );
+
+    if (found) return found;
+
+    // Try partial match
+    found = (locationsData.features as LocationFeature[]).find((f) =>
+      f.properties.name.toLowerCase().includes(normalized)
+    );
+
+    if (found) return found;
+
+    // Try reverse (search string contains project name)
+    found = (locationsData.features as LocationFeature[]).find((f) =>
+      normalized.includes(f.properties.name.toLowerCase())
+    );
+
+    return found || null;
+  };
 
   const handleRegionClick = (countryCode: string, countryName: string) => {
     const projects = projectsByCountry[countryCode] || [];
@@ -29,6 +68,19 @@ export default function InfographicMap() {
     setPopupData({ countryName, projects });
     setIsRegionOverview(true);
     setActivePopup(`region-${countryCode}`);
+  };
+
+  const handleIndividualProjectClick = (projectName: string) => {
+    const project = findProjectByName(projectName);
+
+    if (!project) {
+      console.log(`Project not found in locations.json: ${projectName}`);
+      return;
+    }
+
+    setPopupData(project.properties);
+    setIsRegionOverview(false);
+    setActivePopup(`project-${project.properties.name}`);
   };
 
   const handleProjectClick = (project: LocationFeature) => {
@@ -70,8 +122,8 @@ export default function InfographicMap() {
     `;
   };
 
-  // Render SVG shape based on type
-  const renderShape = (region: typeof countryRegions[0], onClick: () => void) => {
+  // Render country region SVG shapes
+  const renderCountryShape = (region: (typeof countryRegions)[0], onClick: () => void) => {
     const baseProps = {
       onClick,
       style: { cursor: 'pointer' },
@@ -100,6 +152,46 @@ export default function InfographicMap() {
       const [cx, cy, r] = region.coords.split(',').map(Number);
       return (
         <g key={region.code} {...baseProps}>
+          <circle cx={cx} cy={cy} r={r} />
+        </g>
+      );
+    }
+
+    return null;
+  };
+
+  // Render individual project SVG shapes
+  const renderProjectShape = (proj: ProjectCoord, idx: number) => {
+    const onClick = () => handleIndividualProjectClick(proj.name);
+
+    const baseProps = {
+      onClick,
+      style: { cursor: 'pointer' },
+      className: 'image-mapper-shape',
+      fill: 'rgba(0,0,0,0)',
+    };
+
+    if (proj.type === 'rect') {
+      const [x, y, width, height] = proj.coords.split(',').map(Number);
+      return (
+        <g key={`${proj.id}-${idx}`} {...baseProps}>
+          <rect x={x} y={y} width={width} height={height} />
+        </g>
+      );
+    }
+
+    if (proj.type === 'polygon') {
+      return (
+        <g key={`${proj.id}-${idx}`} {...baseProps}>
+          <polygon points={proj.coords} />
+        </g>
+      );
+    }
+
+    if (proj.type === 'circle') {
+      const [cx, cy, r] = proj.coords.split(',').map(Number);
+      return (
+        <g key={`${proj.id}-${idx}`} {...baseProps}>
           <circle cx={cx} cy={cy} r={r} />
         </g>
       );
@@ -142,6 +234,7 @@ export default function InfographicMap() {
                       <img
                         src={project.properties.image || 'https://via.placeholder.com/40'}
                         alt={project.properties.name}
+                        className="project-logo"
                       />
                       <a
                         href="#"
@@ -290,13 +383,17 @@ export default function InfographicMap() {
             width="483.36182336182355"
             height="500.4216524216523"
             fill="rgba(0,0,0,0)"
+            className="image-mapper-shape"
           />
         </g>
 
-        {/* Render all country regions */}
+        {/* Render all country regions (23 countries) */}
         {countryRegions.map((region) =>
-          renderShape(region, () => handleRegionClick(region.code, region.name))
+          renderCountryShape(region, () => handleRegionClick(region.code, region.name))
         )}
+
+        {/* Render all individual project shapes (158 projects) */}
+        {(projectCoords as ProjectCoord[]).map((proj, idx) => renderProjectShape(proj, idx))}
       </svg>
     </>
   );
