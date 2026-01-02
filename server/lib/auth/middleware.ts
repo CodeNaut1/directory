@@ -15,6 +15,50 @@ function getJwtSecret() {
   return new TextEncoder().encode(secret);
 }
 
+/**
+ * Get list of allowed origins
+ */
+function getAllowedOrigins(): string[] {
+  const originsEnv = process.env.ALLOWED_ORIGIN || 'http://localhost:5173';
+  const envOrigins = originsEnv.split(',').map(origin => origin.trim()).filter(Boolean);
+
+  // Add your production URLs
+  const productionOrigins = [
+    'https://directory.bitcoiners.africa',
+    'https://directory-client-ozjk.onrender.com'
+  ];
+
+  // Combine and deduplicate
+  return [...new Set([...envOrigins, ...productionOrigins])];
+}
+
+/**
+ * Check if origin is allowed
+ */
+export function isOriginAllowed(origin: string | null): boolean {
+  if (!origin) return false;
+  const allowedOrigins = getAllowedOrigins();
+  return allowedOrigins.includes(origin);
+}
+
+/**
+ * Get CORS headers for response
+ */
+export function getCorsHeaders(origin: string | null): Record<string, string> {
+  const headers: Record<string, string> = {
+    'Access-Control-Allow-Methods': 'GET, POST, PUT, PATCH, DELETE, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+    'Access-Control-Max-Age': '86400',
+  };
+
+  if (origin && isOriginAllowed(origin)) {
+    headers['Access-Control-Allow-Origin'] = origin;
+    headers['Access-Control-Allow-Credentials'] = 'true';
+  }
+
+  return headers;
+}
+
 export interface AuthenticatedUser {
   id: string;
   email: string;
@@ -93,4 +137,3 @@ export async function requireRole(
 
   return user;
 }
-
