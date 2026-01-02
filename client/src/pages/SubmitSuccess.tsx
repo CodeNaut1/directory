@@ -21,17 +21,19 @@ export default function SubmitSuccess() {
         style={{
           background: '#FFFFFF',
           borderRadius: '12px',
-          padding: '3rem',
+          padding: '2rem 1.5rem', // reduced horizontal padding on small screens
           maxWidth: '500px',
           width: '100%',
           textAlign: 'center',
           boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+          boxSizing: 'border-box',
         }}
       >
+        {/* Checkmark Icon - scales down on mobile */}
         <div
           style={{
-            width: '80px',
-            height: '80px',
+            width: 'clamp(64px, 18vw, 80px)',
+            height: 'clamp(64px, 18vw, 80px)',
             borderRadius: '50%',
             background: '#10B981',
             color: '#FFFFFF',
@@ -42,7 +44,7 @@ export default function SubmitSuccess() {
             boxShadow: '0 4px 6px rgba(16, 185, 129, 0.3)',
           }}
         >
-          <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
+          <svg width="55%" height="55%" viewBox="0 0 24 24" fill="none">
             <path
               d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z"
               stroke="currentColor"
@@ -53,9 +55,10 @@ export default function SubmitSuccess() {
           </svg>
         </div>
 
+        {/* Title - responsive font size */}
         <h1
           style={{
-            fontSize: '2rem',
+            fontSize: 'clamp(1.75rem, 6vw, 2rem)',
             fontWeight: 700,
             color: '#1F2937',
             margin: '0 0 1rem 0',
@@ -64,12 +67,15 @@ export default function SubmitSuccess() {
           Project Submitted Successfully
         </h1>
 
+        {/* Description - responsive font & side padding */}
         <p
           style={{
-            fontSize: '1rem',
+            fontSize: 'clamp(0.9375rem, 2.5vw, 1rem)',
             color: '#4B5563',
             lineHeight: 1.6,
-            margin: '0 0 2rem 0',
+            margin: '0 auto 2.5rem',
+            maxWidth: '440px',
+            padding: '0 0.5rem',
           }}
         >
           Your project has been received. Our team will review it to ensure everything meets our
@@ -77,24 +83,30 @@ export default function SubmitSuccess() {
           usually within 2 days.
         </p>
 
+        {/* Buttons - stack vertically on mobile, side-by-side on tablet+ */}
         <div
           style={{
             display: 'flex',
-            gap: '1rem',
+            flexDirection: window.innerWidth <= 640 ? 'column' : 'row',
+            gap: window.innerWidth <= 640 ? '1rem' : '1rem',
             justifyContent: 'center',
+            alignItems: 'center',
+            width: '100%',
           }}
         >
           <Link
             to="/dashboard"
             style={{
-              display: 'inline-block',
-              padding: '0.75rem 1.5rem',
+              display: 'block',
+              width: window.innerWidth <= 640 ? '100%' : 'auto',
+              padding: '0.875rem 1.5rem',
               background: '#FD5A47',
               color: '#FFFFFF',
               borderRadius: '8px',
               fontSize: '0.9375rem',
               fontWeight: 600,
               textDecoration: 'none',
+              textAlign: 'center',
               transition: 'background 0.2s',
             }}
             onMouseEnter={(e) => {
@@ -106,11 +118,13 @@ export default function SubmitSuccess() {
           >
             Go to Dashboard
           </Link>
+
           <Link
             to="/"
             style={{
-              display: 'inline-block',
-              padding: '0.75rem 1.5rem',
+              display: 'block',
+              width: window.innerWidth <= 640 ? '100%' : 'auto',
+              padding: '0.875rem 1.5rem',
               background: '#FFFFFF',
               color: '#1F2937',
               border: '1px solid #D1D5DB',
@@ -118,6 +132,7 @@ export default function SubmitSuccess() {
               fontSize: '0.9375rem',
               fontWeight: 600,
               textDecoration: 'none',
+              textAlign: 'center',
               transition: 'all 0.2s',
             }}
             onMouseEnter={(e) => {
@@ -136,4 +151,3 @@ export default function SubmitSuccess() {
     </div>
   );
 }
-

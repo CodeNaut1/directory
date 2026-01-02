@@ -15,12 +15,10 @@ type ProjectStatus = 'verified' | 'under_review' | 'needs_update';
 export default function Dashboard() {
   const navigate = useNavigate();
   const { user: authUser } = useAuth();
-
   const API_URL = import.meta.env.VITE_API_URL || '';
 
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
-
   const [activeTab, setActiveTab] = useState<'projects' | 'account'>('projects');
   const [emailForm, setEmailForm] = useState({ newEmail: '', password: '' });
   const [passwordForm, setPasswordForm] = useState({
@@ -35,18 +33,16 @@ export default function Dashboard() {
   const [isUpdatingEmail, setIsUpdatingEmail] = useState(false);
   const [isUpdatingPassword, setIsUpdatingPassword] = useState(false);
 
-  // Derive status from database fields
   const getProjectStatus = (project: Project): ProjectStatus => {
     if (project.published && project.verified) {
       return 'verified';
     } else if (!project.published) {
       return 'under_review';
     } else {
-      return 'verified'; // Published but not verified yet
+      return 'verified';
     }
   };
 
-  // Extract first name from full name
   const getFirstName = (fullName: string | null | undefined): string => {
     if (!fullName) return 'User';
     const firstName = fullName.trim().split(' ')[0];
@@ -55,12 +51,10 @@ export default function Dashboard() {
 
   const displayName = getFirstName(authUser?.name);
 
-  // Set document title
   useEffect(() => {
     document.title = "Dashboard - African Bitcoin Directory";
   }, []);
 
-  // Fetch projects
   useEffect(() => {
     const fetchProjects = async () => {
       try {
@@ -353,691 +347,771 @@ export default function Dashboard() {
   };
 
   return (
-    <main className="app-main" style={{ background: '#F5F5F5', minHeight: '100vh', padding: '4rem 1rem' }}>
-      <div className="container" style={{ maxWidth: 1200, margin: '0 auto' }}>
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'flex-start',
-            marginBottom: '2rem',
-          }}
-        >
-          <div>
-            <h1
-              style={{
-                fontSize: '2.5rem',
-                fontWeight: 700,
-                color: '#1F2937',
-                margin: '0 0 0.5rem 0',
-              }}
-            >
-              Welcome Back, {displayName}
-            </h1>
-            <p
-              style={{
-                fontSize: '1rem',
-                color: '#4B5563',
-                lineHeight: 1.6,
-                margin: 0,
-                maxWidth: '600px',
-              }}
-            >
-              Manage your listing, track its performance, and keep your details current for the
-              Bitcoin in Africa directory.
-            </p>
-          </div>
-          {activeTab === 'projects' && (
-            <Link
-              to="/create-project"
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '0.5rem',
-                padding: '0.75rem 1.5rem',
-                background: '#FD5A47',
-                color: '#FFFFFF',
-                borderRadius: '8px',
-                fontSize: '0.9375rem',
-                fontWeight: 600,
-                textDecoration: 'none',
-                transition: 'background 0.2s',
-                whiteSpace: 'nowrap',
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = '#E04835';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = '#FD5A47';
-              }}
-            >
-              Submit New Project
-            </Link>
-          )}
-        </div>
+    <>
+      <style>{`
+        @media (max-width: 1024px) {
+          .dashboard-header {
+            flex-direction: column !important;
+            align-items: flex-start !important;
+            gap: 1rem !important;
+          }
+          .account-settings-grid {
+            grid-template-columns: 1fr !important;
+          }
+        }
 
-        <div
-          style={{
-            display: 'flex',
-            gap: '0.5rem',
-            marginBottom: '2rem',
-            borderBottom: '1px solid #E5E7EB',
-          }}
-        >
-          <button
-            onClick={() => setActiveTab('projects')}
-            style={{
-              padding: '0.75rem 1.5rem',
-              background: 'transparent',
-              border: 'none',
-              borderBottom: activeTab === 'projects' ? '2px solid #FD5A47' : '2px solid transparent',
-              color: activeTab === 'projects' ? '#FD5A47' : '#6B7280',
-              fontSize: '0.9375rem',
-              fontWeight: activeTab === 'projects' ? 600 : 500,
-              cursor: 'pointer',
-              transition: 'all 0.2s',
-            }}
-          >
-            My Projects
-          </button>
-          <button
-            onClick={() => setActiveTab('account')}
-            style={{
-              padding: '0.75rem 1.5rem',
-              background: 'transparent',
-              border: 'none',
-              borderBottom: activeTab === 'account' ? '2px solid #FD5A47' : '2px solid transparent',
-              color: activeTab === 'account' ? '#FD5A47' : '#6B7280',
-              fontSize: '0.9375rem',
-              fontWeight: activeTab === 'account' ? 600 : 500,
-              cursor: 'pointer',
-              transition: 'all 0.2s',
-            }}
-          >
-            Account Settings
-          </button>
-        </div>
+        @media (max-width: 640px) {
+          .projects-table {
+            display: none !important;
+          }
+          .projects-cards {
+            display: block !important;
+          }
+        }
+      `}</style>
 
-        {activeTab === 'projects' && (
+      <main className="app-main" style={{ background: '#F5F5F5', minHeight: '100vh', padding: 'clamp(2rem, 5vw, 4rem) clamp(1rem, 4vw, 1rem)' }}>
+        <div className="container" style={{ maxWidth: 1200, margin: '0 auto' }}>
           <div
+            className="dashboard-header"
             style={{
-              background: '#FFFFFF',
-              borderRadius: '12px',
-              padding: '2rem',
-              boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'flex-start',
+              marginBottom: '2rem',
             }}
           >
-            {loading ? (
-              <div style={{ textAlign: 'center', padding: '3rem' }}>
-                <p style={{ color: '#4B5563' }}>Loading projects...</p>
-              </div>
-            ) : projects.length === 0 ? (
-              <div style={{ textAlign: 'center', padding: '3rem' }}>
-                <p style={{ color: '#4B5563', marginBottom: '1rem' }}>
-                  You haven't submitted any projects yet.
-                </p>
-                <Link
-                  to="/create-project"
-                  style={{
-                    display: 'inline-block',
-                    padding: '0.75rem 1.5rem',
-                    background: '#FD5A47',
-                    color: '#FFFFFF',
-                    borderRadius: '8px',
-                    fontSize: '0.9375rem',
-                    fontWeight: 600,
-                    textDecoration: 'none',
-                  }}
-                >
-                  Submit Your First Project
-                </Link>
-              </div>
-            ) : (
-              <table
+            <div>
+              <h1
                 style={{
-                  width: '100%',
-                  borderCollapse: 'collapse',
+                  fontSize: 'clamp(2rem, 4vw, 2.5rem)',
+                  fontWeight: 700,
+                  color: '#1F2937',
+                  margin: '0 0 0.5rem 0',
                 }}
               >
-                <thead>
-                  <tr>
-                    <th
-                      style={{
-                        textAlign: 'left',
-                        padding: '0.75rem 1rem',
-                        fontSize: '0.875rem',
-                        fontWeight: 600,
-                        color: '#6B7280',
-                        textTransform: 'uppercase',
-                        letterSpacing: '0.05em',
-                        borderBottom: '1px solid #E5E7EB',
-                      }}
-                    >
-                      Project Name
-                    </th>
-                    <th
-                      style={{
-                        textAlign: 'left',
-                        padding: '0.75rem 1rem',
-                        fontSize: '0.875rem',
-                        fontWeight: 600,
-                        color: '#6B7280',
-                        textTransform: 'uppercase',
-                        letterSpacing: '0.05em',
-                        borderBottom: '1px solid #E5E7EB',
-                      }}
-                    >
-                      Status
-                    </th>
-                    <th
-                      style={{
-                        textAlign: 'left',
-                        padding: '0.75rem 1rem',
-                        fontSize: '0.875rem',
-                        fontWeight: 600,
-                        color: '#6B7280',
-                        textTransform: 'uppercase',
-                        letterSpacing: '0.05em',
-                        borderBottom: '1px solid #E5E7EB',
-                      }}
-                    >
-                      Latest Update
-                    </th>
-                    <th
-                      style={{
-                        textAlign: 'left',
-                        padding: '0.75rem 1rem',
-                        fontSize: '0.875rem',
-                        fontWeight: 600,
-                        color: '#6B7280',
-                        textTransform: 'uppercase',
-                        letterSpacing: '0.05em',
-                        borderBottom: '1px solid #E5E7EB',
-                      }}
-                    >
-                      Action
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {projects.map((project) => {
-                    const status = getProjectStatus(project);
-                    const statusBadge = getStatusBadge(status);
-                    return (
-                      <tr
-                        key={project.id}
-                        style={{
-                          borderBottom: '1px solid #F3F4F6',
-                        }}
-                      >
-                        <td
-                          style={{
-                            padding: '1rem',
-                            fontSize: '0.9375rem',
-                            color: '#1F2937',
-                            fontWeight: 500,
-                          }}
-                        >
-                          {project.name}
-                        </td>
-                        <td
-                          style={{
-                            padding: '1rem',
-                          }}
-                        >
-                          <span
-                            style={{
-                              display: 'inline-flex',
-                              alignItems: 'center',
-                              gap: '0.375rem',
-                              padding: '0.375rem 0.75rem',
-                              background: statusBadge.background,
-                              color: statusBadge.color,
-                              borderRadius: '9999px',
-                              fontSize: '0.875rem',
-                              fontWeight: 600,
-                            }}
-                          >
-                            {statusBadge.icon}
-                            {statusBadge.text}
-                          </span>
-                        </td>
-                        <td
-                          style={{
-                            padding: '1rem',
-                            fontSize: '0.9375rem',
-                            color: '#4B5563',
-                          }}
-                        >
-                          {formatDate(project.updatedAt)}
-                        </td>
-                        <td
-                          style={{
-                            padding: '1rem',
-                          }}
-                        >
-                          {getActionButton(status, project.id)}
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
+                Welcome Back, {displayName}
+              </h1>
+              <p
+                style={{
+                  fontSize: 'clamp(0.9rem, 2vw, 1rem)',
+                  color: '#4B5563',
+                  lineHeight: 1.6,
+                  margin: 0,
+                  maxWidth: '600px',
+                }}
+              >
+                Manage your listing, track its performance, and keep your details current for the
+                Bitcoin in Africa directory.
+              </p>
+            </div>
+            {activeTab === 'projects' && (
+              <Link
+                to="/create-project"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.5rem',
+                  padding: '0.75rem 1.5rem',
+                  background: '#FD5A47',
+                  color: '#FFFFFF',
+                  borderRadius: '8px',
+                  fontSize: '0.9375rem',
+                  fontWeight: 600,
+                  textDecoration: 'none',
+                  transition: 'background 0.2s',
+                  whiteSpace: 'nowrap',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = '#E04835';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = '#FD5A47';
+                }}
+              >
+                Submit New Project
+              </Link>
             )}
           </div>
-        )}
 
-        {/* Account Settings Tab */}
-        {activeTab === 'account' && (
           <div
             style={{
-              display: 'grid',
-              gridTemplateColumns: '1fr 1fr',
-              gap: '2rem',
+              display: 'flex',
+              gap: '0.5rem',
+              marginBottom: '2rem',
+              borderBottom: '1px solid #E5E7EB',
+              overflowX: 'auto',
             }}
           >
-            <div
+            <button
+              onClick={() => setActiveTab('projects')}
               style={{
-                background: '#FFFFFF',
-                borderRadius: '12px',
-                padding: '2rem',
-                boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
+                padding: '0.75rem 1.5rem',
+                background: 'transparent',
+                border: 'none',
+                borderBottom: activeTab === 'projects' ? '2px solid #FD5A47' : '2px solid transparent',
+                color: activeTab === 'projects' ? '#FD5A47' : '#6B7280',
+                fontSize: 'clamp(0.85rem, 2vw, 0.9375rem)',
+                fontWeight: activeTab === 'projects' ? 600 : 500,
+                cursor: 'pointer',
+                transition: 'all 0.2s',
+                whiteSpace: 'nowrap',
               }}
             >
-              <h2
-                style={{
-                  fontSize: '1.5rem',
-                  fontWeight: 700,
-                  color: '#1F2937',
-                  margin: '0 0 0.5rem 0',
-                }}
-              >
-                Change Email
-              </h2>
-              <p
-                style={{
-                  fontSize: '0.875rem',
-                  color: '#6B7280',
-                  margin: '0 0 1.5rem 0',
-                }}
-              >
-                Update your email address. You'll need to confirm your password.
-              </p>
-              <form onSubmit={handleEmailChange}>
-                <div style={{ marginBottom: '1rem' }}>
-                  <label
-                    htmlFor="currentEmail"
-                    style={{
-                      display: 'block',
-                      fontSize: '0.875rem',
-                      fontWeight: 600,
-                      color: '#1F2937',
-                      marginBottom: '0.5rem',
-                    }}
-                  >
-                    Current Email
-                  </label>
-                  <input
-                    type="email"
-                    id="currentEmail"
-                    value={authUser?.email || ''}
-                    disabled
-                    style={{
-                      width: '100%',
-                      padding: '0.75rem 1rem',
-                      fontSize: '0.9375rem',
-                      border: '1px solid #D1D5DB',
-                      borderRadius: '8px',
-                      background: '#F9FAFB',
-                      color: '#6B7280',
-                      cursor: 'not-allowed',
-                    }}
-                  />
-                </div>
-                <div style={{ marginBottom: '1rem' }}>
-                  <label
-                    htmlFor="newEmail"
-                    style={{
-                      display: 'block',
-                      fontSize: '0.875rem',
-                      fontWeight: 600,
-                      color: '#1F2937',
-                      marginBottom: '0.5rem',
-                    }}
-                  >
-                    New Email
-                  </label>
-                  <input
-                    type="email"
-                    id="newEmail"
-                    value={emailForm.newEmail}
-                    onChange={(e) => setEmailForm({ ...emailForm, newEmail: e.target.value })}
-                    placeholder="Enter new email address"
-                    required
-                    style={{
-                      width: '100%',
-                      padding: '0.75rem 1rem',
-                      fontSize: '0.9375rem',
-                      border: emailError ? '2px solid #EF4444' : '1px solid #D1D5DB',
-                      borderRadius: '8px',
-                      outline: 'none',
-                      background: '#FFFFFF',
-                      color: '#1F2937',
-                    }}
-                    onFocus={(e) => {
-                      e.currentTarget.style.borderColor = '#FD5A47';
-                    }}
-                    onBlur={(e) => {
-                      e.currentTarget.style.borderColor = emailError ? '#EF4444' : '#D1D5DB';
-                    }}
-                  />
-                </div>
-                <div style={{ marginBottom: '1.5rem' }}>
-                  <label
-                    htmlFor="emailPassword"
-                    style={{
-                      display: 'block',
-                      fontSize: '0.875rem',
-                      fontWeight: 600,
-                      color: '#1F2937',
-                      marginBottom: '0.5rem',
-                    }}
-                  >
-                    Confirm Password
-                  </label>
-                  <input
-                    type="password"
-                    id="emailPassword"
-                    value={emailForm.password}
-                    onChange={(e) => setEmailForm({ ...emailForm, password: e.target.value })}
-                    placeholder="Enter your password"
-                    required
-                    style={{
-                      width: '100%',
-                      padding: '0.75rem 1rem',
-                      fontSize: '0.9375rem',
-                      border: emailError ? '2px solid #EF4444' : '1px solid #D1D5DB',
-                      borderRadius: '8px',
-                      outline: 'none',
-                      background: '#FFFFFF',
-                      color: '#1F2937',
-                    }}
-                    onFocus={(e) => {
-                      e.currentTarget.style.borderColor = '#FD5A47';
-                    }}
-                    onBlur={(e) => {
-                      e.currentTarget.style.borderColor = emailError ? '#EF4444' : '#D1D5DB';
-                    }}
-                  />
-                </div>
-                {emailError && (
-                  <div
-                    style={{
-                      padding: '0.75rem',
-                      background: '#FEF3F2',
-                      color: '#B42318',
-                      borderRadius: '8px',
-                      fontSize: '0.875rem',
-                      marginBottom: '1rem',
-                    }}
-                  >
-                    {emailError}
-                  </div>
-                )}
-                {emailSuccess && (
-                  <div
-                    style={{
-                      padding: '0.75rem',
-                      background: '#ECFDF3',
-                      color: '#027A48',
-                      borderRadius: '8px',
-                      fontSize: '0.875rem',
-                      marginBottom: '1rem',
-                    }}
-                  >
-                    Email updated successfully!
-                  </div>
-                )}
-                <button
-                  type="submit"
-                  disabled={isUpdatingEmail}
-                  style={{
-                    width: '100%',
-                    padding: '0.75rem 1.5rem',
-                    background: isUpdatingEmail ? '#D1D5DB' : '#FD5A47',
-                    color: '#FFFFFF',
-                    border: 'none',
-                    borderRadius: '8px',
-                    fontSize: '0.9375rem',
-                    fontWeight: 600,
-                    cursor: isUpdatingEmail ? 'not-allowed' : 'pointer',
-                    transition: 'background 0.2s',
-                  }}
-                  onMouseEnter={(e) => {
-                    if (!isUpdatingEmail) {
-                      e.currentTarget.style.background = '#E04835';
-                    }
-                  }}
-                  onMouseLeave={(e) => {
-                    if (!isUpdatingEmail) {
-                      e.currentTarget.style.background = '#FD5A47';
-                    }
-                  }}
-                >
-                  {isUpdatingEmail ? 'Updating...' : 'Update Email'}
-                </button>
-              </form>
-            </div>
-
-            <div
+              My Projects
+            </button>
+            <button
+              onClick={() => setActiveTab('account')}
               style={{
-                background: '#FFFFFF',
-                borderRadius: '12px',
-                padding: '2rem',
-                boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
+                padding: '0.75rem 1.5rem',
+                background: 'transparent',
+                border: 'none',
+                borderBottom: activeTab === 'account' ? '2px solid #FD5A47' : '2px solid transparent',
+                color: activeTab === 'account' ? '#FD5A47' : '#6B7280',
+                fontSize: 'clamp(0.85rem, 2vw, 0.9375rem)',
+                fontWeight: activeTab === 'account' ? 600 : 500,
+                cursor: 'pointer',
+                transition: 'all 0.2s',
+                whiteSpace: 'nowrap',
               }}
             >
-              <h2
-                style={{
-                  fontSize: '1.5rem',
-                  fontWeight: 700,
-                  color: '#1F2937',
-                  margin: '0 0 0.5rem 0',
-                }}
-              >
-                Change Password
-              </h2>
-              <p
-                style={{
-                  fontSize: '0.875rem',
-                  color: '#6B7280',
-                  margin: '0 0 1.5rem 0',
-                }}
-              >
-                Update your password to keep your account secure.
-              </p>
-              <form onSubmit={handlePasswordChange}>
-                <div style={{ marginBottom: '1rem' }}>
-                  <label
-                    htmlFor="currentPassword"
-                    style={{
-                      display: 'block',
-                      fontSize: '0.875rem',
-                      fontWeight: 600,
-                      color: '#1F2937',
-                      marginBottom: '0.5rem',
-                    }}
-                  >
-                    Current Password
-                  </label>
-                  <input
-                    type="password"
-                    id="currentPassword"
-                    value={passwordForm.currentPassword}
-                    onChange={(e) =>
-                      setPasswordForm({ ...passwordForm, currentPassword: e.target.value })
-                    }
-                    placeholder="Enter current password"
-                    required
-                    style={{
-                      width: '100%',
-                      padding: '0.75rem 1rem',
-                      fontSize: '0.9375rem',
-                      border: passwordError ? '2px solid #EF4444' : '1px solid #D1D5DB',
-                      borderRadius: '8px',
-                      outline: 'none',
-                      background: '#FFFFFF',
-                      color: '#1F2937',
-                    }}
-                    onFocus={(e) => {
-                      e.currentTarget.style.borderColor = '#FD5A47';
-                    }}
-                    onBlur={(e) => {
-                      e.currentTarget.style.borderColor = passwordError ? '#EF4444' : '#D1D5DB';
-                    }}
-                  />
-                </div>
-                <div style={{ marginBottom: '1rem' }}>
-                  <label
-                    htmlFor="newPassword"
-                    style={{
-                      display: 'block',
-                      fontSize: '0.875rem',
-                      fontWeight: 600,
-                      color: '#1F2937',
-                      marginBottom: '0.5rem',
-                    }}
-                  >
-                    New Password
-                  </label>
-                  <input
-                    type="password"
-                    id="newPassword"
-                    value={passwordForm.newPassword}
-                    onChange={(e) =>
-                      setPasswordForm({ ...passwordForm, newPassword: e.target.value })
-                    }
-                    placeholder="Enter new password (min. 8 characters)"
-                    required
-                    style={{
-                      width: '100%',
-                      padding: '0.75rem 1rem',
-                      fontSize: '0.9375rem',
-                      border: passwordError ? '2px solid #EF4444' : '1px solid #D1D5DB',
-                      borderRadius: '8px',
-                      outline: 'none',
-                      background: '#FFFFFF',
-                      color: '#1F2937',
-                    }}
-                    onFocus={(e) => {
-                      e.currentTarget.style.borderColor = '#FD5A47';
-                    }}
-                    onBlur={(e) => {
-                      e.currentTarget.style.borderColor = passwordError ? '#EF4444' : '#D1D5DB';
-                    }}
-                  />
-                </div>
-                <div style={{ marginBottom: '1.5rem' }}>
-                  <label
-                    htmlFor="confirmPassword"
-                    style={{
-                      display: 'block',
-                      fontSize: '0.875rem',
-                      fontWeight: 600,
-                      color: '#1F2937',
-                      marginBottom: '0.5rem',
-                    }}
-                  >
-                    Confirm New Password
-                  </label>
-                  <input
-                    type="password"
-                    id="confirmPassword"
-                    value={passwordForm.confirmPassword}
-                    onChange={(e) =>
-                      setPasswordForm({ ...passwordForm, confirmPassword: e.target.value })
-                    }
-                    placeholder="Confirm new password"
-                    required
-                    style={{
-                      width: '100%',
-                      padding: '0.75rem 1rem',
-                      fontSize: '0.9375rem',
-                      border: passwordError ? '2px solid #EF4444' : '1px solid #D1D5DB',
-                      borderRadius: '8px',
-                      outline: 'none',
-                      background: '#FFFFFF',
-                      color: '#1F2937',
-                    }}
-                    onFocus={(e) => {
-                      e.currentTarget.style.borderColor = '#FD5A47';
-                    }}
-                    onBlur={(e) => {
-                      e.currentTarget.style.borderColor = passwordError ? '#EF4444' : '#D1D5DB';
-                    }}
-                  />
-                </div>
-                {passwordError && (
-                  <div
-                    style={{
-                      padding: '0.75rem',
-                      background: '#FEF3F2',
-                      color: '#B42318',
-                      borderRadius: '8px',
-                      fontSize: '0.875rem',
-                      marginBottom: '1rem',
-                    }}
-                  >
-                    {passwordError}
-                  </div>
-                )}
-                {passwordSuccess && (
-                  <div
-                    style={{
-                      padding: '0.75rem',
-                      background: '#ECFDF3',
-                      color: '#027A48',
-                      borderRadius: '8px',
-                      fontSize: '0.875rem',
-                      marginBottom: '1rem',
-                    }}
-                  >
-                    Password updated successfully!
-                  </div>
-                )}
-                <button
-                  type="submit"
-                  disabled={isUpdatingPassword}
-                  style={{
-                    width: '100%',
-                    padding: '0.75rem 1.5rem',
-                    background: isUpdatingPassword ? '#D1D5DB' : '#FD5A47',
-                    color: '#FFFFFF',
-                    border: 'none',
-                    borderRadius: '8px',
-                    fontSize: '0.9375rem',
-                    fontWeight: 600,
-                    cursor: isUpdatingPassword ? 'not-allowed' : 'pointer',
-                    transition: 'background 0.2s',
-                  }}
-                  onMouseEnter={(e) => {
-                    if (!isUpdatingPassword) {
-                      e.currentTarget.style.background = '#E04835';
-                    }
-                  }}
-                  onMouseLeave={(e) => {
-                    if (!isUpdatingPassword) {
-                      e.currentTarget.style.background = '#FD5A47';
-                    }
-                  }}
-                >
-                  {isUpdatingPassword ? 'Updating...' : 'Update Password'}
-                </button>
-              </form>
-            </div>
+              Account Settings
+            </button>
           </div>
-        )}
-      </div>
-    </main>
+
+          {activeTab === 'projects' && (
+            <div
+              style={{
+                background: '#FFFFFF',
+                borderRadius: '12px',
+                padding: 'clamp(1rem, 3vw, 2rem)',
+                boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
+              }}
+            >
+              {loading ? (
+                <div style={{ textAlign: 'center', padding: '3rem' }}>
+                  <p style={{ color: '#4B5563' }}>Loading projects...</p>
+                </div>
+              ) : projects.length === 0 ? (
+                <div style={{ textAlign: 'center', padding: '3rem' }}>
+                  <p style={{ color: '#4B5563', marginBottom: '1rem' }}>
+                    You haven't submitted any projects yet.
+                  </p>
+                  <Link
+                    to="/create-project"
+                    style={{
+                      display: 'inline-block',
+                      padding: '0.75rem 1.5rem',
+                      background: '#FD5A47',
+                      color: '#FFFFFF',
+                      borderRadius: '8px',
+                      fontSize: '0.9375rem',
+                      fontWeight: 600,
+                      textDecoration: 'none',
+                    }}
+                  >
+                    Submit Your First Project
+                  </Link>
+                </div>
+              ) : (
+                <>
+                  {/* Desktop Table */}
+                  <div className="projects-table" style={{ overflowX: 'auto' }}>
+                    <table
+                      style={{
+                        width: '100%',
+                        borderCollapse: 'collapse',
+                        minWidth: '600px',
+                      }}
+                    >
+                      <thead>
+                        <tr>
+                          <th
+                            style={{
+                              textAlign: 'left',
+                              padding: '0.75rem 1rem',
+                              fontSize: '0.875rem',
+                              fontWeight: 600,
+                              color: '#6B7280',
+                              textTransform: 'uppercase',
+                              letterSpacing: '0.05em',
+                              borderBottom: '1px solid #E5E7EB',
+                            }}
+                          >
+                            Project Name
+                          </th>
+                          <th
+                            style={{
+                              textAlign: 'left',
+                              padding: '0.75rem 1rem',
+                              fontSize: '0.875rem',
+                              fontWeight: 600,
+                              color: '#6B7280',
+                              textTransform: 'uppercase',
+                              letterSpacing: '0.05em',
+                              borderBottom: '1px solid #E5E7EB',
+                            }}
+                          >
+                            Status
+                          </th>
+                          <th
+                            style={{
+                              textAlign: 'left',
+                              padding: '0.75rem 1rem',
+                              fontSize: '0.875rem',
+                              fontWeight: 600,
+                              color: '#6B7280',
+                              textTransform: 'uppercase',
+                              letterSpacing: '0.05em',
+                              borderBottom: '1px solid #E5E7EB',
+                            }}
+                          >
+                            Latest Update
+                          </th>
+                          <th
+                            style={{
+                              textAlign: 'left',
+                              padding: '0.75rem 1rem',
+                              fontSize: '0.875rem',
+                              fontWeight: 600,
+                              color: '#6B7280',
+                              textTransform: 'uppercase',
+                              letterSpacing: '0.05em',
+                              borderBottom: '1px solid #E5E7EB',
+                            }}
+                          >
+                            Action
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {projects.map((project) => {
+                          const status = getProjectStatus(project);
+                          const statusBadge = getStatusBadge(status);
+                          return (
+                            <tr
+                              key={project.id}
+                              style={{
+                                borderBottom: '1px solid #F3F4F6',
+                              }}
+                            >
+                              <td
+                                style={{
+                                  padding: '1rem',
+                                  fontSize: '0.9375rem',
+                                  color: '#1F2937',
+                                  fontWeight: 500,
+                                }}
+                              >
+                                {project.name}
+                              </td>
+                              <td
+                                style={{
+                                  padding: '1rem',
+                                }}
+                              >
+                                <span
+                                  style={{
+                                    display: 'inline-flex',
+                                    alignItems: 'center',
+                                    gap: '0.375rem',
+                                    padding: '0.375rem 0.75rem',
+                                    background: statusBadge.background,
+                                    color: statusBadge.color,
+                                    borderRadius: '9999px',
+                                    fontSize: '0.875rem',
+                                    fontWeight: 600,
+                                  }}
+                                >
+                                  {statusBadge.icon}
+                                  {statusBadge.text}
+                                </span>
+                              </td>
+                              <td
+                                style={{
+                                  padding: '1rem',
+                                  fontSize: '0.9375rem',
+                                  color: '#4B5563',
+                                }}
+                              >
+                                {formatDate(project.updatedAt)}
+                              </td>
+                              <td
+                                style={{
+                                  padding: '1rem',
+                                }}
+                              >
+                                {getActionButton(status, project.id)}
+                              </td>
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                  </div>
+
+                  {/* Mobile Cards */}
+                  <div className="projects-cards" style={{ display: 'none' }}>
+                    {projects.map((project) => {
+                      const status = getProjectStatus(project);
+                      const statusBadge = getStatusBadge(status);
+                      return (
+                        <div
+                          key={project.id}
+                          style={{
+                            background: '#FFFFFF',
+                            border: '1px solid #E5E7EB',
+                            borderRadius: '8px',
+                            padding: '1rem',
+                            marginBottom: '1rem',
+                          }}
+                        >
+                          <h3 style={{ fontSize: '1rem', fontWeight: 600, margin: '0 0 0.5rem 0' }}>
+                            {project.name}
+                          </h3>
+                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
+                            <span
+                              style={{
+                                display: 'inline-flex',
+                                alignItems: 'center',
+                                gap: '0.375rem',
+                                padding: '0.375rem 0.75rem',
+                                background: statusBadge.background,
+                                color: statusBadge.color,
+                                borderRadius: '9999px',
+                                fontSize: '0.875rem',
+                                fontWeight: 600,
+                              }}
+                            >
+                              {statusBadge.icon}
+                              {statusBadge.text}
+                            </span>
+                          </div>
+                          <p style={{ fontSize: '0.875rem', color: '#6B7280', margin: '0 0 1rem 0' }}>
+                            Updated: {formatDate(project.updatedAt)}
+                          </p>
+                          {getActionButton(status, project.id)}
+                        </div>
+                      );
+                    })}
+                  </div>
+                </>
+              )}
+            </div>
+          )}
+
+          {activeTab === 'account' && (
+            <div
+              className="account-settings-grid"
+              style={{
+                display: 'grid',
+                gridTemplateColumns: '1fr 1fr',
+                gap: '2rem',
+              }}
+            >
+              <div
+                style={{
+                  background: '#FFFFFF',
+                  borderRadius: '12px',
+                  padding: 'clamp(1.5rem, 3vw, 2rem)',
+                  boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
+                }}
+              >
+                <h2
+                  style={{
+                    fontSize: 'clamp(1.25rem, 3vw, 1.5rem)',
+                    fontWeight: 700,
+                    color: '#1F2937',
+                    margin: '0 0 0.5rem 0',
+                  }}
+                >
+                  Change Email
+                </h2>
+                <p
+                  style={{
+                    fontSize: '0.875rem',
+                    color: '#6B7280',
+                    margin: '0 0 1.5rem 0',
+                  }}
+                >
+                  Update your email address. You'll need to confirm your password.
+                </p>
+                <form onSubmit={handleEmailChange}>
+                  <div style={{ marginBottom: '1rem' }}>
+                    <label
+                      htmlFor="currentEmail"
+                      style={{
+                        display: 'block',
+                        fontSize: '0.875rem',
+                        fontWeight: 600,
+                        color: '#1F2937',
+                        marginBottom: '0.5rem',
+                      }}
+                    >
+                      Current Email
+                    </label>
+                    <input
+                      type="email"
+                      id="currentEmail"
+                      value={authUser?.email || ''}
+                      disabled
+                      style={{
+                        width: '100%',
+                        padding: '0.75rem 1rem',
+                        fontSize: '0.9375rem',
+                        border: '1px solid #D1D5DB',
+                        borderRadius: '8px',
+                        background: '#F9FAFB',
+                        color: '#6B7280',
+                        cursor: 'not-allowed',
+                      }}
+                    />
+                  </div>
+                  <div style={{ marginBottom: '1rem' }}>
+                    <label
+                      htmlFor="newEmail"
+                      style={{
+                        display: 'block',
+                        fontSize: '0.875rem',
+                        fontWeight: 600,
+                        color: '#1F2937',
+                        marginBottom: '0.5rem',
+                      }}
+                    >
+                      New Email
+                    </label>
+                    <input
+                      type="email"
+                      id="newEmail"
+                      value={emailForm.newEmail}
+                      onChange={(e) => setEmailForm({ ...emailForm, newEmail: e.target.value })}
+                      placeholder="Enter new email address"
+                      required
+                      style={{
+                        width: '100%',
+                        padding: '0.75rem 1rem',
+                        fontSize: '0.9375rem',
+                        border: emailError ? '2px solid #EF4444' : '1px solid #D1D5DB',
+                        borderRadius: '8px',
+                        outline: 'none',
+                        background: '#FFFFFF',
+                        color: '#1F2937',
+                      }}
+                      onFocus={(e) => {
+                        e.currentTarget.style.borderColor = '#FD5A47';
+                      }}
+                      onBlur={(e) => {
+                        e.currentTarget.style.borderColor = emailError ? '#EF4444' : '#D1D5DB';
+                      }}
+                    />
+                  </div>
+                  <div style={{ marginBottom: '1.5rem' }}>
+                    <label
+                      htmlFor="emailPassword"
+                      style={{
+                        display: 'block',
+                        fontSize: '0.875rem',
+                        fontWeight: 600,
+                        color: '#1F2937',
+                        marginBottom: '0.5rem',
+                      }}
+                    >
+                      Confirm Password
+                    </label>
+                    <input
+                      type="password"
+                      id="emailPassword"
+                      value={emailForm.password}
+                      onChange={(e) => setEmailForm({ ...emailForm, password: e.target.value })}
+                      placeholder="Enter your password"
+                      required
+                      style={{
+                        width: '100%',
+                        padding: '0.75rem 1rem',
+                        fontSize: '0.9375rem',
+                        border: emailError ? '2px solid #EF4444' : '1px solid #D1D5DB',
+                        borderRadius: '8px',
+                        outline: 'none',
+                        background: '#FFFFFF',
+                        color: '#1F2937',
+                      }}
+                      onFocus={(e) => {
+                        e.currentTarget.style.borderColor = '#FD5A47';
+                      }}
+                      onBlur={(e) => {
+                        e.currentTarget.style.borderColor = emailError ? '#EF4444' : '#D1D5DB';
+                      }}
+                    />
+                  </div>
+                  {emailError && (
+                    <div
+                      style={{
+                        padding: '0.75rem',
+                        background: '#FEF3F2',
+                        color: '#B42318',
+                        borderRadius: '8px',
+                        fontSize: '0.875rem',
+                        marginBottom: '1rem',
+                      }}
+                    >
+                      {emailError}
+                    </div>
+                  )}
+                  {emailSuccess && (
+                    <div
+                      style={{
+                        padding: '0.75rem',
+                        background: '#ECFDF3',
+                        color: '#027A48',
+                        borderRadius: '8px',
+                        fontSize: '0.875rem',
+                        marginBottom: '1rem',
+                      }}
+                    >
+                      Email updated successfully!
+                    </div>
+                  )}
+                  <button
+                    type="submit"
+                    disabled={isUpdatingEmail}
+                    style={{
+                      width: '100%',
+                      padding: '0.75rem 1.5rem',
+                      background: isUpdatingEmail ? '#D1D5DB' : '#FD5A47',
+                      color: '#FFFFFF',
+                      border: 'none',
+                      borderRadius: '8px',
+                      fontSize: '0.9375rem',
+                      fontWeight: 600,
+                      cursor: isUpdatingEmail ? 'not-allowed' : 'pointer',
+                      transition: 'background 0.2s',
+                    }}
+                    onMouseEnter={(e) => {
+                      if (!isUpdatingEmail) {
+                        e.currentTarget.style.background = '#E04835';
+                      }
+                    }}
+                    onMouseLeave={(e) => {
+                      if (!isUpdatingEmail) {
+                        e.currentTarget.style.background = '#FD5A47';
+                      }
+                    }}
+                  >
+                    {isUpdatingEmail ? 'Updating...' : 'Update Email'}
+                  </button>
+                </form>
+              </div>
+
+              <div
+                style={{
+                  background: '#FFFFFF',
+                  borderRadius: '12px',
+                  padding: 'clamp(1.5rem, 3vw, 2rem)',
+                  boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
+                }}
+              >
+                <h2
+                  style={{
+                    fontSize: 'clamp(1.25rem, 3vw, 1.5rem)',
+                    fontWeight: 700,
+                    color: '#1F2937',
+                    margin: '0 0 0.5rem 0',
+                  }}
+                >
+                  Change Password
+                </h2>
+                <p
+                  style={{
+                    fontSize: '0.875rem',
+                    color: '#6B7280',
+                    margin: '0 0 1.5rem 0',
+                  }}
+                >
+                  Update your password to keep your account secure.
+                </p>
+                <form onSubmit={handlePasswordChange}>
+                  <div style={{ marginBottom: '1rem' }}>
+                    <label
+                      htmlFor="currentPassword"
+                      style={{
+                        display: 'block',
+                        fontSize: '0.875rem',
+                        fontWeight: 600,
+                        color: '#1F2937',
+                        marginBottom: '0.5rem',
+                      }}
+                    >
+                      Current Password
+                    </label>
+                    <input
+                      type="password"
+                      id="currentPassword"
+                      value={passwordForm.currentPassword}
+                      onChange={(e) =>
+                        setPasswordForm({ ...passwordForm, currentPassword: e.target.value })
+                      }
+                      placeholder="Enter current password"
+                      required
+                      style={{
+                        width: '100%',
+                        padding: '0.75rem 1rem',
+                        fontSize: '0.9375rem',
+                        border: passwordError ? '2px solid #EF4444' : '1px solid #D1D5DB',
+                        borderRadius: '8px',
+                        outline: 'none',
+                        background: '#FFFFFF',
+                        color: '#1F2937',
+                      }}
+                      onFocus={(e) => {
+                        e.currentTarget.style.borderColor = '#FD5A47';
+                      }}
+                      onBlur={(e) => {
+                        e.currentTarget.style.borderColor = passwordError ? '#EF4444' : '#D1D5DB';
+                      }}
+                    />
+                  </div>
+                  <div style={{ marginBottom: '1rem' }}>
+                    <label
+                      htmlFor="newPassword"
+                      style={{
+                        display: 'block',
+                        fontSize: '0.875rem',
+                        fontWeight: 600,
+                        color: '#1F2937',
+                        marginBottom: '0.5rem',
+                      }}
+                    >
+                      New Password
+                    </label>
+                    <input
+                      type="password"
+                      id="newPassword"
+                      value={passwordForm.newPassword}
+                      onChange={(e) =>
+                        setPasswordForm({ ...passwordForm, newPassword: e.target.value })
+                      }
+                      placeholder="Enter new password (min. 8 characters)"
+                      required
+                      style={{
+                        width: '100%',
+                        padding: '0.75rem 1rem',
+                        fontSize: '0.9375rem',
+                        border: passwordError ? '2px solid #EF4444' : '1px solid #D1D5DB',
+                        borderRadius: '8px',
+                        outline: 'none',
+                        background: '#FFFFFF',
+                        color: '#1F2937',
+                      }}
+                      onFocus={(e) => {
+                        e.currentTarget.style.borderColor = '#FD5A47';
+                      }}
+                      onBlur={(e) => {
+                        e.currentTarget.style.borderColor = passwordError ? '#EF4444' : '#D1D5DB';
+                      }}
+                    />
+                  </div>
+                  <div style={{ marginBottom: '1.5rem' }}>
+                    <label
+                      htmlFor="confirmPassword"
+                      style={{
+                        display: 'block',
+                        fontSize: '0.875rem',
+                        fontWeight: 600,
+                        color: '#1F2937',
+                        marginBottom: '0.5rem',
+                      }}
+                    >
+                      Confirm New Password
+                    </label>
+                    <input
+                      type="password"
+                      id="confirmPassword"
+                      value={passwordForm.confirmPassword}
+                      onChange={(e) =>
+                        setPasswordForm({ ...passwordForm, confirmPassword: e.target.value })
+                      }
+                      placeholder="Confirm new password"
+                      required
+                      style={{
+                        width: '100%',
+                        padding: '0.75rem 1rem',
+                        fontSize: '0.9375rem',
+                        border: passwordError ? '2px solid #EF4444' : '1px solid #D1D5DB',
+                        borderRadius: '8px',
+                        outline: 'none',
+                        background: '#FFFFFF',
+                        color: '#1F2937',
+                      }}
+                      onFocus={(e) => {
+                        e.currentTarget.style.borderColor = '#FD5A47';
+                      }}
+                      onBlur={(e) => {
+                        e.currentTarget.style.borderColor = passwordError ? '#EF4444' : '#D1D5DB';
+                      }}
+                    />
+                  </div>
+                  {passwordError && (
+                    <div
+                      style={{
+                        padding: '0.75rem',
+                        background: '#FEF3F2',
+                        color: '#B42318',
+                        borderRadius: '8px',
+                        fontSize: '0.875rem',
+                        marginBottom: '1rem',
+                      }}
+                    >
+                      {passwordError}
+                    </div>
+                  )}
+                  {passwordSuccess && (
+                    <div
+                      style={{
+                        padding: '0.75rem',
+                        background: '#ECFDF3',
+                        color: '#027A48',
+                        borderRadius: '8px',
+                        fontSize: '0.875rem',
+                        marginBottom: '1rem',
+                      }}
+                    >
+                      Password updated successfully!
+                    </div>
+                  )}
+                  <button
+                    type="submit"
+                    disabled={isUpdatingPassword}
+                    style={{
+                      width: '100%',
+                      padding: '0.75rem 1.5rem',
+                      background: isUpdatingPassword ? '#D1D5DB' : '#FD5A47',
+                      color: '#FFFFFF',
+                      border: 'none',
+                      borderRadius: '8px',
+                      fontSize: '0.9375rem',
+                      fontWeight: 600,
+                      cursor: isUpdatingPassword ? 'not-allowed' : 'pointer',
+                      transition: 'background 0.2s',
+                    }}
+                    onMouseEnter={(e) => {
+                      if (!isUpdatingPassword) {
+                        e.currentTarget.style.background = '#E04835';
+                      }
+                    }}
+                    onMouseLeave={(e) => {
+                      if (!isUpdatingPassword) {
+                        e.currentTarget.style.background = '#FD5A47';
+                      }
+                    }}
+                  >
+                    {isUpdatingPassword ? 'Updating...' : 'Update Password'}
+                  </button>
+                </form>
+              </div>
+            </div>
+          )}
+        </div>
+      </main>
+    </>
   );
 }
