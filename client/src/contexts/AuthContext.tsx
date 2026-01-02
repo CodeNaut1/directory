@@ -18,7 +18,8 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-const API_URL = 'http://localhost:3000/api';
+// ✅ FIX: Use environment variable with fallback
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
@@ -30,7 +31,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   // Refresh access token using refresh token
   const refreshAccessToken = async (): Promise<string | null> => {
     try {
-      const response = await fetch(`${API_URL}/auth/refresh`, {
+      const response = await fetch(`${API_URL}/api/auth/refresh`, {
         method: 'POST',
         credentials: 'include', // Send refresh token cookie
       });
@@ -58,7 +59,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       if (token) {
         try {
           // Try to get user data with current token
-          let response = await fetch(`${API_URL}/users/me`, {
+          let response = await fetch(`${API_URL}/api/users/me`, {
             headers: {
               'Authorization': `Bearer ${token}`,
             },
@@ -70,7 +71,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
             if (token) {
               // Retry with new token
-              response = await fetch(`${API_URL}/users/me`, {
+              response = await fetch(`${API_URL}/api/users/me`, {
                 headers: {
                   'Authorization': `Bearer ${token}`,
                 },
@@ -106,7 +107,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const login = async (email: string, password: string) => {
     try {
-      const response = await fetch(`${API_URL}/auth/login`, {
+      const response = await fetch(`${API_URL}/api/auth/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -140,7 +141,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const logout = async () => {
     try {
-      await fetch(`${API_URL}/auth/logout`, {
+      await fetch(`${API_URL}/api/auth/logout`, {
         method: 'POST',
         credentials: 'include',
       });
@@ -155,7 +156,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const register = async (name: string, email: string, password: string) => {
     try {
-      const response = await fetch(`${API_URL}/auth/register`, {
+      const response = await fetch(`${API_URL}/api/auth/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
