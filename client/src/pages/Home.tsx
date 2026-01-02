@@ -63,38 +63,8 @@ export default function HomePage() {
     e.preventDefault();
     if (!searchQuery.trim()) return;
 
-    try {
-      import('../data/locations.json').then((module) => {
-        const data = module.default;
-        if (data?.features) {
-          const query = searchQuery.toLowerCase();
-          const found = data.features.find((feature: any) => {
-            const props = feature.properties || {};
-            const name = (props.name || '').toLowerCase();
-            const location = (props.location || '').toLowerCase();
-            const category = (props.category || '').toLowerCase();
-            const description = (props.description || '').toLowerCase();
-
-            return (
-              name.includes(query) ||
-              location.includes(query) ||
-              category.includes(query) ||
-              description.includes(query)
-            );
-          });
-
-          if (found) {
-            const slug = found.properties.name
-              .toLowerCase()
-              .replace(/\s+/g, '-')
-              .replace(/[^a-z0-9-]/g, '');
-            navigate(`/project/${slug}`);
-          }
-        }
-      });
-    } catch (error) {
-      console.error('Error searching:', error);
-    }
+    // Navigate to search results page with query parameter
+    navigate(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
   };
 
   return (

@@ -15,6 +15,7 @@ import AdminDashboard from './pages/admin/AdminDashboard';
 import PendingProjects from './pages/admin/PendingProjects';
 import Infographic from './pages/Infographic';
 import LiveMap from './pages/LiveMap';
+import SearchResults from './pages/SearchResults';
 
 export default function App() {
   return (
@@ -28,6 +29,7 @@ export default function App() {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/infographic-q1-2026" element={<Infographic />} />
         <Route path="/live-map" element={<LiveMap />} />
+        <Route path="/search" element={<SearchResults />} />
         <Route path="/project/:id" element={<ViewProject />} />
 
         {/* Protected routes */}

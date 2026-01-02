@@ -67,19 +67,107 @@ export default function ViewProject() {
       }
 
       try {
-        const response = await fetch(`${API_URL}/api/projects/${id}`);
-        if (response.ok) {
-          const data = await response.json();
-          if (data.success && data.data) {
-            setProject(data.data);
-          } else {
-            setError('Project not found');
+        // Try API first
+        if (API_URL) {
+          const response = await fetch(`${API_URL}/api/projects/${id}`);
+          if (response.ok) {
+            const data = await response.json();
+            if (data.success && data.data) {
+              setProject(data.data);
+              setLoading(false);
+              return;
+            }
+          } else if (response.status !== 404) {
+            // If it's not a 404, show the error
+            if (response.status === 403) {
+              setError('This project is currently under review and will be visible once approved.');
+            } else {
+              setError('Failed to load project');
+            }
+            setLoading(false);
+            return;
           }
-        } else if (response.status === 403 || response.status === 404) {
-          setError('This project is currently under review and will be visible once approved.');
-        } else {
-          setError('Failed to load project');
+          // If 404, fall through to local data
         }
+
+        // Fallback to local data from locations.json
+        try {
+          const module = await import('../data/locations.json');
+          const data = module.default;
+          if (data?.features) {
+            // Try to find by slug (id parameter might be a slug)
+            const found = data.features.find((feature: any) => {
+              const props = feature.properties || {};
+              const featureSlug = props.name
+                ? props.name
+                    .toLowerCase()
+                    .replace(/\s+/g, '-')
+                    .replace(/[^a-z0-9-]/g, '')
+                : '';
+              const featureId = feature.id || '';
+              
+              return featureSlug === id || featureId === id || featureId.toString() === id;
+            });
+
+            if (found) {
+              const props = found.properties || {};
+              
+              // Extract city and country from location string (format: "City, Country")
+              let city = '';
+              let countryName = '';
+              if (props.location) {
+                const locationParts = props.location.split(',').map((s: string) => s.trim());
+                city = locationParts[0] || '';
+                countryName = locationParts[1] || '';
+              }
+              
+              const transformedProject: ProjectData = {
+                name: props.name || 'Unnamed Project',
+                description: props.description,
+                logo: props.image || props.logo, // Use 'image' from locations.json
+                website: props.link || props.website, // Use 'link' from locations.json
+                verified: props.verified || props.active === true || props.active === 'true',
+                category: props.category
+                  ? {
+                      id: props.category.toLowerCase().replace(/\s+/g, '-'),
+                      name: props.category,
+                      slug: props.category.toLowerCase().replace(/\s+/g, '-'),
+                    }
+                  : undefined,
+                country: props.country_code || countryName
+                  ? {
+                      id: props.country_code || countryName.toLowerCase().replace(/\s+/g, '-'),
+                      name: countryName || props.country || '',
+                      code: props.country_code || '',
+                    }
+                  : undefined,
+                city: city || props.city,
+                details: {
+                  contactEmail: props.email || props.founder_email,
+                  socialLinks: {
+                    twitter: props.twitter || props.founder_twitter || props.personal_twitter,
+                    linkedin: props.linkedin,
+                    facebook: props.facebook,
+                    instagram: props.instagram,
+                    nostr: props.nostr,
+                  },
+                  bitcoinOnly: true, // All projects in locations.json are Bitcoin-only
+                  lightningNetwork: false, // Not specified in locations.json
+                  longDescription: props.description, // Use description as longDescription
+                },
+                tags: [], // Tags not available in locations.json
+              };
+              setProject(transformedProject);
+              setLoading(false);
+              return;
+            }
+          }
+        } catch (localErr) {
+          console.error('Error loading local data:', localErr);
+        }
+
+        // If we get here, project was not found
+        setError('Project not found');
       } catch (err: any) {
         console.error('Error fetching project:', err);
         setError(err.message || 'Failed to load project');
