@@ -25,39 +25,105 @@ export default function HomePage() {
   const API_URL = import.meta.env.VITE_API_URL || '';
 
   const [categoryCounts, setCategoryCounts] = useState<CategoryCounts>({
-    businesses: 300,
-    education: 400,
-    circularEconomy: 220,
-    miners: 257,
-    communities: 603,
+    businesses: 0,
+    education: 0,
+    circularEconomy: 0,
+    miners: 0,
+    communities: 0,
   });
   const [searchQuery, setSearchQuery] = useState('');
+  const [loadingCounts, setLoadingCounts] = useState(true);
 
   useEffect(() => {
-    import('../data/locations.json').then((module) => {
-      const data = module.default;
-      if (data?.features) {
-        const counts: CategoryCounts = {
-          businesses: 0,
-          education: 0,
-          circularEconomy: 0,
-          miners: 0,
-          communities: 0,
-        };
+    const fetchCategoryCounts = async () => {
+      setLoadingCounts(true);
+      
+      try {
+        // Try API first to get counts of published and verified projects
+        if (API_URL) {
+          try {
+            // Fetch all published projects (API already filters by published=true)
+            // We'll fetch with a high limit to get all projects, then filter for verified
+            const response = await fetch(`${API_URL}/api/projects?page=1&limit=1000`);
+            if (response.ok) {
+              const data = await response.json();
+              if (data.success && data.data) {
+                // Filter for verified projects only (published is already filtered by API)
+                const verifiedProjects = data.data.filter(
+                  (project: any) => project.verified === true
+                );
 
-        data.features.forEach((feature: any) => {
-          const category = (feature.properties?.category || '').toLowerCase();
-          if (category.includes('business')) counts.businesses++;
-          else if (category.includes('education')) counts.education++;
-          else if (category.includes('circular')) counts.circularEconomy++;
-          else if (category.includes('mining') || category.includes('miner')) counts.miners++;
-          else if (category.includes('community')) counts.communities++;
-        });
+                const counts: CategoryCounts = {
+                  businesses: 0,
+                  education: 0,
+                  circularEconomy: 0,
+                  miners: 0,
+                  communities: 0,
+                };
 
-        setCategoryCounts(counts);
+                verifiedProjects.forEach((project: any) => {
+                  const categoryName = (project.category?.name || '').toLowerCase();
+                  const categorySlug = (project.category?.slug || '').toLowerCase();
+                  
+                  if (categoryName.includes('business') || categorySlug.includes('business')) {
+                    counts.businesses++;
+                  } else if (categoryName.includes('education') || categorySlug.includes('education')) {
+                    counts.education++;
+                  } else if (categoryName.includes('circular') || categorySlug.includes('circular')) {
+                    counts.circularEconomy++;
+                  } else if (categoryName.includes('mining') || categoryName.includes('miner') || categorySlug.includes('mining') || categorySlug.includes('miner')) {
+                    counts.miners++;
+                  } else if (categoryName.includes('community') || categorySlug.includes('community')) {
+                    counts.communities++;
+                  }
+                });
+
+                setCategoryCounts(counts);
+                setLoadingCounts(false);
+                return;
+              }
+            }
+          } catch (apiError) {
+            console.warn('API request failed, falling back to local data:', apiError);
+          }
+        }
+      } catch (apiError) {
+        console.warn('API not available, falling back to local data:', apiError);
       }
-    });
-  }, []);
+
+      // Fallback to local data
+      try {
+        const module = await import('../data/locations.json');
+        const data = module.default;
+        if (data?.features) {
+          const counts: CategoryCounts = {
+            businesses: 0,
+            education: 0,
+            circularEconomy: 0,
+            miners: 0,
+            communities: 0,
+          };
+
+          data.features.forEach((feature: any) => {
+            const category = (feature.properties?.category || '').toLowerCase();
+            if (category.includes('business')) counts.businesses++;
+            else if (category.includes('education')) counts.education++;
+            else if (category.includes('circular')) counts.circularEconomy++;
+            else if (category.includes('mining') || category.includes('miner')) counts.miners++;
+            else if (category.includes('community')) counts.communities++;
+          });
+
+          setCategoryCounts(counts);
+        }
+      } catch (localError) {
+        console.error('Error loading local data:', localError);
+      } finally {
+        setLoadingCounts(false);
+      }
+    };
+
+    fetchCategoryCounts();
+  }, [API_URL]);
 
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -363,17 +429,17 @@ export default function HomePage() {
                   display: 'flex',
                   flexDirection: 'column',
                   alignItems: 'center',
-                  gap: '0.5rem',
+                  gap: 'clamp(0.75rem, 2vw, 1rem)',
                 }}
               >
                 <img
                   src={category.icon}
                   alt={category.label}
-                  style={{ width: '20px', height: '20px', objectFit: 'contain' }}
+                  style={{ width: 'clamp(32px, 4vw, 40px)', height: 'clamp(32px, 4vw, 40px)', objectFit: 'contain' }}
                 />
                 <p
                   style={{
-                    fontSize: 'clamp(0.65rem, 1.5vw, 0.75rem)',
+                    fontSize: 'clamp(0.875rem, 2vw, 1rem)',
                     fontWeight: 500,
                     color: '#1F2937',
                     margin: 0,
@@ -385,16 +451,17 @@ export default function HomePage() {
                 <span
                   style={{
                     color: '#FD5A47',
-                    fontSize: 'clamp(0.8rem, 1.8vw, 0.9rem)',
+                    fontSize: 'clamp(1rem, 2.5vw, 1.25rem)',
                     fontWeight: 700,
-                    padding: '0.2rem 0.6rem',
+                    padding: 'clamp(0.375rem, 1vw, 0.5rem) clamp(0.75rem, 2vw, 1rem)',
                     borderRadius: '999px',
                     backgroundColor: 'rgba(237, 99, 0, 0.06)',
                     border: '1px solid rgba(237, 99, 0, 0.15)',
                     boxShadow: '0 2px 8px rgba(237, 99, 0, 0.06)',
+                    minWidth: 'fit-content',
                   }}
                 >
-                  {category.count}
+                  {loadingCounts ? '...' : category.count}
                 </span>
               </div>
             ))}
