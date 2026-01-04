@@ -31,11 +31,22 @@ interface FormData {
   lightning: boolean;
   giftCards: boolean;
   description: string;
+  longDescription: string;
+  initiatives: string;
+  impact: string;
+  challenges: string;
   websiteUrl: string;
   email: string;
+  phone: string;
+  foundedYear: string;
+  founderName: string;
+  founderTwitter: string;
+  founderEmail: string;
   twitterHandle: string;
   linkedinUsername: string;
   facebookUsername: string;
+  youtubeChannel: string;
+  telegramGroup: string;
   nostrAddress: string;
   instagramUsername: string;
 }
@@ -62,11 +73,22 @@ export default function EditProject() {
     lightning: false,
     giftCards: false,
     description: '',
+    longDescription: '',
+    initiatives: '',
+    impact: '',
+    challenges: '',
     websiteUrl: '',
     email: '',
+    phone: '',
+    foundedYear: '',
+    founderName: '',
+    founderTwitter: '',
+    founderEmail: '',
     twitterHandle: '',
     linkedinUsername: '',
     facebookUsername: '',
+    youtubeChannel: '',
+    telegramGroup: '',
     nostrAddress: '',
     instagramUsername: '',
   });
@@ -104,20 +126,31 @@ export default function EditProject() {
           if (data.success && data.data) {
             const project = data.data;
 
-            const loadedData = {
+            const loadedData: FormData = {
               projectName: project.name || '',
               countryId: project.country?.id || '',
               categoryId: project.category?.id || '',
               selectedTags: project.tags?.map((tag: any) => tag.id) || [],
               bitcoinOnchain: project.details?.bitcoinOnly || false,
               lightning: project.details?.lightningNetwork || false,
-              giftCards: false,
+              giftCards: project.details?.giftCards || false,
               description: project.description || '',
+              longDescription: project.details?.longDescription || '',
+              initiatives: project.details?.initiatives || '',
+              impact: project.details?.impact || '',
+              challenges: project.details?.challenges || '',
               websiteUrl: project.website || '',
               email: project.details?.contactEmail || '',
+              phone: project.details?.contactPhone || '',
+              foundedYear: project.foundedYear || '',
+              founderName: project.details?.founderName || '',
+              founderTwitter: project.details?.founderTwitter?.replace('https://twitter.com/', '').replace('@', '') || '',
+              founderEmail: project.details?.founderEmail || '',
               twitterHandle: project.details?.socialLinks?.twitter?.replace('https://twitter.com/', '').replace('@', '') || '',
               linkedinUsername: project.details?.socialLinks?.linkedin?.replace('https://linkedin.com/in/', '') || '',
               facebookUsername: project.details?.socialLinks?.facebook?.replace('https://facebook.com/', '') || '',
+              youtubeChannel: project.details?.socialLinks?.youtube?.replace('https://youtube.com/', '') || '',
+              telegramGroup: project.details?.socialLinks?.telegram?.replace('https://t.me/', '') || '',
               nostrAddress: project.details?.socialLinks?.nostr?.replace('https://njump.me/', '') || '',
               instagramUsername: project.details?.socialLinks?.instagram?.replace('https://instagram.com/', '').replace('@', '') || '',
             };
@@ -248,6 +281,14 @@ export default function EditProject() {
       if (formData.instagramUsername) {
         socialLinks.instagram = `https://instagram.com/${formData.instagramUsername.replace('@', '')}`;
       }
+      if (formData.youtubeChannel) {
+        const channel = formData.youtubeChannel.trim();
+        socialLinks.youtube = channel.startsWith('http') ? channel : `https://youtube.com/${channel}`;
+      }
+      if (formData.telegramGroup) {
+        const group = formData.telegramGroup.trim();
+        socialLinks.telegram = group.startsWith('http') ? group : `https://t.me/${group}`;
+      }
 
       const payload = {
         name: formData.projectName,
@@ -255,12 +296,25 @@ export default function EditProject() {
         website: normalizedUrl || undefined,
         countryId: formData.countryId,
         categoryId: formData.categoryId,
+        foundedYear: formData.foundedYear || undefined,
         tagIds: formData.selectedTags.length > 0 ? formData.selectedTags : undefined,
         details: {
           contactEmail: formData.email,
+          contactPhone: formData.phone || undefined,
           socialLinks: Object.keys(socialLinks).length > 0 ? socialLinks : undefined,
           bitcoinOnly: formData.bitcoinOnchain,
           lightningNetwork: formData.lightning,
+          giftCards: formData.giftCards,
+          longDescription: formData.longDescription.trim() || undefined,
+          initiatives: formData.initiatives.trim() || undefined,
+          impact: formData.impact.trim() || undefined,
+          challenges: formData.challenges.trim() || undefined,
+          founderName: formData.founderName.trim() || undefined,
+          founderTwitter: formData.founderTwitter.trim() ?
+            (formData.founderTwitter.trim().startsWith('http') ?
+              formData.founderTwitter.trim() :
+              `https://twitter.com/${formData.founderTwitter.replace('@', '').trim()}`) : undefined,
+          founderEmail: formData.founderEmail.trim() || undefined,
         },
       };
 
@@ -301,35 +355,16 @@ export default function EditProject() {
     <>
       <style>{`
         @media (max-width: 768px) {
-          .warning-banner {
-            padding: 0.75rem 1rem !important;
-          }
-          .warning-content {
-            flex-direction: column !important;
-            align-items: flex-start !important;
-            gap: 0.5rem !important;
-          }
-          .warning-close {
-            align-self: flex-end !important;
-            margin-top: -0.5rem !important;
-          }
-          .form-grid-2 {
-            grid-template-columns: 1fr !important;
-          }
-          .form-grid-3 {
-            grid-template-columns: 1fr !important;
-          }
-          .button-group {
-            flex-direction: column !important;
-          }
-          .button-group button {
-            width: 100% !important;
-          }
+          .warning-banner { padding: 0.75rem 1rem !important; }
+          .warning-content { flex-direction: column !important; align-items: flex-start !important; gap: 0.5rem !important; }
+          .warning-close { align-self: flex-end !important; margin-top: -0.5rem !important; }
+          .form-grid-2 { grid-template-columns: 1fr !important; }
+          .form-grid-3 { grid-template-columns: 1fr !important; }
+          .button-group { flex-direction: column !important; }
+          .button-group button { width: 100% !important; }
         }
         @media (min-width: 769px) and (max-width: 1024px) {
-          .form-grid-3 {
-            grid-template-columns: repeat(2, 1fr) !important;
-          }
+          .form-grid-3 { grid-template-columns: repeat(2, 1fr) !important; }
         }
       `}</style>
 
@@ -337,12 +372,8 @@ export default function EditProject() {
         <div className="warning-banner" style={{ position: 'fixed', top: 0, left: 0, right: 0, background: '#FFF4E6', borderBottom: '1px solid #FDB022', padding: '1rem', zIndex: 1000 }}>
           <div className="warning-content" style={{ maxWidth: 900, margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flex: 1 }}>
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="#B54708">
-                <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
-              </svg>
-              <p style={{ margin: 0, color: '#92400E', fontSize: 'clamp(0.75rem, 2vw, 0.875rem)', fontWeight: 500 }}>
-                Any changes you make will require re-approval before your project goes live again.
-              </p>
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="#B54708"><path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" /></svg>
+              <p style={{ margin: 0, color: '#92400E', fontSize: 'clamp(0.75rem, 2vw, 0.875rem)', fontWeight: 500 }}>Any changes you make will require re-approval before your project goes live again.</p>
             </div>
             <button className="warning-close" onClick={() => setShowWarning(false)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#92400E', fontSize: '1.25rem', padding: '0.25rem' }}>×</button>
           </div>
@@ -353,21 +384,15 @@ export default function EditProject() {
         <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', background: 'rgba(0, 0, 0, 0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 10000, padding: '1rem' }}>
           <div style={{ background: '#FFFFFF', borderRadius: '12px', padding: 'clamp(2rem, 5vw, 3rem)', maxWidth: '500px', width: '100%', textAlign: 'center', boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1)' }}>
             <div style={{ width: 'clamp(60px, 15vw, 80px)', height: 'clamp(60px, 15vw, 80px)', borderRadius: '50%', background: '#10B981', color: '#FFFFFF', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1.5rem', boxShadow: '0 4px 6px rgba(16, 185, 129, 0.3)' }}>
-              <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
-                <path d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none"><path d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
             </div>
             <h1 style={{ fontSize: 'clamp(1.5rem, 4vw, 2rem)', fontWeight: 700, color: '#1F2937', margin: '0 0 1rem 0' }}>
               {hasChanges() ? 'Changes Submitted for Review' : 'No Changes Made'}
             </h1>
             <p style={{ fontSize: 'clamp(0.875rem, 2vw, 1rem)', color: '#4B5563', lineHeight: 1.6, margin: '0 0 2rem 0' }}>
-              {hasChanges()
-                ? 'Your updates have been received. Our team will review the changes to ensure everything meets our guidelines. You\'ll receive an update within 2 days.'
-                : 'No changes were detected. Your project remains published.'}
+              {hasChanges() ? "Your updates have been received. Our team will review the changes to ensure everything meets our guidelines. You'll receive an update within 2 days." : 'No changes were detected. Your project remains published.'}
             </p>
-            <button onClick={() => navigate('/dashboard')} style={{ padding: '0.75rem 2rem', background: '#FD5A47', color: '#FFFFFF', border: 'none', borderRadius: '8px', fontSize: '0.9375rem', fontWeight: 600, cursor: 'pointer', width: '100%' }}>
-              Go to Dashboard
-            </button>
+            <button onClick={() => navigate('/dashboard')} style={{ padding: '0.75rem 2rem', background: '#FD5A47', color: '#FFFFFF', border: 'none', borderRadius: '8px', fontSize: '0.9375rem', fontWeight: 600, cursor: 'pointer', width: '100%' }}>Go to Dashboard</button>
           </div>
         </div>
       )}
@@ -375,23 +400,20 @@ export default function EditProject() {
       <main className="app-main" style={{ background: '#F5F5F5', minHeight: '100vh', padding: showWarning ? 'calc(clamp(4rem, 8vw, 6rem) + 4rem) clamp(1rem, 4vw, 1rem) clamp(2rem, 5vw, 4rem)' : 'clamp(2rem, 5vw, 4rem) clamp(1rem, 4vw, 1rem)' }}>
         <div style={{ maxWidth: 900, margin: '0 auto' }}>
           <div style={{ marginBottom: '2rem' }}>
-            <Link to="/dashboard" style={{ color: '#FD5A47', textDecoration: 'none', fontSize: '0.875rem' }}>
-              ← Back to Dashboard
-            </Link>
-            <h1 style={{ fontSize: 'clamp(1.5rem, 4vw, 2rem)', fontWeight: 700, color: '#1F2937', marginTop: '1rem' }}>
-              Edit Project
-            </h1>
+            <Link to="/dashboard" style={{ color: '#FD5A47', textDecoration: 'none', fontSize: '0.875rem' }}>← Back to Dashboard</Link>
+            <h1 style={{ fontSize: 'clamp(1.5rem, 4vw, 2rem)', fontWeight: 700, color: '#1F2937', marginTop: '1rem' }}>Edit Project</h1>
           </div>
 
           <section style={{ background: '#FFFFFF', borderRadius: '12px', padding: 'clamp(1.5rem, 4vw, 3rem)', boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)' }}>
             <form onSubmit={handleSubmit}>
+              {/* BASIC INFO */}
               <div style={{ marginBottom: '1.5rem' }}>
                 <label htmlFor="projectName" style={{ display: 'block', fontSize: '0.9375rem', fontWeight: 600, color: '#1F2937', marginBottom: '0.5rem' }}>Project Name</label>
                 <input type="text" id="projectName" name="projectName" value={formData.projectName} onChange={handleChange} style={{ width: '100%', padding: '0.875rem 1rem', fontSize: '0.9375rem', border: errors.projectName ? '2px solid #EF4444' : '1px solid #D1D5DB', borderRadius: '8px', outline: 'none', background: '#F9FAFB' }} />
                 {errors.projectName && <p style={{ color: '#EF4444', fontSize: '0.875rem', marginTop: '0.25rem' }}>{errors.projectName}</p>}
               </div>
 
-              <div className="form-grid-2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', marginBottom: '1.5rem' }}>
+              <div className="form-grid-3" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '1.5rem', marginBottom: '1.5rem' }}>
                 <div>
                   <label htmlFor="countryId" style={{ display: 'block', fontSize: '0.9375rem', fontWeight: 600, color: '#1F2937', marginBottom: '0.5rem' }}>Country</label>
                   <select id="countryId" name="countryId" value={formData.countryId} onChange={handleChange} style={{ width: '100%', padding: '0.875rem 1rem', fontSize: '0.9375rem', border: '1px solid #D1D5DB', borderRadius: '8px', background: '#F9FAFB', cursor: 'pointer' }}>
@@ -406,12 +428,15 @@ export default function EditProject() {
                     {categories.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
                   </select>
                 </div>
+                <div>
+                  <label htmlFor="foundedYear" style={{ display: 'block', fontSize: '0.9375rem', fontWeight: 600, color: '#1F2937', marginBottom: '0.5rem' }}>Founded Year</label>
+                  <input type="text" id="foundedYear" name="foundedYear" value={formData.foundedYear} onChange={handleChange} placeholder="e.g 2020" maxLength={4} style={{ width: '100%', padding: '0.875rem 1rem', fontSize: '0.9375rem', border: '1px solid #D1D5DB', borderRadius: '8px', background: '#F9FAFB' }} />
+                </div>
               </div>
 
+              {/* TAGS */}
               <div style={{ marginBottom: '1.5rem' }}>
-                <label style={{ display: 'block', fontSize: '0.9375rem', fontWeight: 600, color: '#1F2937', marginBottom: '0.75rem' }}>
-                  Tags ({formData.selectedTags.length}/6)
-                </label>
+                <label style={{ display: 'block', fontSize: '0.9375rem', fontWeight: 600, color: '#1F2937', marginBottom: '0.75rem' }}>Tags ({formData.selectedTags.length}/6)</label>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem' }}>
                   {tags.map((tag) => {
                     const isSelected = formData.selectedTags.includes(tag.id);
@@ -425,6 +450,7 @@ export default function EditProject() {
                 </div>
               </div>
 
+              {/* BITCOIN ACCEPTANCE */}
               <div style={{ marginBottom: '1.5rem' }}>
                 <label style={{ display: 'block', fontSize: '0.9375rem', fontWeight: 600, color: '#1F2937', marginBottom: '0.75rem' }}>Bitcoin Acceptance</label>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
@@ -445,12 +471,34 @@ export default function EditProject() {
                 </div>
               </div>
 
+              {/* DESCRIPTIONS */}
               <div style={{ marginBottom: '1.5rem' }}>
-                <label htmlFor="description" style={{ display: 'block', fontSize: '0.9375rem', fontWeight: 600, color: '#1F2937', marginBottom: '0.5rem' }}>Description</label>
-                <textarea id="description" name="description" value={formData.description} onChange={handleChange} rows={6} style={{ width: '100%', padding: '0.875rem 1rem', fontSize: '0.9375rem', border: '1px solid #D1D5DB', borderRadius: '8px', fontFamily: 'inherit', background: '#F9FAFB', resize: 'vertical' }} />
+                <label htmlFor="description" style={{ display: 'block', fontSize: '0.9375rem', fontWeight: 600, color: '#1F2937', marginBottom: '0.5rem' }}>Short Description</label>
+                <textarea id="description" name="description" value={formData.description} onChange={handleChange} rows={4} style={{ width: '100%', padding: '0.875rem 1rem', fontSize: '0.9375rem', border: '1px solid #D1D5DB', borderRadius: '8px', fontFamily: 'inherit', background: '#F9FAFB', resize: 'vertical' }} />
               </div>
 
-              <div className="form-grid-2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', marginBottom: '1.5rem' }}>
+              <div style={{ marginBottom: '1.5rem' }}>
+                <label htmlFor="longDescription" style={{ display: 'block', fontSize: '0.9375rem', fontWeight: 600, color: '#1F2937', marginBottom: '0.5rem' }}>Full Description</label>
+                <textarea id="longDescription" name="longDescription" value={formData.longDescription} onChange={handleChange} rows={6} style={{ width: '100%', padding: '0.875rem 1rem', fontSize: '0.9375rem', border: '1px solid #D1D5DB', borderRadius: '8px', fontFamily: 'inherit', background: '#F9FAFB', resize: 'vertical' }} />
+              </div>
+
+              <div style={{ marginBottom: '1.5rem' }}>
+                <label htmlFor="initiatives" style={{ display: 'block', fontSize: '0.9375rem', fontWeight: 600, color: '#1F2937', marginBottom: '0.5rem' }}>Core Initiatives</label>
+                <textarea id="initiatives" name="initiatives" value={formData.initiatives} onChange={handleChange} rows={5} style={{ width: '100%', padding: '0.875rem 1rem', fontSize: '0.9375rem', border: '1px solid #D1D5DB', borderRadius: '8px', fontFamily: 'inherit', background: '#F9FAFB', resize: 'vertical' }} />
+              </div>
+
+              <div style={{ marginBottom: '1.5rem' }}>
+                <label htmlFor="impact" style={{ display: 'block', fontSize: '0.9375rem', fontWeight: 600, color: '#1F2937', marginBottom: '0.5rem' }}>Impact & Achievements</label>
+                <textarea id="impact" name="impact" value={formData.impact} onChange={handleChange} rows={5} style={{ width: '100%', padding: '0.875rem 1rem', fontSize: '0.9375rem', border: '1px solid #D1D5DB', borderRadius: '8px', fontFamily: 'inherit', background: '#F9FAFB', resize: 'vertical' }} />
+              </div>
+
+              <div style={{ marginBottom: '1.5rem' }}>
+                <label htmlFor="challenges" style={{ display: 'block', fontSize: '0.9375rem', fontWeight: 600, color: '#1F2937', marginBottom: '0.5rem' }}>Current Challenges</label>
+                <textarea id="challenges" name="challenges" value={formData.challenges} onChange={handleChange} rows={5} style={{ width: '100%', padding: '0.875rem 1rem', fontSize: '0.9375rem', border: '1px solid #D1D5DB', borderRadius: '8px', fontFamily: 'inherit', background: '#F9FAFB', resize: 'vertical' }} />
+              </div>
+
+              {/* CONTACT */}
+              <div className="form-grid-3" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '1.5rem', marginBottom: '1.5rem' }}>
                 <div>
                   <label htmlFor="websiteUrl" style={{ display: 'block', fontSize: '0.9375rem', fontWeight: 600, color: '#1F2937', marginBottom: '0.5rem' }}>Website</label>
                   <input type="text" id="websiteUrl" name="websiteUrl" value={formData.websiteUrl} onChange={handleChange} style={{ width: '100%', padding: '0.875rem 1rem', border: '1px solid #D1D5DB', borderRadius: '8px', background: '#F9FAFB' }} />
@@ -459,54 +507,70 @@ export default function EditProject() {
                   <label htmlFor="email" style={{ display: 'block', fontSize: '0.9375rem', fontWeight: 600, color: '#1F2937', marginBottom: '0.5rem' }}>Email</label>
                   <input type="email" id="email" name="email" value={formData.email} onChange={handleChange} style={{ width: '100%', padding: '0.875rem 1rem', border: '1px solid #D1D5DB', borderRadius: '8px', background: '#F9FAFB' }} />
                 </div>
+                <div>
+                  <label htmlFor="phone" style={{ display: 'block', fontSize: '0.9375rem', fontWeight: 600, color: '#1F2937', marginBottom: '0.5rem' }}>Phone</label>
+                  <input type="tel" id="phone" name="phone" value={formData.phone} onChange={handleChange} style={{ width: '100%', padding: '0.875rem 1rem', border: '1px solid #D1D5DB', borderRadius: '8px', background: '#F9FAFB' }} />
+                </div>
               </div>
 
+              {/* SOCIAL */}
               <div className="form-grid-3" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '1.5rem', marginBottom: '1.5rem' }}>
                 <div>
                   <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem', fontSize: '0.9375rem', fontWeight: 600, color: '#1F2937' }}>
-                    <img src={twitterIcon} alt="X" style={{ width: '20px', height: '20px' }} />
-                    X Handle
+                    <img src={twitterIcon} alt="X" style={{ width: '20px', height: '20px' }} />X Handle
                   </label>
-                  <input type="text" name="twitterHandle" value={formData.twitterHandle} onChange={handleChange} placeholder="@username" style={{ width: '100%', padding: '0.875rem 1rem', border: '1px solid #D1D5DB', borderRadius: '8px', background: '#F9FAFB' }} />
+                  <input type="text" name="twitterHandle" value={formData.twitterHandle} onChange={handleChange} style={{ width: '100%', padding: '0.875rem 1rem', border: '1px solid #D1D5DB', borderRadius: '8px', background: '#F9FAFB' }} />
                 </div>
                 <div>
                   <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem', fontSize: '0.9375rem', fontWeight: 600, color: '#1F2937' }}>
-                    <img src={linkedInIcon} alt="LinkedIn" style={{ width: '20px', height: '20px' }} />
-                    LinkedIn
+                    <img src={linkedInIcon} alt="LinkedIn" style={{ width: '20px', height: '20px' }} />LinkedIn
                   </label>
                   <input type="text" name="linkedinUsername" value={formData.linkedinUsername} onChange={handleChange} style={{ width: '100%', padding: '0.875rem 1rem', border: '1px solid #D1D5DB', borderRadius: '8px', background: '#F9FAFB' }} />
                 </div>
                 <div>
                   <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem', fontSize: '0.9375rem', fontWeight: 600, color: '#1F2937' }}>
-                    <span style={{ width: '20px', height: '20px', borderRadius: '4px', background: '#1877F2', color: '#FFFFFF', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.75rem', fontWeight: 700 }}>f</span>
-                    Facebook
+                    <img src={instagramIcon} alt="Instagram" style={{ width: '20px', height: '20px' }} />Instagram
                   </label>
-                  <input type="text" name="facebookUsername" value={formData.facebookUsername} onChange={handleChange} placeholder="African Bitcoiners" style={{ width: '100%', padding: '0.875rem 1rem', border: '1px solid #D1D5DB', borderRadius: '8px', background: '#F9FAFB' }} />
+                  <input type="text" name="instagramUsername" value={formData.instagramUsername} onChange={handleChange} style={{ width: '100%', padding: '0.875rem 1rem', border: '1px solid #D1D5DB', borderRadius: '8px', background: '#F9FAFB' }} />
                 </div>
               </div>
 
+              <div className="form-grid-3" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '1.5rem', marginBottom: '1.5rem' }}>
+                <div>
+                  <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem', fontSize: '0.9375rem', fontWeight: 600, color: '#1F2937' }}>
+                    <img src={nostrIcon} alt="Nostr" style={{ width: '20px', height: '20px' }} />Nostr
+                  </label>
+                  <input type="text" name="nostrAddress" value={formData.nostrAddress} onChange={handleChange} style={{ width: '100%', padding: '0.875rem 1rem', border: '1px solid #D1D5DB', borderRadius: '8px', background: '#F9FAFB' }} />
+                </div>
+                <div>
+                  <label style={{ marginBottom: '0.5rem', fontSize: '0.9375rem', fontWeight: 600, color: '#1F2937', display: 'block' }}>YouTube</label>
+                  <input type="text" name="youtubeChannel" value={formData.youtubeChannel} onChange={handleChange} style={{ width: '100%', padding: '0.875rem 1rem', border: '1px solid #D1D5DB', borderRadius: '8px', background: '#F9FAFB' }} />
+                </div>
+                <div>
+                  <label style={{ marginBottom: '0.5rem', fontSize: '0.9375rem', fontWeight: 600, color: '#1F2937', display: 'block' }}>Telegram</label>
+                  <input type="text" name="telegramGroup" value={formData.telegramGroup} onChange={handleChange} style={{ width: '100%', padding: '0.875rem 1rem', border: '1px solid #D1D5DB', borderRadius: '8px', background: '#F9FAFB' }} />
+                </div>
+              </div>
+
+              {/* FOUNDER */}
               <div className="form-grid-3" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '1.5rem', marginBottom: '2rem' }}>
                 <div>
-                  <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem', fontSize: '0.9375rem', fontWeight: 600, color: '#1F2937' }}>
-                    <img src={nostrIcon} alt="Nostr" style={{ width: '20px', height: '20px' }} />
-                    Nostr
-                  </label>
-                  <input type="text" name="nostrAddress" value={formData.nostrAddress} onChange={handleChange} placeholder="@afribitcoiners" style={{ width: '100%', padding: '0.875rem 1rem', border: '1px solid #D1D5DB', borderRadius: '8px', background: '#F9FAFB' }} />
+                  <label htmlFor="founderName" style={{ display: 'block', fontSize: '0.9375rem', fontWeight: 600, color: '#1F2937', marginBottom: '0.5rem' }}>Founder Name</label>
+                  <input type="text" id="founderName" name="founderName" value={formData.founderName} onChange={handleChange} style={{ width: '100%', padding: '0.875rem 1rem', border: '1px solid #D1D5DB', borderRadius: '8px', background: '#F9FAFB' }} />
                 </div>
                 <div>
-                  <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem', fontSize: '0.9375rem', fontWeight: 600, color: '#1F2937' }}>
-                    <img src={instagramIcon} alt="Instagram" style={{ width: '20px', height: '20px' }} />
-                    Instagram
-                  </label>
-                  <input type="text" name="instagramUsername" value={formData.instagramUsername} onChange={handleChange} placeholder="@afribitcoiners" style={{ width: '100%', padding: '0.875rem 1rem', border: '1px solid #D1D5DB', borderRadius: '8px', background: '#F9FAFB' }} />
+                  <label htmlFor="founderTwitter" style={{ display: 'block', fontSize: '0.9375rem', fontWeight: 600, color: '#1F2937', marginBottom: '0.5rem' }}>Founder Twitter</label>
+                  <input type="text" id="founderTwitter" name="founderTwitter" value={formData.founderTwitter} onChange={handleChange} style={{ width: '100%', padding: '0.875rem 1rem', border: '1px solid #D1D5DB', borderRadius: '8px', background: '#F9FAFB' }} />
                 </div>
-                <div></div>
+                <div>
+                  <label htmlFor="founderEmail" style={{ display: 'block', fontSize: '0.9375rem', fontWeight: 600, color: '#1F2937', marginBottom: '0.5rem' }}>Founder Email</label>
+                  <input type="email" id="founderEmail" name="founderEmail" value={formData.founderEmail} onChange={handleChange} style={{ width: '100%', padding: '0.875rem 1rem', border: '1px solid #D1D5DB', borderRadius: '8px', background: '#F9FAFB' }} />
+                </div>
               </div>
 
+              {/* BUTTONS */}
               <div className="button-group" style={{ display: 'flex', gap: '1rem' }}>
-                <button type="button" onClick={() => navigate('/dashboard')} style={{ flex: 1, padding: '0.875rem', background: '#FFFFFF', color: '#1F2937', border: '1px solid #D1D5DB', borderRadius: '8px', fontSize: '1rem', fontWeight: 600, cursor: 'pointer' }}>
-                  Cancel
-                </button>
+                <button type="button" onClick={() => navigate('/dashboard')} style={{ flex: 1, padding: '0.875rem', background: '#FFFFFF', color: '#1F2937', border: '1px solid #D1D5DB', borderRadius: '8px', fontSize: '1rem', fontWeight: 600, cursor: 'pointer' }}>Cancel</button>
                 <button type="submit" disabled={isSubmitting} style={{ flex: 1, padding: '0.875rem', background: isSubmitting ? '#D1D5DB' : '#FD5A47', color: '#FFFFFF', border: 'none', borderRadius: '8px', fontSize: '1rem', fontWeight: 600, cursor: isSubmitting ? 'not-allowed' : 'pointer' }}>
                   {isSubmitting ? 'Saving...' : 'Save Changes'}
                 </button>

@@ -37,7 +37,7 @@ export default function HomePage() {
   useEffect(() => {
     const fetchCategoryCounts = async () => {
       setLoadingCounts(true);
-      
+
       try {
         // Try API first to get counts of published and verified projects
         if (API_URL) {
@@ -64,7 +64,7 @@ export default function HomePage() {
                 verifiedProjects.forEach((project: any) => {
                   const categoryName = (project.category?.name || '').toLowerCase();
                   const categorySlug = (project.category?.slug || '').toLowerCase();
-                  
+
                   if (categoryName.includes('business') || categorySlug.includes('business')) {
                     counts.businesses++;
                   } else if (categoryName.includes('education') || categorySlug.includes('education')) {
@@ -91,11 +91,12 @@ export default function HomePage() {
         console.warn('API not available, falling back to local data:', apiError);
       }
 
-      // Fallback to local data
+      // Fallback to local data (NEW STRUCTURE)
       try {
-        const module = await import('../data/locations.json');
+        const module = await import('../data/projects.json');
         const data = module.default;
-        if (data?.features) {
+
+        if (data?.projects) {
           const counts: CategoryCounts = {
             businesses: 0,
             education: 0,
@@ -104,13 +105,21 @@ export default function HomePage() {
             communities: 0,
           };
 
-          data.features.forEach((feature: any) => {
-            const category = (feature.properties?.category || '').toLowerCase();
-            if (category.includes('business')) counts.businesses++;
-            else if (category.includes('education')) counts.education++;
-            else if (category.includes('circular')) counts.circularEconomy++;
-            else if (category.includes('mining') || category.includes('miner')) counts.miners++;
-            else if (category.includes('community')) counts.communities++;
+          // Filter for active/published projects only in fallback
+          const activeProjects = data.projects.filter((project: any) =>
+            project.active !== false && project.status === 'approved'
+          );
+
+          activeProjects.forEach((project: any) => {
+            // Categories is an array in new structure
+            const categories = project.categories || [];
+            const categoriesStr = categories.join(' ').toLowerCase();
+
+            if (categoriesStr.includes('business')) counts.businesses++;
+            else if (categoriesStr.includes('education')) counts.education++;
+            else if (categoriesStr.includes('circular')) counts.circularEconomy++;
+            else if (categoriesStr.includes('mining') || categoriesStr.includes('miner')) counts.miners++;
+            else if (categoriesStr.includes('community')) counts.communities++;
           });
 
           setCategoryCounts(counts);
@@ -618,7 +627,7 @@ export default function HomePage() {
               Join hundreds of other projects driving the African Bitcoin economy forward. Get listed today.
             </p>
             <Link
-              to="/list-project"
+              to="/create-project"
               style={{
                 display: 'flex',
                 alignItems: 'center',

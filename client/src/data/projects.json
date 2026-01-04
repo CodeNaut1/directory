@@ -1,0 +1,203 @@
+{
+  "projects": [
+    {
+      "id": "abidjan-bitcoin-meetup",
+      "name": "Abidjan Bitcoin Meetup",
+      "slug": "abidjan-bitcoin-meetup",
+      "description": "Bitcoin Community from Ivory Coast",
+      "country_code": "ci",
+      "country_name": "Côte d'Ivoire",
+      "city": "Abidjan",
+      "location": "Abidjan, Côte d'Ivoire",
+      "image": "https://bitcoiners.africa/wp-content/uploads/2024/06/Abidjan-Bitcoin.jpg",
+      "website": "https://btcmap.org/community/abidjan-bitcoin",
+      "email": "",
+      "categories": [
+        "Community"
+      ],
+      "tags": [],
+      "social": {
+        "twitter": "https://x.com/AbidjanBTC",
+        "linkedin": "",
+        "instagram": "",
+        "facebook": "",
+        "youtube": "",
+        "telegram": "",
+        "nostr": ""
+      },
+      "bitcoin_acceptance": {
+        "onchain": true,
+        "lightning": false,
+        "gift_cards": false
+      },
+      "founder": {
+        "name": "Science Genial",
+        "twitter": "https://x.com/science_genial",
+        "email": ""
+      },
+      "initiatives": "",
+      "impact": "",
+      "challenges": "",
+      "verified": true,
+      "featured": false,
+      "status": "approved",
+      "founded_year": "",
+      "active": true,
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2025-01-03T00:00:00Z"
+    },
+    {
+      "id": "africa-free-routing",
+      "name": "Africa Free Routing",
+      "slug": "africa-free-routing",
+      "description": "Africa free routing is the biggest Bitcoin lightning routing service in Africa based out of Lagos Nigeria.",
+      "country_code": "ng",
+      "country_name": "Nigeria",
+      "city": "Lagos",
+      "location": "Lagos, Nigeria",
+      "image": "https://bitcoiners.africa/wp-content/uploads/2024/03/African-Bitcoiners_Africa-Free-Routing_logo.png",
+      "website": "https://freerouting.africa/",
+      "email": "",
+      "categories": [
+        "Business",
+        "Technology"
+      ],
+      "tags": [
+        "Lightning Network",
+        "Routing",
+        "Infrastructure"
+      ],
+      "social": {
+        "twitter": "https://x.com/FreeRoutingAf",
+        "linkedin": "",
+        "instagram": "",
+        "facebook": "",
+        "youtube": "",
+        "telegram": "",
+        "nostr": ""
+      },
+      "bitcoin_acceptance": {
+        "onchain": true,
+        "lightning": true,
+        "gift_cards": false
+      },
+      "founder": {
+        "name": "Megasley",
+        "twitter": "https://x.com/megasley?s=21",
+        "email": ""
+      },
+      "initiatives": "",
+      "impact": "",
+      "challenges": "",
+      "verified": true,
+      "featured": false,
+      "status": "approved",
+      "founded_year": "",
+      "active": true,
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2025-01-03T00:00:00Z"
+    },
+    {
+      "id": "african-bitcoin-mining-summit",
+      "name": "African Bitcoin Mining Summit",
+      "slug": "african-bitcoin-mining-summit",
+      "description": "The African Bitcoin Mining Summit brings together African Bitcoin miners and investors.",
+      "country_code": "et",
+      "country_name": "Ethiopia",
+      "city": "Addis Ababa",
+      "location": "Addis Ababa, Ethiopia",
+      "image": "https://bitcoiners.africa/wp-content/uploads/2024/10/GAMA-African-Bitcoin-Mining-Summit.jpg",
+      "website": "https://africanbitcoinmining.com/",
+      "email": "",
+      "categories": [
+        "Conference",
+        "Mining"
+      ],
+      "tags": [
+        "Mining",
+        "Summit",
+        "Investment"
+      ],
+      "social": {
+        "twitter": "https://x.com/gama_alliance",
+        "linkedin": "",
+        "instagram": "",
+        "facebook": "",
+        "youtube": "",
+        "telegram": "",
+        "nostr": ""
+      },
+      "bitcoin_acceptance": {
+        "onchain": true,
+        "lightning": false,
+        "gift_cards": false
+      },
+      "founder": {
+        "name": "GAMA",
+        "twitter": "https://x.com/gama_alliance",
+        "email": ""
+      },
+      "initiatives": "",
+      "impact": "",
+      "challenges": "",
+      "verified": true,
+      "featured": true,
+      "status": "approved",
+      "founded_year": "",
+      "active": true,
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2025-01-03T00:00:00Z"
+    },
+    {
+      "id": "afribit",
+      "name": "Afribit",
+      "slug": "afribit",
+      "description": "Our mission is to promote, educate, and onboard merchants and consumers in the Kibera informal settlement to adopt the bitcoin/lightning network with a plan to develop a blockchain community bank model based on the software stack by Galoy",
+      "country_code": "ke",
+      "country_name": "Kenya",
+      "city": "Nairobi",
+      "location": "Nairobi, Kenya",
+      "image": "https://bitcoiners.africa/wp-content/uploads/2024/10/AfriBit.jpg",
+      "website": "https://afribit.africa/",
+      "email": "",
+      "categories": [
+        "Community",
+        "Circular Economy"
+      ],
+      "tags": [
+        "Kibera",
+        "Merchant Adoption",
+        "Lightning Network"
+      ],
+      "social": {
+        "twitter": "https://x.com/AfribitKibera",
+        "linkedin": "",
+        "instagram": "",
+        "facebook": "",
+        "youtube": "",
+        "telegram": "",
+        "nostr": ""
+      },
+      "bitcoin_acceptance": {
+        "onchain": true,
+        "lightning": true,
+        "gift_cards": false
+      },
+      "founder": {
+        "name": "Ronnie and Yogi",
+        "twitter": "",
+        "email": ""
+      },
+      "initiatives": "",
+      "impact": "",
+      "challenges": "",
+      "verified": true,
+      "featured": false,
+      "status": "approved",
+      "founded_year": "",
+      "active": true,
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2025-01-03T00:00:00Z"
+    }
+  ]
+}

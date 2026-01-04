@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import projectsData from '../data/projects.json';
+import type { Project } from '../data/projects.types';
 import markerPinIcon from '../assets/marker-pin.png';
 import bitcoinIcon from '../assets/bitcoin-icon.png';
 import lightningIcon from '../assets/lightning-icon.png';
@@ -12,45 +14,14 @@ import twitterIcon from '../assets/twitter-icon.png';
 import linkedInIcon from '../assets/linkedIn-icon.png';
 import gmailIcon from '../assets/gmail-icon.png';
 import nostrIcon from '../assets/nostr-icon.png';
-
-interface ProjectData {
-  name: string;
-  description?: string;
-  logo?: string;
-  website?: string;
-  category?: {
-    id: string;
-    name: string;
-    slug: string;
-  };
-  country?: {
-    id: string;
-    name: string;
-    code: string;
-  };
-  city?: string;
-  verified?: boolean;
-  details?: {
-    socialLinks?: {
-      twitter?: string;
-      linkedin?: string;
-      facebook?: string;
-      instagram?: string;
-      nostr?: string;
-    };
-    contactEmail?: string;
-    bitcoinOnly?: boolean;
-    lightningNetwork?: boolean;
-    longDescription?: string;
-  };
-  tags?: Array<{ id: string; name: string; slug: string }>;
-}
+import facebookIcon from '../assets/facebook-icon.png';
+import instagramIcon from '../assets/instagram-icon.png';
 
 export default function ViewProject() {
   const { id } = useParams<{ id: string }>();
   const API_URL = import.meta.env.VITE_API_URL || '';
 
-  const [project, setProject] = useState<ProjectData | null>(null);
+  const [project, setProject] = useState<Project | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -78,7 +49,6 @@ export default function ViewProject() {
               return;
             }
           } else if (response.status !== 404) {
-            // If it's not a 404, show the error
             if (response.status === 403) {
               setError('This project is currently under review and will be visible once approved.');
             } else {
@@ -90,80 +60,18 @@ export default function ViewProject() {
           // If 404, fall through to local data
         }
 
-        // Fallback to local data from locations.json
-        try {
-          const module = await import('../data/locations.json');
-          const data = module.default;
-          if (data?.features) {
-            // Try to find by slug (id parameter might be a slug)
-            const found = data.features.find((feature: any) => {
-              const props = feature.properties || {};
-              const featureSlug = props.name
-                ? props.name
-                  .toLowerCase()
-                  .replace(/\s+/g, '-')
-                  .replace(/[^a-z0-9-]/g, '')
-                : '';
-              const featureId = feature.id || '';
+        // Fallback to local data from projects.json
+        const found = projectsData.projects.find(
+          (p) => p.id === id || p.slug === id
+        );
 
-              return featureSlug === id || featureId === id || featureId.toString() === id;
-            });
-
-            if (found) {
-              const props = found.properties || {};
-
-              // Extract city and country from location string (format: "City, Country")
-              let city = '';
-              let countryName = '';
-              if (props.location) {
-                const locationParts = props.location.split(',').map((s: string) => s.trim());
-                city = locationParts[0] || '';
-                countryName = locationParts[1] || '';
-              }
-
-              const transformedProject: ProjectData = {
-                name: props.name || 'Unnamed Project',
-                description: props.description,
-                logo: (props as any).image || (props as any).logo, // Use 'image' from locations.json (type assertion)
-                website: (props as any).link || (props as any).website, // Use 'link' from locations.json (type assertion)
-                verified: (props as any).verified || props.active === true || props.active === 'true',
-                category: props.category
-                  ? {
-                    id: props.category.toLowerCase().replace(/\s+/g, '-'),
-                    name: props.category,
-                    slug: props.category.toLowerCase().replace(/\s+/g, '-'),
-                  }
-                  : undefined,
-                country: props.country_code || countryName
-                  ? {
-                    id: props.country_code || countryName.toLowerCase().replace(/\s+/g, '-'),
-                    name: countryName || (props as any).country || '',
-                    code: props.country_code || '',
-                  }
-                  : undefined,
-                city: city || (props as any).city,
-                details: {
-                  contactEmail: (props as any).email || (props as any).founder_email,
-                  socialLinks: {
-                    twitter: (props as any).twitter || (props as any).founder_twitter || (props as any).personal_twitter,
-                    linkedin: (props as any).linkedin,
-                    facebook: (props as any).facebook,
-                    instagram: (props as any).instagram,
-                    nostr: (props as any).nostr,
-                  },
-                  bitcoinOnly: true, // All projects in locations.json are Bitcoin-only
-                  lightningNetwork: false, // Not specified in locations.json
-                  longDescription: props.description, // Use description as longDescription
-                },
-                tags: [], // Tags not available in locations.json
-              };
-              setProject(transformedProject);
-              setLoading(false);
-              return;
-            }
+        if (found) {
+          setProject(found as Project);
+          if (found.name) {
+            document.title = `${found.name} - African Bitcoin Directory`;
           }
-        } catch (localErr) {
-          console.error('Error loading local data:', localErr);
+          setLoading(false);
+          return;
         }
 
         // If we get here, project was not found
@@ -203,10 +111,21 @@ export default function ViewProject() {
     );
   }
 
-  const location = [project.city, project.country?.name].filter(Boolean).join(', ');
   const bitcoinMethods: string[] = [];
-  if (project.details?.bitcoinOnly) bitcoinMethods.push('Bitcoin');
-  if (project.details?.lightningNetwork) bitcoinMethods.push('Lightning');
+  if (project.bitcoin_acceptance.onchain) bitcoinMethods.push('Bitcoin Onchain');
+  if (project.bitcoin_acceptance.lightning) bitcoinMethods.push('Lightning Network');
+  if (project.bitcoin_acceptance.gift_cards) bitcoinMethods.push('Gift Cards');
+
+  // Count available social links
+  const socialLinks = [
+    project.social.twitter,
+    project.social.linkedin,
+    project.social.facebook,
+    project.social.instagram,
+    project.social.youtube,
+    project.social.telegram,
+    project.social.nostr,
+  ].filter(Boolean);
 
   return (
     <>
@@ -266,16 +185,20 @@ export default function ViewProject() {
               {/* Main Info Card */}
               <div style={{ background: '#FFFFFF', borderRadius: '12px', padding: 'clamp(1.5rem, 4vw, 2rem)', boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)', marginBottom: '2rem' }}>
                 {/* Category Badge */}
-                {project.category && (
-                  <span style={{ display: 'inline-block', padding: '0.375rem 0.875rem', background: '#FEF3C7', color: '#92400E', borderRadius: '9999px', fontSize: '0.875rem', fontWeight: 500, marginBottom: '1rem' }}>
-                    {project.category.name}
-                  </span>
+                {project.categories && project.categories.length > 0 && (
+                  <div style={{ marginBottom: '1rem', display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+                    {project.categories.map((cat, idx) => (
+                      <span key={idx} style={{ display: 'inline-block', padding: '0.375rem 0.875rem', background: '#FEF3C7', color: '#92400E', borderRadius: '9999px', fontSize: '0.875rem', fontWeight: 500 }}>
+                        {cat}
+                      </span>
+                    ))}
+                  </div>
                 )}
 
                 {/* Title Row with Logo and Verified */}
                 <div className="title-row" style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1.5rem' }}>
-                  {project.logo && (
-                    <img src={project.logo} alt={project.name} style={{ width: 'clamp(50px, 10vw, 60px)', height: 'clamp(50px, 10vw, 60px)', borderRadius: '8px', objectFit: 'cover', flexShrink: 0 }} />
+                  {project.image && (
+                    <img src={project.image} alt={project.name} style={{ width: 'clamp(50px, 10vw, 60px)', height: 'clamp(50px, 10vw, 60px)', borderRadius: '8px', objectFit: 'cover', flexShrink: 0 }} />
                   )}
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <h1 style={{ fontSize: 'clamp(1.75rem, 4vw, 2.5rem)', fontWeight: 700, color: '#1F2937', margin: 0, wordBreak: 'break-word' }}>
@@ -288,28 +211,41 @@ export default function ViewProject() {
                       Verified
                     </span>
                   )}
+                  {project.featured && (
+                    <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.375rem', padding: '0.375rem 0.875rem', background: '#FD5A47', color: '#FFFFFF', borderRadius: '9999px', fontSize: '0.875rem', fontWeight: 600, flexShrink: 0, whiteSpace: 'nowrap' }}>
+                      ⭐ Featured
+                    </span>
+                  )}
                 </div>
 
                 {/* Location & Bitcoin Methods */}
                 <div className="meta-row" style={{ display: 'flex', flexWrap: 'wrap', gap: '1.5rem', marginBottom: '2rem' }}>
-                  {location && (
+                  {project.location && (
                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                       <img src={markerPinIcon} alt="Location" style={{ width: '20px', height: '20px', flexShrink: 0 }} />
-                      <span style={{ color: '#1F2937', fontSize: '0.9375rem' }}>{location}</span>
+                      <span style={{ color: '#1F2937', fontSize: '0.9375rem' }}>{project.location}</span>
+                      {project.country_code && (
+                        <span className={`fi fi-${project.country_code.toLowerCase()}`} style={{ fontSize: '1.2rem' }}></span>
+                      )}
                     </div>
                   )}
-                  {project.details?.bitcoinOnly && (
+                  {project.bitcoin_acceptance.onchain && (
                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                       <img src={bitcoinIcon} alt="Bitcoin" style={{ width: '20px', height: '20px', flexShrink: 0 }} />
                       <span style={{ color: '#1F2937', fontSize: '0.9375rem' }}>Bitcoin Onchain</span>
                       {project.verified && <img src={verifiedIcon} alt="Verified" style={{ width: '16px', height: '16px' }} />}
                     </div>
                   )}
-                  {project.details?.lightningNetwork && (
+                  {project.bitcoin_acceptance.lightning && (
                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                       <img src={lightningIcon} alt="Lightning" style={{ width: '20px', height: '20px', flexShrink: 0 }} />
                       <span style={{ color: '#1F2937', fontSize: '0.9375rem' }}>Lightning</span>
                       {project.verified && <img src={verifiedIcon} alt="Verified" style={{ width: '16px', height: '16px' }} />}
+                    </div>
+                  )}
+                  {project.founded_year && (
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                      <span style={{ color: '#6B7280', fontSize: '0.875rem' }}>Founded: {project.founded_year}</span>
                     </div>
                   )}
                 </div>
@@ -320,7 +256,7 @@ export default function ViewProject() {
                 {project.description && (
                   <div style={{ marginBottom: '2rem' }}>
                     <h2 style={{ fontSize: 'clamp(0.9rem, 2vw, 1rem)', fontWeight: 600, color: '#1F2937', marginBottom: '0.75rem' }}>
-                      Description
+                      About
                     </h2>
                     <p style={{ fontSize: 'clamp(0.875rem, 2vw, 0.9375rem)', color: '#1F2937', lineHeight: 1.7, margin: 0 }}>
                       {project.description}
@@ -329,7 +265,7 @@ export default function ViewProject() {
                 )}
 
                 {/* Action Buttons */}
-                <div className="action-buttons" style={{ display: 'flex', gap: '1rem' }}>
+                <div className="action-buttons" style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
                   {project.website && (
                     <a
                       href={project.website.startsWith('http') ? project.website : `https://${project.website}`}
@@ -343,36 +279,36 @@ export default function ViewProject() {
                       Visit Website
                     </a>
                   )}
-                  {project.details?.contactEmail && (
+                  {project.email && (
                     <a
-                      href={`mailto:${project.details.contactEmail}`}
+                      href={`mailto:${project.email}`}
                       style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.75rem 1.5rem', background: '#FFFFFF', color: '#1F2937', border: '1px solid #E5E7EB', borderRadius: '8px', fontSize: '0.9375rem', fontWeight: 600, textDecoration: 'none', transition: 'all 0.2s', whiteSpace: 'nowrap' }}
                       onMouseEnter={(e) => { e.currentTarget.style.background = '#F9FAFB'; }}
                       onMouseLeave={(e) => { e.currentTarget.style.background = '#FFFFFF'; }}
                     >
                       <img src={emailIcon} alt="Email" style={{ width: '18px', height: '18px' }} />
-                      Contact the Team
+                      Contact Team
                     </a>
                   )}
                 </div>
               </div>
 
               {/* Key Focus Areas */}
-              {(project.category?.name || bitcoinMethods.length > 0) && (
+              {(project.categories.length > 0 || bitcoinMethods.length > 0) && (
                 <div style={{ background: '#FFFFFF', borderRadius: '12px', padding: 'clamp(1.5rem, 4vw, 2rem)', boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)', marginBottom: '2rem' }}>
                   <h2 style={{ fontSize: 'clamp(1rem, 3vw, 1.25rem)', fontWeight: 700, color: '#1F2937', marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
                     <img src={targetIcon} alt="Target" style={{ width: '24px', height: '24px' }} />
-                    Key Focus Areas & Integration
+                    Key Focus Areas
                   </h2>
                   <div className="focus-grid" style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
-                    {project.category && (
+                    {project.categories.length > 0 && (
                       <div style={{ display: 'flex', paddingBottom: '1.5rem', borderBottom: bitcoinMethods.length > 0 ? '1px solid #E5E7EB' : 'none' }}>
                         <p className="focus-label" style={{ fontSize: '0.875rem', fontWeight: 600, color: '#1F2937', margin: 0, minWidth: '140px', lineHeight: 1.6 }}>Industry</p>
-                        <p style={{ fontSize: 'clamp(0.875rem, 2vw, 0.9375rem)', color: '#1F2937', margin: 0, flex: 1, lineHeight: 1.6 }}>{project.category.name}</p>
+                        <p style={{ fontSize: 'clamp(0.875rem, 2vw, 0.9375rem)', color: '#1F2937', margin: 0, flex: 1, lineHeight: 1.6 }}>{project.categories.join(', ')}</p>
                       </div>
                     )}
                     {bitcoinMethods.length > 0 && (
-                      <div style={{ display: 'flex', paddingTop: project.category ? '1.5rem' : 0 }}>
+                      <div style={{ display: 'flex', paddingTop: project.categories.length > 0 ? '1.5rem' : 0 }}>
                         <p className="focus-label" style={{ fontSize: '0.875rem', fontWeight: 600, color: '#1F2937', margin: 0, minWidth: '140px', lineHeight: 1.6 }}>Bitcoin Accepted</p>
                         <p style={{ fontSize: 'clamp(0.875rem, 2vw, 0.9375rem)', color: '#1F2937', margin: 0, flex: 1, lineHeight: 1.6 }}>{bitcoinMethods.join(', ')}</p>
                       </div>
@@ -381,90 +317,172 @@ export default function ViewProject() {
                 </div>
               )}
 
-              {/* Core Initiatives */}
-              {project.details?.longDescription && (
-                <div style={{ background: '#FFFFFF', borderRadius: '12px', padding: 'clamp(1.5rem, 4vw, 2rem)', boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)' }}>
+              {/* Core Initiatives, Impact & Challenges */}
+              {(project.initiatives || project.impact || project.challenges) && (
+                <div style={{ background: '#FFFFFF', borderRadius: '12px', padding: 'clamp(1.5rem, 4vw, 2rem)', boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)', marginBottom: '2rem' }}>
                   <h2 style={{ fontSize: 'clamp(1rem, 3vw, 1.25rem)', fontWeight: 700, color: '#1F2937', marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
                     <img src={starIcon} alt="Star" style={{ width: '24px', height: '24px' }} />
-                    Core Initiatives & Impact
+                    Details
                   </h2>
-                  <div style={{ fontSize: 'clamp(0.875rem, 2vw, 0.9375rem)', color: '#1F2937', lineHeight: 1.7, whiteSpace: 'pre-wrap' }}>
-                    {project.details.longDescription}
-                  </div>
+
+                  {project.initiatives && (
+                    <div style={{ marginBottom: project.impact || project.challenges ? '1.5rem' : 0 }}>
+                      <h3 style={{ fontSize: '0.9rem', fontWeight: 600, color: '#1F2937', marginBottom: '0.5rem' }}>Core Initiatives</h3>
+                      <p style={{ fontSize: 'clamp(0.875rem, 2vw, 0.9375rem)', color: '#1F2937', lineHeight: 1.7, margin: 0, whiteSpace: 'pre-wrap' }}>{project.initiatives}</p>
+                    </div>
+                  )}
+
+                  {project.impact && (
+                    <div style={{ marginBottom: project.challenges ? '1.5rem' : 0 }}>
+                      <h3 style={{ fontSize: '0.9rem', fontWeight: 600, color: '#10B981', marginBottom: '0.5rem' }}>Impact & Achievements</h3>
+                      <p style={{ fontSize: 'clamp(0.875rem, 2vw, 0.9375rem)', color: '#1F2937', lineHeight: 1.7, margin: 0, whiteSpace: 'pre-wrap' }}>{project.impact}</p>
+                    </div>
+                  )}
+
+                  {project.challenges && (
+                    <div>
+                      <h3 style={{ fontSize: '0.9rem', fontWeight: 600, color: '#F59E0B', marginBottom: '0.5rem' }}>Current Challenges</h3>
+                      <p style={{ fontSize: 'clamp(0.875rem, 2vw, 0.9375rem)', color: '#1F2937', lineHeight: 1.7, margin: 0, whiteSpace: 'pre-wrap' }}>{project.challenges}</p>
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* Founder Information */}
+              {project.founder && (project.founder.name || project.founder.twitter || project.founder.email) && (
+                <div style={{ background: '#FFFFFF', borderRadius: '12px', padding: 'clamp(1.5rem, 4vw, 2rem)', boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)' }}>
+                  <h2 style={{ fontSize: 'clamp(1rem, 3vw, 1.25rem)', fontWeight: 700, color: '#1F2937', marginBottom: '1.5rem' }}>
+                    Founder Information
+                  </h2>
+                  {project.founder.name && (
+                    <p style={{ fontSize: 'clamp(0.875rem, 2vw, 0.9375rem)', color: '#1F2937', marginBottom: '0.75rem' }}>
+                      <strong>Name:</strong> {project.founder.name}
+                    </p>
+                  )}
+                  {project.founder.twitter && (
+                    <p style={{ fontSize: 'clamp(0.875rem, 2vw, 0.9375rem)', color: '#1F2937', marginBottom: '0.75rem' }}>
+                      <strong>Twitter:</strong>{' '}
+                      <a href={project.founder.twitter} target="_blank" rel="noopener" style={{ color: '#FD5A47', textDecoration: 'none' }}>
+                        @{project.founder.twitter.split('/').pop()}
+                      </a>
+                    </p>
+                  )}
+                  {project.founder.email && (
+                    <p style={{ fontSize: 'clamp(0.875rem, 2vw, 0.9375rem)', color: '#1F2937', margin: 0 }}>
+                      <strong>Email:</strong>{' '}
+                      <a href={`mailto:${project.founder.email}`} style={{ color: '#FD5A47', textDecoration: 'none' }}>
+                        {project.founder.email}
+                      </a>
+                    </p>
+                  )}
                 </div>
               )}
             </div>
 
             {/* Right Column (Sidebar) */}
             <div className="project-sidebar">
-              {/* Contact Info Card */}
+              {/* Project Status Card */}
               <div style={{ background: '#FFFFFF', borderRadius: '12px', padding: 'clamp(1.5rem, 4vw, 2rem)', marginBottom: '2rem', boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)' }}>
                 <h2 style={{ fontSize: 'clamp(1rem, 2.5vw, 1.125rem)', fontWeight: 600, color: '#1F2937', marginBottom: '1.5rem' }}>
-                  Contact Info
+                  Project Status
                 </h2>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                  {project.website && (
-                    <a
-                      href={project.website.startsWith('http') ? project.website : `https://${project.website}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', color: '#1F2937', textDecoration: 'none', fontSize: '0.9375rem' }}
-                    >
-                      <img src={websiteIcon} alt="Website" style={{ width: '20px', height: '20px', flexShrink: 0 }} />
-                      <span style={{ flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                        {project.website.replace(/^https?:\/\//, '').replace(/^www\./, '')}
-                      </span>
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style={{ flexShrink: 0 }}>
-                        <path d="M18 13V19A2 2 0 0 1 16 21H5A2 2 0 0 1 3 19V8A2 2 0 0 1 5 6H11" stroke="currentColor" strokeWidth="2" />
-                        <path d="M15 3H21V9" stroke="currentColor" strokeWidth="2" />
-                        <path d="M10 14L21 3" stroke="currentColor" strokeWidth="2" />
-                      </svg>
-                    </a>
+                  <div>
+                    <p style={{ fontSize: '0.875rem', color: '#6B7280', marginBottom: '0.25rem' }}>Activity</p>
+                    <p style={{ fontSize: '0.9375rem', color: project.active ? '#10B981' : '#EF4444', fontWeight: 600, margin: 0 }}>
+                      {project.active ? '✓ Active' : '⚠ Inactive'}
+                    </p>
+                  </div>
+                  <div>
+                    <p style={{ fontSize: '0.875rem', color: '#6B7280', marginBottom: '0.25rem' }}>Status</p>
+                    <p style={{ fontSize: '0.9375rem', color: '#1F2937', fontWeight: 500, margin: 0, textTransform: 'capitalize' }}>
+                      {project.status}
+                    </p>
+                  </div>
+                  {project.created_at && (
+                    <div>
+                      <p style={{ fontSize: '0.875rem', color: '#6B7280', marginBottom: '0.25rem' }}>Added</p>
+                      <p style={{ fontSize: '0.9375rem', color: '#1F2937', margin: 0 }}>
+                        {new Date(project.created_at).toLocaleDateString()}
+                      </p>
+                    </div>
                   )}
-                  {project.details?.socialLinks?.twitter && (
-                    <a
-                      href={project.details.socialLinks.twitter}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', color: '#1F2937', textDecoration: 'none', fontSize: '0.9375rem' }}
-                    >
-                      <img src={twitterIcon} alt="Twitter" style={{ width: '20px', height: '20px', flexShrink: 0 }} />
-                      <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{project.details.socialLinks.twitter.split('/').pop()?.replace('@', '') || 'Twitter'}</span>
-                    </a>
-                  )}
-                  {project.details?.socialLinks?.linkedin && (
-                    <a
-                      href={project.details.socialLinks.linkedin}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', color: '#1F2937', textDecoration: 'none', fontSize: '0.9375rem' }}
-                    >
-                      <img src={linkedInIcon} alt="LinkedIn" style={{ width: '20px', height: '20px', flexShrink: 0 }} />
-                      <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{project.details.socialLinks.linkedin.split('/').pop() || 'LinkedIn'}</span>
-                    </a>
-                  )}
-                  {project.details?.contactEmail && (
-                    <a
-                      href={`mailto:${project.details.contactEmail}`}
-                      style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', color: '#1F2937', textDecoration: 'none', fontSize: '0.9375rem' }}
-                    >
-                      <img src={gmailIcon} alt="Email" style={{ width: '20px', height: '20px', flexShrink: 0 }} />
-                      <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{project.details.contactEmail}</span>
-                    </a>
-                  )}
-                  {project.details?.socialLinks?.nostr && (
-                    <a
-                      href={project.details.socialLinks.nostr}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', color: '#1F2937', textDecoration: 'none', fontSize: '0.9375rem' }}
-                    >
-                      <img src={nostrIcon} alt="Nostr" style={{ width: '20px', height: '20px', flexShrink: 0 }} />
-                      <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{project.details.socialLinks.nostr.split('/').pop() || 'Nostr'}</span>
-                    </a>
+                  {project.updated_at && (
+                    <div>
+                      <p style={{ fontSize: '0.875rem', color: '#6B7280', marginBottom: '0.25rem' }}>Updated</p>
+                      <p style={{ fontSize: '0.9375rem', color: '#1F2937', margin: 0 }}>
+                        {new Date(project.updated_at).toLocaleDateString()}
+                      </p>
+                    </div>
                   )}
                 </div>
               </div>
+
+              {/* Contact Info Card */}
+              {socialLinks.length > 0 && (
+                <div style={{ background: '#FFFFFF', borderRadius: '12px', padding: 'clamp(1.5rem, 4vw, 2rem)', marginBottom: '2rem', boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)' }}>
+                  <h2 style={{ fontSize: 'clamp(1rem, 2.5vw, 1.125rem)', fontWeight: 600, color: '#1F2937', marginBottom: '1.5rem' }}>
+                    Connect
+                  </h2>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                    {project.website && (
+                      <a
+                        href={project.website.startsWith('http') ? project.website : `https://${project.website}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', color: '#1F2937', textDecoration: 'none', fontSize: '0.9375rem' }}
+                      >
+                        <img src={websiteIcon} alt="Website" style={{ width: '20px', height: '20px', flexShrink: 0 }} />
+                        <span style={{ flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                          {project.website.replace(/^https?:\/\//, '').replace(/^www\./, '')}
+                        </span>
+                      </a>
+                    )}
+                    {project.social.twitter && (
+                      <a
+                        href={project.social.twitter}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', color: '#1F2937', textDecoration: 'none', fontSize: '0.9375rem' }}
+                      >
+                        <img src={twitterIcon} alt="Twitter" style={{ width: '20px', height: '20px', flexShrink: 0 }} />
+                        <span>{project.social.twitter.split('/').pop()?.replace('@', '') || 'Twitter'}</span>
+                      </a>
+                    )}
+                    {project.social.linkedin && (
+                      <a
+                        href={project.social.linkedin}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', color: '#1F2937', textDecoration: 'none', fontSize: '0.9375rem' }}
+                      >
+                        <img src={linkedInIcon} alt="LinkedIn" style={{ width: '20px', height: '20px', flexShrink: 0 }} />
+                        <span>LinkedIn</span>
+                      </a>
+                    )}
+                    {project.email && (
+                      <a
+                        href={`mailto:${project.email}`}
+                        style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', color: '#1F2937', textDecoration: 'none', fontSize: '0.9375rem' }}
+                      >
+                        <img src={gmailIcon} alt="Email" style={{ width: '20px', height: '20px', flexShrink: 0 }} />
+                        <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{project.email}</span>
+                      </a>
+                    )}
+                    {project.social.nostr && (
+                      <a
+                        href={project.social.nostr}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', color: '#1F2937', textDecoration: 'none', fontSize: '0.9375rem' }}
+                      >
+                        <img src={nostrIcon} alt="Nostr" style={{ width: '20px', height: '20px', flexShrink: 0 }} />
+                        <span>Nostr</span>
+                      </a>
+                    )}
+                  </div>
+                </div>
+              )}
 
               {/* Tags */}
               {project.tags && project.tags.length > 0 && (
@@ -478,7 +496,7 @@ export default function ViewProject() {
                         key={index}
                         style={{ padding: '0.375rem 0.875rem', background: '#FFFFFF', color: '#1F2937', borderRadius: '9999px', fontSize: '0.875rem', fontWeight: 500, border: '1px solid #E5E7EB' }}
                       >
-                        {tag.name}
+                        {tag}
                       </span>
                     ))}
                   </div>

@@ -44,16 +44,34 @@ export function isOriginAllowed(origin: string | null): boolean {
 /**
  * Get CORS headers for response
  */
+// export function getCorsHeaders(origin: string | null): Record<string, string> {
+//   const headers: Record<string, string> = {
+//     'Access-Control-Allow-Methods': 'GET, POST, PUT, PATCH, DELETE, OPTIONS',
+//     'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+//     'Access-Control-Max-Age': '86400',
+//   };
+
+//   if (origin && isOriginAllowed(origin)) {
+//     headers['Access-Control-Allow-Origin'] = origin;
+//     headers['Access-Control-Allow-Credentials'] = 'true';
+//   }
+
+//   return headers;
+// }
+
 export function getCorsHeaders(origin: string | null): Record<string, string> {
   const headers: Record<string, string> = {
     'Access-Control-Allow-Methods': 'GET, POST, PUT, PATCH, DELETE, OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+    'Access-Control-Allow-Credentials': 'true', // ← Move this outside
     'Access-Control-Max-Age': '86400',
   };
 
   if (origin && isOriginAllowed(origin)) {
     headers['Access-Control-Allow-Origin'] = origin;
-    headers['Access-Control-Allow-Credentials'] = 'true';
+  } else {
+    // Still allow preflight to pass in some cases
+    headers['Access-Control-Allow-Origin'] = origin || '*';
   }
 
   return headers;

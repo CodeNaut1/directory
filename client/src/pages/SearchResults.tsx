@@ -6,19 +6,14 @@ interface Project {
   name: string;
   slug: string;
   description?: string;
-  logo?: string;
+  image?: string;
   website?: string;
   verified?: boolean;
-  category?: {
-    name: string;
-    slug: string;
-  };
-  country?: {
-    name: string;
-    code: string;
-  };
+  categories?: string[];
+  country_name?: string;
+  country_code?: string;
   city?: string;
-  tags?: Array<{ name: string; slug: string }>;
+  tags?: string[];
 }
 
 export default function SearchResults() {
@@ -57,70 +52,40 @@ export default function SearchResults() {
           }
         }
 
-        // Fallback to local data
-        const module = await import('../data/locations.json');
+        // Fallback to local data (NEW STRUCTURE)
+        const module = await import('../data/projects.json');
         const data = module.default;
-        if (data?.features) {
+
+        if (data?.projects) {
           const searchQuery = query.toLowerCase();
-          const matches = data.features.filter((feature: any) => {
-            const props = feature.properties || {};
-            const name = (props.name || '').toLowerCase();
-            const location = (props.location || '').toLowerCase();
-            const category = (props.category || '').toLowerCase();
-            const description = (props.description || '').toLowerCase();
+
+          // Filter active/published projects only
+          const activeProjects = data.projects.filter((project: any) =>
+            project.active !== false && project.status === 'approved'
+          );
+
+          // Search across multiple fields
+          const matches = activeProjects.filter((project: any) => {
+            const name = (project.name || '').toLowerCase();
+            const location = (project.location || '').toLowerCase();
+            const description = (project.description || '').toLowerCase();
+            const city = (project.city || '').toLowerCase();
+            const countryName = (project.country_name || '').toLowerCase();
+            const categories = (project.categories || []).join(' ').toLowerCase();
+            const tags = (project.tags || []).join(' ').toLowerCase();
 
             return (
               name.includes(searchQuery) ||
               location.includes(searchQuery) ||
-              category.includes(searchQuery) ||
-              description.includes(searchQuery)
+              description.includes(searchQuery) ||
+              city.includes(searchQuery) ||
+              countryName.includes(searchQuery) ||
+              categories.includes(searchQuery) ||
+              tags.includes(searchQuery)
             );
           });
 
-          const transformedProjects: Project[] = matches.map((feature: any) => {
-            const props = feature.properties || {};
-            const slug = props.name
-              ? props.name
-                  .toLowerCase()
-                  .replace(/\s+/g, '-')
-                  .replace(/[^a-z0-9-]/g, '')
-              : `project-${feature.id || Math.random()}`;
-
-            // Extract city and country from location string (format: "City, Country")
-            let city = '';
-            let countryName = '';
-            if (props.location) {
-              const locationParts = props.location.split(',').map((s: string) => s.trim());
-              city = locationParts[0] || '';
-              countryName = locationParts[1] || '';
-            }
-
-            return {
-              id: feature.id || slug,
-              name: props.name || 'Unnamed Project',
-              slug,
-              description: props.description,
-              logo: props.image || props.logo, // Use 'image' from locations.json
-              website: props.link || props.website, // Use 'link' from locations.json
-              verified: props.verified || props.active === true || props.active === 'true',
-              category: props.category
-                ? {
-                    name: props.category,
-                    slug: props.category.toLowerCase().replace(/\s+/g, '-'),
-                  }
-                : undefined,
-              country: props.country_code || countryName
-                ? {
-                    name: countryName || props.country || '',
-                    code: props.country_code || '',
-                  }
-                : undefined,
-              city: city || props.city,
-              tags: [], // Tags not available in locations.json
-            };
-          });
-
-          setProjects(transformedProjects);
+          setProjects(matches);
         } else {
           setProjects([]);
         }
@@ -252,9 +217,9 @@ export default function SearchResults() {
                 }}
               >
                 <div className="search-result-card" style={{ display: 'flex', gap: '1.5rem', alignItems: 'flex-start' }}>
-                  {project.logo && (
+                  {project.image && (
                     <img
-                      src={project.logo}
+                      src={project.image}
                       alt={project.name}
                       className="search-result-logo"
                       style={{
@@ -267,7 +232,7 @@ export default function SearchResults() {
                     />
                   )}
                   <div style={{ flex: 1 }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.5rem' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.5rem', flexWrap: 'wrap' }}>
                       <h2
                         style={{
                           fontSize: '1.25rem',
@@ -313,7 +278,7 @@ export default function SearchResults() {
                       </p>
                     )}
                     <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem', alignItems: 'center' }}>
-                      {project.category && (
+                      {project.categories && project.categories.length > 0 && (
                         <span
                           style={{
                             padding: '0.25rem 0.75rem',
@@ -324,10 +289,10 @@ export default function SearchResults() {
                             fontWeight: 500,
                           }}
                         >
-                          {project.category.name}
+                          {project.categories[0]}
                         </span>
                       )}
-                      {project.country && (
+                      {(project.city || project.country_name) && (
                         <span
                           style={{
                             fontSize: '0.875rem',
@@ -335,7 +300,7 @@ export default function SearchResults() {
                           }}
                         >
                           📍 {project.city ? `${project.city}, ` : ''}
-                          {project.country.name}
+                          {project.country_name}
                         </span>
                       )}
                       {project.tags && project.tags.length > 0 && (
@@ -352,7 +317,7 @@ export default function SearchResults() {
                                 fontWeight: 500,
                               }}
                             >
-                              {tag.name}
+                              {tag}
                             </span>
                           ))}
                         </div>
@@ -368,4 +333,3 @@ export default function SearchResults() {
     </main>
   );
 }
-

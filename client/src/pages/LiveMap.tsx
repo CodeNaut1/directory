@@ -9,24 +9,6 @@ export default function LiveMap() {
 
   return (
     <div style={{ minHeight: '100vh', background: '#f8f9fa' }}>
-      {/* Hero Section */}
-      {/* <div
-        style={{
-          background: 'linear-gradient(135deg, #FF6B35 0%, #F7931A 100%)',
-          color: 'white',
-          padding: '4rem 2rem',
-          textAlign: 'center',
-        }}
-      >
-        <h1 style={{ fontSize: '3rem', fontWeight: 'bold', marginBottom: '1rem' }}>
-          Bitcoin Africa Live Map
-        </h1>
-        <p style={{ fontSize: '1.25rem', maxWidth: '800px', margin: '0 auto' }}>
-          Explore the growing Bitcoin ecosystem across Africa. Discover projects, communities, and
-          innovations driving Bitcoin adoption on the continent.
-        </p>
-      </div> */}
-
       {/* Map Container */}
       <div style={{
         maxWidth: '100%',

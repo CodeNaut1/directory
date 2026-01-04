@@ -1,18 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import locationsData from '../data/locations.json';
-import { countryRegions } from '../data/countryRegions';
-import type { LocationFeature } from '../data/locations.types';
-
-// Import all project coordinates (158 individual projects)
-import projectCoords from '../data/all-projects.json';
-
-interface ProjectCoord {
-  id: string;
-  name: string;
-  type: 'rect' | 'polygon' | 'circle';
-  coords: string;
-}
+import projectsData from '../data/projects.json';
+import coordinatesData from '../data/coordinates.json';
+import type { Project, ProjectCoordinate, CountryRegion } from '../data/projects.types';
 
 export default function InfographicMap() {
   const [activePopup, setActivePopup] = useState<string | null>(null);
@@ -20,73 +10,57 @@ export default function InfographicMap() {
   const [isRegionOverview, setIsRegionOverview] = useState(false);
   const navigate = useNavigate();
 
+  // Extract data from imports (with type assertions for JSON compatibility)
+  const projects = projectsData.projects as unknown as Project[];
+  const projectCoordinates = coordinatesData.project_coordinates as unknown as ProjectCoordinate[];
+  const countryRegions = coordinatesData.country_regions as unknown as CountryRegion[];
+
   // Group projects by country code
-  const projectsByCountry = (locationsData.features as LocationFeature[]).reduce(
-    (acc, feature) => {
-      const countryCode = feature.properties.country_code?.toLowerCase() || 'global';
+  const projectsByCountry = projects.reduce(
+    (acc, project) => {
+      const countryCode = project.country_code.toLowerCase();
       if (!acc[countryCode]) acc[countryCode] = [];
-      acc[countryCode].push(feature);
+      acc[countryCode].push(project);
       return acc;
     },
-    {} as Record<string, LocationFeature[]>
+    {} as Record<string, Project[]>
   );
 
-  // Helper to find project by name (fuzzy match)
-  const findProjectByName = (searchName: string): LocationFeature | null => {
-    const normalized = searchName.toLowerCase().trim();
-
-    // Try exact match first
-    let found = (locationsData.features as LocationFeature[]).find(
-      (f) => f.properties.name.toLowerCase() === normalized
-    );
-
-    if (found) return found;
-
-    // Try partial match
-    found = (locationsData.features as LocationFeature[]).find((f) =>
-      f.properties.name.toLowerCase().includes(normalized)
-    );
-
-    if (found) return found;
-
-    // Try reverse (search string contains project name)
-    found = (locationsData.features as LocationFeature[]).find((f) =>
-      normalized.includes(f.properties.name.toLowerCase())
-    );
-
-    return found || null;
+  // Helper to find project by ID or name
+  const findProjectById = (projId: string): Project | null => {
+    return projects.find((p) => p.id === projId || p.slug === projId) || null;
   };
 
   const handleRegionClick = (countryCode: string, countryName: string) => {
-    const projects = projectsByCountry[countryCode] || [];
+    const countryProjects = projectsByCountry[countryCode] || [];
 
-    if (projects.length === 0) {
+    if (countryProjects.length === 0) {
       console.log(`No projects found for ${countryName}`);
       return;
     }
 
-    setPopupData({ countryName, projects });
+    setPopupData({ countryName, projects: countryProjects });
     setIsRegionOverview(true);
     setActivePopup(`region-${countryCode}`);
   };
 
-  const handleIndividualProjectClick = (projectName: string) => {
-    const project = findProjectByName(projectName);
+  const handleIndividualProjectClick = (projId: string) => {
+    const project = findProjectById(projId);
 
     if (!project) {
-      console.log(`Project not found in locations.json: ${projectName}`);
+      console.log(`Project not found: ${projId}`);
       return;
     }
 
-    setPopupData(project.properties);
+    setPopupData(project);
     setIsRegionOverview(false);
-    setActivePopup(`project-${project.properties.name}`);
+    setActivePopup(`project-${project.id}`);
   };
 
-  const handleProjectClick = (project: LocationFeature) => {
-    setPopupData(project.properties);
+  const handleProjectClick = (project: Project) => {
+    setPopupData(project);
     setIsRegionOverview(false);
-    setActivePopup(`project-${project.properties.name}`);
+    setActivePopup(`project-${project.id}`);
   };
 
   const closePopup = () => {
@@ -99,7 +73,13 @@ export default function InfographicMap() {
     navigate('/live-map');
   };
 
+  const navigateToProject = (projectId: string) => {
+    navigate(`/project/${projectId}`);
+  };
+
   const createSocialLink = (type: string, url: string): string => {
+    if (!url) return '';
+
     const icons: Record<string, string> = {
       website: 'globe-vector.png',
       twitter: 'twitter-vector.png',
@@ -123,7 +103,7 @@ export default function InfographicMap() {
   };
 
   // Render country region SVG shapes
-  const renderCountryShape = (region: (typeof countryRegions)[0], onClick: () => void) => {
+  const renderCountryShape = (region: CountryRegion, onClick: () => void) => {
     const baseProps = {
       onClick,
       style: { cursor: 'pointer' },
@@ -161,8 +141,10 @@ export default function InfographicMap() {
   };
 
   // Render individual project SVG shapes
-  const renderProjectShape = (proj: ProjectCoord, idx: number) => {
-    const onClick = () => handleIndividualProjectClick(proj.name);
+  const renderProjectShape = (coord: ProjectCoordinate, idx: number) => {
+    if (!coord.infographic) return null;
+
+    const onClick = () => handleIndividualProjectClick(coord.proj_id);
 
     const baseProps = {
       onClick,
@@ -171,27 +153,27 @@ export default function InfographicMap() {
       fill: 'rgba(0,0,0,0)',
     };
 
-    if (proj.type === 'rect') {
-      const [x, y, width, height] = proj.coords.split(',').map(Number);
+    if (coord.infographic.type === 'rect') {
+      const [x, y, width, height] = coord.infographic.coords.split(',').map(Number);
       return (
-        <g key={`${proj.id}-${idx}`} {...baseProps}>
+        <g key={`${coord.proj_id}-${idx}`} {...baseProps}>
           <rect x={x} y={y} width={width} height={height} />
         </g>
       );
     }
 
-    if (proj.type === 'polygon') {
+    if (coord.infographic.type === 'polygon') {
       return (
-        <g key={`${proj.id}-${idx}`} {...baseProps}>
-          <polygon points={proj.coords} />
+        <g key={`${coord.proj_id}-${idx}`} {...baseProps}>
+          <polygon points={coord.infographic.coords} />
         </g>
       );
     }
 
-    if (proj.type === 'circle') {
-      const [cx, cy, r] = proj.coords.split(',').map(Number);
+    if (coord.infographic.type === 'circle') {
+      const [cx, cy, r] = coord.infographic.coords.split(',').map(Number);
       return (
-        <g key={`${proj.id}-${idx}`} {...baseProps}>
+        <g key={`${coord.proj_id}-${idx}`} {...baseProps}>
           <circle cx={cx} cy={cy} r={r} />
         </g>
       );
@@ -229,11 +211,11 @@ export default function InfographicMap() {
               <div className="popup-content">
                 <h2>{popupData.countryName}</h2>
                 <ul style={{ listStyle: 'none', padding: 0 }}>
-                  {popupData.projects.map((project: LocationFeature, idx: number) => (
+                  {popupData.projects.map((project: Project, idx: number) => (
                     <li key={idx} className="infograph-click">
                       <img
-                        src={project.properties.image || 'https://via.placeholder.com/40'}
-                        alt={project.properties.name}
+                        src={project.image || 'https://via.placeholder.com/40'}
+                        alt={project.name}
                         className="project-logo"
                       />
                       <a
@@ -243,11 +225,11 @@ export default function InfographicMap() {
                           handleProjectClick(project);
                         }}
                       >
-                        {project.properties.name}{' '}
+                        {project.name}{' '}
                         <i className="fas fa-external-link-alt"></i>
                       </a>
                       <br />
-                      {project.properties.description}
+                      {project.description}
                     </li>
                   ))}
                 </ul>
@@ -266,7 +248,7 @@ export default function InfographicMap() {
                     {popupData.country_code && popupData.country_code.length === 2 ? (
                       <span
                         className={`fi fi-${popupData.country_code.toLowerCase()} project-flag`}
-                        title={popupData.location?.split(',').pop()?.trim()}
+                        title={popupData.country_name}
                       ></span>
                     ) : (
                       <span className="project-flag" title="Africa wide">
@@ -284,13 +266,11 @@ export default function InfographicMap() {
                   className="project-socials"
                   dangerouslySetInnerHTML={{
                     __html: [
-                      popupData.link ? createSocialLink('website', popupData.link) : '',
-                      popupData.twitter ? createSocialLink('twitter', popupData.twitter) : '',
-                      popupData.linkedin ? createSocialLink('linkedin', popupData.linkedin) : '',
-                      popupData.instagram
-                        ? createSocialLink('instagram', popupData.instagram)
-                        : '',
-                      popupData.nostr ? createSocialLink('nostr', popupData.nostr) : '',
+                      popupData.website ? createSocialLink('website', popupData.website) : '',
+                      popupData.social?.twitter ? createSocialLink('twitter', popupData.social.twitter) : '',
+                      popupData.social?.linkedin ? createSocialLink('linkedin', popupData.social.linkedin) : '',
+                      popupData.social?.instagram ? createSocialLink('instagram', popupData.social.instagram) : '',
+                      popupData.social?.nostr ? createSocialLink('nostr', popupData.social.nostr) : '',
                     ]
                       .filter(Boolean)
                       .join(''),
@@ -316,7 +296,7 @@ export default function InfographicMap() {
                       />
                       SECTOR
                     </p>
-                    <p className="detail-value">{popupData.category || 'Unknown'}</p>
+                    <p className="detail-value">{popupData.categories?.join(', ') || 'Unknown'}</p>
                   </div>
                 </div>
 
@@ -328,10 +308,10 @@ export default function InfographicMap() {
                     />
                     FOUNDER INFORMATION
                   </p>
-                  <p className="detail-value">{popupData.founder || 'Not available'}</p>
-                  {popupData.founder_twitter && (
-                    <a href={popupData.founder_twitter} target="_blank" rel="noopener">
-                      @{popupData.founder_twitter.split('/').pop()}
+                  <p className="detail-value">{popupData.founder?.name || 'Not available'}</p>
+                  {popupData.founder?.twitter && (
+                    <a href={popupData.founder.twitter} target="_blank" rel="noopener">
+                      @{popupData.founder.twitter.split('/').pop()}
                     </a>
                   )}
                 </div>
@@ -356,6 +336,29 @@ export default function InfographicMap() {
                       }
                     ></i>
                   </p>
+                </div>
+
+                {/* View Full Project Button */}
+                <div style={{ marginTop: '1.5rem', paddingTop: '1.5rem', borderTop: '1px solid #E5E7EB' }}>
+                  <button
+                    onClick={() => navigateToProject(popupData.id)}
+                    style={{
+                      width: '100%',
+                      padding: '0.75rem 1.5rem',
+                      background: '#FD5A47',
+                      color: '#FFFFFF',
+                      border: 'none',
+                      borderRadius: '8px',
+                      fontSize: '0.9375rem',
+                      fontWeight: 600,
+                      cursor: 'pointer',
+                      transition: 'background 0.2s',
+                    }}
+                    onMouseEnter={(e) => { e.currentTarget.style.background = '#E04835'; }}
+                    onMouseLeave={(e) => { e.currentTarget.style.background = '#FD5A47'; }}
+                  >
+                    View Full Project Page →
+                  </button>
                 </div>
               </>
             )}
@@ -387,13 +390,13 @@ export default function InfographicMap() {
           />
         </g>
 
-        {/* Render all country regions (23 countries) */}
+        {/* Render all country regions */}
         {countryRegions.map((region) =>
           renderCountryShape(region, () => handleRegionClick(region.code, region.name))
         )}
 
-        {/* Render all individual project shapes (158 projects) */}
-        {(projectCoords as ProjectCoord[]).map((proj, idx) => renderProjectShape(proj, idx))}
+        {/* Render all individual project shapes */}
+        {projectCoordinates.map((coord, idx) => renderProjectShape(coord, idx))}
       </svg>
     </>
   );

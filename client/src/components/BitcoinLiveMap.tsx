@@ -1,7 +1,9 @@
 import { useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
-import locationsData from '../data/locations.json';
+import projectsData from '../data/projects.json';
+import coordinatesData from '../data/coordinates.json';
 
 interface BitcoinLiveMapProps {
   width?: string;
@@ -34,25 +36,21 @@ export default function BitcoinLiveMap({
 }: BitcoinLiveMapProps) {
   const mapContainer = useRef<HTMLDivElement>(null);
   const mapInstance = useRef<any>(null);
+  const navigate = useNavigate();
 
   const MAPBOX_TOKEN = import.meta.env.VITE_MAPBOX_API_KEY || 'pk.eyJ1IjoiZW0wMTMiLCJhIjoiY21iNWxpNzVkMGJyODJqcXN3b2J1NXZpbSJ9.kCtk-1jyDTZATMR_QKSzpA';
 
   useEffect(() => {
-    // console.log('🗺️ BitcoinLiveMap mounting...');
-    // console.log('📍 Mapbox Token:', MAPBOX_TOKEN ? 'Found ✓' : 'Missing ✗');
-    // console.log('📦 Locations data:', locationsData.features?.length || 0, 'features');
-
     if (!mapContainer.current) {
       console.error('❌ Map container ref is null!');
       return;
     }
 
     if (mapInstance.current) {
-      // console.log('⚠️ Map already initialized, skipping');
       return;
     }
 
-    // Set up global config (mimicking WordPress wp_localize_script)
+    // Set up global config
     (window as any).bitcoinLiveMapConfig = {
       apiKey: MAPBOX_TOKEN,
       iconBaseUrl: 'https://bitcoiners.africa/wp-content/uploads/2025/04/',
@@ -60,10 +58,8 @@ export default function BitcoinLiveMap({
 
     mapboxgl.accessToken = MAPBOX_TOKEN;
 
-    // console.log('🚀 Creating Mapbox map instance...');
-
     try {
-      // Create map (matching WordPress createMap exactly)
+      // Create map
       mapInstance.current = new mapboxgl.Map({
         container: mapContainer.current,
         style: `mapbox://styles/mapbox/${style}`,
@@ -76,7 +72,6 @@ export default function BitcoinLiveMap({
       });
 
       const map = mapInstance.current;
-      // console.log('✅ Map instance created successfully');
 
       // Add navigation controls
       map.addControl(new mapboxgl.NavigationControl());
@@ -91,8 +86,6 @@ export default function BitcoinLiveMap({
 
       // On map load
       map.on('load', () => {
-        // console.log('✅ Map loaded successfully');
-
         // Setup terrain source
         map.addSource('mapbox-dem', {
           type: 'raster-dem',
@@ -103,7 +96,6 @@ export default function BitcoinLiveMap({
 
         if (terrain === 'true') {
           map.setTerrain({ source: 'mapbox-dem', exaggeration: 1.5 });
-          // console.log('🏔️ Terrain enabled');
         }
 
         // Setup 3D buildings
@@ -133,12 +125,10 @@ export default function BitcoinLiveMap({
             },
             labelLayerId
           );
-          // console.log('🏢 Buildings layer added');
         }
 
         // Add locations if enabled
         if (locations) {
-          // console.log('📍 Adding location markers...');
           addLocationMarkers(map);
         }
       });
@@ -152,20 +142,67 @@ export default function BitcoinLiveMap({
     }
 
     return () => {
-      // console.log('🧹 Cleaning up map instance');
       mapInstance.current?.remove();
       mapInstance.current = null;
     };
   }, []);
 
-  // Add location markers function (matching WordPress exactly)
+  // Build GeoJSON from new data structure
+  const buildGeoJSON = () => {
+    const features = coordinatesData.project_coordinates
+      .filter(coord => coord.livemap) // Only include projects with livemap coordinates
+      .map(coord => {
+        // Find matching project data
+        const project = projectsData.projects.find(p => p.id === coord.proj_id);
+
+        if (!project) return null;
+
+        return {
+          type: 'Feature' as const,
+          geometry: {
+            type: 'Point' as const,
+            coordinates: coord.livemap!.coords, // [lng, lat]
+          },
+          properties: {
+            id: project.id,
+            name: project.name,
+            description: project.description,
+            image: project.image,
+            website: project.website,
+            email: project.email,
+            country_code: project.country_code,
+            country_name: project.country_name,
+            location: project.location,
+            category: project.categories.join(', '),
+            active: project.active,
+            verified: project.verified,
+            // Social links
+            twitter: project.social.twitter,
+            linkedin: project.social.linkedin,
+            instagram: project.social.instagram,
+            nostr: project.social.nostr,
+            // Founder info
+            founder_name: project.founder.name,
+            founder_twitter: project.founder.twitter,
+          },
+        };
+      })
+      .filter(Boolean); // Remove nulls
+
+    return {
+      type: 'FeatureCollection' as const,
+      features,
+    };
+  };
+
+  // Add location markers function
   const addLocationMarkers = (map: any) => {
-    if (!locationsData || !Array.isArray(locationsData.features)) {
-      console.error('❌ Invalid locations data');
+    const geoJsonData = buildGeoJSON();
+
+    if (!geoJsonData.features || geoJsonData.features.length === 0) {
+      console.error('❌ No location data available');
       return;
     }
-
-    // console.log(`📍 Adding ${locationsData.features.length} locations to map`);
 
     // Remove existing layers/sources
     if (map.getLayer('bitcoin-projects-layer')) {
@@ -178,11 +215,10 @@ export default function BitcoinLiveMap({
     // Add source
     map.addSource('bitcoin-projects', {
       type: 'geojson',
-      data: locationsData,
+      data: geoJsonData,
     });
-    // console.log('✅ Source added');
 
-    // Create custom pointer (EXACTLY as WordPress)
+    // Create custom pointer
     const size = 80;
     const customPointer: any = {
       width: size,
@@ -255,7 +291,6 @@ export default function BitcoinLiveMap({
 
     if (!map.hasImage('custom-bitcoin-pointer')) {
       map.addImage('custom-bitcoin-pointer', customPointer, { pixelRatio: 2 });
-      // console.log('✅ Custom marker image added');
     }
 
     // Add layer
@@ -270,7 +305,6 @@ export default function BitcoinLiveMap({
         'icon-anchor': 'bottom',
       },
     });
-    // console.log('✅ Markers layer added');
 
     // Click handler
     map.on('click', 'bitcoin-projects-layer', (e: any) => {
@@ -290,8 +324,7 @@ export default function BitcoinLiveMap({
         duration: 1000,
       });
 
-      // console.log('🖱️ Marker clicked:', props.name);
-      showProjectPopup(props, coordinates);
+      showProjectPopup(props, coordinates, navigate);
     });
 
     // Cursor change
@@ -302,14 +335,10 @@ export default function BitcoinLiveMap({
     map.on('mouseleave', 'bitcoin-projects-layer', () => {
       map.getCanvas().style.cursor = '';
     });
-
-    // console.log('✅ Location markers setup complete');
   };
 
-  // Show popup (EXACTLY as WordPress)
-  const showProjectPopup = (props: any, coordinates: [number, number]) => {
-    // console.log('✅ showProjectPopup fired', props.name);
-
+  // Show popup
+  const showProjectPopup = (props: any, coordinates: [number, number], navigate: any) => {
     // Clean up existing
     document.querySelectorAll('.bitcoin-livemap-popup').forEach((el) => el.remove());
     document.querySelectorAll('.bitcoin-livemap-popup-overlay').forEach((el) => el.remove());
@@ -323,7 +352,7 @@ export default function BitcoinLiveMap({
     let flagHtml: string;
     if (props.country_code && props.country_code.length === 2) {
       const iso = props.country_code.toLowerCase();
-      const countryName = (props.location || '').split(',').pop()?.trim() || iso.toUpperCase();
+      const countryName = props.country_name || iso.toUpperCase();
       flagHtml = `<span class="project-flag fi fi-${iso}" title="${countryName}"></span>`;
     } else {
       flagHtml = `<span class="project-flag" title="Africa wide">🌐</span>`;
@@ -349,7 +378,7 @@ export default function BitcoinLiveMap({
           <p>${props.description || 'No description available'}</p>
         </div>
         <div class="project-socials">
-          ${props.link ? createSocialLink('website', props.link) : ''}
+          ${props.website ? createSocialLink('website', props.website) : ''}
           ${props.twitter ? createSocialLink('twitter', props.twitter) : ''}
           ${props.linkedin ? createSocialLink('linkedin', props.linkedin) : ''}
           ${props.instagram ? createSocialLink('instagram', props.instagram) : ''}
@@ -366,14 +395,14 @@ export default function BitcoinLiveMap({
             <p class="detail-label">
               <img src="https://bitcoiners.africa/wp-content/uploads/2025/04/puzzle-icon.png" alt="Industry icon" />SECTOR
             </p>
-            <p class="detail-value">${props.category || props.sector || 'Unknown'}</p>
+            <p class="detail-value">${props.category || 'Unknown'}</p>
           </div>
         </div>
         <div class="detail-item founder">
           <p class="detail-label">
             <img src="https://bitcoiners.africa/wp-content/uploads/2025/04/user-icon.png" alt="Founder icon" />FOUNDER INFORMATION
           </p>
-          <p class="detail-value">${props.founder_name || props.founder || 'Not available'}</p>
+          <p class="detail-value">${props.founder_name || 'Not available'}</p>
           ${props.founder_twitter
         ? `<a href="${props.founder_twitter}" target="_blank">@${props.founder_twitter.split('/').pop()}</a>`
         : '<a href="#" target="_blank">No information</a>'
@@ -389,6 +418,11 @@ export default function BitcoinLiveMap({
         : 'Active in the Last 3 months <i class="far fa-check-circle"></i>'
       }
           </p>
+        </div>
+        <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid #E5E7EB;">
+          <button class="view-project-btn" data-project-id="${props.id}" style="width: 100%; padding: 0.75rem 1.5rem; background: #FD5A47; color: #FFFFFF; border: none; border-radius: 8px; font-size: 0.9375rem; font-weight: 600; cursor: pointer;">
+            View Full Project Page →
+          </button>
         </div>
       </div>
     `;
@@ -408,6 +442,17 @@ export default function BitcoinLiveMap({
       popup.remove();
       overlay.remove();
     });
+
+    // View project button handler
+    const viewBtn = popup.querySelector('.view-project-btn');
+    if (viewBtn) {
+      viewBtn.addEventListener('click', () => {
+        const projectId = viewBtn.getAttribute('data-project-id');
+        if (projectId) {
+          navigate(`/project/${projectId}`);
+        }
+      });
+    }
 
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
