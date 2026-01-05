@@ -116,13 +116,15 @@
       "tags": [
         "Lightning Network",
         "Routing",
-        "Infrastructure"
+        "Infrastructure",
+        "Developer Bootcamps",
+        "Workshops"
       ],
       "social": {
         "twitter": "https://x.com/FreeRoutingAf",
         "linkedin": "https://www.linkedin.com/company/africa-free-routing/",
-        "instagram": "Nil",
-        "facebook": "Nil",
+        "instagram": "https://www.instagram.com/africanbitcoiners/?hl=en",
+        "facebook": "https://www.facebook.com/p/African-Bitcoiners-100083919610982/",
         "youtube": "",
         "telegram": "Nil",
         "nostr": "npub1j8w9vaymagphmvfvkk7tt9cxfneejmctez6yw5nfp0m8qxteptcsjv8nud"
@@ -139,7 +141,7 @@
       },
       "initiatives": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.\n Second initiative: Bootcamps. \n Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem",
       "impact": "",
-      "challenges": "Challenge  1: Funding .....Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?",
+      "challenges": "Challenge  1: Funding .....Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?. \n Challenge 2: Unlnown....",
       "verified": true,
       "featured": false,
       "status": "approved",

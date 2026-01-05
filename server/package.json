@@ -3,7 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "predev": "tsx lib/jobs/sync-projects.ts",
     "dev": "next dev",
+    "sync": "tsx lib/jobs/sync-projects.ts",
+    "watch": "tsx watch lib/jobs/watch-projects.ts",
     "postinstall": "prisma generate",
     "build": "rm -rf .next && next build",
     "start": "next start",
@@ -59,7 +62,7 @@
     "prisma": "^5.19.1",
     "tailwindcss": "^4.1.18",
     "ts-jest": "^29.1.5",
-    "tsx": "^4.16.2",
+    "tsx": "^4.21.0",
     "typescript": "^5.5.3"
   },
   "engines": {
