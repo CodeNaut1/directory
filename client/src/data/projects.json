@@ -101,14 +101,14 @@
       "id": "africa-free-routing",
       "name": "Africa Free Routing",
       "slug": "africa-free-routing",
-      "description": "Africa free routing is the biggest Bitcoin lightning routing service in Africa based out of Lagos Nigeria.",
+      "description": "Africa free routing is the biggest Bitcoin lightning routing service in Africa based out of Lagos Nigeria. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur",
       "country_code": "ng",
       "country_name": "Nigeria",
       "city": "Lagos",
       "location": "Lagos, Nigeria",
       "image": "https://bitcoiners.africa/wp-content/uploads/2024/03/African-Bitcoiners_Africa-Free-Routing_logo.png",
       "website": "https://freerouting.africa/",
-      "email": "",
+      "email": "megasley@freerouting.africa",
       "categories": [
         "Business",
         "Technology"
@@ -120,12 +120,12 @@
       ],
       "social": {
         "twitter": "https://x.com/FreeRoutingAf",
-        "linkedin": "",
-        "instagram": "",
-        "facebook": "",
+        "linkedin": "https://www.linkedin.com/company/africa-free-routing/",
+        "instagram": "Nil",
+        "facebook": "Nil",
         "youtube": "",
-        "telegram": "",
-        "nostr": ""
+        "telegram": "Nil",
+        "nostr": "npub1j8w9vaymagphmvfvkk7tt9cxfneejmctez6yw5nfp0m8qxteptcsjv8nud"
       },
       "bitcoin_acceptance": {
         "onchain": true,
@@ -137,9 +137,9 @@
         "twitter": "https://x.com/megasley?s=21",
         "email": ""
       },
-      "initiatives": "",
+      "initiatives": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.\n Second initiative: Bootcamps. \n Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem",
       "impact": "",
-      "challenges": "",
+      "challenges": "Challenge  1: Funding .....Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?",
       "verified": true,
       "featured": false,
       "status": "approved",

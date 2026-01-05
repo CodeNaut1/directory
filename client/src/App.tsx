@@ -15,6 +15,7 @@ import AdminLayout from './components/AdminLayout';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import PendingProjects from './pages/admin/PendingProjects';
 import Infographic from './pages/Infographic';
+import InfographicArchive from './pages/InfographicArchive';
 import LiveMap from './pages/LiveMap';
 import SearchResults from './pages/SearchResults';
 
@@ -29,6 +30,7 @@ export default function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/infographic-q1-2026" element={<Infographic />} />
+        <Route path="/infographic-archive" element={<InfographicArchive />} />
         <Route path="/live-map" element={<LiveMap />} />
         <Route path="/search" element={<SearchResults />} />
         <Route path="/project/:id" element={<ViewProject />} />
