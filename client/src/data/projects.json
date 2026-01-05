@@ -5217,9 +5217,9 @@
       "updated_at": "2026-01-05T06:49:14.595Z"
     },
     {
-      "id": "flash",
-      "name": "Flash",
-      "slug": "flash",
+      "id": "bitcoin-flash",
+      "name": "Bitcoin Flash",
+      "slug": "bitcoin-flash",
       "description": "Flash is a startup introducing people in Benin, Togo, Burkina-Faso and Côte d'Ivoire to Bitcoin by building a simple platform that help them easily Buy and Sell Bitcoin via LN and Mobile Money starting from 100 XOF and also helping companies in Benin accept Bitcoin Payment.",
       "country_code": "bj",
       "country_name": "Benin",

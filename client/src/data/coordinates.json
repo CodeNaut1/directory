@@ -539,7 +539,7 @@
       "name": "Bitcoin Mastermind",
       "infographic": {
         "type": "rect",
-        "coords": "811.289648622982,106.15004748338083"
+        "coords": "2100.2545109211774,1486.1006647673314"
       },
       "livemap": {
         "type": "Point",
@@ -1378,9 +1378,12 @@
       }
     },
     {
-      "proj_id": "flash",
-      "name": "Flash",
-      "infographic": null,
+      "proj_id": "bitcoin-flash",
+      "name": "Bitcoin Flash",
+      "infographic": {
+        "type": "rect",
+        "coords": "1743.8936372269707,1789.3865147198483"
+      },
       "livemap": {
         "type": "Point",
         "coords": [

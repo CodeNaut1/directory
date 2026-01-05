@@ -28,17 +28,9 @@ export default function InfographicMap() {
     return projects.find((p) => p.id === projId || p.slug === projId) || null;
   };
 
-  // Navigate directly to first project in country
+  // Navigate to country projects page
   const handleRegionClick = (countryCode: string) => {
-    const countryProjects = projectsByCountry[countryCode] || [];
-
-    if (countryProjects.length === 0) {
-      console.log(`No projects found for country: ${countryCode}`);
-      return;
-    }
-
-    // Navigate to first project in the country
-    navigate(`/project/${countryProjects[0].id}`);
+    navigate(`/country/${countryCode.toLowerCase()}`);
   };
 
   // Navigate directly to project page
