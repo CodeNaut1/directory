@@ -802,9 +802,12 @@
       }
     },
     {
-      "proj_id": "bitcoinkids",
-      "name": "BitcoinKids",
-      "infographic": null,
+      "proj_id": "bitcoin-kids",
+      "name": "Bitcoin Kids",
+      "infographic": {
+        "type": "rect",
+        "coords": "3267.9050332383667,1493.6828110161443"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
