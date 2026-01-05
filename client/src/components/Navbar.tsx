@@ -1,4 +1,4 @@
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { useState, useRef, useEffect } from 'react';
 import logoUrl from '../assets/African-Bitcoiners-official_logo.png';
@@ -7,12 +7,18 @@ import '../styles/global.css';
 export default function Navbar() {
   const { isLoggedIn, logout, user } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
+  const [showInfographicDropdown, setShowInfographicDropdown] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
+  const infographicDropdownRef = useRef<HTMLDivElement>(null);
 
   const isAdmin = user?.role === 'admin' || user?.role === 'moderator';
+  
+  // Check if we're on an infographic page
+  const isInfographicPage = location.pathname === '/infographic-q1-2026' || location.pathname === '/infographic-archive';
 
   // Close menu when clicking outside
   useEffect(() => {
@@ -22,6 +28,9 @@ export default function Navbar() {
       }
       if (mobileMenuRef.current && !mobileMenuRef.current.contains(event.target as Node)) {
         setShowMobileMenu(false);
+      }
+      if (infographicDropdownRef.current && !infographicDropdownRef.current.contains(event.target as Node)) {
+        setShowInfographicDropdown(false);
       }
     };
 
@@ -127,17 +136,117 @@ export default function Navbar() {
             >
               HOME
             </NavLink>
-            <NavLink
-              to="/infographic-q1-2026"
-              className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
-              style={({ isActive }) => ({
-                borderBottom: isActive ? '2px solid #FD5A47' : '2px solid transparent',
-                paddingBottom: '0.25rem',
-                fontSize: 'clamp(0.75rem, 1.5vw, 0.875rem)',
-              })}
+            <div
+              ref={infographicDropdownRef}
+              style={{ position: 'relative' }}
+              onMouseEnter={() => setShowInfographicDropdown(true)}
+              onMouseLeave={() => setShowInfographicDropdown(false)}
             >
-              INFOGRAPHIC
-            </NavLink>
+              <NavLink
+                to="/infographic-q1-2026"
+                className="nav-link"
+                style={({ isActive }) => ({
+                  borderBottom: (isActive || isInfographicPage) ? '2px solid #FD5A47' : '2px solid transparent',
+                  paddingBottom: '0.25rem',
+                  fontSize: 'clamp(0.75rem, 1.5vw, 0.875rem)',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.25rem',
+                  textDecoration: 'none',
+                  color: 'inherit',
+                })}
+              >
+                INFOGRAPHIC
+                <svg
+                  width="12"
+                  height="12"
+                  viewBox="0 0 12 12"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  style={{
+                    transform: showInfographicDropdown ? 'rotate(180deg)' : 'rotate(0deg)',
+                    transition: 'transform 0.2s',
+                  }}
+                >
+                  <path d="M3 4.5L6 7.5L9 4.5" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </NavLink>
+
+              {showInfographicDropdown && (
+                <div
+                  style={{
+                    position: 'absolute',
+                    top: 'calc(100% + 0.5rem)',
+                    left: '50%',
+                    transform: 'translateX(-50%)',
+                    background: '#FFFFFF',
+                    border: '1px solid #E5E7EB',
+                    borderRadius: '8px',
+                    boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)',
+                    minWidth: '200px',
+                    overflow: 'hidden',
+                    zIndex: 1000,
+                    whiteSpace: 'nowrap',
+                  }}
+                >
+                  <NavLink
+                    to="/infographic-q1-2026"
+                    onClick={() => setShowInfographicDropdown(false)}
+                    className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
+                    style={({ isActive }) => ({
+                      display: 'block',
+                      padding: '0.75rem 1rem',
+                      fontSize: 'clamp(0.75rem, 1.5vw, 0.875rem)',
+                      color: isActive ? '#FD5A47' : '#1F2937',
+                      textDecoration: 'none',
+                      background: isActive ? '#FEF2F2' : 'transparent',
+                      transition: 'background 0.2s',
+                    })}
+                    onMouseEnter={(e) => {
+                      if (!e.currentTarget.classList.contains('active')) {
+                        e.currentTarget.style.background = '#F9FAFB';
+                      }
+                    }}
+                    onMouseLeave={(e) => {
+                      if (!e.currentTarget.classList.contains('active')) {
+                        e.currentTarget.style.background = 'transparent';
+                      }
+                    }}
+                  >
+                    Infographic Q1 2026
+                  </NavLink>
+                  <NavLink
+                    to="/infographic-archive"
+                    onClick={() => setShowInfographicDropdown(false)}
+                    className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
+                    style={({ isActive }) => ({
+                      display: 'block',
+                      padding: '0.75rem 1rem',
+                      fontSize: 'clamp(0.75rem, 1.5vw, 0.875rem)',
+                      color: isActive ? '#FD5A47' : '#1F2937',
+                      textDecoration: 'none',
+                      background: isActive ? '#FEF2F2' : 'transparent',
+                      borderTop: '1px solid #E5E7EB',
+                      transition: 'background 0.2s',
+                    })}
+                    onMouseEnter={(e) => {
+                      if (!e.currentTarget.classList.contains('active')) {
+                        e.currentTarget.style.background = '#F9FAFB';
+                      }
+                    }}
+                    onMouseLeave={(e) => {
+                      if (!e.currentTarget.classList.contains('active')) {
+                        e.currentTarget.style.background = 'transparent';
+                      }
+                    }}
+                  >
+                    Archives
+                  </NavLink>
+                </div>
+              )}
+            </div>
             <NavLink
               to="/live-map"
               className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
@@ -417,27 +526,128 @@ export default function Navbar() {
               >
                 HOME
               </NavLink>
-              <NavLink
-                to="/infographic-q1-2026"
-                onClick={() => setShowMobileMenu(false)}
-                style={{
-                  padding: '0.75rem 1rem',
-                  borderRadius: '6px',
-                  fontSize: '0.9375rem',
-                  fontWeight: 500,
-                  color: '#1F2937',
-                  textDecoration: 'none',
-                  transition: 'background 0.2s',
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.background = '#F9FAFB';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.background = 'transparent';
-                }}
-              >
-                INFOGRAPHIC
-              </NavLink>
+              <div style={{ display: 'flex', flexDirection: 'column' }}>
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.5rem',
+                  }}
+                >
+                  <NavLink
+                    to="/infographic-q1-2026"
+                    onClick={() => setShowMobileMenu(false)}
+                    style={{
+                      flex: 1,
+                      padding: '0.75rem 1rem',
+                      borderRadius: '6px',
+                      fontSize: '0.9375rem',
+                      fontWeight: 500,
+                      color: '#1F2937',
+                      textDecoration: 'none',
+                      transition: 'background 0.2s',
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.background = '#F9FAFB';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.background = 'transparent';
+                    }}
+                  >
+                    INFOGRAPHIC
+                  </NavLink>
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setShowInfographicDropdown(!showInfographicDropdown);
+                    }}
+                    style={{
+                      padding: '0.75rem',
+                      background: 'transparent',
+                      border: 'none',
+                      cursor: 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      transition: 'background 0.2s',
+                      borderRadius: '6px',
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.background = '#F9FAFB';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.background = 'transparent';
+                    }}
+                  >
+                    <svg
+                      width="12"
+                      height="12"
+                      viewBox="0 0 12 12"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      style={{
+                        transform: showInfographicDropdown ? 'rotate(180deg)' : 'rotate(0deg)',
+                        transition: 'transform 0.2s',
+                      }}
+                    >
+                      <path d="M3 4.5L6 7.5L9 4.5" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </button>
+                </div>
+                {showInfographicDropdown && (
+                  <div style={{ paddingLeft: '1rem', display: 'flex', flexDirection: 'column' }}>
+                    <NavLink
+                      to="/infographic-q1-2026"
+                      onClick={() => {
+                        setShowMobileMenu(false);
+                        setShowInfographicDropdown(false);
+                      }}
+                      style={{
+                        padding: '0.75rem 1rem',
+                        borderRadius: '6px',
+                        fontSize: '0.9375rem',
+                        fontWeight: 500,
+                        color: '#1F2937',
+                        textDecoration: 'none',
+                        transition: 'background 0.2s',
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.background = '#F9FAFB';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.background = 'transparent';
+                      }}
+                    >
+                      Infographic Q1 2026
+                    </NavLink>
+                    <NavLink
+                      to="/infographic-archive"
+                      onClick={() => {
+                        setShowMobileMenu(false);
+                        setShowInfographicDropdown(false);
+                      }}
+                      style={{
+                        padding: '0.75rem 1rem',
+                        borderRadius: '6px',
+                        fontSize: '0.9375rem',
+                        fontWeight: 500,
+                        color: '#1F2937',
+                        textDecoration: 'none',
+                        transition: 'background 0.2s',
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.background = '#F9FAFB';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.background = 'transparent';
+                      }}
+                    >
+                      Archives
+                    </NavLink>
+                  </div>
+                )}
+              </div>
               <NavLink
                 to="/live-map"
                 onClick={() => setShowMobileMenu(false)}
