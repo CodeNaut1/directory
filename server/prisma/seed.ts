@@ -1,4 +1,6 @@
 import { PrismaClient } from '@prisma/client';
+import * as fs from 'fs';
+import * as path from 'path';
 
 const prisma = new PrismaClient();
 
@@ -25,6 +27,12 @@ async function main() {
     { name: 'Tourism', slug: 'tourism', description: 'Tourism and travel services', order: 15 },
     { name: 'Exchange', slug: 'exchange', description: 'Bitcoin exchanges and trading platforms', order: 16 },
     { name: 'Wallet', slug: 'wallet', description: 'Bitcoin wallets and custody solutions', order: 17 },
+    { name: 'Technology', slug: 'technology', description: 'Bitcoin technology and development', order: 18 },
+    { name: 'Finance', slug: 'finance', description: 'Financial services', order: 19 },
+    { name: 'Travel', slug: 'travel', description: 'Travel and accommodation', order: 20 },
+    { name: 'Podcast', slug: 'podcast', description: 'Bitcoin podcasts', order: 21 },
+    { name: 'Charity', slug: 'charity', description: 'Charitable organizations', order: 22 },
+    { name: 'Directory', slug: 'directory', description: 'Business directories', order: 23 },
   ];
 
   const categories = await Promise.all(
@@ -145,6 +153,144 @@ async function main() {
   );
 
   console.log(`✅ Created ${tags.length} tags`);
+
+  // Import Projects from JSON
+  console.log('📦 Importing projects from JSON...');
+  const projectsJsonPath = path.join(__dirname, '../../client/src/data/projects.json');
+  const projectsJson = JSON.parse(fs.readFileSync(projectsJsonPath, 'utf-8'));
+
+  let importedCount = 0;
+  let skippedCount = 0;
+
+  for (const projectData of projectsJson.projects) {
+    try {
+      // Find country by code (if provided)
+      let countryId: string | undefined = undefined;
+      if (projectData.country_code) {
+        const country = await prisma.country.findUnique({
+          where: { code: projectData.country_code.toUpperCase() },
+        });
+        countryId = country?.id;
+      }
+
+      // Helper to convert empty string or null to undefined
+      const toOptional = (val: any): string | undefined => {
+        return val && val.trim() ? val : undefined;
+      };
+
+      // Prepare project data
+      const project = await prisma.project.upsert({
+        where: { slug: projectData.slug },
+        update: {
+          name: projectData.name,
+          description: projectData.description,
+          location: toOptional(projectData.location),
+          city: toOptional(projectData.city),
+          countryId,
+          countryCode: toOptional(projectData.country_code?.toLowerCase()),
+          countryName: toOptional(projectData.country_name),
+          logo: toOptional(projectData.image),
+          website: toOptional(projectData.website),
+          email: toOptional(projectData.email),
+          categories: projectData.categories || [],
+          socialLinks: projectData.social || {},
+          acceptsOnchain: projectData.bitcoin_acceptance?.onchain || false,
+          acceptsLightning: projectData.bitcoin_acceptance?.lightning || false,
+          acceptsGiftCards: projectData.bitcoin_acceptance?.gift_cards || false,
+          founderName: toOptional(projectData.founder?.name),
+          founderTwitter: toOptional(projectData.founder?.twitter),
+          founderEmail: toOptional(projectData.founder?.email),
+          initiatives: toOptional(projectData.initiatives),
+          impact: toOptional(projectData.impact),
+          challenges: toOptional(projectData.challenges),
+          foundedYear: toOptional(projectData.founded_year),
+          verified: projectData.verified || false,
+          featured: projectData.featured || false,
+          active: projectData.active !== false, // Default to true
+          status: projectData.status === 'approved' ? 'approved' : 'pending',
+          published: projectData.status === 'approved' ? true : false,
+          updatedAt: projectData.updated_at ? new Date(projectData.updated_at) : new Date(),
+        },
+        create: {
+          id: projectData.id,
+          slug: projectData.slug,
+          name: projectData.name,
+          description: projectData.description,
+          location: toOptional(projectData.location),
+          city: toOptional(projectData.city),
+          countryId,
+          countryCode: toOptional(projectData.country_code?.toLowerCase()),
+          countryName: toOptional(projectData.country_name),
+          logo: toOptional(projectData.image),
+          website: toOptional(projectData.website),
+          email: toOptional(projectData.email),
+          categories: projectData.categories || [],
+          socialLinks: projectData.social || {},
+          acceptsOnchain: projectData.bitcoin_acceptance?.onchain || false,
+          acceptsLightning: projectData.bitcoin_acceptance?.lightning || false,
+          acceptsGiftCards: projectData.bitcoin_acceptance?.gift_cards || false,
+          founderName: toOptional(projectData.founder?.name),
+          founderTwitter: toOptional(projectData.founder?.twitter),
+          founderEmail: toOptional(projectData.founder?.email),
+          initiatives: toOptional(projectData.initiatives),
+          impact: toOptional(projectData.impact),
+          challenges: toOptional(projectData.challenges),
+          foundedYear: toOptional(projectData.founded_year),
+          verified: projectData.verified || false,
+          featured: projectData.featured || false,
+          active: projectData.active !== false,
+          status: projectData.status === 'approved' ? 'approved' : 'pending',
+          published: projectData.status === 'approved' ? true : false,
+          createdAt: projectData.created_at ? new Date(projectData.created_at) : new Date(),
+          updatedAt: projectData.updated_at ? new Date(projectData.updated_at) : new Date(),
+        },
+      });
+
+      // Handle tags
+      if (projectData.tags && Array.isArray(projectData.tags) && projectData.tags.length > 0) {
+        for (const tagName of projectData.tags) {
+          if (tagName && tagName.trim()) {
+            const slug = tagName.toLowerCase().replace(/\s+/g, '-');
+
+            // Create or find tag
+            const tag = await prisma.tag.upsert({
+              where: { slug },
+              update: {},
+              create: { name: tagName, slug },
+            });
+
+            // Create project-tag relation
+            await prisma.projectTag.upsert({
+              where: {
+                projectId_tagId: {
+                  projectId: project.id,
+                  tagId: tag.id,
+                },
+              },
+              update: {},
+              create: {
+                projectId: project.id,
+                tagId: tag.id,
+              },
+            });
+          }
+        }
+      }
+
+      importedCount++;
+      if (importedCount % 50 === 0) {
+        console.log(`   Imported ${importedCount} projects...`);
+      }
+    } catch (error) {
+      console.error(`❌ Error importing project ${projectData.slug}:`, error);
+      skippedCount++;
+    }
+  }
+
+  console.log(`✅ Imported ${importedCount} projects`);
+  if (skippedCount > 0) {
+    console.log(`⚠️  Skipped ${skippedCount} projects due to errors`);
+  }
 
   // Mark existing users as admins (don't create new accounts)
   console.log('👤 Updating admin users...');

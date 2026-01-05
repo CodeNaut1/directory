@@ -121,69 +121,29 @@ model Project {
   id          String  @id @default(cuid())
   name        String
   slug        String  @unique
-  description String  @db.Text
-  
-  // Location fields - UPDATED
-  location    String? // Full location string (e.g. "Abidjan, Cote d'Ivoire")
-  city        String?
-  address     String?
-  
-  // Country relation - MADE OPTIONAL
-  countryId String?
-  country   Country? @relation(fields: [countryId], references: [id], onDelete: SetNull)
-  
-  // Direct country fields for projects.json data
-  countryCode String? // ISO code (e.g. "ci", "ng")
-  countryName String? // Full name (e.g. "Côte d'Ivoire")
-
-  // Images
-  logo        String? // Main logo (maps to "image" in JSON)
+  description String
+  website     String?
+  logo        String?
   coverImage  String?
 
-  // Contact - MOVED email to main model
-  website String?
-  email   String?
+  // Status
+  published Boolean @default(false)
+  featured  Boolean @default(false)
+  verified  Boolean @default(false)
 
-  // Status - UPDATED
-  published Boolean           @default(false) // Public visibility
-  active    Boolean           @default(true) // Active/Inactive
-  featured  Boolean           @default(false)
-  verified  Boolean           @default(false)
-  status    SubmissionStatus  @default(pending) // Approval status
+  // Location
+  countryId String
+  country   Country @relation(fields: [countryId], references: [id], onDelete: Restrict)
+  city      String?
+  address   String?
 
-  // Classification - MADE OPTIONAL
-  categoryId String?
-  category   Category? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  // Classification
+  categoryId String
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Restrict)
 
-  // Multiple categories support - NEW
-  categories String[] @default([]) // Array of category names
-
-  // Ownership - MADE OPTIONAL for bulk import
-  userId String?
-  user   User?   @relation(fields: [userId], references: [id], onDelete: SetNull)
-
-  // NEW FIELDS from projects.json
-  
-  // Founder information
-  founderName    String?
-  founderTwitter String?
-  founderEmail   String?
-  
-  // Initiatives, Impact, Challenges
-  initiatives String? @db.Text
-  impact      String? @db.Text
-  challenges  String? @db.Text
-  
-  // Social media links (JSON)
-  socialLinks Json? // { twitter, linkedin, instagram, facebook, youtube, telegram, nostr }
-  
-  // Bitcoin acceptance
-  acceptsOnchain   Boolean @default(false)
-  acceptsLightning Boolean @default(false)
-  acceptsGiftCards Boolean @default(false)
-  
-  // Founded year
-  foundedYear String?
+  // Ownership
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   // Timestamps
   createdAt   DateTime  @default(now())
@@ -191,6 +151,7 @@ model Project {
   publishedAt DateTime?
 
   // Relations
+  details     ProjectDetails?
   tags        ProjectTag[]
   submissions Submission[]
   reviews     Review[]
@@ -198,15 +159,42 @@ model Project {
   @@index([slug])
   @@index([published])
   @@index([featured])
-  @@index([active])
-  @@index([status])
   @@index([countryId])
-  @@index([countryCode])
   @@index([categoryId])
   @@index([userId])
   @@index([createdAt])
-  @@index([published, featured, createdAt(sort: Desc)])
+  @@index([published, featured, createdAt(sort: Desc)]) // For listing queries
+  // Note: Full-text search can be implemented using PostgreSQL native functions via raw queries
   @@map("projects")
+}
+
+// ProjectDetails model - Extended profile information
+model ProjectDetails {
+  id        String  @id @default(cuid())
+  projectId String  @unique
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  // Extended info
+  longDescription String? @db.Text
+  socialLinks     Json? // { twitter, github, linkedin, telegram, etc. }
+  contactEmail    String?
+  contactPhone    String?
+
+  // Additional metadata
+  foundedYear      Int?
+  teamSize         String?
+  fundingStage     String?
+  bitcoinOnly      Boolean @default(false)
+  lightningNetwork Boolean @default(false)
+
+  // SEO
+  metaTitle       String?
+  metaDescription String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("project_details")
 }
 
 // ProjectTag - Many-to-many relationship
@@ -269,7 +257,7 @@ model Review {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@unique([projectId, userId])
+  @@unique([projectId, userId]) // One review per user per project
   @@index([projectId])
   @@index([userId])
   @@index([published, createdAt(sort: Desc)])

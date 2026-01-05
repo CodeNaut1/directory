@@ -25,8 +25,8 @@ export default function BitcoinLiveMap({
   height = '500px',
   lat = 1.0,
   lng = 30.0,
-  zoom = 2,
-  pitch = 45,
+  zoom = 3.5,
+  pitch = 40,
   bearing = 0,
   style = 'light-v10',
   terrain = 'false',
@@ -49,12 +49,6 @@ export default function BitcoinLiveMap({
     if (mapInstance.current) {
       return;
     }
-
-    // Set up global config
-    (window as any).bitcoinLiveMapConfig = {
-      apiKey: MAPBOX_TOKEN,
-      iconBaseUrl: 'https://bitcoiners.africa/wp-content/uploads/2025/04/',
-    };
 
     mapboxgl.accessToken = MAPBOX_TOKEN;
 
@@ -167,23 +161,6 @@ export default function BitcoinLiveMap({
             id: project.id,
             name: project.name,
             description: project.description,
-            image: project.image,
-            website: project.website,
-            email: project.email,
-            country_code: project.country_code,
-            country_name: project.country_name,
-            location: project.location,
-            category: project.categories.join(', '),
-            active: project.active,
-            verified: project.verified,
-            // Social links
-            twitter: project.social.twitter,
-            linkedin: project.social.linkedin,
-            instagram: project.social.instagram,
-            nostr: project.social.nostr,
-            // Founder info
-            founder_name: project.founder.name,
-            founder_twitter: project.founder.twitter,
           },
         };
       })
@@ -306,25 +283,17 @@ export default function BitcoinLiveMap({
       },
     });
 
-    // Click handler
+    // Click handler - Navigate directly to project page
     map.on('click', 'bitcoin-projects-layer', (e: any) => {
       e.originalEvent.preventDefault();
       e.originalEvent.stopPropagation();
 
       const props = e.features[0].properties;
-      const coordinates = e.features[0].geometry.coordinates.slice();
+      const projectId = props.id;
 
-      while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-        coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+      if (projectId) {
+        navigate(`/project/${projectId}`);
       }
-
-      map.flyTo({
-        center: coordinates,
-        zoom: 5,
-        duration: 1000,
-      });
-
-      showProjectPopup(props, coordinates, navigate);
     });
 
     // Cursor change
@@ -335,160 +304,6 @@ export default function BitcoinLiveMap({
     map.on('mouseleave', 'bitcoin-projects-layer', () => {
       map.getCanvas().style.cursor = '';
     });
-  };
-
-  // Show popup
-  const showProjectPopup = (props: any, coordinates: [number, number], navigate: any) => {
-    // Clean up existing
-    document.querySelectorAll('.bitcoin-livemap-popup').forEach((el) => el.remove());
-    document.querySelectorAll('.bitcoin-livemap-popup-overlay').forEach((el) => el.remove());
-
-    // Create overlay
-    const overlay = document.createElement('div');
-    overlay.className = 'bitcoin-livemap-popup-overlay';
-    document.body.appendChild(overlay);
-
-    // Build flag HTML
-    let flagHtml: string;
-    if (props.country_code && props.country_code.length === 2) {
-      const iso = props.country_code.toLowerCase();
-      const countryName = props.country_name || iso.toUpperCase();
-      flagHtml = `<span class="project-flag fi fi-${iso}" title="${countryName}"></span>`;
-    } else {
-      flagHtml = `<span class="project-flag" title="Africa wide">🌐</span>`;
-    }
-
-    // Create popup
-    const popup = document.createElement('div');
-    popup.className = 'bitcoin-livemap-popup';
-    popup.innerHTML = `
-      <div class="popup-header-top">
-        <h3 class="header-title">Project Spotlight</h3>
-        <span class="close-popup">×</span>
-      </div>
-      <div class="popup-content-wrapper">
-        <div class="popup-header">
-          <div class="project-title">
-            <img src="${props.image || 'https://via.placeholder.com/40'}" alt="${props.name}" class="project-logo" />
-            <h4 class="project-name">${props.name}</h4>
-            ${flagHtml}
-          </div>
-        </div>
-        <div class="project-description">
-          <p>${props.description || 'No description available'}</p>
-        </div>
-        <div class="project-socials">
-          ${props.website ? createSocialLink('website', props.website) : ''}
-          ${props.twitter ? createSocialLink('twitter', props.twitter) : ''}
-          ${props.linkedin ? createSocialLink('linkedin', props.linkedin) : ''}
-          ${props.instagram ? createSocialLink('instagram', props.instagram) : ''}
-          ${props.nostr ? createSocialLink('nostr', props.nostr) : ''}
-        </div>
-        <div class="project-details">
-          <div class="detail-item city">
-            <p class="detail-label">
-              <img src="https://bitcoiners.africa/wp-content/uploads/2025/04/location-icon.png" alt="Location icon" />LOCATION
-            </p>
-            <p class="detail-value">${props.location || 'Unknown'}</p>
-          </div>
-          <div class="detail-item sector">
-            <p class="detail-label">
-              <img src="https://bitcoiners.africa/wp-content/uploads/2025/04/puzzle-icon.png" alt="Industry icon" />SECTOR
-            </p>
-            <p class="detail-value">${props.category || 'Unknown'}</p>
-          </div>
-        </div>
-        <div class="detail-item founder">
-          <p class="detail-label">
-            <img src="https://bitcoiners.africa/wp-content/uploads/2025/04/user-icon.png" alt="Founder icon" />FOUNDER INFORMATION
-          </p>
-          <p class="detail-value">${props.founder_name || 'Not available'}</p>
-          ${props.founder_twitter
-        ? `<a href="${props.founder_twitter}" target="_blank">@${props.founder_twitter.split('/').pop()}</a>`
-        : '<a href="#" target="_blank">No information</a>'
-      }
-        </div>
-        <div class="detail-item activity">
-          <p class="detail-label">
-            <img src="https://bitcoiners.africa/wp-content/uploads/2025/04/activity-icon.png" alt="Activity icon" />ACTIVITY STATUS
-          </p>
-          <p class="detail-value ${props.active === false ? 'status-inactive' : 'status-active'}">
-            ${props.active === false
-        ? 'Not active recently <i class="fas fa-ban"></i>'
-        : 'Active in the Last 3 months <i class="far fa-check-circle"></i>'
-      }
-          </p>
-        </div>
-        <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid #E5E7EB;">
-          <button class="view-project-btn" data-project-id="${props.id}" style="width: 100%; padding: 0.75rem 1.5rem; background: #FD5A47; color: #FFFFFF; border: none; border-radius: 8px; font-size: 0.9375rem; font-weight: 600; cursor: pointer;">
-            View Full Project Page →
-          </button>
-        </div>
-      </div>
-    `;
-
-    document.body.appendChild(popup);
-
-    // Close handlers
-    const closeBtn = popup.querySelector('.close-popup');
-    if (closeBtn) {
-      closeBtn.addEventListener('click', () => {
-        popup.remove();
-        overlay.remove();
-      });
-    }
-
-    overlay.addEventListener('click', () => {
-      popup.remove();
-      overlay.remove();
-    });
-
-    // View project button handler
-    const viewBtn = popup.querySelector('.view-project-btn');
-    if (viewBtn) {
-      viewBtn.addEventListener('click', () => {
-        const projectId = viewBtn.getAttribute('data-project-id');
-        if (projectId) {
-          navigate(`/project/${projectId}`);
-        }
-      });
-    }
-
-    const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        popup.remove();
-        overlay.remove();
-        document.removeEventListener('keydown', handleEscape);
-      }
-    };
-    document.addEventListener('keydown', handleEscape);
-
-    popup.style.display = 'block';
-    overlay.style.display = 'block';
-  };
-
-  const createSocialLink = (type: string, url: string): string => {
-    const globalConfig = (window as any).bitcoinLiveMapConfig;
-    const icons: Record<string, string> = {
-      website: 'globe-vector.png',
-      twitter: 'twitter-vector.png',
-      linkedin: 'Linkedin-logo.svg',
-      instagram: 'instagram1.svg',
-      nostr: 'nostr-logo-purple-trasparent.svg',
-    };
-    const src = globalConfig.iconBaseUrl + icons[type];
-    let displayText = url.replace(/https?:\/\/(www\.)?/, '').split('/')[0];
-    if (type === 'twitter' && url.includes('twitter.com')) {
-      displayText = `@${url.split('/').pop()}`;
-    }
-    return `
-      <div class="${type}">
-        <a href="${url}" target="_blank" rel="noopener">
-          <img src="${src}" alt="${type} icon"/>
-          <p>${displayText}</p>
-        </a>
-      </div>
-    `;
   };
 
   return (

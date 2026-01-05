@@ -1,5 +1,5 @@
 /**
- * Project service
+ * Project service - UPDATED for new schema
  * Handles project-related business logic
  */
 
@@ -13,23 +13,83 @@ import slugify from 'slugify';
 
 
 /**
- * Helper function to Check if project update data has actual changes
+ * Transform database project to match projects.json format for frontend compatibility
  */
-function hasActualChanges(updateData: any): boolean {
-  // Check if any meaningful fields are being updated
-  const meaningfulFields = [
-    'name', 'description', 'website', 'countryId', 'categoryId',
-    'city', 'address', 'logo', 'coverImage', 'tags', 'details'
-  ];
-  return meaningfulFields.some(field => updateData[field] !== undefined);
+function transformProjectToJsonFormat(project: any) {
+  return {
+    id: project.id,
+    name: project.name,
+    slug: project.slug,
+    description: project.description,
+
+    // Location
+    country_code: project.countryCode || project.country?.code || '',
+    country_name: project.countryName || project.country?.name || '',
+    city: project.city || '',
+    location: project.location || (project.city && project.country?.name ? `${project.city}, ${project.country.name}` : ''),
+
+    // Images
+    image: project.logo || '',
+
+    // Contact
+    website: project.website || '',
+    email: project.email || '',
+
+    // Categories
+    categories: project.categories || [project.category?.name].filter(Boolean) || [],
+
+    // Tags
+    tags: project.tags?.map((pt: any) => pt.tag?.name || pt.name).filter(Boolean) || [],
+
+    // Social links
+    social: project.socialLinks || {
+      twitter: '',
+      linkedin: '',
+      instagram: '',
+      facebook: '',
+      youtube: '',
+      telegram: '',
+      nostr: '',
+    },
+
+    // Bitcoin acceptance
+    bitcoin_acceptance: {
+      onchain: project.acceptsOnchain || false,
+      lightning: project.acceptsLightning || false,
+      gift_cards: project.acceptsGiftCards || false,
+    },
+
+    // Founder
+    founder: {
+      name: project.founderName || '',
+      twitter: project.founderTwitter || '',
+      email: project.founderEmail || '',
+    },
+
+    // Text fields
+    initiatives: project.initiatives || '',
+    impact: project.impact || '',
+    challenges: project.challenges || '',
+
+    // Status
+    verified: project.verified || false,
+    featured: project.featured || false,
+    status: project.status || 'pending',
+    active: project.active !== undefined ? project.active : true,
+
+    // Timestamps
+    founded_year: project.foundedYear || '',
+    created_at: project.createdAt?.toISOString() || new Date().toISOString(),
+    updated_at: project.updatedAt?.toISOString() || new Date().toISOString(),
+  };
 }
+
 
 /**
  * Generate a unique slug from name
  */
-function generateSlug(name: string, existingSlug?: string): string {
-  const baseSlug = slugify(name, { lower: true, strict: true });
-  return baseSlug;
+function generateSlug(name: string): string {
+  return slugify(name, { lower: true, strict: true });
 }
 
 /**
@@ -64,24 +124,24 @@ export async function listProjects(query: ProjectListQuery) {
 
   // Build where clause
   const where: any = {
-    published: true, // Only show published projects
+    published: true,
     ...(featured !== undefined && { featured }),
     ...(category && {
-      category: {
-        slug: category,
-      },
+      OR: [
+        { category: { slug: category } },
+        { categories: { has: category } },
+      ],
     }),
     ...(country && {
-      country: {
-        code: country,
-      },
+      OR: [
+        { country: { code: country } },
+        { countryCode: country.toLowerCase() },
+      ],
     }),
     ...(tag && {
       tags: {
         some: {
-          tag: {
-            slug: tag,
-          },
+          tag: { slug: tag },
         },
       },
     }),
@@ -94,16 +154,9 @@ export async function listProjects(query: ProjectListQuery) {
   };
 
   // Build orderBy
-  const orderBy: any = {};
-  if (sort === 'newest') {
-    orderBy.createdAt = 'desc';
-  } else if (sort === 'oldest') {
-    orderBy.createdAt = 'asc';
-  } else if (sort === 'name') {
-    orderBy.name = 'asc';
-  } else {
-    orderBy.createdAt = 'desc'; // Default
-  }
+  let orderBy: any = { createdAt: 'desc' };
+  if (sort === 'oldest') orderBy = { createdAt: 'asc' };
+  else if (sort === 'name') orderBy = { name: 'asc' };
 
   // Get projects and total count
   const [projects, total] = await Promise.all([
@@ -112,102 +165,37 @@ export async function listProjects(query: ProjectListQuery) {
       skip,
       take: limit,
       orderBy,
-      select: {
-        id: true,
-        name: true,
-        slug: true,
-        description: true,
-        website: true,
-        logo: true,
-        coverImage: true,
-        published: true,
-        featured: true,
-        verified: true,
-        city: true,
-        address: true,
-        createdAt: true,
-        publishedAt: true,
-        country: {
-          select: {
-            id: true,
-            code: true,
-            name: true,
-            flag: true,
-          },
-        },
-        category: {
-          select: {
-            id: true,
-            name: true,
-            slug: true,
-          },
-        },
-        tags: {
-          select: {
-            tag: {
-              select: {
-                id: true,
-                name: true,
-                slug: true,
-              },
-            },
-          },
-        },
-        user: {
-          select: {
-            id: true,
-            name: true,
-            email: true,
-          },
-        },
+      include: {
+        country: true,
+        category: true,
+        tags: { include: { tag: true } },
       },
     }),
     prisma.project.count({ where }),
   ]);
 
-  // Transform tags structure
-  const transformedProjects = projects.map((project) => ({
-    ...project,
-    tags: project.tags.map((pt) => pt.tag),
-  }));
-
   return {
-    data: transformedProjects,
-    meta: {
-      page,
-      limit,
-      total,
-    },
+    data: projects.map(transformProjectToJsonFormat),
+    meta: { page, limit, total },
   };
 }
 
 /**
- * Get all projects for a specific user (including unpublished)
- * Used for user dashboard
+ * Get user's projects
  */
 export async function getUserProjects(userId: string) {
   const projects = await prisma.project.findMany({
-    where: {
-      userId,
-    },
-    orderBy: {
-      createdAt: 'desc',
-    },
-    select: {
-      id: true,
-      name: true,
-      slug: true,
-      published: true,
-      verified: true,
-      featured: true,
-      updatedAt: true,
-      createdAt: true,
+    where: { userId },
+    orderBy: { createdAt: 'desc' },
+    include: {
+      country: true,
+      category: true,
+      tags: { include: { tag: true } },
     },
   });
 
-  return projects;
+  return projects.map(transformProjectToJsonFormat);
 }
-
 
 /**
  * Get project by ID or slug
@@ -215,36 +203,14 @@ export async function getUserProjects(userId: string) {
 export async function getProjectById(idOrSlug: string) {
   const project = await prisma.project.findFirst({
     where: {
-      OR: [
-        { id: idOrSlug },
-        { slug: idOrSlug },
-      ],
+      OR: [{ id: idOrSlug }, { slug: idOrSlug }],
     },
     include: {
       country: true,
       category: true,
-      tags: {
-        include: {
-          tag: true,
-        },
-      },
-      details: true,
+      tags: { include: { tag: true } },
       user: {
-        select: {
-          id: true,
-          name: true,
-          email: true,
-          avatar: true,
-        },
-      },
-      _count: {
-        select: {
-          reviews: {
-            where: {
-              published: true,
-            },
-          },
-        },
+        select: { id: true, name: true, email: true, avatar: true },
       },
     },
   });
@@ -253,27 +219,19 @@ export async function getProjectById(idOrSlug: string) {
     throw new NotFoundError('Project not found');
   }
 
-  // Only show published projects to non-owners
-  // (Ownership check will be done in the route handler if needed)
+  if (!project.published && project.status !== 'approved') {
+    throw new Error('This project is currently under review and will be visible once approved.');
+  }
 
-  // Transform tags
-  const transformedProject = {
-    ...project,
-    tags: project.tags.map((pt) => pt.tag),
-  };
-
-  return transformedProject;
+  return transformProjectToJsonFormat(project);
 }
 
 /**
  * Create a new project
  */
 export async function createProject(user: AuthenticatedUser, input: CreateProjectInput) {
-  // Generate slug
-  const baseSlug = generateSlug(input.name);
-  const slug = await ensureUniqueSlug(baseSlug);
+  const slug = await ensureUniqueSlug(generateSlug(input.name));
 
-  // Create project
   const project = await prisma.project.create({
     data: {
       name: input.name,
@@ -287,52 +245,21 @@ export async function createProject(user: AuthenticatedUser, input: CreateProjec
       city: input.city || null,
       address: input.address || null,
       userId: user.id,
-      published: false, // Projects start as unpublished
+      published: false,
       ...(input.tagIds && {
         tags: {
-          create: input.tagIds.map((tagId) => ({
-            tagId,
-          })),
-        },
-      }),
-      ...(input.details && {
-        details: {
-          create: {
-            longDescription: input.details.longDescription || null,
-            ...(input.details.socialLinks !== undefined && {
-              socialLinks: input.details.socialLinks || Prisma.JsonNull,
-            }),
-            contactEmail: input.details.contactEmail || null,
-            contactPhone: input.details.contactPhone || null,
-            foundedYear: input.details.foundedYear || null,
-            teamSize: input.details.teamSize || null,
-            fundingStage: input.details.fundingStage || null,
-            bitcoinOnly: input.details.bitcoinOnly || false,
-            lightningNetwork: input.details.lightningNetwork || false,
-            metaTitle: input.details.metaTitle || null,
-            metaDescription: input.details.metaDescription || null,
-          },
+          create: input.tagIds.map((tagId) => ({ tagId })),
         },
       }),
     },
     include: {
-      country: {
-        select: {
-          code: true,
-          name: true,
-          flag: true,
-        },
-      },
-      category: {
-        select: {
-          name: true,
-          slug: true,
-        },
-      },
+      country: true,
+      category: true,
+      tags: { include: { tag: true } },
     },
   });
 
-  return project;
+  return transformProjectToJsonFormat(project);
 }
 
 /**
@@ -343,207 +270,86 @@ export async function updateProject(
   projectId: string,
   input: UpdateProjectInput
 ) {
-  // Check if project exists and user owns it
   const project = await prisma.project.findUnique({
     where: { id: projectId },
     select: { id: true, userId: true, slug: true, name: true },
   });
 
-  if (!project) {
-    throw new NotFoundError('Project not found');
-  }
+  if (!project) throw new NotFoundError('Project not found');
 
   if (project.userId !== user.id && user.role !== 'admin' && user.role !== 'moderator') {
     throw new AuthorizationError('You do not have permission to update this project');
   }
 
-  // Generate new slug if name changed
   let slug = project.slug;
   if (input.name && input.name !== project.name) {
-    const baseSlug = generateSlug(input.name);
-    slug = await ensureUniqueSlug(baseSlug, projectId);
+    slug = await ensureUniqueSlug(generateSlug(input.name), projectId);
   }
 
-  // Build update data
   const updateData: any = {};
+  if (input.name) { updateData.name = input.name; updateData.slug = slug; }
+  if (input.description !== undefined) updateData.description = input.description;
+  if (input.website !== undefined) updateData.website = input.website || null;
+  if (input.logo !== undefined) updateData.logo = input.logo || null;
+  if (input.coverImage !== undefined) updateData.coverImage = input.coverImage || null;
+  if (input.countryId) updateData.countryId = input.countryId;
+  if (input.categoryId) updateData.categoryId = input.categoryId;
+  if (input.city !== undefined) updateData.city = input.city || null;
+  if (input.address !== undefined) updateData.address = input.address || null;
 
-  if (input.name) {
-    updateData.name = input.name;
-    updateData.slug = slug;
-  }
-  if (input.description !== undefined) {
-    updateData.description = input.description;
-  }
-  if (input.website !== undefined) {
-    updateData.website = input.website || null;
-  }
-  if (input.logo !== undefined) {
-    updateData.logo = input.logo || null;
-  }
-  if (input.coverImage !== undefined) {
-    updateData.coverImage = input.coverImage || null;
-  }
-  if (input.countryId) {
-    updateData.countryId = input.countryId;
-  }
-  if (input.categoryId) {
-    updateData.categoryId = input.categoryId;
-  }
-  if (input.city !== undefined) {
-    updateData.city = input.city || null;
-  }
-  if (input.address !== undefined) {
-    updateData.address = input.address || null;
-  }
   if (input.tagIds) {
     updateData.tags = {
       deleteMany: {},
-      create: input.tagIds.map((tagId) => ({
-        tagId,
-      })),
+      create: input.tagIds.map((tagId) => ({ tagId })),
     };
   }
 
-  if (input.details) {
-    const detailsData: any = {
-      create: {
-        longDescription: input.details.longDescription || null,
-        ...(input.details.socialLinks !== undefined && {
-          socialLinks: input.details.socialLinks || Prisma.JsonNull,
-        }),
-        contactEmail: input.details.contactEmail || null,
-        contactPhone: input.details.contactPhone || null,
-        foundedYear: input.details.foundedYear || null,
-        teamSize: input.details.teamSize || null,
-        fundingStage: input.details.fundingStage || null,
-        bitcoinOnly: input.details.bitcoinOnly || false,
-        lightningNetwork: input.details.lightningNetwork || false,
-        metaTitle: input.details.metaTitle || null,
-        metaDescription: input.details.metaDescription || null,
-      },
-      update: {},
-    };
-
-    if (input.details.longDescription !== undefined) {
-      detailsData.update.longDescription = input.details.longDescription || null;
-    }
-    if (input.details.socialLinks !== undefined) {
-      detailsData.update.socialLinks = input.details.socialLinks || Prisma.JsonNull;
-    }
-    if (input.details.contactEmail !== undefined) {
-      detailsData.update.contactEmail = input.details.contactEmail || null;
-    }
-    if (input.details.contactPhone !== undefined) {
-      detailsData.update.contactPhone = input.details.contactPhone || null;
-    }
-    if (input.details.foundedYear !== undefined) {
-      detailsData.update.foundedYear = input.details.foundedYear || null;
-    }
-    if (input.details.teamSize !== undefined) {
-      detailsData.update.teamSize = input.details.teamSize || null;
-    }
-    if (input.details.fundingStage !== undefined) {
-      detailsData.update.fundingStage = input.details.fundingStage || null;
-    }
-    if (input.details.bitcoinOnly !== undefined) {
-      detailsData.update.bitcoinOnly = input.details.bitcoinOnly;
-    }
-    if (input.details.lightningNetwork !== undefined) {
-      detailsData.update.lightningNetwork = input.details.lightningNetwork;
-    }
-    if (input.details.metaTitle !== undefined) {
-      detailsData.update.metaTitle = input.details.metaTitle || null;
-    }
-    if (input.details.metaDescription !== undefined) {
-      detailsData.update.metaDescription = input.details.metaDescription || null;
-    }
-
-    updateData.details = {
-      upsert: detailsData,
-    };
-  }
-
-  // Only unpublish project if there are actual changes (requires re-review)
-  if (hasActualChanges(updateData)) {
-    updateData.published = false;
-    updateData.publishedAt = null;
-  }
-
-  // Update project
   const updated = await prisma.project.update({
     where: { id: projectId },
-    data: updateData as any, // Type assertion needed due to conditional fields
+    data: updateData,
     include: {
-      country: {
-        select: {
-          code: true,
-          name: true,
-          flag: true,
-        },
-      },
-      category: {
-        select: {
-          name: true,
-          slug: true,
-        },
-      },
-      tags: {
-        include: {
-          tag: true,
-        },
-      },
+      country: true,
+      category: true,
+      tags: { include: { tag: true } },
     },
   });
 
-  // Transform tags
-  return {
-    ...updated,
-    tags: updated.tags.map((pt) => pt.tag),
-  };
+  return transformProjectToJsonFormat(updated);
 }
 
 /**
  * Delete a project
  */
 export async function deleteProject(user: AuthenticatedUser, projectId: string) {
-  // Check if project exists and user owns it
   const project = await prisma.project.findUnique({
     where: { id: projectId },
     select: { id: true, userId: true },
   });
 
-  if (!project) {
-    throw new NotFoundError('Project not found');
-  }
+  if (!project) throw new NotFoundError('Project not found');
 
   if (project.userId !== user.id && user.role !== 'admin') {
     throw new AuthorizationError('You do not have permission to delete this project');
   }
 
-  await prisma.project.delete({
-    where: { id: projectId },
-  });
+  await prisma.project.delete({ where: { id: projectId } });
 }
 
 /**
  * Submit project for review
  */
 export async function submitProjectForReview(user: AuthenticatedUser, projectId: string, notes?: string) {
-  // Check if project exists and user owns it
   const project = await prisma.project.findUnique({
     where: { id: projectId },
     select: { id: true, userId: true },
   });
 
-  if (!project) {
-    throw new NotFoundError('Project not found');
-  }
+  if (!project) throw new NotFoundError('Project not found');
 
   if (project.userId !== user.id) {
     throw new AuthorizationError('You do not have permission to submit this project');
   }
 
-  // Create submission record
   const submission = await prisma.submission.create({
     data: {
       projectId,
@@ -553,15 +359,10 @@ export async function submitProjectForReview(user: AuthenticatedUser, projectId:
     },
     include: {
       project: {
-        select: {
-          id: true,
-          name: true,
-          slug: true,
-        },
+        select: { id: true, name: true, slug: true },
       },
     },
   });
 
   return submission;
 }
-

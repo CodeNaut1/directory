@@ -6,7 +6,7 @@ export default function Infographic() {
   const [showInstructions, setShowInstructions] = useState(true);
 
   useEffect(() => {
-    document.title = 'Bitcoin Africa Infographic - Interactive Map';
+    document.title = 'Infographic - Africa Bitcoin Directory';
   }, []);
 
   return (

@@ -4,7 +4,7 @@ import '../styles/livemap.css';
 
 export default function LiveMap() {
   useEffect(() => {
-    document.title = 'Live Map - African Bitcoiners Directory';
+    document.title = 'Live Map - African Bitcoin Directory';
   }, []);
 
   return (
@@ -17,11 +17,11 @@ export default function LiveMap() {
       }}>
         <BitcoinLiveMap
           width="100%"
-          height="800px"
+          height="900px"
           lat={1.0}
-          lng={30.0}
-          zoom={3.5}
-          pitch={45}
+          lng={24.0}
+          zoom={3}
+          pitch={40}
           bearing={0}
           style="light-v10"
           terrain="false"
