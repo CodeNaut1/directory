@@ -124,6 +124,7 @@ export default function ViewProject() {
 
   // Count available social links
   const socialLinks = [
+    project.website,
     project.social.twitter,
     project.social.linkedin,
     project.social.facebook,
@@ -420,7 +421,10 @@ export default function ViewProject() {
                         rel="noopener noreferrer"
                         style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', color: '#1F2937', textDecoration: 'none', fontSize: '0.9375rem' }}
                       >
-                        <img src={websiteIcon} alt="Website" style={{ width: '20px', height: '20px', flexShrink: 0 }} />
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <circle cx="12" cy="12" r="10" stroke="#1F2937" strokeWidth="2" />
+                          <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" stroke="#1F2937" strokeWidth="2" />
+                        </svg>
                         <span style={{ flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                           {project.website.replace(/^https?:\/\//, '').replace(/^www\./, '').replace(/\/$/, '')}
                         </span>
