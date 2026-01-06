@@ -88,10 +88,10 @@ export default function LoginPage() {
             <div className="auth-card">
               <div className="auth-card-header-eyebrow">Sign in</div>
               <h2 className="auth-card-title">Log in to your project profile</h2>
-              <p className="auth-card-subtitle">
+              {/* <p className="auth-card-subtitle">
                 Use the email you registered your project with. No spam, no noise — just tools to
                 manage your presence.
-              </p>
+              </p> */}
 
               {error && (
                 <div
