@@ -2,6 +2,9 @@ import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import projectsData from '../data/projects.json';
 import type { Project } from '../data/projects.types';
+import markerPinIcon from '../assets/marker-pin.png';
+import bitcoinIcon from '../assets/bitcoin-icon.png';
+import lightningIcon from '../assets/lightning-icon.png';
 
 export default function CountryProjects() {
   const { countryCode } = useParams<{ countryCode: string }>();
@@ -218,17 +221,20 @@ export default function CountryProjects() {
                 }}>
                   {project.location && (
                     <span style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
-                      📍 {project.location.split(',')[0]}
+                      <img src={markerPinIcon} alt="Location" style={{ width: '14px', height: '14px' }} />
+                      {project.location.split(',')[0]}
                     </span>
                   )}
                   {project.bitcoin_acceptance.lightning && (
                     <span style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
-                      ⚡ Lightning
+                      <img src={lightningIcon} alt="Lightning" style={{ width: '14px', height: '14px' }} />
+                      Lightning
                     </span>
                   )}
                   {project.bitcoin_acceptance.onchain && (
                     <span style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
-                      ₿ On-chain
+                      <img src={bitcoinIcon} alt="Bitcoin" style={{ width: '14px', height: '14px' }} />
+                      On-chain
                     </span>
                   )}
                 </div>

@@ -6,6 +6,7 @@ import nostrIcon from '../assets/nostr-icon.png';
 import instagramIcon from '../assets/instagram-icon.png';
 import bitcoinIcon from '../assets/bitcoin-icon.png';
 import lightningIcon from '../assets/lightning-icon.png';
+import DuplicateCheck from '../components/DuplicateCheck';
 
 interface Country {
   id: string;
@@ -93,9 +94,18 @@ export default function CreateProject() {
     instagramUsername: '',
     projectLogo: null,
   });
+
   const [logoPreview, setLogoPreview] = useState<string | null>(null);
   const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Duplicate check state
+  const [showDuplicateCheck, setShowDuplicateCheck] = useState(false);
+  const [duplicateCheckData, setDuplicateCheckData] = useState({
+    projectName: '',
+    website: '',
+    twitter: '',
+  });
 
   useEffect(() => {
     document.title = "Create Project - African Bitcoin Directory";
@@ -224,6 +234,36 @@ export default function CreateProject() {
       return;
     }
 
+    // Prepare duplicate check data
+    const normalizedWebsite = formData.websiteUrl.trim()
+      ? (formData.websiteUrl.trim().startsWith('http')
+        ? formData.websiteUrl.trim()
+        : `https://${formData.websiteUrl.trim()}`)
+      : '';
+
+    const normalizedTwitter = formData.twitterHandle.trim()
+      ? `https://twitter.com/${formData.twitterHandle.replace('@', '').trim()}`
+      : '';
+
+    // Show duplicate checker
+    setDuplicateCheckData({
+      projectName: formData.projectName.trim(),
+      website: normalizedWebsite,
+      twitter: normalizedTwitter,
+    });
+    setShowDuplicateCheck(true);
+  };
+
+  const handleDuplicateContinue = async () => {
+    setShowDuplicateCheck(false);
+    await submitProject();
+  };
+
+  const handleDuplicateCancel = () => {
+    setShowDuplicateCheck(false);
+  };
+
+  const submitProject = async () => {
     setIsSubmitting(true);
 
     try {
@@ -664,6 +704,17 @@ export default function CreateProject() {
           </section>
         </div>
       </main>
+
+      {/* Duplicate Check Modal */}
+      {showDuplicateCheck && (
+        <DuplicateCheck
+          projectName={duplicateCheckData.projectName}
+          website={duplicateCheckData.website}
+          twitter={duplicateCheckData.twitter}
+          onContinue={handleDuplicateContinue}
+          onCancel={handleDuplicateCancel}
+        />
+      )}
     </>
   );
 }

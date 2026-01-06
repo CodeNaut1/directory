@@ -94,8 +94,8 @@
       "livemap": {
         "type": "Point",
         "coords": [
-          -18.9137,
-          47.5361
+          19.895255774722717,
+          0.0026755702568668147
         ]
       }
     },
@@ -539,7 +539,7 @@
       "name": "Bitcoin Mastermind",
       "infographic": {
         "type": "rect",
-        "coords": "2100.2545109211774,1486.1006647673314"
+        "coords": "2100.2545109211774,1486.1006647673314,811.289648622982,106.15004748338083"
       },
       "livemap": {
         "type": "Point",
@@ -802,9 +802,12 @@
       }
     },
     {
-      "proj_id": "bitcoinkids",
-      "name": "BitcoinKids",
-      "infographic": null,
+      "proj_id": "bitcoin-kids",
+      "name": "Bitcoin Kids",
+      "infographic": {
+        "type": "rect",
+        "coords": "3267.9050332383667,1493.6828110161443"
+      },
       "livemap": {
         "type": "Point",
         "coords": [

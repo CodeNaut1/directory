@@ -39,50 +39,71 @@ export default function HomePage() {
       setLoadingCounts(true);
 
       try {
-        // Try API first to get counts of published and verified projects
         if (API_URL) {
           try {
-            // Fetch all published projects (API already filters by published=true)
-            // We'll fetch with a high limit to get all projects, then filter for verified
-            const response = await fetch(`${API_URL}/api/projects?page=1&limit=1000`);
-            if (response.ok) {
-              const data = await response.json();
-              if (data.success && data.data) {
-                // Filter for verified projects only (published is already filtered by API)
-                const verifiedProjects = data.data.filter(
-                  (project: any) => project.verified === true
-                );
+            // Fetch ALL projects using pagination
+            let allProjects: any[] = [];
+            let page = 1;
+            const limit = 100;
+            let hasMore = true;
 
-                const counts: CategoryCounts = {
-                  businesses: 0,
-                  education: 0,
-                  circularEconomy: 0,
-                  miners: 0,
-                  communities: 0,
-                };
+            while (hasMore) {
+              const response = await fetch(`${API_URL}/api/projects?page=${page}&limit=${limit}`);
+              if (response.ok) {
+                const data = await response.json();
 
-                verifiedProjects.forEach((project: any) => {
-                  const categoryName = (project.category?.name || '').toLowerCase();
-                  const categorySlug = (project.category?.slug || '').toLowerCase();
+                // console.log('API Response:', data);
+                // console.log('Sample project:', data.data?.[0]);
 
-                  if (categoryName.includes('business') || categorySlug.includes('business')) {
-                    counts.businesses++;
-                  } else if (categoryName.includes('education') || categorySlug.includes('education')) {
-                    counts.education++;
-                  } else if (categoryName.includes('circular') || categorySlug.includes('circular')) {
-                    counts.circularEconomy++;
-                  } else if (categoryName.includes('mining') || categoryName.includes('miner') || categorySlug.includes('mining') || categorySlug.includes('miner')) {
-                    counts.miners++;
-                  } else if (categoryName.includes('community') || categorySlug.includes('community')) {
-                    counts.communities++;
-                  }
-                });
+                if (data.success && data.data) {
+                  allProjects = [...allProjects, ...data.data];
 
-                setCategoryCounts(counts);
-                setLoadingCounts(false);
-                return;
+                  // Check if there are more pages
+                  const total = data.meta?.total || 0;
+                  hasMore = allProjects.length < total;
+                  page++;
+                } else {
+                  hasMore = false;
+                }
+              } else {
+                hasMore = false;
               }
             }
+
+            // Filter for verified projects only
+            const verifiedProjects = allProjects.filter(
+              (project: any) => project.verified === true
+            );
+
+            const counts: CategoryCounts = {
+              businesses: 0,
+              education: 0,
+              circularEconomy: 0,
+              miners: 0,
+              communities: 0,
+            };
+
+            verifiedProjects.forEach((project: any) => {
+              // categories is an ARRAY of strings
+              const categories = project.categories || [];
+              const categoriesStr = categories.join(' ').toLowerCase();
+
+              if (categoriesStr.includes('business')) {
+                counts.businesses++;
+              } else if (categoriesStr.includes('education')) {
+                counts.education++;
+              } else if (categoriesStr.includes('circular')) {
+                counts.circularEconomy++;
+              } else if (categoriesStr.includes('mining') || categoriesStr.includes('miner')) {
+                counts.miners++;
+              } else if (categoriesStr.includes('community')) {
+                counts.communities++;
+              }
+            });
+
+            setCategoryCounts(counts);
+            setLoadingCounts(false);
+            return;
           } catch (apiError) {
             console.warn('API request failed, falling back to local data:', apiError);
           }
@@ -91,7 +112,7 @@ export default function HomePage() {
         console.warn('API not available, falling back to local data:', apiError);
       }
 
-      // Fallback to local data (NEW STRUCTURE)
+      // Fallback to local data (keep existing code)
       try {
         const module = await import('../data/projects.json');
         const data = module.default;
@@ -105,13 +126,11 @@ export default function HomePage() {
             communities: 0,
           };
 
-          // Filter for active/published projects only in fallback
           const activeProjects = data.projects.filter((project: any) =>
             project.active !== false && project.status === 'approved'
           );
 
           activeProjects.forEach((project: any) => {
-            // Categories is an array in new structure
             const categories = project.categories || [];
             const categoriesStr = categories.join(' ').toLowerCase();
 
@@ -426,20 +445,26 @@ export default function HomePage() {
             }}
           >
             {[
-              { icon: businessesIcon, label: 'Businesses', count: categoryCounts.businesses },
-              { icon: educationIcon, label: 'Education', count: categoryCounts.education },
-              { icon: circularIcon, label: 'Circular Economy', count: categoryCounts.circularEconomy },
-              { icon: minersIcon, label: 'Miners', count: categoryCounts.miners },
-              { icon: communitiesIcon, label: 'Communities', count: categoryCounts.communities },
+              { icon: businessesIcon, label: 'Businesses', count: categoryCounts.businesses, slug: 'business' },
+              { icon: educationIcon, label: 'Education', count: categoryCounts.education, slug: 'education' },
+              { icon: circularIcon, label: 'Circular Economy', count: categoryCounts.circularEconomy, slug: 'circular' },
+              { icon: minersIcon, label: 'Miners', count: categoryCounts.miners, slug: 'mining' },
+              { icon: communitiesIcon, label: 'Communities', count: categoryCounts.communities, slug: 'community' },
             ].map((category) => (
-              <div
+              <Link
                 key={category.label}
+                to={`/category/${category.slug}`}
                 style={{
                   display: 'flex',
                   flexDirection: 'column',
                   alignItems: 'center',
                   gap: 'clamp(0.75rem, 2vw, 1rem)',
+                  textDecoration: 'none',
+                  color: 'inherit',
+                  transition: 'transform 0.2s',
                 }}
+                onMouseEnter={(e) => { e.currentTarget.style.transform = 'scale(1.05)'; }}
+                onMouseLeave={(e) => { e.currentTarget.style.transform = 'scale(1)'; }}
               >
                 <img
                   src={category.icon}
@@ -472,7 +497,7 @@ export default function HomePage() {
                 >
                   {loadingCounts ? '...' : category.count}
                 </span>
-              </div>
+              </Link>
             ))}
           </div>
         </section>

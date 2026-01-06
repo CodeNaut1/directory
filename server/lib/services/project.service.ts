@@ -124,7 +124,8 @@ export async function listProjects(query: ProjectListQuery) {
 
   // Build where clause
   const where: any = {
-    published: true,
+    published: true, // Only show published
+    status: 'approved', // Only show approved projects
     ...(featured !== undefined && { featured }),
     ...(category && {
       OR: [
@@ -205,10 +206,68 @@ export async function getProjectById(idOrSlug: string) {
     where: {
       OR: [{ id: idOrSlug }, { slug: idOrSlug }],
     },
-    include: {
-      country: true,
-      category: true,
-      tags: { include: { tag: true } },
+    // Select specific fields to ensure TypeScript knows about them
+    select: {
+      id: true,
+      slug: true,
+      name: true,
+      description: true,
+      location: true,
+      city: true,
+      address: true,
+      countryId: true,
+      countryCode: true,
+      countryName: true,
+      logo: true,
+      coverImage: true,
+      website: true,
+      email: true,
+      categories: true,
+      socialLinks: true,
+      acceptsOnchain: true,
+      acceptsLightning: true,
+      acceptsGiftCards: true,
+      founderName: true,
+      founderTwitter: true,
+      founderEmail: true,
+      initiatives: true,
+      impact: true,
+      challenges: true,
+      foundedYear: true,
+      published: true,
+      verified: true,
+      featured: true,
+      active: true,
+      status: true, // Include status in select
+      createdAt: true,
+      updatedAt: true,
+      publishedAt: true,
+      country: {
+        select: {
+          id: true,
+          code: true,
+          name: true,
+          flag: true,
+        },
+      },
+      category: {
+        select: {
+          id: true,
+          name: true,
+          slug: true,
+        },
+      },
+      tags: {
+        include: {
+          tag: {
+            select: {
+              id: true,
+              name: true,
+              slug: true,
+            },
+          },
+        },
+      },
       user: {
         select: { id: true, name: true, email: true, avatar: true },
       },
@@ -219,7 +278,11 @@ export async function getProjectById(idOrSlug: string) {
     throw new NotFoundError('Project not found');
   }
 
-  if (!project.published && project.status !== 'approved') {
+  // Check if project should be visible to public
+  // A project is visible if:
+  // 1. It's published AND
+  // 2. Status is 'approved'
+  if (!project.published || project.status !== 'approved') {
     throw new Error('This project is currently under review and will be visible once approved.');
   }
 

@@ -294,8 +294,8 @@ export default function RegisterPage() {
                     disabled={loading}
                   />
                   <label htmlFor="terms">
-                    I agree to only list Bitcoin-only projects (no tokens, NFTs or multi-coin
-                    exchanges) and agree to African Bitcoiners&apos; verification guidelines.
+                    I agree to only list Bitcoin-only projects, no tokens, NFTs or multi-coin
+                    exchanges.
                   </label>
                 </div>
 

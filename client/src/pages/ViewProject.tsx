@@ -24,6 +24,12 @@ export default function ViewProject() {
   const [project, setProject] = useState<Project | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const VerifiedBadge = () => (
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="8" cy="8" r="8" fill="#10B981" />
+      <path d="M11.3 5.3L6.5 10.1L4.7 8.3" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
 
   useEffect(() => {
     document.title = "Project - African Bitcoin Directory";
@@ -118,6 +124,7 @@ export default function ViewProject() {
 
   // Count available social links
   const socialLinks = [
+    project.website,
     project.social.twitter,
     project.social.linkedin,
     project.social.facebook,
@@ -186,7 +193,7 @@ export default function ViewProject() {
               <div style={{ background: '#FFFFFF', borderRadius: '12px', padding: 'clamp(1.5rem, 4vw, 2rem)', boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)', marginBottom: '2rem' }}>
                 {/* Category Badge */}
                 {project.categories && project.categories.length > 0 && (
-                  <div style={{ marginBottom: '1rem', display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+                  <div style={{ marginBottom: '2rem', display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
                     {project.categories.map((cat, idx) => (
                       <span key={idx} style={{ display: 'inline-block', padding: '0.375rem 0.875rem', background: '#FEF3C7', color: '#92400E', borderRadius: '9999px', fontSize: '0.875rem', fontWeight: 500 }}>
                         {cat}
@@ -196,7 +203,7 @@ export default function ViewProject() {
                 )}
 
                 {/* Title Row with Logo and Verified */}
-                <div className="title-row" style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1.5rem' }}>
+                <div className="title-row" style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '2.5rem' }}>
                   {project.image && (
                     <img src={project.image} alt={project.name} style={{ width: 'clamp(50px, 10vw, 60px)', height: 'clamp(50px, 10vw, 60px)', borderRadius: '8px', objectFit: 'cover', flexShrink: 0 }} />
                   )}
@@ -206,9 +213,8 @@ export default function ViewProject() {
                     </h1>
                   </div>
                   {project.verified && (
-                    <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.375rem', padding: '0.375rem 0.875rem', background: '#10B981', color: '#FFFFFF', borderRadius: '9999px', fontSize: '0.875rem', fontWeight: 600, flexShrink: 0, whiteSpace: 'nowrap' }}>
-                      <img src={verifiedIcon} alt="Verified" style={{ width: '14px', height: '14px' }} />
-                      Verified
+                    <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.5rem 1rem', background: '#D1FAE5', color: '#065F46', borderRadius: '20px', fontSize: '0.875rem', fontWeight: 600, flexShrink: 0, whiteSpace: 'nowrap' }}>
+                      Verified <VerifiedBadge />
                     </span>
                   )}
                   {project.featured && (
@@ -219,7 +225,7 @@ export default function ViewProject() {
                 </div>
 
                 {/* Location & Bitcoin Methods */}
-                <div className="meta-row" style={{ display: 'flex', flexWrap: 'wrap', gap: '1.5rem', marginBottom: '2rem' }}>
+                <div className="meta-row" style={{ display: 'flex', flexWrap: 'wrap', gap: '1.5rem', marginBottom: '2.5rem' }}>
                   {project.location && (
                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                       <img src={markerPinIcon} alt="Location" style={{ width: '20px', height: '20px', flexShrink: 0 }} />
@@ -233,14 +239,24 @@ export default function ViewProject() {
                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                       <img src={bitcoinIcon} alt="Bitcoin" style={{ width: '20px', height: '20px', flexShrink: 0 }} />
                       <span style={{ color: '#1F2937', fontSize: '0.9375rem' }}>Bitcoin Onchain</span>
-                      {project.verified && <img src={verifiedIcon} alt="Verified" style={{ width: '16px', height: '16px' }} />}
+                      {project.verified && (
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ flexShrink: 0 }}>
+                          <circle cx="8" cy="8" r="8" fill="#10B981" />
+                          <path d="M11.3 5.3L6.5 10.1L4.7 8.3" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+                      )}
                     </div>
                   )}
                   {project.bitcoin_acceptance.lightning && (
                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                       <img src={lightningIcon} alt="Lightning" style={{ width: '20px', height: '20px', flexShrink: 0 }} />
                       <span style={{ color: '#1F2937', fontSize: '0.9375rem' }}>Lightning</span>
-                      {project.verified && <img src={verifiedIcon} alt="Verified" style={{ width: '16px', height: '16px' }} />}
+                      {project.verified && (
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ flexShrink: 0 }}>
+                          <circle cx="8" cy="8" r="8" fill="#10B981" />
+                          <path d="M11.3 5.3L6.5 10.1L4.7 8.3" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+                      )}
                     </div>
                   )}
                   {project.founded_year && (
@@ -296,8 +312,8 @@ export default function ViewProject() {
               {/* Key Focus Areas */}
               {(project.categories.length > 0 || bitcoinMethods.length > 0) && (
                 <div style={{ background: '#FFFFFF', borderRadius: '12px', padding: 'clamp(1.5rem, 4vw, 2rem)', boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)', marginBottom: '2rem' }}>
-                  <h2 style={{ fontSize: 'clamp(1rem, 3vw, 1.25rem)', fontWeight: 700, color: '#1F2937', marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
-                    <img src={targetIcon} alt="Target" style={{ width: '24px', height: '24px' }} />
+                  <h2 style={{ fontSize: 'clamp(1.7rem, 3vw, 1.25rem)', fontWeight: 700, color: '#1F2937', marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
+                    <img src={targetIcon} alt="Target" style={{ width: '32px', height: '32px' }} />
                     Key Focus Areas
                   </h2>
                   <div className="focus-grid" style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
@@ -320,38 +336,56 @@ export default function ViewProject() {
               {/* Core Initiatives, Impact & Challenges */}
               {(project.initiatives || project.impact || project.challenges) && (
                 <div style={{ background: '#FFFFFF', borderRadius: '12px', padding: 'clamp(1.5rem, 4vw, 2rem)', boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)', marginBottom: '2rem' }}>
-                  <h2 style={{ fontSize: 'clamp(1rem, 3vw, 1.25rem)', fontWeight: 700, color: '#1F2937', marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
-                    <img src={starIcon} alt="Star" style={{ width: '24px', height: '24px' }} />
-                    Details
+                  <h2 style={{ fontSize: 'clamp(1.7rem, 3vw, 1.25rem)', fontWeight: 700, color: '#1F2937', marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
+                    <img src={starIcon} alt="Star" style={{ width: '32px', height: '32px' }} />
+                    Core Initiatives and Impacts
                   </h2>
 
                   {project.initiatives && (
                     <div style={{ marginBottom: project.impact || project.challenges ? '1.5rem' : 0 }}>
-                      <h3 style={{ fontSize: '0.9rem', fontWeight: 600, color: '#1F2937', marginBottom: '0.5rem' }}>Core Initiatives</h3>
-                      <p style={{ fontSize: 'clamp(0.875rem, 2vw, 0.9375rem)', color: '#1F2937', lineHeight: 1.7, margin: 0, whiteSpace: 'pre-wrap' }}>{project.initiatives}</p>
+                      <h3 style={{ fontSize: '1.2rem', fontWeight: 600, color: '#F59E0B', marginBottom: '0.75rem' }}>Core Initiatives</h3>
+                      <ul style={{ margin: 0, paddingLeft: '1.5rem', listStyleType: 'disc' }}>
+                        {project.initiatives.split('\n').filter(line => line.trim()).map((line, idx) => (
+                          <li key={idx} style={{ fontSize: 'clamp(0.875rem, 2vw, 0.9375rem)', color: '#1F2937', lineHeight: 1.7, marginBottom: '0.5rem' }}>
+                            {line.trim().replace(/^[•\-]\s*/, '')}
+                          </li>
+                        ))}
+                      </ul>
                     </div>
                   )}
 
                   {project.impact && (
                     <div style={{ marginBottom: project.challenges ? '1.5rem' : 0 }}>
-                      <h3 style={{ fontSize: '0.9rem', fontWeight: 600, color: '#10B981', marginBottom: '0.5rem' }}>Impact & Achievements</h3>
-                      <p style={{ fontSize: 'clamp(0.875rem, 2vw, 0.9375rem)', color: '#1F2937', lineHeight: 1.7, margin: 0, whiteSpace: 'pre-wrap' }}>{project.impact}</p>
+                      <h3 style={{ fontSize: '1.2rem', fontWeight: 600, color: '#F59E0B', marginBottom: '0.75rem' }}>Impact & Achievements</h3>
+                      <ul style={{ margin: 0, paddingLeft: '1.5rem', listStyleType: 'disc' }}>
+                        {project.impact.split('\n').filter(line => line.trim()).map((line, idx) => (
+                          <li key={idx} style={{ fontSize: 'clamp(0.875rem, 2vw, 0.9375rem)', color: '#1F2937', lineHeight: 1.7, marginBottom: '0.5rem' }}>
+                            {line.trim().replace(/^[•\-]\s*/, '')}
+                          </li>
+                        ))}
+                      </ul>
                     </div>
                   )}
 
                   {project.challenges && (
                     <div>
-                      <h3 style={{ fontSize: '0.9rem', fontWeight: 600, color: '#F59E0B', marginBottom: '0.5rem' }}>Current Challenges</h3>
-                      <p style={{ fontSize: 'clamp(0.875rem, 2vw, 0.9375rem)', color: '#1F2937', lineHeight: 1.7, margin: 0, whiteSpace: 'pre-wrap' }}>{project.challenges}</p>
+                      <h3 style={{ fontSize: '1.2rem', fontWeight: 600, color: '#F59E0B', marginBottom: '0.75rem' }}>Current Challenges</h3>
+                      <ul style={{ margin: 0, paddingLeft: '1.5rem', listStyleType: 'disc' }}>
+                        {project.challenges.split('\n').filter(line => line.trim()).map((line, idx) => (
+                          <li key={idx} style={{ fontSize: 'clamp(0.875rem, 2vw, 0.9375rem)', color: '#1F2937', lineHeight: 1.7, marginBottom: '0.5rem' }}>
+                            {line.trim().replace(/^[•\-]\s*/, '')}
+                          </li>
+                        ))}
+                      </ul>
                     </div>
                   )}
                 </div>
               )}
 
               {/* Founder Information */}
-              {project.founder && (project.founder.name || project.founder.twitter || project.founder.email) && (
+              {project.founder && (project.founder.name || project.founder.twitter) && (
                 <div style={{ background: '#FFFFFF', borderRadius: '12px', padding: 'clamp(1.5rem, 4vw, 2rem)', boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)' }}>
-                  <h2 style={{ fontSize: 'clamp(1rem, 3vw, 1.25rem)', fontWeight: 700, color: '#1F2937', marginBottom: '1.5rem' }}>
+                  <h2 style={{ fontSize: 'clamp(1.7rem, 3vw, 1.25rem)', fontWeight: 700, color: '#1F2937', marginBottom: '1.5rem' }}>
                     Founder Information
                   </h2>
                   {project.founder.name && (
@@ -363,15 +397,7 @@ export default function ViewProject() {
                     <p style={{ fontSize: 'clamp(0.875rem, 2vw, 0.9375rem)', color: '#1F2937', marginBottom: '0.75rem' }}>
                       <strong>Twitter:</strong>{' '}
                       <a href={project.founder.twitter} target="_blank" rel="noopener" style={{ color: '#FD5A47', textDecoration: 'none' }}>
-                        @{project.founder.twitter.split('/').pop()}
-                      </a>
-                    </p>
-                  )}
-                  {project.founder.email && (
-                    <p style={{ fontSize: 'clamp(0.875rem, 2vw, 0.9375rem)', color: '#1F2937', margin: 0 }}>
-                      <strong>Email:</strong>{' '}
-                      <a href={`mailto:${project.founder.email}`} style={{ color: '#FD5A47', textDecoration: 'none' }}>
-                        {project.founder.email}
+                        @{project.founder.twitter.split('/').pop()?.replace('@', '').split('?')[0]}
                       </a>
                     </p>
                   )}
@@ -381,43 +407,6 @@ export default function ViewProject() {
 
             {/* Right Column (Sidebar) */}
             <div className="project-sidebar">
-              {/* Project Status Card */}
-              <div style={{ background: '#FFFFFF', borderRadius: '12px', padding: 'clamp(1.5rem, 4vw, 2rem)', marginBottom: '2rem', boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)' }}>
-                <h2 style={{ fontSize: 'clamp(1rem, 2.5vw, 1.125rem)', fontWeight: 600, color: '#1F2937', marginBottom: '1.5rem' }}>
-                  Project Status
-                </h2>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                  <div>
-                    <p style={{ fontSize: '0.875rem', color: '#6B7280', marginBottom: '0.25rem' }}>Activity</p>
-                    <p style={{ fontSize: '0.9375rem', color: project.active ? '#10B981' : '#EF4444', fontWeight: 600, margin: 0 }}>
-                      {project.active ? '✓ Active' : '⚠ Inactive'}
-                    </p>
-                  </div>
-                  <div>
-                    <p style={{ fontSize: '0.875rem', color: '#6B7280', marginBottom: '0.25rem' }}>Status</p>
-                    <p style={{ fontSize: '0.9375rem', color: '#1F2937', fontWeight: 500, margin: 0, textTransform: 'capitalize' }}>
-                      {project.status}
-                    </p>
-                  </div>
-                  {project.created_at && (
-                    <div>
-                      <p style={{ fontSize: '0.875rem', color: '#6B7280', marginBottom: '0.25rem' }}>Added</p>
-                      <p style={{ fontSize: '0.9375rem', color: '#1F2937', margin: 0 }}>
-                        {new Date(project.created_at).toLocaleDateString()}
-                      </p>
-                    </div>
-                  )}
-                  {project.updated_at && (
-                    <div>
-                      <p style={{ fontSize: '0.875rem', color: '#6B7280', marginBottom: '0.25rem' }}>Updated</p>
-                      <p style={{ fontSize: '0.9375rem', color: '#1F2937', margin: 0 }}>
-                        {new Date(project.updated_at).toLocaleDateString()}
-                      </p>
-                    </div>
-                  )}
-                </div>
-              </div>
-
               {/* Contact Info Card */}
               {socialLinks.length > 0 && (
                 <div style={{ background: '#FFFFFF', borderRadius: '12px', padding: 'clamp(1.5rem, 4vw, 2rem)', marginBottom: '2rem', boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)' }}>
@@ -432,9 +421,12 @@ export default function ViewProject() {
                         rel="noopener noreferrer"
                         style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', color: '#1F2937', textDecoration: 'none', fontSize: '0.9375rem' }}
                       >
-                        <img src={websiteIcon} alt="Website" style={{ width: '20px', height: '20px', flexShrink: 0 }} />
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <circle cx="12" cy="12" r="10" stroke="#1F2937" strokeWidth="2" />
+                          <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" stroke="#1F2937" strokeWidth="2" />
+                        </svg>
                         <span style={{ flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                          {project.website.replace(/^https?:\/\//, '').replace(/^www\./, '')}
+                          {project.website.replace(/^https?:\/\//, '').replace(/^www\./, '').replace(/\/$/, '')}
                         </span>
                       </a>
                     )}
@@ -446,7 +438,7 @@ export default function ViewProject() {
                         style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', color: '#1F2937', textDecoration: 'none', fontSize: '0.9375rem' }}
                       >
                         <img src={twitterIcon} alt="Twitter" style={{ width: '20px', height: '20px', flexShrink: 0 }} />
-                        <span>{project.social.twitter.split('/').pop()?.replace('@', '') || 'Twitter'}</span>
+                        <span>@{project.social.twitter.split('/').pop()?.replace('@', '').split('?')[0] || 'Twitter'}</span>
                       </a>
                     )}
                     {project.social.linkedin && (
@@ -457,7 +449,9 @@ export default function ViewProject() {
                         style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', color: '#1F2937', textDecoration: 'none', fontSize: '0.9375rem' }}
                       >
                         <img src={linkedInIcon} alt="LinkedIn" style={{ width: '20px', height: '20px', flexShrink: 0 }} />
-                        <span>LinkedIn</span>
+                        <span>{project.social.linkedin.includes('/company/')
+                          ? project.social.linkedin.split('/company/')[1]?.replace('/', '')
+                          : project.social.linkedin.split('/in/')[1]?.replace('/', '') || 'LinkedIn'}</span>
                       </a>
                     )}
                     {project.email && (
@@ -477,7 +471,37 @@ export default function ViewProject() {
                         style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', color: '#1F2937', textDecoration: 'none', fontSize: '0.9375rem' }}
                       >
                         <img src={nostrIcon} alt="Nostr" style={{ width: '20px', height: '20px', flexShrink: 0 }} />
-                        <span>Nostr</span>
+                        <span>{project.social.nostr.startsWith('npub')
+                          ? `${project.social.nostr.substring(0, 20)}...`
+                          : project.social.nostr.includes('nostr.com/') || project.social.nostr.includes('primal.net/')
+                            ? project.social.nostr.split('/').pop()?.replace('@', '') || 'Nostr'
+                            : 'Nostr'}</span>
+                      </a>
+                    )}
+                    {project.social.youtube && (
+                      <a
+                        href={project.social.youtube}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', color: '#1F2937', textDecoration: 'none', fontSize: '0.9375rem' }}
+                      >
+                        <span style={{ fontSize: '20px' }}>▶️</span>
+                        <span>{project.social.youtube.includes('/@')
+                          ? project.social.youtube.split('/@')[1]?.split('/')[0]
+                          : project.social.youtube.includes('/channel/') || project.social.youtube.includes('/c/')
+                            ? 'YouTube'
+                            : 'YouTube'}</span>
+                      </a>
+                    )}
+                    {project.social.telegram && (
+                      <a
+                        href={project.social.telegram}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', color: '#1F2937', textDecoration: 'none', fontSize: '0.9375rem' }}
+                      >
+                        <span style={{ fontSize: '20px' }}>✈️</span>
+                        <span>@{project.social.telegram.split('/').pop()?.replace('@', '') || 'Telegram'}</span>
                       </a>
                     )}
                   </div>

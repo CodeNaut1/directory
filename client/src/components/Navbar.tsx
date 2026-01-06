@@ -20,6 +20,9 @@ export default function Navbar() {
   // Check if we're on an infographic page
   const isInfographicPage = location.pathname === '/infographic-q1-2026' || location.pathname === '/infographic-archive';
 
+  // Check if we're on an infographic page
+  const isInfographicPage = location.pathname === '/infographic-q1-2026' || location.pathname === '/infographic-archive';
+
   // Close menu when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
