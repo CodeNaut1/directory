@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { jsPDF } from 'jspdf';
 import infographicQ1 from '../assets/infographic_q1_2025.png';
 import infographicQ2 from '../assets/infographic_q2_2025.png';
 import infographicQ3 from '../assets/infographic_q3_2025.png';
@@ -9,7 +10,6 @@ interface InfographicVersion {
   id: string;
   name: string;
   image: string;
-  pdfUrl?: string;
 }
 
 export default function InfographicArchive() {
@@ -45,15 +45,46 @@ export default function InfographicArchive() {
     window.open(image, '_blank');
   };
 
-  const handleDownloadPDF = (name: string, image: string) => {
-    // For now, we'll convert the image to PDF or download as image
-    // If PDFs are available later, we can update this
-    const link = document.createElement('a');
-    link.href = image;
-    link.download = `${name.toLowerCase().replace(/\s+/g, '-')}.png`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+  const handleDownloadPDF = async (name: string, imageUrl: string) => {
+    try {
+      const img = new Image();
+      img.crossOrigin = 'anonymous';
+      
+      await new Promise((resolve, reject) => {
+        img.onload = resolve;
+        img.onerror = reject;
+        img.src = imageUrl;
+      });
+
+      const imgWidth = img.width;
+      const imgHeight = img.height;
+
+      const pixelsToMm = 25.4 / 96;
+      const pdfWidth = imgWidth * pixelsToMm;
+      const pdfHeight = imgHeight * pixelsToMm;
+
+      const pdf = new jsPDF({
+        orientation: pdfHeight > pdfWidth ? 'portrait' : 'landscape',
+        unit: 'mm',
+        format: [pdfWidth, pdfHeight],
+      });
+      pdf.addImage(imageUrl, 'PNG', 0, 0, pdfWidth, pdfHeight);
+
+      const pdfBlob = pdf.output('blob');
+      const url = URL.createObjectURL(pdfBlob);
+      
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `${name.toLowerCase().replace(/\s+/g, '-')}.pdf`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      
+      URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error('Error converting image to PDF:', error);
+      alert(`Unable to convert ${name} to PDF. Please try again later.`);
+    }
   };
 
   return (

@@ -16,11 +16,7 @@ export default function Navbar() {
   const infographicDropdownRef = useRef<HTMLDivElement>(null);
 
   const isAdmin = user?.role === 'admin' || user?.role === 'moderator';
-  
-  // Check if we're on an infographic page
-  const isInfographicPage = location.pathname === '/infographic-q1-2026' || location.pathname === '/infographic-archive';
 
-  // Check if we're on an infographic page
   const isInfographicPage = location.pathname === '/infographic-q1-2026' || location.pathname === '/infographic-archive';
 
   // Close menu when clicking outside
@@ -181,19 +177,26 @@ export default function Navbar() {
                 <div
                   style={{
                     position: 'absolute',
-                    top: 'calc(100% + 0.5rem)',
+                    top: '100%',
                     left: '50%',
                     transform: 'translateX(-50%)',
-                    background: '#FFFFFF',
-                    border: '1px solid #E5E7EB',
-                    borderRadius: '8px',
-                    boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)',
-                    minWidth: '200px',
-                    overflow: 'hidden',
+                    paddingTop: '0.5rem',
                     zIndex: 1000,
-                    whiteSpace: 'nowrap',
                   }}
+                  onMouseEnter={() => setShowInfographicDropdown(true)}
+                  onMouseLeave={() => setShowInfographicDropdown(false)}
                 >
+                  <div
+                    style={{
+                      background: '#FFFFFF',
+                      border: '1px solid #E5E7EB',
+                      borderRadius: '8px',
+                      boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)',
+                      minWidth: '200px',
+                      overflow: 'hidden',
+                      whiteSpace: 'nowrap',
+                    }}
+                  >
                   <NavLink
                     to="/infographic-q1-2026"
                     onClick={() => setShowInfographicDropdown(false)}
@@ -247,6 +250,7 @@ export default function Navbar() {
                   >
                     Archives
                   </NavLink>
+                  </div>
                 </div>
               )}
             </div>
