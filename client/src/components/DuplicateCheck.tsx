@@ -156,6 +156,13 @@ export default function DuplicateCheck({
     return matrix[str2.length][str1.length];
   };
 
+  // CORRECT:
+  useEffect(() => {
+    if (!loading && similarProjects.length === 0) {
+      onContinue();
+    }
+  }, [loading, similarProjects.length]);
+
   if (loading) {
     return (
       <div style={{ position: 'fixed', inset: 0, background: 'rgba(0, 0, 0, 0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 9999 }}>
@@ -169,9 +176,7 @@ export default function DuplicateCheck({
   }
 
   if (similarProjects.length === 0) {
-    // No duplicates found, continue automatically
-    onContinue();
-    return null;
+    return null; // Just return null, useEffect handles continue
   }
 
   return (

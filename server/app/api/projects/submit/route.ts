@@ -1,3 +1,4 @@
+import { getAuthenticatedUser } from '@/lib/auth/middleware';
 import { NextRequest, NextResponse } from 'next/server';
 import { getRequestUser } from '@/lib/utils/api-handler';
 import { successResponse } from '@/lib/utils/api-response';
@@ -14,14 +15,14 @@ import { nanoid } from 'nanoid';
 export async function POST(req: NextRequest) {
   try {
     // Authenticate user
-    const user = getRequestUser(req);
+    const user = await getAuthenticatedUser(req);
 
-    if (!user) {
-      return NextResponse.json(
-        { success: false, error: 'Unauthorized' },
-        { status: 401 }
-      );
-    }
+    // if (!user) {
+    //   return NextResponse.json(
+    //     { success: false, error: 'Unauthorized' },
+    //     { status: 401 }
+    //   );
+    // }
 
     let body: CreateProjectInput;
     let logoPath: string | undefined;
