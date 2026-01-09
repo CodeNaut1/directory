@@ -9,4 +9,5 @@ export * from './query';
 export * from './review';
 export * from './admin';
 export * from './analytics';
+export * from './claim';
 

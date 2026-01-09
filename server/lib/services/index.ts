@@ -9,4 +9,5 @@ export * from './country.service';
 export * from './tag.service';
 export * from './project.service';
 export * from './search.service';
+export * from './claim.service';
 

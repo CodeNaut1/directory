@@ -37,6 +37,13 @@ enum AuditAction {
   unpublish
 }
 
+// Project claim status enum
+enum ClaimStatus {
+  pending // Awaiting admin review
+  approved // Claim approved, project ownership transferred
+  rejected // Claim rejected by admin
+}
+
 // User model - Authentication and authorization
 model User {
   id           String   @id @default(cuid())
@@ -60,6 +67,7 @@ model User {
   projects    Project[]
   reviews     Review[]
   submissions Submission[]
+  claims      ProjectClaim[]
   auditLogs   AuditLog[]   @relation("AuditLogUser")
 
   @@index([email])
@@ -194,6 +202,7 @@ model Project {
   tags        ProjectTag[]
   submissions Submission[]
   reviews     Review[]
+  claims      ProjectClaim[]
 
   @@index([slug])
   @@index([published])
@@ -298,4 +307,31 @@ model AuditLog {
   @@index([resourceType, resourceId])
   @@index([createdAt(sort: Desc)])
   @@map("audit_logs")
+}
+
+// ProjectClaim model - Tracks project ownership claims
+model ProjectClaim {
+  id          String     @id @default(cuid())
+  projectId   String
+  project     Project    @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  userId      String
+  user        User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  status      ClaimStatus @default(pending)
+  proofOfOwnership String? @db.Text // User-provided proof of ownership
+
+  // Moderation
+  moderatedBy     String?
+  moderatedAt     DateTime?
+  rejectionReason String?   @db.Text
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@unique([projectId, userId]) // One claim per user per project
+  @@index([projectId])
+  @@index([userId])
+  @@index([status])
+  @@index([createdAt])
+  @@map("project_claims")
 }

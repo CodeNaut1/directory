@@ -233,3 +233,50 @@ Content-Type: application/json
   "url": "https://example.com"
 }
 
+### ============================================
+### Project Claim Endpoints
+### ============================================
+
+### Submit Claim
+POST {{baseUrl}}/projects/{{projectId}}/claim
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "proofOfOwnership": "I am the founder of this project. I can verify ownership through our website admin panel and social media accounts."
+}
+
+### Get Claim Status
+GET {{baseUrl}}/projects/{{projectId}}/claim/status
+Authorization: Bearer {{accessToken}}
+
+### List Claims (Admin)
+GET {{baseUrl}}/admin/claims
+Authorization: Bearer {{accessToken}}
+
+### List Claims with Filters (Admin)
+GET {{baseUrl}}/admin/claims?status=pending&page=1&limit=20
+Authorization: Bearer {{accessToken}}
+
+### Get Claim by ID (Admin)
+GET {{baseUrl}}/admin/claims/{{claimId}}
+Authorization: Bearer {{accessToken}}
+
+### Approve Claim (Admin)
+POST {{baseUrl}}/admin/claims/{{claimId}}/approve
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "notes": "Verified ownership via email confirmation"
+}
+
+### Reject Claim (Admin)
+POST {{baseUrl}}/admin/claims/{{claimId}}/reject
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "reason": "Insufficient proof of ownership provided"
+}
+
