@@ -348,7 +348,7 @@
       "country_name": "Zambia",
       "city": "Zambia",
       "location": "Zambia",
-      "image": "https://bitcoiners.africa/wp-content/uploads/2024/06/Bantu-Bitcoin.jpg",
+      "image": "https://bitcoiners.africa/wp-content/uploads/2026/02/Bantu-Bitcoin-New.webp",
       "website": "https://BantuBitcoin.github.io/",
       "email": "",
       "categories": [
@@ -2810,7 +2810,7 @@
         "gift_cards": false
       },
       "founder": {
-        "name": "Ndesanjo Macha",
+        "name": "Emmanuel Mangalashi & Ndesa",
         "twitter": "https://x.com/ndesanjo",
         "email": ""
       },
@@ -7156,26 +7156,26 @@
       "id": "thecore21m",
       "name": "thecore21m",
       "slug": "thecore21m",
-      "description": "EcoBitz is dedicated to achieve zero waste in glass, educate merchants who sale drinks and beverages about recycling their glass, then pay them in sats for their recycling efforts. We then resale the glass bottles after sorting and cleaning them for repackaging, making upcycled products like drinking glasses, ash trays and vaces. We are Bitcoin a Bitcoin circular economy and reaching my area recyclers to teach them about Bitcoin and how we can use it in our daily lives.",
+      "description": "The Core is dedicated to providing accessible Bitcoin education and fostering community development throughout Africa and beyond.",
       "country_code": "ke",
       "country_name": "Kenya",
       "city": "Kenya",
       "location": "Kenya, Nairobi",
       "image": "https://bitcoiners.africa/wp-content/uploads/2025/10/thecore21m-logo.png",
-      "website": "https://x.com/ecobitz_21m?s=21",
+      "website": "https://www.thecore.africa/",
       "email": "",
       "categories": [
         "Circular Economy"
       ],
       "tags": [],
       "social": {
-        "twitter": "https://x.com/ecobitz_21m?s=21",
+        "twitter": "https://x.com/thecore21m?s=20",
         "linkedin": "",
         "instagram": "",
         "facebook": "",
         "youtube": "",
         "telegram": "",
-        "nostr": ""
+        "nostr": "npub1ghhhgrrlqkekma85tgpy6wauczlt9m4gtdnyqt7a49jx2e3p0hwsrmvnj2"
       },
       "bitcoin_acceptance": {
         "onchain": true,

@@ -17,7 +17,6 @@ export default function Navbar() {
 
   const isAdmin = user?.role === 'admin' || user?.role === 'moderator';
 
-  // Check if we're on an infographic page
   const isInfographicPage = location.pathname === '/infographic-q1-2026' || location.pathname === '/infographic-archive';
 
   // Close menu when clicking outside
@@ -178,72 +177,80 @@ export default function Navbar() {
                 <div
                   style={{
                     position: 'absolute',
-                    top: 'calc(100% + 0.5rem)',
+                    top: '100%',
                     left: '50%',
                     transform: 'translateX(-50%)',
-                    background: '#FFFFFF',
-                    border: '1px solid #E5E7EB',
-                    borderRadius: '8px',
-                    boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)',
-                    minWidth: '200px',
-                    overflow: 'hidden',
+                    paddingTop: '0.5rem',
                     zIndex: 1000,
-                    whiteSpace: 'nowrap',
                   }}
+                  onMouseEnter={() => setShowInfographicDropdown(true)}
+                  onMouseLeave={() => setShowInfographicDropdown(false)}
                 >
-                  <NavLink
-                    to="/infographic-q1-2026"
-                    onClick={() => setShowInfographicDropdown(false)}
-                    className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
-                    style={({ isActive }) => ({
-                      display: 'block',
-                      padding: '0.75rem 1rem',
-                      fontSize: 'clamp(0.75rem, 1.5vw, 0.875rem)',
-                      color: isActive ? '#FD5A47' : '#1F2937',
-                      textDecoration: 'none',
-                      background: isActive ? '#FEF2F2' : 'transparent',
-                      transition: 'background 0.2s',
-                    })}
-                    onMouseEnter={(e) => {
-                      if (!e.currentTarget.classList.contains('active')) {
-                        e.currentTarget.style.background = '#F9FAFB';
-                      }
-                    }}
-                    onMouseLeave={(e) => {
-                      if (!e.currentTarget.classList.contains('active')) {
-                        e.currentTarget.style.background = 'transparent';
-                      }
+                  <div
+                    style={{
+                      background: '#FFFFFF',
+                      border: '1px solid #E5E7EB',
+                      borderRadius: '8px',
+                      boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)',
+                      minWidth: '200px',
+                      overflow: 'hidden',
+                      whiteSpace: 'nowrap',
                     }}
                   >
-                    Infographic Q1 2026
-                  </NavLink>
-                  <NavLink
-                    to="/infographic-archive"
-                    onClick={() => setShowInfographicDropdown(false)}
-                    className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
-                    style={({ isActive }) => ({
-                      display: 'block',
-                      padding: '0.75rem 1rem',
-                      fontSize: 'clamp(0.75rem, 1.5vw, 0.875rem)',
-                      color: isActive ? '#FD5A47' : '#1F2937',
-                      textDecoration: 'none',
-                      background: isActive ? '#FEF2F2' : 'transparent',
-                      borderTop: '1px solid #E5E7EB',
-                      transition: 'background 0.2s',
-                    })}
-                    onMouseEnter={(e) => {
-                      if (!e.currentTarget.classList.contains('active')) {
-                        e.currentTarget.style.background = '#F9FAFB';
-                      }
-                    }}
-                    onMouseLeave={(e) => {
-                      if (!e.currentTarget.classList.contains('active')) {
-                        e.currentTarget.style.background = 'transparent';
-                      }
-                    }}
-                  >
-                    Archives
-                  </NavLink>
+                    <NavLink
+                      to="/infographic-q1-2026"
+                      onClick={() => setShowInfographicDropdown(false)}
+                      className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
+                      style={({ isActive }) => ({
+                        display: 'block',
+                        padding: '0.75rem 1rem',
+                        fontSize: 'clamp(0.75rem, 1.5vw, 0.875rem)',
+                        color: isActive ? '#FD5A47' : '#1F2937',
+                        textDecoration: 'none',
+                        background: isActive ? '#FEF2F2' : 'transparent',
+                        transition: 'background 0.2s',
+                      })}
+                      onMouseEnter={(e) => {
+                        if (!e.currentTarget.classList.contains('active')) {
+                          e.currentTarget.style.background = '#F9FAFB';
+                        }
+                      }}
+                      onMouseLeave={(e) => {
+                        if (!e.currentTarget.classList.contains('active')) {
+                          e.currentTarget.style.background = 'transparent';
+                        }
+                      }}
+                    >
+                      Infographic Q1 2026
+                    </NavLink>
+                    <NavLink
+                      to="/infographic-archive"
+                      onClick={() => setShowInfographicDropdown(false)}
+                      className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
+                      style={({ isActive }) => ({
+                        display: 'block',
+                        padding: '0.75rem 1rem',
+                        fontSize: 'clamp(0.75rem, 1.5vw, 0.875rem)',
+                        color: isActive ? '#FD5A47' : '#1F2937',
+                        textDecoration: 'none',
+                        background: isActive ? '#FEF2F2' : 'transparent',
+                        borderTop: '1px solid #E5E7EB',
+                        transition: 'background 0.2s',
+                      })}
+                      onMouseEnter={(e) => {
+                        if (!e.currentTarget.classList.contains('active')) {
+                          e.currentTarget.style.background = '#F9FAFB';
+                        }
+                      }}
+                      onMouseLeave={(e) => {
+                        if (!e.currentTarget.classList.contains('active')) {
+                          e.currentTarget.style.background = 'transparent';
+                        }
+                      }}
+                    >
+                      Archives
+                    </NavLink>
+                  </div>
                 </div>
               )}
             </div>

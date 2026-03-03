@@ -1,4 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+import { initGA, logPageView } from './utils/analytics';
 import Navbar from './components/Navbar';
 import ProtectedRoute from './components/ProtectedRoute';
 import HomePage from './pages/Home';
@@ -21,6 +24,19 @@ import LiveMap from './pages/LiveMap';
 import SearchResults from './pages/SearchResults';
 
 export default function App() {
+
+  const location = useLocation();
+
+  // Initialize GA on mount
+  useEffect(() => {
+    initGA();
+  }, []);
+
+  // Track page views on route change
+  useEffect(() => {
+    logPageView(location.pathname + location.search);
+  }, [location]);
+
   return (
     <div className="app-shell">
       <Navbar />
