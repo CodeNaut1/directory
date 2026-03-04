@@ -96,7 +96,7 @@ export async function appendToSheet(data: ProjectSubmissionData): Promise<void> 
 
     await sheets.spreadsheets.values.append({
       spreadsheetId: SHEET_ID,
-      range: 'Sheet1!A:AB', // Adjust if your sheet has a different name
+      range: 'Live Directory Entries!A:AB', // Adjust if your sheet has a different name
       valueInputOption: 'RAW',
       requestBody: {
         values: [row],
