@@ -115,66 +115,71 @@ export async function POST(req: NextRequest) {
     // Create project
     const project = await createProject(user, body);
 
-    // 🔥 NEW: Sync to Google Sheets (non-blocking)
-    try {
-      // Fetch related data for the sheet
-      const [country, category, tags] = await Promise.all([
-        prisma.country.findUnique({
-          where: { id: body.countryId },
-          select: { name: true },
-        }),
-        prisma.category.findUnique({
-          where: { id: body.categoryId },
-          select: { name: true },
-        }),
-        body.tagIds
-          ? prisma.tag.findMany({
-            where: { id: { in: body.tagIds } },
+    // 🔥 IMPROVED: Fire-and-forget sync to Google Sheets (non-blocking)
+    // This runs in the background and doesn't slow down the response
+    setImmediate(async () => {
+      try {
+        const [country, category, tags] = await Promise.all([
+          prisma.country.findUnique({
+            where: { id: body.countryId },
             select: { name: true },
-          })
-          : Promise.resolve([]),
-      ]);
+          }),
+          prisma.category.findUnique({
+            where: { id: body.categoryId },
+            select: { name: true },
+          }),
+          body.tagIds
+            ? prisma.tag.findMany({
+              where: { id: { in: body.tagIds } },
+              select: { name: true },
+            })
+            : Promise.resolve([]),
+        ]);
 
-      const tagNames = tags.map((t: { name: string }) => t.name);
+        const tagNames = tags.map((t: { name: string }) => t.name);
 
-      // Prepare data for Google Sheets
-      await appendToSheet({
-        projectName: body.name,
-        countryName: country?.name || '',
-        categoryName: category?.name || '',
-        tags: tagNames,
-        bitcoinOnchain: body.details?.bitcoinOnly || false,
-        lightning: body.details?.lightningNetwork || false,
-        giftCards: body.details?.giftCards || false,
-        description: body.description,
-        longDescription: body.details?.longDescription,
-        initiatives: body.details?.initiatives,
-        impact: body.details?.impact,
-        challenges: body.details?.challenges,
-        websiteUrl: body.website,
-        email: body.details?.contactEmail || '',
-        phone: body.details?.contactPhone,
-        foundedYear: body.foundedYear,
-        founderName: body.details?.founderName,
-        founderTwitter: body.details?.founderTwitter,
-        founderEmail: body.details?.founderEmail,
-        twitterHandle: body.details?.socialLinks?.twitter,
-        linkedinUsername: body.details?.socialLinks?.linkedin,
-        facebookUsername: body.details?.socialLinks?.facebook,
-        youtubeChannel: body.details?.socialLinks?.youtube,
-        telegramGroup: body.details?.socialLinks?.telegram,
-        nostrAddress: body.details?.socialLinks?.nostr,
-        instagramUsername: body.details?.socialLinks?.instagram,
-        submittedAt: new Date().toLocaleString('en-US', { timeZone: 'Africa/Lagos', dateStyle: 'medium', timeStyle: 'short' }), // For human-readable format
-        submittedBy: user?.email || 'Unknown',
-      });
+        await appendToSheet({
+          projectName: body.name,
+          countryName: country?.name || '',
+          categoryName: category?.name || '',
+          tags: tagNames,
+          bitcoinOnchain: body.details?.bitcoinOnly || false,
+          lightning: body.details?.lightningNetwork || false,
+          giftCards: body.details?.giftCards || false,
+          description: body.description,
+          longDescription: body.details?.longDescription,
+          initiatives: body.details?.initiatives,
+          impact: body.details?.impact,
+          challenges: body.details?.challenges,
+          websiteUrl: body.website,
+          email: body.details?.contactEmail || '',
+          phone: body.details?.contactPhone,
+          foundedYear: body.foundedYear,
+          founderName: body.details?.founderName,
+          founderTwitter: body.details?.founderTwitter,
+          founderEmail: body.details?.founderEmail,
+          twitterHandle: body.details?.socialLinks?.twitter,
+          linkedinUsername: body.details?.socialLinks?.linkedin,
+          facebookUsername: body.details?.socialLinks?.facebook,
+          youtubeChannel: body.details?.socialLinks?.youtube,
+          telegramGroup: body.details?.socialLinks?.telegram,
+          nostrAddress: body.details?.socialLinks?.nostr,
+          instagramUsername: body.details?.socialLinks?.instagram,
+          submittedAt: new Date().toLocaleString('en-US', {
+            timeZone: 'Africa/Lagos',
+            dateStyle: 'medium',
+            timeStyle: 'short'
+          }),
+          submittedBy: user?.email || 'Unknown',
+        });
 
-      console.log('✅ Project synced to Google Sheet');
-    } catch (sheetError) {
-      // Don't fail the entire request if sheets sync fails
-      console.error('⚠️ Failed to sync to Google Sheets:', sheetError);
-    }
+        console.log('✅ Project synced to Google Sheet');
+      } catch (sheetError) {
+        console.error('⚠️ Failed to sync to Google Sheets:', sheetError);
+      }
+    });
 
+    // Return immediately without waiting for sheets sync
     return NextResponse.json(successResponse(project), { status: 201 });
   } catch (error: any) {
     console.error('Error in POST /api/projects/submit:', error);
