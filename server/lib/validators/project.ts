@@ -21,18 +21,18 @@ export const createProjectSchema = z.object({
   tagIds: z.array(z.string().cuid('Invalid tag ID')).max(6, 'Maximum 6 tags allowed').optional(),
 
   // OPTIONAL ADDITIONAL FIELDS (New structure)
-  foundedYear: z.string().max(4, 'Invalid year format').optional(), // Changed to string for flexibility
+  foundedYear: z.string().max(4, 'Invalid year format').optional().or(z.literal('')), // Allow empty string
 
   // DETAILED PROJECT INFO
   details: z
     .object({
       // Core descriptions
-      longDescription: z.string().max(10000, 'Long description is too long').optional(),
-      initiatives: z.string().max(10000, 'Initiatives description is too long').optional(),
-      impact: z.string().max(10000, 'Impact description is too long').optional(),
-      challenges: z.string().max(10000, 'Challenges description is too long').optional(),
+      longDescription: z.string().max(10000, 'Long description is too long').optional().or(z.literal('')),
+      initiatives: z.string().max(10000, 'Initiatives description is too long').optional().or(z.literal('')),
+      impact: z.string().max(10000, 'Impact description is too long').optional().or(z.literal('')),
+      challenges: z.string().max(10000, 'Challenges description is too long').optional().or(z.literal('')),
 
-      // Social links
+      // Social links - Allow empty strings
       socialLinks: z
         .object({
           twitter: z.string().url('Invalid Twitter URL').optional().or(z.literal('')),
@@ -45,26 +45,25 @@ export const createProjectSchema = z.object({
         })
         .optional(),
 
-      // Contact info
-      contactEmail: z.string().email('Invalid contact email').max(200).optional(),
-      contactPhone: z.string().max(20, 'Phone number is too long').optional(),
+      // Contact info - Allow empty strings for optional fields
+      contactEmail: z.string().email('Invalid contact email').optional().or(z.literal('')),
+      contactPhone: z.string().max(20, 'Phone number is too long').optional().or(z.literal('')),
 
       // Bitcoin acceptance
       bitcoinOnly: z.boolean().optional(),
       lightningNetwork: z.boolean().optional(),
       giftCards: z.boolean().optional(),
 
-      // Founder information
-      founderName: z.string().max(200, 'Founder name is too long').optional(),
+      // Founder information - Allow empty strings
+      founderName: z.string().max(200, 'Founder name is too long').optional().or(z.literal('')),
       founderTwitter: z.string().url('Invalid founder Twitter URL').optional().or(z.literal('')),
-      founderEmail: z.string().email('Invalid founder email').optional(),
+      founderEmail: z.string().email('Invalid founder email').optional().or(z.literal('')),
 
       // Additional metadata
-      foundedYear: z.number().int().min(1900).max(new Date().getFullYear()).optional(),
-      teamSize: z.string().max(50).optional(),
-      fundingStage: z.string().max(100).optional(),
-      metaTitle: z.string().max(200).optional(),
-      metaDescription: z.string().max(500).optional(),
+      teamSize: z.string().max(50).optional().or(z.literal('')),
+      fundingStage: z.string().max(100).optional().or(z.literal('')),
+      metaTitle: z.string().max(200).optional().or(z.literal('')),
+      metaDescription: z.string().max(500).optional().or(z.literal('')),
     })
     .optional(),
 });
