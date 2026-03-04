@@ -115,13 +115,14 @@ export async function appendToSheet(data: ProjectSubmissionData): Promise<void> 
       data.founderTwitter || '',     // FOUNDER TWITTER
       data.founderEmail || '',       // FOUNDER EMAIL
       data.foundedYear || '',        // YEAR FOUNDED
+      data.submittedBy,              // SUBMITTED BY
     ];
 
     console.log('📝 Appending row with', row.length, 'columns');
 
     const response = await sheets.spreadsheets.values.append({
       spreadsheetId: SHEET_ID,
-      range: 'Live Directory Entries!A:AB', // Updated to column S (19 columns)
+      range: 'Live Directory Entries!A:T', // 20 columns (A to T)
       valueInputOption: 'RAW',
       insertDataOption: 'INSERT_ROWS',
       requestBody: {
