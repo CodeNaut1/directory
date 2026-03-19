@@ -13,7 +13,7 @@ const updateCountrySchema = z.object({
 
 export async function PATCH(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const authResult = await verifyAuth(req);
@@ -32,11 +32,12 @@ export async function PATCH(
       );
     }
 
+    const { id } = await params;
     const body = await req.json();
     const { name, code, flag } = updateCountrySchema.parse(body);
 
     const country = await prisma.country.update({
-      where: { id: params.id },
+      where: { id },
       data: {
         name,
         code: code.toUpperCase(),
@@ -59,7 +60,7 @@ export async function PATCH(
 
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const authResult = await verifyAuth(req);
@@ -78,8 +79,10 @@ export async function DELETE(
       );
     }
 
+    const { id } = await params;
+
     await prisma.country.delete({
-      where: { id: params.id },
+      where: { id },
     });
 
     return NextResponse.json({

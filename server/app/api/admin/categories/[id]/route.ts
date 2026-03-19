@@ -12,7 +12,7 @@ const updateCategorySchema = z.object({
 
 export async function PATCH(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const authResult = await verifyAuth(req);
@@ -31,13 +31,14 @@ export async function PATCH(
       );
     }
 
+    const { id } = await params;
     const body = await req.json();
     const { name, description } = updateCategorySchema.parse(body);
 
     const slug = name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
 
     const category = await prisma.category.update({
-      where: { id: params.id },
+      where: { id },
       data: {
         name,
         slug,
@@ -60,7 +61,7 @@ export async function PATCH(
 
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const authResult = await verifyAuth(req);
@@ -79,8 +80,10 @@ export async function DELETE(
       );
     }
 
+    const { id } = await params;
+
     await prisma.category.delete({
-      where: { id: params.id },
+      where: { id },
     });
 
     return NextResponse.json({
