@@ -18,7 +18,13 @@ import NotFound from './pages/NotFound';
 import AdminLayout from './components/AdminLayout';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import PendingProjects from './pages/admin/PendingProjects';
-import Claims from './pages/admin/Claims';  // ← ADD THIS IMPORT
+import Claims from './pages/admin/Claims';
+import AllProjects from './pages/admin/AllProjects';
+import Categories from './pages/admin/Categories';
+import Tags from './pages/admin/Tags';
+import Countries from './pages/admin/Countries';
+import Users from './pages/admin/Users';
+import Settings from './pages/admin/Settings';
 import Infographic from './pages/Infographic';
 import InfographicArchive from './pages/InfographicArchive';
 import LiveMap from './pages/LiveMap';
@@ -67,7 +73,13 @@ export default function App() {
         <Route path="/admin" element={<AdminLayout />}>
           <Route index element={<AdminDashboard />} />
           <Route path="projects/pending" element={<PendingProjects />} />
-          <Route path="claims" element={<Claims />} />  {/* ← ADD THIS LINE */}
+          <Route path="projects" element={<AllProjects />} />
+          <Route path="claims" element={<Claims />} />
+          <Route path="categories" element={<Categories />} />
+          <Route path="tags" element={<Tags />} />
+          <Route path="countries" element={<Countries />} />
+          <Route path="users" element={<Users />} />
+          <Route path="settings" element={<Settings />} />
         </Route>
       </Routes>
     </div>

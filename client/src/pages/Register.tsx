@@ -299,7 +299,11 @@ export default function RegisterPage() {
                   </label>
                 </div>
 
-                <button type="submit" className="btn-primary" disabled={loading || !isPasswordValid}>
+                <button
+                  type="submit"
+                  className="btn-primary"
+                  disabled={loading || !isPasswordValid || !passwordsMatch || !termsAccepted}
+                >
                   {loading ? 'Creating account...' : 'Create account'}
                 </button>
               </form>

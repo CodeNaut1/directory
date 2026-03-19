@@ -7,6 +7,8 @@ export default function AdminLayout() {
   const navigate = useNavigate();
   const { user, logout } = useAuth();
   const [showSidebar, setShowSidebar] = useState(false);
+  const [pendingCount, setPendingCount] = useState(0);
+  const API_URL = import.meta.env.VITE_API_URL || '';
 
   // Redirect non-admins
   useEffect(() => {
@@ -14,6 +16,33 @@ export default function AdminLayout() {
       navigate('/dashboard');
     }
   }, [user, navigate]);
+
+  // Fetch pending count
+  useEffect(() => {
+    const fetchPendingCount = async () => {
+      try {
+        const token = localStorage.getItem('access_token');
+        const response = await fetch(`${API_URL}/api/admin/projects/pending`, {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+          },
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          if (data.success && data.data) {
+            setPendingCount(data.data.length);
+          }
+        }
+      } catch (error) {
+        console.error('Error fetching pending count:', error);
+      }
+    };
+
+    if (user && (user.role === 'admin' || user.role === 'moderator')) {
+      fetchPendingCount();
+    }
+  }, [user, API_URL]);
 
   const handleLogout = () => {
     logout();
@@ -24,8 +53,8 @@ export default function AdminLayout() {
 
   const navItems = [
     { path: '/admin', label: 'Dashboard', icon: '📊' },
-    { path: '/admin/projects/pending', label: 'Pending Approvals', icon: '⏳', badge: true },
-    { path: '/admin/claims', label: 'Ownership Claims', icon: '✋' },  // ← ADD THIS LINE
+    { path: '/admin/projects/pending', label: 'Pending Approvals', icon: '⏳', badge: pendingCount },
+    { path: '/admin/claims', label: 'Ownership Claims', icon: '✋' },
     { path: '/admin/projects', label: 'All Projects', icon: '📁' },
     { path: '/admin/categories', label: 'Categories', icon: '🏷️' },
     { path: '/admin/countries', label: 'Countries', icon: '🌍' },
@@ -40,6 +69,7 @@ export default function AdminLayout() {
 
   return (
     <>
+      {/* ... rest of the styles ... */}
       <style>{`
         @media (max-width: 1024px) {
           .admin-sidebar {
@@ -159,7 +189,7 @@ export default function AdminLayout() {
               >
                 <span style={{ fontSize: '1.25rem' }}>{item.icon}</span>
                 <span style={{ flex: 1 }}>{item.label}</span>
-                {item.badge && (
+                {item.badge && item.badge > 0 && (
                   <span
                     style={{
                       background: '#EF4444',
@@ -170,7 +200,7 @@ export default function AdminLayout() {
                       borderRadius: '9999px',
                     }}
                   >
-                    3
+                    {item.badge}
                   </span>
                 )}
               </Link>
