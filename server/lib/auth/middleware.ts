@@ -155,3 +155,25 @@ export async function requireRole(
 
   return user;
 }
+
+/**
+ * Verify authentication and return result with user info
+ * Used by admin endpoints
+ */
+export async function verifyAuth(req: NextRequest): Promise<{
+  authenticated: boolean;
+  user: AuthenticatedUser | null;
+}> {
+  try {
+    const user = await getAuthenticatedUser(req);
+    return {
+      authenticated: true,
+      user,
+    };
+  } catch (error) {
+    return {
+      authenticated: false,
+      user: null,
+    };
+  }
+}

@@ -303,6 +303,11 @@ export default function RegisterPage() {
                   type="submit"
                   className="btn-primary"
                   disabled={loading || !isPasswordValid || !passwordsMatch || !termsAccepted}
+                  style={{
+                    opacity: (loading || !isPasswordValid || !passwordsMatch || !termsAccepted) ? 0.5 : 1,
+                    cursor: (loading || !isPasswordValid || !passwordsMatch || !termsAccepted) ? 'not-allowed' : 'pointer',
+                    transition: 'opacity 0.2s, cursor 0.2s',
+                  }}
                 >
                   {loading ? 'Creating account...' : 'Create account'}
                 </button>

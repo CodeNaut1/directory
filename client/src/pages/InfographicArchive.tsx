@@ -9,6 +9,7 @@ import infographicQ1 from '../assets/infographic_q1_2025.png';
 import infographicQ2 from '../assets/infographic_q2_2025.png';
 import infographicQ3 from '../assets/infographic_q3_2025.png';
 import infographicQ4 from '../assets/infographic_q4_2025.png';
+import infographicQ12026 from '../assets/infographic_q1_2026.png';
 import '../styles/global.css';
 
 interface InfographicVersion {
@@ -23,6 +24,11 @@ export default function InfographicArchive() {
   }, []);
 
   const infographics: InfographicVersion[] = [
+    {
+      id: 'q1-2026',
+      name: 'Infographic Q1 2026',
+      image: infographicQ12026,
+    },
     {
       id: 'q4-2025',
       name: 'Infographic Q4 2025',
