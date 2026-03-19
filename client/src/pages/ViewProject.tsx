@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import projectsData from '../data/projects.json';
 import type { Project } from '../data/projects.types';
+import { useAuth } from '../contexts/AuthContext';
 import markerPinIcon from '../assets/marker-pin.png';
 import bitcoinIcon from '../assets/bitcoin-icon.png';
 import lightningIcon from '../assets/lightning-icon.png';
@@ -16,6 +17,7 @@ import gmailIcon from '../assets/gmail-icon.png';
 import nostrIcon from '../assets/nostr-icon.png';
 import facebookIcon from '../assets/facebook-icon.png';
 import instagramIcon from '../assets/instagram-icon.png';
+import ClaimProjectModal from '../components/ClaimProjectModal';
 
 export default function ViewProject() {
   const { id } = useParams<{ id: string }>();
@@ -24,6 +26,9 @@ export default function ViewProject() {
   const [project, setProject] = useState<Project | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const { user, isLoggedIn } = useAuth();
+  const [claimStatus, setClaimStatus] = useState<any>(null);
+  const [showClaimModal, setShowClaimModal] = useState(false);
   const VerifiedBadge = () => (
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
       <circle cx="8" cy="8" r="8" fill="#10B981" />
@@ -93,6 +98,31 @@ export default function ViewProject() {
     fetchProject();
   }, [id, API_URL]);
 
+  // Check if user can claim this project
+  useEffect(() => {
+    const checkClaimStatus = async () => {
+      if (!isLoggedIn || !user || !project || !id) return;
+
+      try {
+        const token = localStorage.getItem('access_token');
+        const response = await fetch(`${API_URL}/api/projects/${id}/claim/status`, {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+          },
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          setClaimStatus(data.data);
+        }
+      } catch (error) {
+        console.error('Error checking claim status:', error);
+      }
+    };
+
+    checkClaimStatus();
+  }, [isLoggedIn, user, project, id, API_URL]);
+
   if (loading) {
     return (
       <main style={{ background: '#F5F5F5', minHeight: '100vh', padding: 'clamp(2rem, 5vw, 4rem) clamp(1rem, 4vw, 1rem)' }}>
@@ -133,6 +163,9 @@ export default function ViewProject() {
     project.social.telegram,
     project.social.nostr,
   ].filter(Boolean);
+
+  // Check if project has an owner
+  const hasOwner = 'user' in project && (project as any).user;
 
   return (
     <>
@@ -305,6 +338,40 @@ export default function ViewProject() {
                       <img src={emailIcon} alt="Email" style={{ width: '18px', height: '18px' }} />
                       Contact Team
                     </a>
+                  )}
+
+                  {/* Claim Project Button - Show if user is logged in and project has no owner */}
+                  {isLoggedIn && user && !hasOwner && !claimStatus && (
+                    <button
+                      onClick={() => setShowClaimModal(true)}
+                      style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.75rem 1.5rem', background: '#10B981', color: '#FFFFFF', border: 'none', borderRadius: '8px', fontSize: '0.9375rem', fontWeight: 600, textDecoration: 'none', transition: 'background 0.2s', whiteSpace: 'nowrap', cursor: 'pointer' }}
+                      onMouseEnter={(e) => { e.currentTarget.style.background = '#059669'; }}
+                      onMouseLeave={(e) => { e.currentTarget.style.background = '#10B981'; }}
+                    >
+                      ✋ Claim This Project
+                    </button>
+                  )}
+
+                  {/* Show claim status if user has already claimed */}
+                  {claimStatus && claimStatus.status === 'pending' && (
+                    <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.75rem 1.5rem', background: '#FEF3C7', color: '#92400E', border: '1px solid #F59E0B', borderRadius: '8px', fontSize: '0.9375rem', fontWeight: 600 }}>
+                      ⏳ Claim Pending Review
+                    </div>
+                  )}
+
+                  {claimStatus && claimStatus.status === 'approved' && (
+                    <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.75rem 1.5rem', background: '#D1FAE5', color: '#065F46', border: '1px solid #10B981', borderRadius: '8px', fontSize: '0.9375rem', fontWeight: 600 }}>
+                      ✅ Claim Approved
+                    </div>
+                  )}
+
+                  {claimStatus && claimStatus.status === 'rejected' && (
+                    <button
+                      onClick={() => setShowClaimModal(true)}
+                      style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.75rem 1.5rem', background: '#FEE2E2', color: '#991B1B', border: '1px solid #EF4444', borderRadius: '8px', fontSize: '0.9375rem', fontWeight: 600, cursor: 'pointer' }}
+                    >
+                      ❌ Claim Rejected - Reapply
+                    </button>
                   )}
                 </div>
               </div>
@@ -528,8 +595,24 @@ export default function ViewProject() {
               )}
             </div>
           </div>
-        </div>
-      </main>
+        </div >
+      </main >
+
+      {/* Claim Modal */}
+      {
+        showClaimModal && (
+          <ClaimProjectModal
+            projectId={id!}
+            projectName={project.name}
+            onClose={() => setShowClaimModal(false)}
+            onSuccess={() => {
+              setShowClaimModal(false);
+              // Refresh claim status
+              window.location.reload();
+            }}
+          />
+        )
+      }
     </>
   );
 }

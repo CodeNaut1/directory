@@ -18,6 +18,7 @@ import NotFound from './pages/NotFound';
 import AdminLayout from './components/AdminLayout';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import PendingProjects from './pages/admin/PendingProjects';
+import Claims from './pages/admin/Claims';  // ← ADD THIS IMPORT
 import Infographic from './pages/Infographic';
 import InfographicArchive from './pages/InfographicArchive';
 import LiveMap from './pages/LiveMap';
@@ -66,6 +67,7 @@ export default function App() {
         <Route path="/admin" element={<AdminLayout />}>
           <Route index element={<AdminDashboard />} />
           <Route path="projects/pending" element={<PendingProjects />} />
+          <Route path="claims" element={<Claims />} />  {/* ← ADD THIS LINE */}
         </Route>
       </Routes>
     </div>

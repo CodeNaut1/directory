@@ -25,6 +25,7 @@ export default function AdminLayout() {
   const navItems = [
     { path: '/admin', label: 'Dashboard', icon: '📊' },
     { path: '/admin/projects/pending', label: 'Pending Approvals', icon: '⏳', badge: true },
+    { path: '/admin/claims', label: 'Ownership Claims', icon: '✋' },  // ← ADD THIS LINE
     { path: '/admin/projects', label: 'All Projects', icon: '📁' },
     { path: '/admin/categories', label: 'Categories', icon: '🏷️' },
     { path: '/admin/countries', label: 'Countries', icon: '🌍' },
