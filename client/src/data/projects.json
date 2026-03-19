@@ -2458,52 +2458,6 @@
       "updated_at": "2026-01-05T06:49:14.596Z"
     },
     {
-      "id": "bitcoin-togo",
-      "name": "Bitcoin Togo",
-      "slug": "bitcoin-togo",
-      "description": "is a community for Bitcoin developers or individuals in Bitcoin Development to come together to discuss and participate in technical discussions.",
-      "country_code": "tg",
-      "country_name": "Togo",
-      "city": "Lomé",
-      "location": "Lomé, Togo",
-      "image": "https://bitcoiners.africa/wp-content/uploads/2024/10/Togo-Bitcoin-Community.jpg",
-      "website": "",
-      "email": "",
-      "categories": [
-        "Community"
-      ],
-      "tags": [],
-      "social": {
-        "twitter": "https://x.com/togobitcoin",
-        "linkedin": "",
-        "instagram": "",
-        "facebook": "",
-        "youtube": "",
-        "telegram": "",
-        "nostr": ""
-      },
-      "bitcoin_acceptance": {
-        "onchain": true,
-        "lightning": false,
-        "gift_cards": false
-      },
-      "founder": {
-        "name": "Chef Lopez ",
-        "twitter": "",
-        "email": ""
-      },
-      "initiatives": "",
-      "impact": "",
-      "challenges": "",
-      "verified": true,
-      "featured": false,
-      "status": "approved",
-      "founded_year": "",
-      "active": true,
-      "created_at": "2024-01-01T00:00:00Z",
-      "updated_at": "2026-01-05T06:49:14.596Z"
-    },
-    {
       "id": "bitcoin-ubuntu",
       "name": "Bitcoin Ubuntu",
       "slug": "bitcoin-ubuntu",

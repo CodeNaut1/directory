@@ -5,6 +5,7 @@ import { successResponse } from '@/lib/utils/api-response';
 import { createProjectSchema, type CreateProjectInput } from '@/lib/validators';
 import { createProject } from '@/lib/services/project.service';
 import { appendToSheet } from '@/lib/services/googleSheets';
+import { sendProjectSubmissionConfirmation, sendAdminNotification } from '@/lib/services/email.service';
 import { writeFile } from 'fs/promises';
 import { join } from 'path';
 import { nanoid } from 'nanoid';
@@ -115,8 +116,7 @@ export async function POST(req: NextRequest) {
     // Create project
     const project = await createProject(user, body);
 
-    // 🔥 IMPROVED: Fire-and-forget sync to Google Sheets (non-blocking)
-    // This runs in the background and doesn't slow down the response
+    // 🔥 Fire-and-forget: Google Sheets + Email notifications
     setImmediate(async () => {
       try {
         const [country, category, tags] = await Promise.all([
@@ -137,7 +137,13 @@ export async function POST(req: NextRequest) {
         ]);
 
         const tagNames = tags.map((t: { name: string }) => t.name);
+        const submittedAt = new Date().toLocaleString('en-US', {
+          timeZone: 'Africa/Lagos',
+          dateStyle: 'medium',
+          timeStyle: 'short'
+        });
 
+        // Google Sheets sync
         await appendToSheet({
           projectName: body.name,
           countryName: country?.name || '',
@@ -165,17 +171,30 @@ export async function POST(req: NextRequest) {
           telegramGroup: body.details?.socialLinks?.telegram,
           nostrAddress: body.details?.socialLinks?.nostr,
           instagramUsername: body.details?.socialLinks?.instagram,
-          submittedAt: new Date().toLocaleString('en-US', {
-            timeZone: 'Africa/Lagos',
-            dateStyle: 'medium',
-            timeStyle: 'short'
-          }),
+          submittedAt,
           submittedBy: user?.email || 'Unknown',
         });
 
-        console.log('✅ Project synced to Google Sheet');
-      } catch (sheetError) {
-        console.error('⚠️ Failed to sync to Google Sheets:', sheetError);
+        // Send emails
+        const emailData = {
+          userName: user?.name || user?.email?.split('@')[0] || 'User',
+          userEmail: user?.email || body.details?.contactEmail || '',
+          projectName: body.name,
+          country: country?.name || '',
+          category: category?.name || '',
+          description: body.description,
+          website: body.website,
+          submittedAt,
+        };
+
+        await Promise.all([
+          sendProjectSubmissionConfirmation(emailData),
+          sendAdminNotification(emailData),
+        ]);
+
+        console.log('✅ Project synced to Google Sheet and emails sent');
+      } catch (error) {
+        console.error('⚠️ Background tasks failed:', error);
       }
     });
 

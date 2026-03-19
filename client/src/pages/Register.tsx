@@ -209,23 +209,23 @@ export default function RegisterPage() {
                   {/* Password Requirements Checklist */}
                   {password && (
                     <div className="password-requirements" style={{ marginTop: '0.75rem', fontSize: '0.875rem', display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '0.5rem' }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: hasMinLength ? '#16A34A' : '#667085' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: hasMinLength ? '#16A34A' : '#DC2626' }}>
                         <span style={{ fontWeight: 600 }}>{hasMinLength ? '✓' : '○'}</span>
                         <span>8+ characters</span>
                       </div>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: hasUpperCase ? '#16A34A' : '#667085' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: hasUpperCase ? '#16A34A' : '#DC2626' }}>
                         <span style={{ fontWeight: 600 }}>{hasUpperCase ? '✓' : '○'}</span>
                         <span>Uppercase letter</span>
                       </div>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: hasLowerCase ? '#16A34A' : '#667085' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: hasLowerCase ? '#16A34A' : '#DC2626' }}>
                         <span style={{ fontWeight: 600 }}>{hasLowerCase ? '✓' : '○'}</span>
                         <span>Lowercase letter</span>
                       </div>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: hasNumber ? '#16A34A' : '#667085' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: hasNumber ? '#16A34A' : '#DC2626' }}>
                         <span style={{ fontWeight: 600 }}>{hasNumber ? '✓' : '○'}</span>
                         <span>Number</span>
                       </div>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: hasSpecialChar ? '#16A34A' : '#667085', gridColumn: 'span 2' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: hasSpecialChar ? '#16A34A' : '#DC2626', gridColumn: 'span 2' }}>
                         <span style={{ fontWeight: 600 }}>{hasSpecialChar ? '✓' : '○'}</span>
                         <span>Special character (!@#$%^&*)</span>
                       </div>
