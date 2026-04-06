@@ -135,6 +135,9 @@ export interface Project {
   /** Featured project flag */
   featured: boolean;
 
+  /** Published status - ← ADD THIS */
+  published: boolean;
+
   /** Project status */
   status: ProjectStatus;
 
@@ -149,6 +152,9 @@ export interface Project {
 
   /** Last update timestamp (ISO 8601) */
   updated_at: string;
+
+  /** Owner user ID - ← ADD THIS */
+  userId?: string | null;
 }
 
 /**

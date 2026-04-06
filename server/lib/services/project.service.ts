@@ -15,6 +15,9 @@ import slugify from 'slugify';
 /**
  * Transform database project to match projects.json format for frontend compatibility
  */
+/**
+ * Transform database project to match projects.json format for frontend compatibility
+ */
 function transformProjectToJsonFormat(project: any) {
   return {
     id: project.id,
@@ -71,9 +74,10 @@ function transformProjectToJsonFormat(project: any) {
     impact: project.impact || '',
     challenges: project.challenges || '',
 
-    // Status
+    // Status - KEEP THESE FROM DATABASE
     verified: project.verified || false,
     featured: project.featured || false,
+    published: project.published || false,  // ← ADD THIS
     status: project.status || 'pending',
     active: project.active !== undefined ? project.active : true,
 
@@ -81,6 +85,9 @@ function transformProjectToJsonFormat(project: any) {
     founded_year: project.foundedYear || '',
     created_at: project.createdAt?.toISOString() || new Date().toISOString(),
     updated_at: project.updatedAt?.toISOString() || new Date().toISOString(),
+
+    // CRITICAL: Include userId for ownership checks
+    userId: project.userId || null,  // ← ADD THIS
   };
 }
 
@@ -184,14 +191,70 @@ export async function listProjects(query: ProjectListQuery) {
 /**
  * Get user's projects
  */
+/**
+ * Get user's projects
+ */
 export async function getUserProjects(userId: string) {
   const projects = await prisma.project.findMany({
     where: { userId },
     orderBy: { createdAt: 'desc' },
-    include: {
-      country: true,
-      category: true,
-      tags: { include: { tag: true } },
+    select: {
+      id: true,
+      slug: true,
+      name: true,
+      description: true,
+      location: true,
+      city: true,
+      countryCode: true,
+      countryName: true,
+      logo: true,
+      website: true,
+      email: true,
+      categories: true,
+      socialLinks: true,
+      acceptsOnchain: true,
+      acceptsLightning: true,
+      acceptsGiftCards: true,
+      founderName: true,
+      founderTwitter: true,
+      founderEmail: true,
+      initiatives: true,
+      impact: true,
+      challenges: true,
+      foundedYear: true,
+      published: true,     // ← CRITICAL
+      verified: true,      // ← CRITICAL
+      featured: true,
+      active: true,
+      status: true,        // ← CRITICAL
+      userId: true,        // ← CRITICAL
+      createdAt: true,
+      updatedAt: true,
+      country: {
+        select: {
+          id: true,
+          code: true,
+          name: true,
+        },
+      },
+      category: {
+        select: {
+          id: true,
+          name: true,
+          slug: true,
+        },
+      },
+      tags: {
+        include: {
+          tag: {
+            select: {
+              id: true,
+              name: true,
+              slug: true,
+            },
+          },
+        },
+      },
     },
   });
 
