@@ -50,6 +50,7 @@ async function main() {
   // Seed Countries (All African countries)
   console.log('🌍 Seeding countries...');
   const countriesData = [
+    { code: 'XX', name: 'Global/Africa Wide', flag: '🌍' },
     { code: 'DZ', name: 'Algeria', flag: '🇩🇿' },
     { code: 'AO', name: 'Angola', flag: '🇦🇴' },
     { code: 'BJ', name: 'Benin', flag: '🇧🇯' },
