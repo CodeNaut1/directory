@@ -14,7 +14,8 @@ import {
   ValidationError,
 } from './errors';
 import { logError, logRequest } from './logger';
-import { getAuthenticatedUser, hasRole, AuthenticatedUser, getCorsHeaders } from '../auth/middleware';
+// import { getAuthenticatedUser, hasRole, AuthenticatedUser, getCorsHeaders } from '../auth/middleware';
+import { getAuthenticatedUser, hasRole, AuthenticatedUser, getCorsHeaders } from '@/lib/auth';
 
 type Handler = (req: NextRequest, context?: any) => Promise<NextResponse | Response>;
 
