@@ -480,6 +480,7 @@ export default function CreateProject() {
                     </label>
                     <select id="countryId" name="countryId" value={formData.countryId} onChange={handleChange} style={{ width: '100%', padding: '0.875rem 1rem', fontSize: '0.9375rem', border: errors.countryId ? '2px solid #EF4444' : '1px solid #D1D5DB', borderRadius: '8px', background: '#FFFFFF', cursor: 'pointer' }}>
                       <option value="">Select a country</option>
+                      <option value="global">🌍 Global/Africa Wide</option>
                       {countries.map((country) => <option key={country.id} value={country.id}>{country.name}</option>)}
                     </select>
                     {errors.countryId && <p style={{ color: '#EF4444', fontSize: '0.875rem', marginTop: '0.25rem' }}>{errors.countryId}</p>}

@@ -8,6 +8,7 @@ interface Project {
   published: boolean;
   verified: boolean;
   updatedAt: string;
+  updated_at: string;
 }
 
 type ProjectStatus = 'verified' | 'under_review' | 'needs_update';
@@ -144,10 +145,14 @@ export default function Dashboard() {
     }
   };
 
-  const formatDate = (dateString: string) => {
-    if (!dateString) return 'N/A';
+  const formatDate = (dateString: string | undefined) => {
+    // Try both updatedAt and updated_at from API
+    const dateToFormat = dateString;
+
+    if (!dateToFormat) return 'N/A';
+
     try {
-      const date = new Date(dateString);
+      const date = new Date(dateToFormat);
       if (isNaN(date.getTime())) return 'N/A';
       return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
     } catch {
@@ -270,33 +275,57 @@ export default function Dashboard() {
   };
 
   const getActionButton = (status: ProjectStatus, projectId: string) => {
-    // For verified (published) projects, show "Edit Project"
+    // For verified (published & approved) projects, show "View" and "Edit Project"
     if (status === 'verified') {
       return (
-        <button
-          onClick={() => navigate(`/edit-project/${projectId}`)}
-          style={{
-            padding: '0.5rem 1rem',
-            background: '#FFFFFF',
-            color: '#1F2937',
-            border: '1px solid #D1D5DB',
-            borderRadius: '6px',
-            fontSize: '0.875rem',
-            fontWeight: 500,
-            cursor: 'pointer',
-            transition: 'all 0.2s',
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.background = '#F9FAFB';
-            e.currentTarget.style.borderColor = '#9CA3AF';
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.background = '#FFFFFF';
-            e.currentTarget.style.borderColor = '#D1D5DB';
-          }}
-        >
-          Edit Project
-        </button>
+        <div style={{ display: 'flex', gap: '0.5rem' }}>
+          <button
+            onClick={() => navigate(`/project/${projectId}`)}
+            style={{
+              padding: '0.5rem 1rem',
+              background: '#FFFFFF',
+              color: '#1F2937',
+              border: '1px solid #D1D5DB',
+              borderRadius: '6px',
+              fontSize: '0.875rem',
+              fontWeight: 500,
+              cursor: 'pointer',
+              transition: 'all 0.2s',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = '#F9FAFB';
+              e.currentTarget.style.borderColor = '#9CA3AF';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = '#FFFFFF';
+              e.currentTarget.style.borderColor = '#D1D5DB';
+            }}
+          >
+            View
+          </button>
+          <button
+            onClick={() => navigate(`/edit-project/${projectId}`)}
+            style={{
+              padding: '0.5rem 1rem',
+              background: '#FD5A47',
+              color: '#FFFFFF',
+              border: 'none',
+              borderRadius: '6px',
+              fontSize: '0.875rem',
+              fontWeight: 500,
+              cursor: 'pointer',
+              transition: 'all 0.2s',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = '#E04835';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = '#FD5A47';
+            }}
+          >
+            Edit
+          </button>
+        </div>
       );
     }
 
@@ -647,7 +676,7 @@ export default function Dashboard() {
                                   color: '#4B5563',
                                 }}
                               >
-                                {formatDate(project.updatedAt)}
+                                {formatDate(project.updated_at || project.updatedAt)}
                               </td>
                               <td
                                 style={{
@@ -701,7 +730,7 @@ export default function Dashboard() {
                             </span>
                           </div>
                           <p style={{ fontSize: '0.875rem', color: '#6B7280', margin: '0 0 1rem 0' }}>
-                            Updated: {formatDate(project.updatedAt)}
+                            Updated: {formatDate(project.updated_at || project.updatedAt)}
                           </p>
                           {getActionButton(status, project.id)}
                         </div>

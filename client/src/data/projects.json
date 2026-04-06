@@ -1,6 +1,514 @@
 {
   "projects": [
     {
+      "id": "bitzed",
+      "name": "Bitzed",
+      "slug": "bitzed",
+      "description": "Buy and spend Bitcoin with mobile money in Zambia on the Lightning Network",
+      "country_code": "zm",
+      "country_name": "Zambia",
+      "city": "",
+      "location": "Zambia",
+      "image": "",
+      "website": "https://bitzed.xyz/",
+      "email": "support@bitzed.xyz",
+      "categories": [
+        "Exchange"
+      ],
+      "tags": [
+        "Mobile App",
+        "Bitcoin Only",
+        "Lightning Network",
+        "Web App"
+      ],
+      "social": {
+        "twitter": "",
+        "linkedin": "",
+        "instagram": "",
+        "facebook": "",
+        "youtube": "",
+        "telegram": "",
+        "nostr": ""
+      },
+      "bitcoin_acceptance": {
+        "onchain": false,
+        "lightning": true,
+        "gift_cards": false
+      },
+      "founder": {
+        "name": "Humphrey",
+        "twitter": "https://twitter.com/bitcoin_diary",
+        "email": "humphrey@bitzed.xzy"
+      },
+      "initiatives": "",
+      "impact": "Making Bitcoin easier to access and use through mobile money, Bitzed helps ordinary Zambians gain more control over how they save and transact, without heavy barriers or restrictions.",
+      "challenges": "",
+      "verified": false,
+      "featured": false,
+      "status": "pending",
+      "founded_year": "2025",
+      "active": true,
+      "created_at": "2026-04-06T15:56:41.621911",
+      "updated_at": "2026-04-06T15:56:41.621912"
+    },
+    {
+      "id": "open-study-hubs",
+      "name": "Open Study Hubs",
+      "slug": "open-study-hubs",
+      "description": "This work is all about decentralized, physical Bitcoin learning spaces, to ensure that Bitcoin circular economies are built naturally among the rural communities. Main focus is on the rural communities, where there's no Main-grid electricity, and internet connection is either unreliable or unavailable.",
+      "country_code": "mw",
+      "country_name": "Malawi",
+      "city": "",
+      "location": "Malawi",
+      "image": "",
+      "website": "",
+      "email": "osh.wiring329@passinbox.com",
+      "categories": [
+        "Education"
+      ],
+      "tags": [
+        "Education",
+        "Bitcoin Only"
+      ],
+      "social": {
+        "twitter": "https://twitter.com/rightonthetape",
+        "linkedin": "",
+        "instagram": "",
+        "facebook": "",
+        "youtube": "",
+        "telegram": "",
+        "nostr": "https://njump.me/npub16ecxhn2xscwjt2mmn2ls59yms0avkvd0z3t64v70pew6vfg9y6qqh38puf"
+      },
+      "bitcoin_acceptance": {
+        "onchain": true,
+        "lightning": true,
+        "gift_cards": false
+      },
+      "founder": {
+        "name": "Kondwani Konyani",
+        "twitter": "https://twitter.com/RightOnTheTape",
+        "email": "np.embargo587@passinbox.com"
+      },
+      "initiatives": "- Education programs (beginning with the first hub - the Genesis Hub, then expanding to other community-run study Hubs)\n\n- Community building (when people understand Bitcoin, it's simple to use it in their daily activities)",
+      "impact": "Prior to launching this project on [Geyser Fund](https://geyser.fund/project/bitcoinstudyhubs), I asked Kgothatso of Machankura, if I could assist with the Chichewa translation of the Machankura Wallet. He was grateful for the idea, so he gave me a go ahead. I helped with the Wallet menu translation, and Chichewa version is available on Machankura Wallet for those who may not understand English. I believe if people are taught about Bitcoin in their local language, it becomes more practical. Likewise, I'm working on translation of different Bitcoin beginners books and articles.\n\nPHASE 1. \nEstablish the first fully operational Bitcoin Study Hub, the Genesis Hub, and train facilitators.\n\nPHASE 2. \nExpanding to other areas, in order to have various community-run study hubs. This ensures decentralized approach, similar to MyFirstBitcoin's.\n\nPHASE 3.\nBuilding circular economies. When people understand Bitcoin, they naturally begin to use it as a tool for community empowerment and individual sovereignty.",
+      "challenges": "Open Study Hubs project is currently struggling to get the necessary resources to get fully established. These are meant to be physical spaces, where people (children, the youth, adults and elderly) come at their convenient time to learn about Bitcoin (freedom and responsibility). \n- We need a site for the learning space \n- We need teaching and learning materials (books, tools, demo kits, etc)",
+      "verified": false,
+      "featured": false,
+      "status": "pending",
+      "founded_year": "2026",
+      "active": true,
+      "created_at": "2026-04-06T15:56:41.621940",
+      "updated_at": "2026-04-06T15:56:41.621941"
+    },
+    {
+      "id": "bitcoin-high-school",
+      "name": "Bitcoin High School",
+      "slug": "bitcoin-high-school",
+      "description": "An edutech platform to promote the learning of STEM alongside Bitcoin, built on Bitcoin rails.",
+      "country_code": "ug",
+      "country_name": "Uganda",
+      "city": "",
+      "location": "Uganda",
+      "image": "",
+      "website": "",
+      "email": "maalimken2@gmail.com",
+      "categories": [
+        "Education"
+      ],
+      "tags": [
+        "Education",
+        "Open Source",
+        "Bitcoin Only",
+        "Lightning Network",
+        "Web App",
+        "Infrastructure"
+      ],
+      "social": {
+        "twitter": "https://twitter.com/MaaliMKen",
+        "linkedin": "https://linkedin.com/in/Maali Marvin Kenneth",
+        "instagram": "",
+        "facebook": "",
+        "youtube": "",
+        "telegram": "",
+        "nostr": ""
+      },
+      "bitcoin_acceptance": {
+        "onchain": false,
+        "lightning": true,
+        "gift_cards": false
+      },
+      "founder": {
+        "name": "Maali Marvin Kenneth",
+        "twitter": "https://twitter.com/MaaliMKen",
+        "email": "maalimken2@gmail.com"
+      },
+      "initiatives": "- Merchant adoption with Blink\n- online education of high schoolers students using a question-answer methodology.\n- Bitcoin education.",
+      "impact": "- 40 users of the platform.\n- I've been welcomed by Starlight Secondary School (built by members of the Bitcoin community).",
+      "challenges": "- Lack of funding to quickly build AI rails which directly help teachers/tutors upload questions. These will then onboard students.\n- Limited visibility in the Bitcoin community from lack of time/funds to network ( still in full time hustle mode. No time/funds for PR, which cuts of a needed feedback loop).",
+      "verified": false,
+      "featured": false,
+      "status": "pending",
+      "founded_year": "2026",
+      "active": true,
+      "created_at": "2026-04-06T15:56:41.621963",
+      "updated_at": "2026-04-06T15:56:41.621965"
+    },
+    {
+      "id": "bitedu-network",
+      "name": "BITEDU NETWORK",
+      "slug": "bitedu-network",
+      "description": "BitEdu Network is a leading non-profit organization committed to advancing Bitcoin education, financial literacy, and economic empowerment across Africa and beyond. Through structured education, practical tools, and community-driven resources, we provide individuals with credible knowledge and actionable skills to navigate the decentralized economy. As a trusted educational hub, BitEdu Network simplifies complex concepts, removes barriers to entry, and fosters sustainable, Bitcoin-powered opportunities for global communities.",
+      "country_code": "ng",
+      "country_name": "Nigeria",
+      "city": "",
+      "location": "Nigeria",
+      "image": "",
+      "website": "",
+      "email": "beetceduhub@gmail.com",
+      "categories": [
+        "Education"
+      ],
+      "tags": [
+        "Education",
+        "Open Source",
+        "Bitcoin Only"
+      ],
+      "social": {
+        "twitter": "https://twitter.com/btceduhub_",
+        "linkedin": "",
+        "instagram": "",
+        "facebook": "",
+        "youtube": "",
+        "telegram": "",
+        "nostr": ""
+      },
+      "bitcoin_acceptance": {
+        "onchain": true,
+        "lightning": true,
+        "gift_cards": false
+      },
+      "founder": {
+        "name": "Afolayan Gideon",
+        "twitter": "https://twitter.com/gideonafo1",
+        "email": "aaagideon001@gmail.com"
+      },
+      "initiatives": "Education programs\ncommunity growth",
+      "impact": "Featured in programs and proffered resourceful contents",
+      "challenges": "Hub development and grant supports",
+      "verified": false,
+      "featured": false,
+      "status": "pending",
+      "founded_year": "2025",
+      "active": true,
+      "created_at": "2026-04-06T15:56:41.621983",
+      "updated_at": "2026-04-06T15:56:41.621985"
+    },
+    {
+      "id": "lwandi-bitcoin",
+      "name": "Lwandi Bitcoin",
+      "slug": "lwandi-bitcoin",
+      "description": "Building a Bitcoin Circular Economy in Mozambique Ponta do Ouro Beach Community. Mentored and supported by Bitcoin Famba and Lwandi Surf.",
+      "country_code": "mz",
+      "country_name": "Mozambique",
+      "city": "",
+      "location": "Mozambique",
+      "image": "",
+      "website": "",
+      "email": "lwandibitcoin@gmail.com",
+      "categories": [
+        "Circular Economy"
+      ],
+      "tags": [
+        "Education",
+        "P2P",
+        "Bitcoin Only",
+        "Lightning Network",
+        "Merchant Adoption",
+        "Investment"
+      ],
+      "social": {
+        "twitter": "https://twitter.com/LwandiBitcoin",
+        "linkedin": "https://linkedin.com/in/Lwandi Bitcoin",
+        "instagram": "https://instagram.com/lwandi.bitcoin",
+        "facebook": "https://facebook.com/Lwandi Bitcoin",
+        "youtube": "https://youtube.com/@lwandibitcoin",
+        "telegram": "https://t.me/@lwandibitcoin",
+        "nostr": "https://njump.me/npub17w0cveeyluhr8n652hq5n7702u6w5y9gy4q0vzld9rwswnpr3uusk5ktq5"
+      },
+      "bitcoin_acceptance": {
+        "onchain": true,
+        "lightning": true,
+        "gift_cards": false
+      },
+      "founder": {
+        "name": "Gabriel Carrião",
+        "twitter": "https://twitter.com/CarriaoGabriel",
+        "email": "gabrielcarriao@protonmail.com"
+      },
+      "initiatives": "- Education programs\n- Merchant adoption\n- Income generation",
+      "impact": "",
+      "challenges": "Finding ways to earn sats to pay salaries in Bitcoin.",
+      "verified": false,
+      "featured": false,
+      "status": "pending",
+      "founded_year": "2026",
+      "active": true,
+      "created_at": "2026-04-06T15:56:41.622013",
+      "updated_at": "2026-04-06T15:56:41.622014"
+    },
+    {
+      "id": "bitdevs-mauritius",
+      "name": "Bitdevs Mauritius",
+      "slug": "bitdevs-mauritius",
+      "description": "Mauritius Bitcoin Developers Community",
+      "country_code": "mu",
+      "country_name": "Mauritius",
+      "city": "",
+      "location": "Mauritius",
+      "image": "",
+      "website": "https://bitdevsmauritius.org",
+      "email": "sadiq@bitdevsmauritius.org",
+      "categories": [
+        "Tech Meetup"
+      ],
+      "tags": [
+        "Open Source",
+        "Bitcoin Only"
+      ],
+      "social": {
+        "twitter": "https://twitter.com/https://x.com/bitdevsmru?s=21",
+        "linkedin": "",
+        "instagram": "",
+        "facebook": "",
+        "youtube": "",
+        "telegram": "",
+        "nostr": ""
+      },
+      "bitcoin_acceptance": {
+        "onchain": true,
+        "lightning": false,
+        "gift_cards": false
+      },
+      "founder": {
+        "name": "Sadiq Rabiu",
+        "twitter": "https://twitter.com/rsadiqra",
+        "email": "rsadiqra@gmail.com"
+      },
+      "initiatives": "Monthly Socratic Meet-up",
+      "impact": "BitDevs started a few months before Btrust Dev Day, and we’ve improved local participation through targeted campaigns. Monthly attendance has also increased, with more locals joining to learn about Bitcoin technology.",
+      "challenges": "Honestly for now no challenge",
+      "verified": false,
+      "featured": false,
+      "status": "pending",
+      "founded_year": "2025",
+      "active": true,
+      "created_at": "2026-04-06T15:56:41.622032",
+      "updated_at": "2026-04-06T15:56:41.622033"
+    },
+    {
+      "id": "african-bitcoiners",
+      "name": "African Bitcoiners",
+      "slug": "african-bitcoiners",
+      "description": "We are a trusted community making Bitcoin more accessible to the people of Africa.",
+      "country_code": "lr",
+      "country_name": "Liberia",
+      "city": "",
+      "location": "Liberia",
+      "image": "",
+      "website": "https://www.bitcoiners.africa",
+      "email": "africanbitcoiners@bitcoiners.africa",
+      "categories": [
+        "Community"
+      ],
+      "tags": [
+        "Education",
+        "Bitcoin Only",
+        "Infrastructure"
+      ],
+      "social": {
+        "twitter": "https://twitter.com/afribitcoiners",
+        "linkedin": "https://www.linkedin.com/company/african-bitcoiners/",
+        "instagram": "https://instagram.com/africanbitcoiners",
+        "facebook": "https://facebook.com/African Bitcoiners",
+        "youtube": "",
+        "telegram": "https://t.me/African Bitcoiners",
+        "nostr": "https://njump.me/npub1q7qtx2k5qevch38nk7wq02gqvwkxldscu6fp293gav4vl7f5k52s4eq5kj"
+      },
+      "bitcoin_acceptance": {
+        "onchain": true,
+        "lightning": true,
+        "gift_cards": false
+      },
+      "founder": {
+        "name": "Afriqualia",
+        "twitter": "",
+        "email": ""
+      },
+      "initiatives": "Education initiatives, community building, and social impact.",
+      "impact": "",
+      "challenges": "",
+      "verified": false,
+      "featured": false,
+      "status": "pending",
+      "founded_year": "2022",
+      "active": true,
+      "created_at": "2026-04-06T15:56:41.622056",
+      "updated_at": "2026-04-06T15:56:41.622058"
+    },
+    {
+      "id": "africa-bitcoin-news",
+      "name": "Africa Bitcoin News",
+      "slug": "africa-bitcoin-news",
+      "description": "Africa's Bitcoin-only news platform, centering the African Bitcoin narrative. The primary source of truth for Bitcoin in Africa.",
+      "country_code": "lr",
+      "country_name": "Liberia",
+      "city": "",
+      "location": "Liberia",
+      "image": "",
+      "website": "https://bitcoinnews.africa/",
+      "email": "africanbitcoiners@bitcoiners.africa",
+      "categories": [
+        "Media"
+      ],
+      "tags": [
+        "Bitcoin Only",
+        "Infrastructure"
+      ],
+      "social": {
+        "twitter": "https://twitter.com/AfriBitcoinNews",
+        "linkedin": "",
+        "instagram": "",
+        "facebook": "",
+        "youtube": "",
+        "telegram": "",
+        "nostr": "https://njump.me/npub13j8wl3j0mdl8yw6qggny5v69fmgjtd28u60jmuyld9rtt64p648q3hcapw"
+      },
+      "bitcoin_acceptance": {
+        "onchain": true,
+        "lightning": true,
+        "gift_cards": false
+      },
+      "founder": {
+        "name": "African Bitcoiners",
+        "twitter": "",
+        "email": ""
+      },
+      "initiatives": "Bitcoin-only news across Africa.",
+      "impact": "",
+      "challenges": "",
+      "verified": false,
+      "featured": false,
+      "status": "pending",
+      "founded_year": "2026",
+      "active": true,
+      "created_at": "2026-04-06T15:56:41.622076",
+      "updated_at": "2026-04-06T15:56:41.622077"
+    },
+    {
+      "id": "bitdevs-kampala",
+      "name": "BitDevs Kampala",
+      "slug": "bitdevs-kampala",
+      "description": "BitDevs Kampala is a Bitcoin-only technical community in Kampala, Uganda, dedicated to exploring, discussing, and participating in the research and development of Bitcoin and related protocols.",
+      "country_code": "ug",
+      "country_name": "Uganda",
+      "city": "",
+      "location": "Uganda",
+      "image": "",
+      "website": "https://bitdevskla.org",
+      "email": "bitdevskampala@gmail.com",
+      "categories": [
+        "Tech Meetup"
+      ],
+      "tags": [
+        "Education",
+        "Open Source",
+        "Bitcoin Only",
+        "Infrastructure",
+        "Workshops"
+      ],
+      "social": {
+        "twitter": "https://twitter.com/BitDevsKLA",
+        "linkedin": "",
+        "instagram": "",
+        "facebook": "",
+        "youtube": "",
+        "telegram": "",
+        "nostr": ""
+      },
+      "bitcoin_acceptance": {
+        "onchain": true,
+        "lightning": true,
+        "gift_cards": false
+      },
+      "founder": {
+        "name": "Jemimah Nagasha and Angella Mulikatete",
+        "twitter": "https://twitter.com/nagasha_",
+        "email": ""
+      },
+      "initiatives": "",
+      "impact": "",
+      "challenges": "",
+      "verified": false,
+      "featured": false,
+      "status": "pending",
+      "founded_year": "",
+      "active": true,
+      "created_at": "2026-04-06T15:56:41.622095",
+      "updated_at": "2026-04-06T15:56:41.622097"
+    },
+    {
+      "id": "bitjr-academy-and-space",
+      "name": "BitJR Academy and Space",
+      "slug": "bitjr-academy-and-space",
+      "description": "BitJR Academy and Space introduces Bitcoin education to children aged 6 -17 in Livingstone, Zambia through hands-on learning and real-world use. By combining games, classes, and Lightning-powered activities, the initiative helps children earn, spend, and save sats while building a small circular economy.",
+      "country_code": "zm",
+      "country_name": "Zambia",
+      "city": "",
+      "location": "Zambia",
+      "image": "",
+      "website": "https://bitjracademyandspace.org/",
+      "email": "bitjracademyandspace@gmail.com",
+      "categories": [
+        "Community"
+      ],
+      "tags": [
+        "Education",
+        "Open Source",
+        "Bitcoin Only",
+        "Lightning Network",
+        "Merchant Adoption"
+      ],
+      "social": {
+        "twitter": "https://twitter.com/BitJracademy",
+        "linkedin": "",
+        "instagram": "",
+        "facebook": "",
+        "youtube": "https://youtube.com/@BitJRAcademyandSpace",
+        "telegram": "https://t.me/@BitJRAcademy",
+        "nostr": "https://njump.me/npub1yu5u4pkc47qkeps6yl7kc7t5yc9fymtc0a4nrr3glrxd9m9hpw2sdq59zh"
+      },
+      "bitcoin_acceptance": {
+        "onchain": true,
+        "lightning": true,
+        "gift_cards": false
+      },
+      "founder": {
+        "name": "Walusungu Nyachikanda",
+        "twitter": "https://twitter.com/WNyachikanda",
+        "email": "walzinyachikay@gmail.com"
+      },
+      "initiatives": "- Bitcoin education for children (ages 6–17) \n- Community meetups, competitions, and project fairs\n- Building a kids-led circular economy (earn, spend, and save sats)\n- Merchant onboarding to support everyday Bitcoin transactions (Local school tuckshops and community merchants)",
+      "impact": "- Introduced Bitcoin education to children in Livingstone since October 2024\n- Enabled more than 100 children to earn and spend sats\n- Established early-stage kids Bitcoin circular economy with active usage\n- Established Area Satoshi Club in local schools\n- Taught 18 local school teachers about Bitcoin for effective communication\n- Onboarded local school tuckshops\n- Increased community awareness through meetups and merchant participation\n- Connected local initiative to global networks like My First Bitcoin and CBAF\n- Demonstrated that children can influence household and community adoption",
+      "challenges": "- Limited access to NFC Bolt Cards for consistent participation (Most Kids do not have mobile devices)\n- Onboarding and retaining merchants in a small local economy\n- We do not have spacious and permanent learning hub\n- Sustaining funding for activities, rewards, and expansion",
+      "verified": false,
+      "featured": false,
+      "status": "pending",
+      "founded_year": "2024",
+      "active": true,
+      "created_at": "2026-04-06T15:56:41.622120",
+      "updated_at": "2026-04-06T15:56:41.622121"
+    },
+    {
       "id": "abidjan-bitcoin",
       "name": "Abidjan Bitcoin Meetup",
       "slug": "abidjan-bitcoin",
