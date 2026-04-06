@@ -6,15 +6,15 @@ const createTransporter = () => {
   if (process.env.NODE_ENV === 'production') {
     return nodemailer.createTransport({
       host: 'smtp.gmail.com',
-      port: 465, // Use SSL port instead of TLS
-      secure: true, // Use SSL
-      pool: true,
+      port: 587,
+      secure: false,
       auth: {
         user: process.env.GMAIL_USER,
         pass: process.env.GMAIL_APP_PASSWORD,
       },
       tls: {
-        rejectUnauthorized: false, // Allow self-signed certificates
+        ciphers: 'SSLv3',
+        rejectUnauthorized: false,
       },
     });
   }
