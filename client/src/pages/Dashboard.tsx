@@ -35,10 +35,10 @@ export default function Dashboard() {
 
   const getProjectStatus = (project: Project): ProjectStatus => {
     // If published and verified, it's live
-    if (project.published && project.verified) {
+    if (project.published === true && project.verified === true) {
       return 'verified';
     }
-    // If not published, it's under review
+    // If not published or published is undefined, it's under review
     if (!project.published) {
       return 'under_review';
     }

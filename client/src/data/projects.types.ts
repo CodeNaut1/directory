@@ -135,8 +135,8 @@ export interface Project {
   /** Featured project flag */
   featured: boolean;
 
-  /** Published status - ← ADD THIS */
-  published: boolean;
+  /** Published status - optional for backwards compatibility with projects.json */
+  published?: boolean;  // ← ADD ? HERE
 
   /** Project status */
   status: ProjectStatus;
@@ -153,7 +153,7 @@ export interface Project {
   /** Last update timestamp (ISO 8601) */
   updated_at: string;
 
-  /** Owner user ID - ← ADD THIS */
+  /** Owner user ID - optional for backwards compatibility */
   userId?: string | null;
 }
 
