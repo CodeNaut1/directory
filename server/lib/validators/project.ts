@@ -9,7 +9,10 @@ export const createProjectSchema = z.object({
   // REQUIRED FIELDS (Essentials only)
   name: z.string().min(3, 'Name must be at least 3 characters').max(200, 'Name is too long'),
   description: z.string().min(10, 'Description must be at least 10 characters').max(5000, 'Description is too long'),
-  countryId: z.string().cuid('Invalid country ID'),
+  countryId: z.string().refine(
+    (val) => val === 'global' || /^c[a-z0-9]{24,25}$/i.test(val),
+    'Invalid country ID'
+  ),
   categoryId: z.string().cuid('Invalid category ID'),
 
   // OPTIONAL BASIC FIELDS
