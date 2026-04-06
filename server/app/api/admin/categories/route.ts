@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
-import { verifyAuth } from '@/lib/auth/middleware';
+import { verifyAuth } from '@/lib/auth';
 import { z } from 'zod';
 
 const prisma = new PrismaClient();
@@ -12,7 +12,6 @@ const createCategorySchema = z.object({
 
 export async function POST(req: NextRequest) {
   try {
-    // Verify authentication and admin/moderator role
     const authResult = await verifyAuth(req);
     if (!authResult.authenticated || !authResult.user) {
       return NextResponse.json(
@@ -33,10 +32,8 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const { name, description } = createCategorySchema.parse(body);
 
-    // Generate slug from name
     const slug = name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
 
-    // Check if slug already exists
     const existing = await prisma.category.findUnique({ where: { slug } });
     if (existing) {
       return NextResponse.json(
@@ -45,7 +42,6 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Create category
     const category = await prisma.category.create({
       data: {
         name,

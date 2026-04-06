@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createGetHandler } from '@/lib/utils/api-handler';
 import { successResponse } from '@/lib/utils/api-response';
-import { claimListQuerySchema, type ClaimListQuery } from '@/lib/validators/claim';
+import { claimListQuerySchema, type ClaimListQuery } from '@/lib/validators';
 import { listClaims } from '@/lib/services/claim.service';
 
 /**

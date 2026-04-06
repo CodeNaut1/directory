@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createPostHandler, getValidatedBody, getRequestUser } from '@/lib/utils/api-handler';
 import { successResponse } from '@/lib/utils/api-response';
-import { rejectClaimSchema, type RejectClaimInput } from '@/lib/validators/claim';
+import { rejectClaimSchema, type RejectClaimInput } from '@/lib/validators';
 import { rejectClaim } from '@/lib/services/claim.service';
 
 interface RouteParams {
