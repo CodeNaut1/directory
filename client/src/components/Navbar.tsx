@@ -135,6 +135,17 @@ export default function Navbar() {
             >
               HOME
             </NavLink>
+            <NavLink
+              to="/how-it-works"
+              className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
+              style={({ isActive }) => ({
+                borderBottom: isActive ? '2px solid #FD5A47' : '2px solid transparent',
+                paddingBottom: '0.25rem',
+                fontSize: 'clamp(0.75rem, 1.5vw, 0.875rem)',
+              })}
+            >
+              HOW IT WORKS
+            </NavLink>
             <div
               ref={infographicDropdownRef}
               style={{ position: 'relative' }}
@@ -532,6 +543,27 @@ export default function Navbar() {
                 }}
               >
                 HOME
+              </NavLink>
+              <NavLink
+                to="/how-it-works"
+                onClick={() => setShowMobileMenu(false)}
+                style={{
+                  padding: '0.75rem 1rem',
+                  borderRadius: '6px',
+                  fontSize: '0.9375rem',
+                  fontWeight: 500,
+                  color: '#1F2937',
+                  textDecoration: 'none',
+                  transition: 'background 0.2s',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = '#F9FAFB';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = 'transparent';
+                }}
+              >
+                HOW IT WORKS
               </NavLink>
               <div style={{ display: 'flex', flexDirection: 'column' }}>
                 <div

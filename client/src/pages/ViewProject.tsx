@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import projectsData from '../data/projects.json';
 import type { Project } from '../data/projects.types';
 import { useAuth } from '../contexts/AuthContext';
@@ -19,11 +20,20 @@ import facebookIcon from '../assets/facebook-icon.png';
 import instagramIcon from '../assets/instagram-icon.png';
 import ClaimProjectModal from '../components/ClaimProjectModal';
 
+// Extended Project type to include userId from API
+interface ProjectWithUser extends Project {
+  userId?: string | null;
+  user?: {
+    id: string;
+    name: string;
+  } | null;
+}
+
 export default function ViewProject() {
   const { id } = useParams<{ id: string }>();
   const API_URL = import.meta.env.VITE_API_URL || '';
 
-  const [project, setProject] = useState<Project | null>(null);
+  const [project, setProject] = useState<ProjectWithUser | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const { user, isLoggedIn } = useAuth();
@@ -164,8 +174,14 @@ export default function ViewProject() {
     project.social.nostr,
   ].filter(Boolean);
 
+  // // Check if project has an owner
+  // const hasOwner = 'user' in project && (project as any).user;
+
   // Check if project has an owner
-  const hasOwner = 'user' in project && (project as any).user;
+  const hasOwner = project.userId !== null && project.userId !== undefined;
+
+  // Check if current user owns this project
+  const isOwner = user && project.userId === user.id;
 
   return (
     <>
@@ -316,8 +332,8 @@ export default function ViewProject() {
                 {/* Action Buttons */}
                 <div className="action-buttons" style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
                   {project.website && (
-                    <a
-                      href={project.website.startsWith('http') ? project.website : `https://${project.website}`}
+
+                    <a href={project.website.startsWith('http') ? project.website : `https://${project.website}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.75rem 1.5rem', background: '#FD5A47', color: '#FFFFFF', borderRadius: '8px', fontSize: '0.9375rem', fontWeight: 600, textDecoration: 'none', transition: 'background 0.2s', whiteSpace: 'nowrap' }}
@@ -328,9 +344,10 @@ export default function ViewProject() {
                       Visit Website
                     </a>
                   )}
+
                   {project.email && (
-                    <a
-                      href={`mailto:${project.email}`}
+
+                    <a href={`mailto:${project.email}`}
                       style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.75rem 1.5rem', background: '#FFFFFF', color: '#1F2937', border: '1px solid #E5E7EB', borderRadius: '8px', fontSize: '0.9375rem', fontWeight: 600, textDecoration: 'none', transition: 'all 0.2s', whiteSpace: 'nowrap' }}
                       onMouseEnter={(e) => { e.currentTarget.style.background = '#F9FAFB'; }}
                       onMouseLeave={(e) => { e.currentTarget.style.background = '#FFFFFF'; }}
@@ -340,11 +357,23 @@ export default function ViewProject() {
                     </a>
                   )}
 
-                  {/* Claim Project Button - Show if user is logged in and project has no owner */}
-                  {isLoggedIn && user && !hasOwner && !claimStatus && (
+                  {/* If user owns this project - show Edit button */}
+                  {isOwner && (
+                    <Link
+                      to={`/edit-project/${id}`}
+                      style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.75rem 1.5rem', background: '#10B981', color: '#FFFFFF', border: 'none', borderRadius: '8px', fontSize: '0.9375rem', fontWeight: 600, textDecoration: 'none', transition: 'background 0.2s', whiteSpace: 'nowrap' }}
+                      onMouseEnter={(e) => { e.currentTarget.style.background = '#059669'; }}
+                      onMouseLeave={(e) => { e.currentTarget.style.background = '#10B981'; }}
+                    >
+                      ✏️ Edit Project
+                    </Link>
+                  )}
+
+                  {/* Claim Project Button - Show ONLY if: user is logged in, project has no owner, user doesn't own it, and user hasn't claimed */}
+                  {isLoggedIn && user && !hasOwner && !isOwner && !claimStatus && (
                     <button
                       onClick={() => setShowClaimModal(true)}
-                      style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.75rem 1.5rem', background: '#10B981', color: '#FFFFFF', border: 'none', borderRadius: '8px', fontSize: '0.9375rem', fontWeight: 600, textDecoration: 'none', transition: 'background 0.2s', whiteSpace: 'nowrap', cursor: 'pointer' }}
+                      style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.75rem 1.5rem', background: '#10B981', color: '#FFFFFF', border: 'none', borderRadius: '8px', fontSize: '0.9375rem', fontWeight: 600, cursor: 'pointer', transition: 'background 0.2s', whiteSpace: 'nowrap' }}
                       onMouseEnter={(e) => { e.currentTarget.style.background = '#059669'; }}
                       onMouseLeave={(e) => { e.currentTarget.style.background = '#10B981'; }}
                     >
@@ -352,7 +381,7 @@ export default function ViewProject() {
                     </button>
                   )}
 
-                  {/* Show claim status if user has already claimed */}
+                  {/* Show claim status badges */}
                   {claimStatus && claimStatus.status === 'pending' && (
                     <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.75rem 1.5rem', background: '#FEF3C7', color: '#92400E', border: '1px solid #F59E0B', borderRadius: '8px', fontSize: '0.9375rem', fontWeight: 600 }}>
                       ⏳ Claim Pending Review

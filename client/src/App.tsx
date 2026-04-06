@@ -5,6 +5,7 @@ import { initGA, logPageView } from './utils/analytics';
 import Navbar from './components/Navbar';
 import ProtectedRoute from './components/ProtectedRoute';
 import HomePage from './pages/Home';
+import HowItWorks from './pages/HowItWorks';
 import LoginPage from './pages/Login';
 import RegisterPage from './pages/Register';
 import Dashboard from './pages/Dashboard';
@@ -51,6 +52,7 @@ export default function App() {
         {/* Public routes */}
         <Route path="/" element={<HomePage />} />
         <Route path="/home" element={<HomePage />} />
+        <Route path="/how-it-works" element={<HowItWorks />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/infographic-q1-2026" element={<Infographic />} />

@@ -34,13 +34,16 @@ export default function Dashboard() {
   const [isUpdatingPassword, setIsUpdatingPassword] = useState(false);
 
   const getProjectStatus = (project: Project): ProjectStatus => {
+    // If published and verified, it's live
     if (project.published && project.verified) {
       return 'verified';
-    } else if (!project.published) {
-      return 'under_review';
-    } else {
-      return 'verified';
     }
+    // If not published, it's under review
+    if (!project.published) {
+      return 'under_review';
+    }
+    // Otherwise it's published but not verified (needs update)
+    return 'needs_update';
   };
 
   const getFirstName = (fullName: string | null | undefined): string => {
@@ -142,8 +145,14 @@ export default function Dashboard() {
   };
 
   const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+    if (!dateString) return 'N/A';
+    try {
+      const date = new Date(dateString);
+      if (isNaN(date.getTime())) return 'N/A';
+      return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+    } catch {
+      return 'N/A';
+    }
   };
 
   const handleEmailChange = async (e: React.FormEvent) => {
@@ -261,89 +270,93 @@ export default function Dashboard() {
   };
 
   const getActionButton = (status: ProjectStatus, projectId: string) => {
-    switch (status) {
-      case 'verified':
-        return (
-          <button
-            onClick={() => navigate(`/edit-project/${projectId}`)}
-            style={{
-              padding: '0.5rem 1rem',
-              background: '#FFFFFF',
-              color: '#1F2937',
-              border: '1px solid #D1D5DB',
-              borderRadius: '6px',
-              fontSize: '0.875rem',
-              fontWeight: 500,
-              cursor: 'pointer',
-              transition: 'all 0.2s',
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.background = '#F9FAFB';
-              e.currentTarget.style.borderColor = '#9CA3AF';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.background = '#FFFFFF';
-              e.currentTarget.style.borderColor = '#D1D5DB';
-            }}
-          >
-            Edit Details
-          </button>
-        );
-      case 'under_review':
-        return (
-          <button
-            onClick={() => navigate(`/project/${projectId}`)}
-            style={{
-              padding: '0.5rem 1rem',
-              background: '#FFFFFF',
-              color: '#1F2937',
-              border: '1px solid #D1D5DB',
-              borderRadius: '6px',
-              fontSize: '0.875rem',
-              fontWeight: 500,
-              cursor: 'pointer',
-              transition: 'all 0.2s',
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.background = '#F9FAFB';
-              e.currentTarget.style.borderColor = '#9CA3AF';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.background = '#FFFFFF';
-              e.currentTarget.style.borderColor = '#D1D5DB';
-            }}
-          >
-            View Submission
-          </button>
-        );
-      case 'needs_update':
-        return (
-          <button
-            onClick={() => navigate(`/revise-project/${projectId}`)}
-            style={{
-              padding: '0.5rem 1rem',
-              background: '#FFFFFF',
-              color: '#1F2937',
-              border: '1px solid #D1D5DB',
-              borderRadius: '6px',
-              fontSize: '0.875rem',
-              fontWeight: 500,
-              cursor: 'pointer',
-              transition: 'all 0.2s',
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.background = '#F9FAFB';
-              e.currentTarget.style.borderColor = '#9CA3AF';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.background = '#FFFFFF';
-              e.currentTarget.style.borderColor = '#D1D5DB';
-            }}
-          >
-            Revise & Resubmit
-          </button>
-        );
+    // For verified (published) projects, show "Edit Project"
+    if (status === 'verified') {
+      return (
+        <button
+          onClick={() => navigate(`/edit-project/${projectId}`)}
+          style={{
+            padding: '0.5rem 1rem',
+            background: '#FFFFFF',
+            color: '#1F2937',
+            border: '1px solid #D1D5DB',
+            borderRadius: '6px',
+            fontSize: '0.875rem',
+            fontWeight: 500,
+            cursor: 'pointer',
+            transition: 'all 0.2s',
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.background = '#F9FAFB';
+            e.currentTarget.style.borderColor = '#9CA3AF';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.background = '#FFFFFF';
+            e.currentTarget.style.borderColor = '#D1D5DB';
+          }}
+        >
+          Edit Project
+        </button>
+      );
     }
+
+    // For under review, show "View Submission"
+    if (status === 'under_review') {
+      return (
+        <button
+          onClick={() => navigate(`/project/${projectId}`)}
+          style={{
+            padding: '0.5rem 1rem',
+            background: '#FFFFFF',
+            color: '#1F2937',
+            border: '1px solid #D1D5DB',
+            borderRadius: '6px',
+            fontSize: '0.875rem',
+            fontWeight: 500,
+            cursor: 'pointer',
+            transition: 'all 0.2s',
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.background = '#F9FAFB';
+            e.currentTarget.style.borderColor = '#9CA3AF';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.background = '#FFFFFF';
+            e.currentTarget.style.borderColor = '#D1D5DB';
+          }}
+        >
+          View Submission
+        </button>
+      );
+    }
+
+    // For needs update, show "Revise & Resubmit"
+    return (
+      <button
+        onClick={() => navigate(`/edit-project/${projectId}`)}
+        style={{
+          padding: '0.5rem 1rem',
+          background: '#FFFFFF',
+          color: '#1F2937',
+          border: '1px solid #D1D5DB',
+          borderRadius: '6px',
+          fontSize: '0.875rem',
+          fontWeight: 500,
+          cursor: 'pointer',
+          transition: 'all 0.2s',
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.background = '#F9FAFB';
+          e.currentTarget.style.borderColor = '#9CA3AF';
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.background = '#FFFFFF';
+          e.currentTarget.style.borderColor = '#D1D5DB';
+        }}
+      >
+        Revise & Resubmit
+      </button>
+    );
   };
 
   return (

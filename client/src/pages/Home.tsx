@@ -298,6 +298,40 @@ export default function HomePage() {
                 </p>
               </div>
 
+              <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '2rem' }}>
+                <Link
+                  to="/how-it-works"
+                  style={{
+                    padding: '0.75rem 2rem',
+                    background: 'transparent',
+                    color: '#FD5A47',
+                    border: '2px solid #FD5A47',
+                    borderRadius: '8px',
+                    fontSize: '0.9375rem',
+                    fontWeight: 600,
+                    textDecoration: 'none',
+                    transition: 'all 0.2s',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '0.5rem',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = '#FD5A47';
+                    e.currentTarget.style.color = '#FFFFFF';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = 'transparent';
+                    e.currentTarget.style.color = '#FD5A47';
+                  }}
+                >
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2">
+                    <circle cx="8" cy="8" r="7" />
+                    <path d="M8 4v4l3 3" strokeLinecap="round" />
+                  </svg>
+                  How It Works
+                </Link>
+              </div>
+
               <div style={{ display: 'flex', justifyContent: 'center' }}>
                 <form onSubmit={handleSearch} className="search-form" style={{ width: '100%' }}>
                   <div
