@@ -54,6 +54,7 @@ export default function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/infographic-q1-2026" element={<Infographic />} />
+        <Route path="/infographic-q2-2026" element={<Infographic />} />
         <Route path="/infographic-archive" element={<InfographicArchive />} />
         <Route path="/live-map" element={<LiveMap />} />
         <Route path="/search" element={<SearchResults />} />

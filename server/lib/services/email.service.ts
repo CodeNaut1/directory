@@ -1,18 +1,40 @@
 import nodemailer from 'nodemailer';
 
-// Gmail transporter using App Password
-const transporter = nodemailer.createTransport({
-  host: 'smtp.gmail.com',
-  port: 587,
-  secure: false, // Use TLS
-  auth: {
-    user: process.env.GMAIL_USER,
-    pass: process.env.GMAIL_APP_PASSWORD,
-  },
-});
+// Create transporter based on environment
+const createTransporter = () => {
+  // In production, use direct SMTP with different settings
+  if (process.env.NODE_ENV === 'production') {
+    return nodemailer.createTransport({
+      host: 'smtp.gmail.com',
+      port: 465, // Use SSL port instead of TLS
+      secure: true, // Use SSL
+      pool: true,
+      auth: {
+        user: process.env.GMAIL_USER,
+        pass: process.env.GMAIL_APP_PASSWORD,
+      },
+      tls: {
+        rejectUnauthorized: false, // Allow self-signed certificates
+      },
+    });
+  }
+
+  // In development, use TLS
+  return nodemailer.createTransport({
+    host: 'smtp.gmail.com',
+    port: 587,
+    secure: false,
+    auth: {
+      user: process.env.GMAIL_USER,
+      pass: process.env.GMAIL_APP_PASSWORD,
+    },
+  });
+};
+
+const transporter = createTransporter();
 
 const FROM_EMAIL = process.env.FROM_EMAIL || process.env.GMAIL_USER || '';
-const REPLY_TO_EMAIL = 'hello@bitcoiners.africa'; // All emails should reply to this
+const REPLY_TO_EMAIL = 'hello@bitcoiners.africa';
 
 // Parse comma-separated emails
 const getAdminEmails = (): string[] => {
@@ -27,7 +49,6 @@ const getTeamEmails = (): string[] => {
     : [];
 };
 
-// Combine admin and team emails
 const getAllNotificationEmails = (): string[] => {
   return [...getAdminEmails(), ...getTeamEmails()];
 };
@@ -57,6 +78,20 @@ interface ProjectReviewEmailData {
   status: 'approved' | 'declined' | 'needs_update';
   feedback?: string;
   reviewedAt: string;
+}
+
+/**
+ * Verify transporter connection
+ */
+export async function verifyEmailConnection() {
+  try {
+    await transporter.verify();
+    console.log('✅ Email service is ready');
+    return true;
+  } catch (error) {
+    console.error('❌ Email service connection failed:', error);
+    return false;
+  }
 }
 
 /**
@@ -123,7 +158,7 @@ export async function sendWelcomeEmail(data: WelcomeEmailData) {
       </html>
     `;
 
-    await transporter.sendMail({
+    const info = await transporter.sendMail({
       from: `"African Bitcoin Directory" <${FROM_EMAIL}>`,
       to: data.userEmail,
       replyTo: REPLY_TO_EMAIL,
@@ -131,9 +166,10 @@ export async function sendWelcomeEmail(data: WelcomeEmailData) {
       html: emailHtml,
     });
 
-    console.log('✅ Welcome email sent to:', data.userEmail);
+    console.log('✅ Welcome email sent to:', data.userEmail, '| Message ID:', info.messageId);
   } catch (error) {
     console.error('❌ Failed to send welcome email:', error);
+    // Don't throw - allow registration to continue even if email fails
   }
 }
 
