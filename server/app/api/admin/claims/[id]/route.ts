@@ -4,9 +4,9 @@ import { successResponse } from '@/lib/utils/api-response';
 import { getClaimById } from '@/lib/services/claim.service';
 
 interface RouteParams {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
 /**
@@ -14,8 +14,9 @@ interface RouteParams {
  * GET /api/admin/claims/:id
  */
 export const GET = createGetHandler(
-  async (req: NextRequest, { params }: RouteParams) => {
-    const claim = await getClaimById(params.id);
+  async (req: NextRequest, context: RouteParams) => {
+    const { id } = await context.params;
+    const claim = await getClaimById(id);
 
     return NextResponse.json(successResponse(claim));
   },

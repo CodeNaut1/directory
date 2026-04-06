@@ -1,13 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createPostHandler, getValidatedBody, getRequestUser } from '@/lib/utils/api-handler';
 import { successResponse } from '@/lib/utils/api-response';
-import { approveClaimSchema, type ApproveClaimInput } from '@/lib/validators';
+import { approveClaimSchema, type ApproveClaimInput } from '@/lib/validators/claim';
 import { approveClaim } from '@/lib/services/claim.service';
 
 interface RouteParams {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
 /**
@@ -15,11 +15,12 @@ interface RouteParams {
  * POST /api/admin/claims/:id/approve
  */
 export const POST = createPostHandler(
-  async (req: NextRequest, { params }: RouteParams) => {
+  async (req: NextRequest, context: RouteParams) => {
+    const { id } = await context.params;
     const admin = getRequestUser(req);
     const body = getValidatedBody<ApproveClaimInput>(req);
 
-    const claim = await approveClaim(admin, params.id, body);
+    const claim = await approveClaim(admin, id, body);
 
     return NextResponse.json(
       successResponse({
