@@ -1,4 +1,6 @@
 /** @type {import('next').NextConfig} */
+const path = require('path');
+
 const nextConfig = {
   reactStrictMode: true,
   env: {
@@ -18,8 +20,16 @@ const nextConfig = {
     domains: [],
     remotePatterns: [],
   },
-  // ✅ REMOVED: CORS headers are now handled in api-handler.ts
-  // This prevents duplicate Access-Control-Allow-Origin headers
+  // Add webpack alias for server-side path resolution
+  webpack: (config, { isServer }) => {
+    if (isServer) {
+      config.resolve.alias = {
+        ...config.resolve.alias,
+        '@': path.resolve(__dirname),
+      };
+    }
+    return config;
+  },
 };
 
 module.exports = nextConfig;
