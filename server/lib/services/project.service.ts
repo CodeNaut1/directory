@@ -222,12 +222,12 @@ export async function getUserProjects(userId: string) {
       impact: true,
       challenges: true,
       foundedYear: true,
-      published: true,     // ← CRITICAL
-      verified: true,      // ← CRITICAL
+      published: true,
+      verified: true,
       featured: true,
       active: true,
-      status: true,        // ← CRITICAL
-      userId: true,        // ← CRITICAL
+      status: true,
+      userId: true,
       createdAt: true,
       updatedAt: true,
       country: {
@@ -263,13 +263,13 @@ export async function getUserProjects(userId: string) {
 
 /**
  * Get project by ID or slug
+ * Allows viewing unpublished projects if user is owner/admin
  */
-export async function getProjectById(idOrSlug: string) {
+export async function getProjectById(idOrSlug: string, requestingUser?: AuthenticatedUser) {
   const project = await prisma.project.findFirst({
     where: {
       OR: [{ id: idOrSlug }, { slug: idOrSlug }],
     },
-    // Select specific fields to ensure TypeScript knows about them
     select: {
       id: true,
       slug: true,
@@ -301,7 +301,8 @@ export async function getProjectById(idOrSlug: string) {
       verified: true,
       featured: true,
       active: true,
-      status: true, // Include status in select
+      status: true,
+      userId: true,  // ← CRITICAL for ownership check
       createdAt: true,
       updatedAt: true,
       publishedAt: true,
@@ -341,11 +342,16 @@ export async function getProjectById(idOrSlug: string) {
     throw new NotFoundError('Project not found');
   }
 
-  // Check if project should be visible to public
-  // A project is visible if:
-  // 1. It's published AND
-  // 2. Status is 'approved'
-  if (!project.published || project.status !== 'approved') {
+  // Check visibility rules
+  const isOwner = requestingUser && project.userId === requestingUser.id;
+  const isAdmin = requestingUser && (requestingUser.role === 'admin' || requestingUser.role === 'moderator');
+  const isPublished = project.published && project.status === 'approved';
+
+  // Allow access if:
+  // 1. Project is published and approved (public)
+  // 2. User is the owner (can view their own submissions)
+  // 3. User is admin/moderator
+  if (!isPublished && !isOwner && !isAdmin) {
     throw new Error('This project is currently under review and will be visible once approved.');
   }
 

@@ -15,7 +15,9 @@ export async function searchProjects(query: SearchQuery) {
 
   // Build where clause
   const where: any = {
-    published: true, // Only search published projects
+    // Only search published or approved projects
+    published: true,
+    status: 'approved',
     OR: [
       { name: { contains: q, mode: 'insensitive' } },
       { description: { contains: q, mode: 'insensitive' } },

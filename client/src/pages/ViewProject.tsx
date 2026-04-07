@@ -59,22 +59,35 @@ export default function ViewProject() {
       }
 
       try {
-        // Try API first
+        // Try API first (with auth headers if logged in)
         if (API_URL) {
-          const response = await fetch(`${API_URL}/api/projects/${id}`);
+          const headers: HeadersInit = {};
+          const token = localStorage.getItem('access_token');
+          if (token) {
+            headers['Authorization'] = `Bearer ${token}`;
+          }
+
+          const response = await fetch(`${API_URL}/api/projects/${id}`, { headers });
+
           if (response.ok) {
             const data = await response.json();
             if (data.success && data.data) {
               setProject(data.data);
+              if (data.data.name) {
+                document.title = `${data.data.name} - African Bitcoin Directory`;
+              }
               setLoading(false);
               return;
             }
+          } else if (response.status === 403 || response.status === 401) {
+            // Project exists but user can't view it
+            const errorData = await response.json();
+            setError(errorData.error?.message || 'This project is currently under review.');
+            setLoading(false);
+            return;
           } else if (response.status !== 404) {
-            if (response.status === 403) {
-              setError('This project is currently under review and will be visible once approved.');
-            } else {
-              setError('Failed to load project');
-            }
+            // Some other error
+            setError('Failed to load project');
             setLoading(false);
             return;
           }

@@ -3,6 +3,7 @@ import { createGetHandler, createPatchHandler, createDeleteHandler, getValidated
 import { successResponse } from '@/lib/utils/api-response';
 import { updateProjectSchema, type UpdateProjectInput } from '@/lib/validators';
 import { getProjectById, updateProject, deleteProject } from '@/lib/services/project.service';
+import { AuthenticatedUser } from '@/lib/auth/middleware';
 
 interface RouteParams {
   params: {
@@ -14,11 +15,28 @@ interface RouteParams {
  * Get project by ID or slug
  * GET /api/projects/:id
  */
+// export const GET = createGetHandler(
+//   async (req: NextRequest, { params }: RouteParams) => {
+//     const project = await getProjectById(params.id);
+//     return NextResponse.json(successResponse(project));
+//   }
+// );
+
 export const GET = createGetHandler(
   async (req: NextRequest, { params }: RouteParams) => {
-    const project = await getProjectById(params.id);
+    // Get user if authenticated (but don't require auth)
+    let user: AuthenticatedUser | undefined;
+    try {
+      user = getRequestUser(req);
+    } catch {
+      // User not authenticated, that's fine
+      user = undefined;
+    }
+
+    const project = await getProjectById(params.id, user);  // ← Pass user
     return NextResponse.json(successResponse(project));
-  }
+  },
+  { requireAuth: false }  // ← Don't require auth for public viewing
 );
 
 /**
@@ -29,9 +47,9 @@ export const PATCH = createPatchHandler(
   async (req: NextRequest, { params }: RouteParams) => {
     const user = getRequestUser(req);
     const body = getValidatedBody<UpdateProjectInput>(req);
-    
+
     const project = await updateProject(user, params.id, body);
-    
+
     return NextResponse.json(successResponse(project));
   },
   updateProjectSchema,
@@ -45,9 +63,9 @@ export const PATCH = createPatchHandler(
 export const DELETE = createDeleteHandler(
   async (req: NextRequest, { params }: RouteParams) => {
     const user = getRequestUser(req);
-    
+
     await deleteProject(user, params.id);
-    
+
     return NextResponse.json(
       successResponse({ message: 'Project deleted successfully' })
     );
