@@ -7,6 +7,7 @@ interface Project {
   name: string;
   published: boolean;
   verified: boolean;
+  status: string;
   updatedAt: string;
   updated_at: string;
 }
@@ -35,16 +36,21 @@ export default function Dashboard() {
   const [isUpdatingPassword, setIsUpdatingPassword] = useState(false);
 
   const getProjectStatus = (project: Project): ProjectStatus => {
-    // If published and verified, it's live
-    if (project.published === true && project.verified === true) {
-      return 'verified';
+    // Check the actual status field from database
+    if (project.published === true && (project as any).status === 'approved') {
+      return 'verified'; // Live and approved
     }
-    // If not published or published is undefined, it's under review
-    if (!project.published) {
-      return 'under_review';
+
+    if ((project as any).status === 'pending' || !project.published) {
+      return 'under_review'; // Pending approval
     }
-    // Otherwise it's published but not verified (needs update)
-    return 'needs_update';
+
+    if ((project as any).status === 'rejected') {
+      return 'needs_update'; // Rejected, needs revision
+    }
+
+    // Default
+    return 'under_review';
   };
 
   const getFirstName = (fullName: string | null | undefined): string => {

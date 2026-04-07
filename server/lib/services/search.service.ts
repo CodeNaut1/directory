@@ -7,6 +7,26 @@ import { prisma } from '@/lib/db';
 import type { SearchQuery } from '@/lib/validators';
 
 /**
+ * Transform database project to match frontend format
+ */
+function transformProjectToJsonFormat(project: any) {
+  return {
+    id: project.id,
+    name: project.name,
+    slug: project.slug,
+    description: project.description,
+    image: project.logo || '',
+    website: project.website || '',
+    verified: project.verified || false,
+    categories: project.categories || [project.category?.name].filter(Boolean) || [],
+    country_name: project.countryName || project.country?.name || '',
+    country_code: project.countryCode || project.country?.code || '',
+    city: project.city || '',
+    tags: project.tags?.map((pt: any) => pt.tag?.name || pt.name).filter(Boolean) || [],
+  };
+}
+
+/**
  * Search projects
  */
 export async function searchProjects(query: SearchQuery) {
@@ -15,7 +35,6 @@ export async function searchProjects(query: SearchQuery) {
 
   // Build where clause
   const where: any = {
-    // Only search published or approved projects
     published: true,
     status: 'approved',
     OR: [
@@ -50,68 +69,19 @@ export async function searchProjects(query: SearchQuery) {
       skip,
       take: limit,
       orderBy: {
-        createdAt: 'desc', // Most recent first
+        createdAt: 'desc',
       },
-      select: {
-        id: true,
-        name: true,
-        slug: true,
-        description: true,
-        website: true,
-        logo: true,
-        coverImage: true,
-        published: true,
-        featured: true,
-        verified: true,
-        city: true,
-        createdAt: true,
-        publishedAt: true,
-        country: {
-          select: {
-            id: true,
-            code: true,
-            name: true,
-            flag: true,
-          },
-        },
-        category: {
-          select: {
-            id: true,
-            name: true,
-            slug: true,
-          },
-        },
-        tags: {
-          select: {
-            tag: {
-              select: {
-                id: true,
-                name: true,
-                slug: true,
-              },
-            },
-          },
-        },
-        user: {
-          select: {
-            id: true,
-            name: true,
-            email: true,
-          },
-        },
+      include: {
+        country: true,
+        category: true,
+        tags: { include: { tag: true } },
       },
     }),
     prisma.project.count({ where }),
   ]);
 
-  // Transform tags structure
-  const transformedProjects = projects.map((project) => ({
-    ...project,
-    tags: project.tags.map((pt) => pt.tag),
-  }));
-
   return {
-    data: transformedProjects,
+    data: projects.map(transformProjectToJsonFormat),
     meta: {
       page,
       limit,
@@ -119,4 +89,3 @@ export async function searchProjects(query: SearchQuery) {
     },
   };
 }
-
