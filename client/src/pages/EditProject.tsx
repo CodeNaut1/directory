@@ -10,6 +10,7 @@ import lightningIcon from '../assets/lightning-icon.png';
 interface Country {
   id: string;
   name: string;
+  code: string;
 }
 
 interface Category {
@@ -418,8 +419,18 @@ export default function EditProject() {
                   <label htmlFor="countryId" style={{ display: 'block', fontSize: '0.9375rem', fontWeight: 600, color: '#1F2937', marginBottom: '0.5rem' }}>Country</label>
                   <select id="countryId" name="countryId" value={formData.countryId} onChange={handleChange} style={{ width: '100%', padding: '0.875rem 1rem', fontSize: '0.9375rem', border: '1px solid #D1D5DB', borderRadius: '8px', background: '#F9FAFB', cursor: 'pointer' }}>
                     <option value="">Select country</option>
-                    <option value="global">Global/Africa Wide</option>
-                    {countries.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
+                    {countries
+                      .filter(c => c.code === 'XX')
+                      .map((country) => (
+                        <option key={country.id} value={country.id}>🌍 Global/Africa Wide</option>
+                      ))
+                    }
+                    {countries
+                      .filter(c => c.code !== 'XX')
+                      .map((c) => (
+                        <option key={c.id} value={c.id}>{c.name}</option>
+                      ))
+                    }
                   </select>
                 </div>
                 <div>
