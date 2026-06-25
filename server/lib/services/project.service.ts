@@ -363,6 +363,16 @@ export async function getProjectById(idOrSlug: string, requestingUser?: Authenti
  */
 export async function createProject(user: AuthenticatedUser, input: CreateProjectInput) {
   const slug = await ensureUniqueSlug(generateSlug(input.name));
+  const details = input.details;
+
+  const countryId = input.countryId === 'global' ? null : input.countryId;
+
+  const [country, category] = await Promise.all([
+    countryId
+      ? prisma.country.findUnique({ where: { id: countryId }, select: { code: true, name: true } })
+      : Promise.resolve(null),
+    prisma.category.findUnique({ where: { id: input.categoryId }, select: { name: true } }),
+  ]);
 
   const project = await prisma.project.create({
     data: {
@@ -372,12 +382,28 @@ export async function createProject(user: AuthenticatedUser, input: CreateProjec
       website: input.website || null,
       logo: input.logo || null,
       coverImage: input.coverImage || null,
-      countryId: input.countryId,
+      countryId,
       categoryId: input.categoryId,
       city: input.city || null,
       address: input.address || null,
       userId: user.id,
       published: false,
+      status: 'pending',
+      email: details?.contactEmail || null,
+      foundedYear: input.foundedYear || null,
+      countryCode: country?.code?.toLowerCase() || null,
+      countryName: country?.name || null,
+      categories: category ? [category.name] : [],
+      socialLinks: details?.socialLinks ?? undefined,
+      acceptsOnchain: details?.bitcoinOnly ?? false,
+      acceptsLightning: details?.lightningNetwork ?? false,
+      acceptsGiftCards: details?.giftCards ?? false,
+      founderName: details?.founderName || null,
+      founderTwitter: details?.founderTwitter || null,
+      founderEmail: details?.founderEmail || null,
+      initiatives: details?.initiatives || null,
+      impact: details?.impact || null,
+      challenges: details?.challenges || null,
       ...(input.tagIds && {
         tags: {
           create: input.tagIds.map((tagId) => ({ tagId })),

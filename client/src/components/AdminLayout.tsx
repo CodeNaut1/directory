@@ -60,6 +60,7 @@ export default function AdminLayout() {
     { path: '/admin/countries', label: 'Countries', icon: '🌍' },
     { path: '/admin/tags', label: 'Tags', icon: '🔖' },
     { path: '/admin/users', label: 'Users', icon: '👥' },
+    { path: '/admin/export', label: 'Export CSV', icon: '📥' },
     { path: '/admin/settings', label: 'Settings', icon: '⚙️' },
   ];
 
