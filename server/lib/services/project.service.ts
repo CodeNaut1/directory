@@ -349,7 +349,7 @@ export async function getProjectById(idOrSlug: string, requestingUser?: Authenti
   // 2. User is the owner (can view their own submissions)
   // 3. User is admin/moderator
   if (!isPublic && !isOwner && !isAdmin) {
-    throw new Error('This project is currently under review and will be visible once approved.');
+    throw new AuthorizationError('This project is currently under review and will be visible once approved.');
   }
 
   return transformProjectToJsonFormat(project);
@@ -438,12 +438,10 @@ export async function updateProject(
   }
 
   let slug = project.slug;
-  if (input.name && input.name !== project.name) {
-    slug = await ensureUniqueSlug(generateSlug(input.name), projectId);
-  }
+  // Slug is immutable once set — do not regenerate when name changes
 
   const updateData: any = {};
-  if (input.name) { updateData.name = input.name; updateData.slug = slug; }
+  if (input.name) updateData.name = input.name;
   if (input.description !== undefined) updateData.description = input.description;
   if (input.website !== undefined) updateData.website = input.website || null;
   if (input.logo !== undefined) updateData.logo = input.logo || null;

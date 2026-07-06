@@ -2,30 +2,16 @@ import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import projectsData from '../data/projects.json';
 import type { Project } from '../data/projects.types';
+import { getProjectUrl } from '../utils/projectUrl';
 import markerPinIcon from '../assets/marker-pin.png';
 import bitcoinIcon from '../assets/bitcoin-icon.png';
 import lightningIcon from '../assets/lightning-icon.png';
-import businessesIcon from '../assets/businesses_icon.png';
-import educationIcon from '../assets/education_icon.png';
-import circularIcon from '../assets/circular-icon.png';
-import minersIcon from '../assets/miners-icon.png';
-import communitiesIcon from '../assets/communities_icon.png';
-
-const categoryIcons: Record<string, string> = {
-  business: businessesIcon,
-  education: educationIcon,
-  circular: circularIcon,
-  mining: minersIcon,
-  community: communitiesIcon,
-};
-
-const categoryNames: Record<string, string> = {
-  business: 'Businesses',
-  education: 'Education',
-  circular: 'Circular Economy',
-  mining: 'Miners',
-  community: 'Communities',
-};
+import VerifiedBadge from '../components/VerifiedBadge';
+import {
+  CATEGORY_NAMES,
+  getCategoryBySlug,
+  matchesCategory,
+} from '../data/featuredCategories';
 
 export default function CategoryProjects() {
   const { categorySlug } = useParams<{ categorySlug: string }>();
@@ -44,7 +30,6 @@ export default function CategoryProjects() {
       }
 
       try {
-        // Try API first - fetch all projects, filter client-side
         if (API_URL) {
           try {
             let allProjects: any[] = [];
@@ -69,11 +54,10 @@ export default function CategoryProjects() {
               }
             }
 
-            // Filter by category client-side
             const filtered = allProjects.filter((project: any) => {
               const categories = project.categories || [];
               const categoriesStr = categories.join(' ').toLowerCase();
-              return categoriesStr.includes(categorySlug.toLowerCase());
+              return matchesCategory(categoriesStr, categorySlug);
             });
 
             setProjects(filtered);
@@ -84,12 +68,11 @@ export default function CategoryProjects() {
           }
         }
 
-        // Fallback to local JSON
         const filtered = projectsData.projects.filter((project: any) => {
           if (project.status !== 'approved') return false;
           const categories = project.categories || [];
           const categoriesStr = categories.join(' ').toLowerCase();
-          return categoriesStr.includes(categorySlug.toLowerCase());
+          return matchesCategory(categoriesStr, categorySlug);
         });
 
         setProjects(filtered as Project[]);
@@ -105,7 +88,7 @@ export default function CategoryProjects() {
   }, [categorySlug, API_URL]);
 
   useEffect(() => {
-    const categoryName = categoryNames[categorySlug || ''] || categorySlug;
+    const categoryName = CATEGORY_NAMES[categorySlug || ''] || categorySlug;
     document.title = `${categoryName} - African Bitcoin Directory`;
   }, [categorySlug]);
 
@@ -131,8 +114,9 @@ export default function CategoryProjects() {
     );
   }
 
-  const categoryName = categoryNames[categorySlug || ''] || categorySlug;
-  const categoryIcon = categoryIcons[categorySlug || ''];
+  const categoryName = CATEGORY_NAMES[categorySlug || ''] || categorySlug;
+  const categoryMeta = getCategoryBySlug(categorySlug || '');
+  const CategoryIcon = categoryMeta?.icon;
 
   return (
     <>
@@ -151,15 +135,28 @@ export default function CategoryProjects() {
 
       <main style={{ background: '#F5F5F5', minHeight: '100vh', padding: 'clamp(2rem, 5vw, 4rem) clamp(1rem, 4vw, 1rem)' }}>
         <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-          {/* Header */}
           <div style={{ marginBottom: '3rem' }}>
             <Link to="/" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', color: '#FD5A47', textDecoration: 'none', fontSize: '0.9375rem', fontWeight: 500, marginBottom: '1.5rem' }}>
               ← Back to Home
             </Link>
 
             <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '0.75rem' }}>
-              {categoryIcon && (
-                <img src={categoryIcon} alt={categoryName} style={{ width: '48px', height: '48px' }} />
+              {CategoryIcon && (
+                <div
+                  style={{
+                    width: 48,
+                    height: 48,
+                    borderRadius: 12,
+                    background: '#F3F4F6',
+                    border: '1px solid #E5E7EB',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    flexShrink: 0,
+                  }}
+                >
+                  <CategoryIcon size={24} strokeWidth={1.75} color="#4B5563" aria-hidden />
+                </div>
               )}
               <h1 style={{ fontSize: 'clamp(2rem, 5vw, 3rem)', fontWeight: 700, color: '#1F2937', margin: 0 }}>
                 {categoryName}
@@ -171,7 +168,6 @@ export default function CategoryProjects() {
             </p>
           </div>
 
-          {/* Projects Grid */}
           {projects.length === 0 ? (
             <div style={{ textAlign: 'center', padding: '4rem 0' }}>
               <p style={{ fontSize: '1.125rem', color: '#6B7280' }}>No projects found in this category.</p>
@@ -181,7 +177,7 @@ export default function CategoryProjects() {
               {projects.map((project) => (
                 <Link
                   key={project.id}
-                  to={`/project/${project.id}`}
+                  to={getProjectUrl(project)}
                   style={{
                     display: 'block',
                     background: '#FFFFFF',
@@ -201,7 +197,6 @@ export default function CategoryProjects() {
                     e.currentTarget.style.boxShadow = '0 1px 3px rgba(0, 0, 0, 0.1)';
                   }}
                 >
-                  {/* Logo & Title */}
                   <div style={{ display: 'flex', alignItems: 'flex-start', gap: '1rem', marginBottom: '1rem' }}>
                     {project.image && (
                       <img src={project.image} alt={project.name} style={{ width: '48px', height: '48px', borderRadius: '8px', objectFit: 'cover', flexShrink: 0 }} />
@@ -210,15 +205,10 @@ export default function CategoryProjects() {
                       <h3 style={{ fontSize: '1.125rem', fontWeight: 700, color: '#1F2937', margin: '0 0 0.5rem 0', wordBreak: 'break-word' }}>
                         {project.name}
                       </h3>
-                      {project.verified && (
-                        <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.25rem', padding: '0.25rem 0.625rem', background: '#D1FAE5', color: '#065F46', borderRadius: '12px', fontSize: '0.75rem', fontWeight: 600 }}>
-                          Verified ✓
-                        </span>
-                      )}
+                      {project.verified && <VerifiedBadge />}
                     </div>
                   </div>
 
-                  {/* Categories */}
                   {project.categories && project.categories.length > 0 && (
                     <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '0.75rem' }}>
                       {project.categories.map((cat, idx) => (
@@ -229,14 +219,12 @@ export default function CategoryProjects() {
                     </div>
                   )}
 
-                  {/* Description */}
                   {project.description && (
                     <p style={{ fontSize: '0.875rem', color: '#6B7280', lineHeight: 1.6, margin: '0 0 1rem 0', display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
                       {project.description}
                     </p>
                   )}
 
-                  {/* Meta Info */}
                   <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem', fontSize: '0.875rem', color: '#6B7280' }}>
                     {project.location && (
                       <span style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
@@ -262,7 +250,6 @@ export default function CategoryProjects() {
             </div>
           )}
 
-          {/* CTA */}
           <div style={{ marginTop: '4rem', textAlign: 'center', padding: '3rem', background: '#FFFFFF', borderRadius: '12px' }}>
             <h2 style={{ fontSize: '1.5rem', fontWeight: 700, color: '#1F2937', marginBottom: '1rem' }}>
               Have a project in this category?

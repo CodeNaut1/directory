@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
+import { getProjectUrl } from '../utils/projectUrl';
 
 interface Project {
   id: string;
@@ -196,7 +197,7 @@ export default function SearchResults() {
             {projects.map((project) => (
               <Link
                 key={project.id}
-                to={`/project/${project.id || project.slug}`}
+                to={getProjectUrl(project)}
                 style={{
                   display: 'block',
                   background: '#FFFFFF',

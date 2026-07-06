@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import projectsData from '../data/projects.json';
 import coordinatesData from '../data/coordinates.json';
 import type { Project, ProjectCoordinate, CountryRegion } from '../data/projects.types';
+import { getProjectUrl } from '../utils/projectUrl';
 import infographicImage from '../assets/African Bitcoin Ecosystem Infographic Q3 2026.png';
 
 export default function InfographicMap() {
@@ -42,7 +43,7 @@ export default function InfographicMap() {
       return;
     }
 
-    navigate(`/project/${project.id}`);
+    navigate(getProjectUrl(project));
   };
 
   // Render country region SVG shapes

@@ -3,12 +3,12 @@ import { createGetHandler, createPatchHandler, createDeleteHandler, getValidated
 import { successResponse } from '@/lib/utils/api-response';
 import { updateProjectSchema, type UpdateProjectInput } from '@/lib/validators';
 import { getProjectById, updateProject, deleteProject } from '@/lib/services/project.service';
-import { AuthenticatedUser } from '@/lib/auth/middleware';
+import { verifyAuth } from '@/lib/auth/middleware';
 
 interface RouteParams {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
 /**
@@ -23,20 +23,14 @@ interface RouteParams {
 // );
 
 export const GET = createGetHandler(
-  async (req: NextRequest, { params }: RouteParams) => {
-    // Get user if authenticated (but don't require auth)
-    let user: AuthenticatedUser | undefined;
-    try {
-      user = getRequestUser(req);
-    } catch {
-      // User not authenticated, that's fine
-      user = undefined;
-    }
+  async (req: NextRequest, context: RouteParams) => {
+    const { id } = await context.params;
+    const { user } = await verifyAuth(req);
 
-    const project = await getProjectById(params.id, user);  // ← Pass user
+    const project = await getProjectById(id, user ?? undefined);
     return NextResponse.json(successResponse(project));
   },
-  { requireAuth: false }  // ← Don't require auth for public viewing
+  { requireAuth: false }
 );
 
 /**
@@ -44,11 +38,12 @@ export const GET = createGetHandler(
  * PATCH /api/projects/:id
  */
 export const PATCH = createPatchHandler(
-  async (req: NextRequest, { params }: RouteParams) => {
+  async (req: NextRequest, context: RouteParams) => {
+    const { id } = await context.params;
     const user = getRequestUser(req);
     const body = getValidatedBody<UpdateProjectInput>(req);
 
-    const project = await updateProject(user, params.id, body);
+    const project = await updateProject(user, id, body);
 
     return NextResponse.json(successResponse(project));
   },
@@ -61,10 +56,11 @@ export const PATCH = createPatchHandler(
  * DELETE /api/projects/:id
  */
 export const DELETE = createDeleteHandler(
-  async (req: NextRequest, { params }: RouteParams) => {
+  async (req: NextRequest, context: RouteParams) => {
+    const { id } = await context.params;
     const user = getRequestUser(req);
 
-    await deleteProject(user, params.id);
+    await deleteProject(user, id);
 
     return NextResponse.json(
       successResponse({ message: 'Project deleted successfully' })

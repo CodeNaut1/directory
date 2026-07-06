@@ -2,9 +2,11 @@ import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import projectsData from '../data/projects.json';
 import type { Project } from '../data/projects.types';
+import { getProjectUrl } from '../utils/projectUrl';
 import markerPinIcon from '../assets/marker-pin.png';
 import bitcoinIcon from '../assets/bitcoin-icon.png';
 import lightningIcon from '../assets/lightning-icon.png';
+import VerifiedBadge from '../components/VerifiedBadge';
 
 export default function CountryProjects() {
   const { countryCode } = useParams<{ countryCode: string }>();
@@ -130,11 +132,11 @@ export default function CountryProjects() {
             {projects.map((project) => (
               <Link
                 key={project.id}
-                to={`/project/${project.id}`}
+                to={getProjectUrl(project)}
                 className="project-card"
               >
                 {/* Header with Logo and Title */}
-                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1rem' }}>
+                <div style={{ display: 'flex', alignItems: 'flex-start', gap: '1rem', marginBottom: '1rem' }}>
                   {project.image && (
                     <img
                       src={project.image}
@@ -153,25 +155,14 @@ export default function CountryProjects() {
                       fontSize: '1.125rem',
                       fontWeight: 600,
                       color: '#1F2937',
-                      margin: 0,
+                      margin: '0 0 0.5rem 0',
                       overflow: 'hidden',
                       textOverflow: 'ellipsis',
                       whiteSpace: 'nowrap'
                     }}>
                       {project.name}
                     </h3>
-                    {project.verified && (
-                      <span style={{
-                        display: 'inline-flex',
-                        alignItems: 'center',
-                        gap: '0.25rem',
-                        fontSize: '0.75rem',
-                        color: '#10B981',
-                        marginTop: '0.25rem'
-                      }}>
-                        ✓ Verified
-                      </span>
-                    )}
+                    {project.verified && <VerifiedBadge />}
                   </div>
                 </div>
 

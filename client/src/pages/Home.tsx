@@ -1,24 +1,18 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { BarChart3 } from 'lucide-react';
 import homepageImage1 from '../assets/homepage_image1.png';
 import homepageImage2 from '../assets/homepage_image2.png';
-import businessesIcon from '../assets/businesses_icon.png';
-import educationIcon from '../assets/education_icon.png';
-import circularIcon from '../assets/circular-icon.png';
-import minersIcon from '../assets/miners-icon.png';
-import communitiesIcon from '../assets/communities_icon.png';
 import verifiedIcon from '../assets/verified_icon.png';
 import circularFocusIcon from '../assets/circularfocus_icon.png';
 import communityIconOrange from '../assets/community_icon_orange.png';
 import africaIcon from '../assets/africa_icon.png';
-
-interface CategoryCounts {
-  businesses: number;
-  education: number;
-  circularEconomy: number;
-  miners: number;
-  communities: number;
-}
+import CountryCarousel from '../components/CountryCarousel';
+import {
+  FEATURED_CATEGORIES,
+  countCategories,
+  type CategoryCounts,
+} from '../data/featuredCategories';
 
 export default function HomePage() {
   const navigate = useNavigate();
@@ -30,6 +24,9 @@ export default function HomePage() {
     circularEconomy: 0,
     miners: 0,
     communities: 0,
+    media: 0,
+    hodl: 0,
+    nonProfit: 0,
   });
   const [searchQuery, setSearchQuery] = useState('');
   const [loadingCounts, setLoadingCounts] = useState(true);
@@ -75,33 +72,7 @@ export default function HomePage() {
               (project: any) => project.verified === true
             );
 
-            const counts: CategoryCounts = {
-              businesses: 0,
-              education: 0,
-              circularEconomy: 0,
-              miners: 0,
-              communities: 0,
-            };
-
-            verifiedProjects.forEach((project: any) => {
-              // categories is an ARRAY of strings
-              const categories = project.categories || [];
-              const categoriesStr = categories.join(' ').toLowerCase();
-
-              if (categoriesStr.includes('business')) {
-                counts.businesses++;
-              } else if (categoriesStr.includes('education')) {
-                counts.education++;
-              } else if (categoriesStr.includes('circular')) {
-                counts.circularEconomy++;
-              } else if (categoriesStr.includes('mining') || categoriesStr.includes('miner')) {
-                counts.miners++;
-              } else if (categoriesStr.includes('community')) {
-                counts.communities++;
-              }
-            });
-
-            setCategoryCounts(counts);
+            setCategoryCounts(countCategories(verifiedProjects));
             setLoadingCounts(false);
             return;
           } catch (apiError) {
@@ -118,31 +89,11 @@ export default function HomePage() {
         const data = module.default;
 
         if (data?.projects) {
-          const counts: CategoryCounts = {
-            businesses: 0,
-            education: 0,
-            circularEconomy: 0,
-            miners: 0,
-            communities: 0,
-          };
-
-          // Filter approved projects only
           const activeProjects = data.projects.filter((project: any) =>
             project.status === 'approved'
           );
 
-          activeProjects.forEach((project: any) => {
-            const categories = project.categories || [];
-            const categoriesStr = categories.join(' ').toLowerCase();
-
-            if (categoriesStr.includes('business')) counts.businesses++;
-            else if (categoriesStr.includes('education')) counts.education++;
-            else if (categoriesStr.includes('circular')) counts.circularEconomy++;
-            else if (categoriesStr.includes('mining') || categoriesStr.includes('miner')) counts.miners++;
-            else if (categoriesStr.includes('community')) counts.communities++;
-          });
-
-          setCategoryCounts(counts);
+          setCategoryCounts(countCategories(activeProjects));
         }
       } catch (localError) {
         console.error('Error loading local data:', localError);
@@ -176,8 +127,15 @@ export default function HomePage() {
             display: none !important;
           }
           .categories-grid {
-            grid-template-columns: repeat(3, 1fr) !important;
-            gap: 1.5rem !important;
+            overflow-x: auto !important;
+            justify-content: flex-start !important;
+            gap: 1.25rem !important;
+            padding-bottom: 0.5rem !important;
+            -webkit-overflow-scrolling: touch;
+          }
+          .category-item {
+            flex: 0 0 auto !important;
+            min-width: 88px !important;
           }
           .why-essential-grid {
             grid-template-columns: repeat(2, 1fr) !important;
@@ -196,8 +154,13 @@ export default function HomePage() {
             justify-content: center !important;
           }
           .categories-grid {
-            grid-template-columns: repeat(2, 1fr) !important;
             gap: 1rem !important;
+          }
+          .category-item {
+            min-width: 76px !important;
+          }
+          .category-item p {
+            font-size: 0.875rem !important;
           }
           .why-essential-grid {
             grid-template-columns: 1fr !important;
@@ -265,8 +228,9 @@ export default function HomePage() {
               <div style={{ textAlign: 'center' }}>
                 <h1
                   style={{
+                    fontFamily: '"Instrument Serif", Georgia, serif',
                     fontSize: 'clamp(2rem, 5vw, 4rem)',
-                    fontWeight: 700,
+                    fontWeight: 400,
                     lineHeight: 1.2,
                     color: '#1F2937',
                     margin: 0,
@@ -299,7 +263,7 @@ export default function HomePage() {
                 </p>
               </div>
 
-              <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '2rem' }}>
+              <div style={{ display: 'flex', justifyContent: 'center', gap: '0.75rem', flexWrap: 'wrap', marginBottom: '2rem' }}>
                 <Link
                   to="/how-it-works"
                   style={{
@@ -330,6 +294,36 @@ export default function HomePage() {
                     <path d="M8 4v4l3 3" strokeLinecap="round" />
                   </svg>
                   How It Works
+                </Link>
+                <Link
+                  to="/infographic-q3-2026"
+                  style={{
+                    padding: '0.75rem 2rem',
+                    background: 'transparent',
+                    color: '#1F2937',
+                    border: '2px solid #D1D5DB',
+                    borderRadius: '8px',
+                    fontSize: '0.9375rem',
+                    fontWeight: 600,
+                    textDecoration: 'none',
+                    transition: 'all 0.2s',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '0.5rem',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = '#1F2937';
+                    e.currentTarget.style.color = '#FFFFFF';
+                    e.currentTarget.style.borderColor = '#1F2937';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = 'transparent';
+                    e.currentTarget.style.color = '#1F2937';
+                    e.currentTarget.style.borderColor = '#D1D5DB';
+                  }}
+                >
+                  <BarChart3 size={16} strokeWidth={2} />
+                  Q3 2026 Infographic
                 </Link>
               </div>
 
@@ -449,6 +443,8 @@ export default function HomePage() {
           </div>
         </section>
 
+        <CountryCarousel />
+
         <section
           style={{
             padding: '2rem clamp(1rem, 4vw, 1rem) 3rem',
@@ -467,52 +463,77 @@ export default function HomePage() {
               marginBottom: '2rem',
             }}
           >
-            CATEGORIES
+            Browse by Category
           </h2>
           <div
             className="categories-grid"
             style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(5, 1fr)',
-              gap: '0',
-              maxWidth: 800,
+              display: 'flex',
+              flexWrap: 'nowrap',
+              justifyContent: 'space-between',
+              alignItems: 'flex-start',
+              gap: '1rem',
+              maxWidth: 1200,
               margin: '0 auto',
+              overflowX: 'auto',
+              padding: '0.5rem 0',
             }}
           >
-            {[
-              { icon: businessesIcon, label: 'Businesses', count: categoryCounts.businesses, slug: 'business' },
-              { icon: educationIcon, label: 'Education', count: categoryCounts.education, slug: 'education' },
-              { icon: circularIcon, label: 'Circular Economy', count: categoryCounts.circularEconomy, slug: 'circular' },
-              { icon: minersIcon, label: 'Miners', count: categoryCounts.miners, slug: 'mining' },
-              { icon: communitiesIcon, label: 'Communities', count: categoryCounts.communities, slug: 'community' },
-            ].map((category) => (
+            {FEATURED_CATEGORIES.map((category) => {
+              const Icon = category.icon;
+              return (
               <Link
                 key={category.label}
+                className="category-item"
                 to={`/category/${category.slug}`}
                 style={{
                   display: 'flex',
                   flexDirection: 'column',
                   alignItems: 'center',
-                  gap: 'clamp(0.75rem, 2vw, 1rem)',
+                  gap: '0.625rem',
                   textDecoration: 'none',
                   color: 'inherit',
-                  transition: 'transform 0.2s',
+                  transition: 'box-shadow 0.2s, transform 0.2s',
+                  flex: '1 1 0',
+                  minWidth: 0,
                 }}
-                onMouseEnter={(e) => { e.currentTarget.style.transform = 'scale(1.05)'; }}
-                onMouseLeave={(e) => { e.currentTarget.style.transform = 'scale(1)'; }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-3px)';
+                  e.currentTarget.style.boxShadow = '0 6px 16px rgba(0, 0, 0, 0.08)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = 'none';
+                }}
               >
-                <img
-                  src={category.icon}
-                  alt={category.label}
-                  style={{ width: 'clamp(32px, 4vw, 40px)', height: 'clamp(32px, 4vw, 40px)', objectFit: 'contain' }}
-                />
+                <div
+                  style={{
+                    width: 44,
+                    height: 44,
+                    borderRadius: '12px',
+                    background: '#F3F4F6',
+                    border: '1px solid #E5E7EB',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    flexShrink: 0,
+                  }}
+                >
+                  <Icon
+                    size={20}
+                    strokeWidth={1.75}
+                    color="#4B5563"
+                    aria-hidden
+                  />
+                </div>
                 <p
                   style={{
-                    fontSize: 'clamp(0.875rem, 2vw, 1rem)',
-                    fontWeight: 500,
+                    fontSize: '0.9375rem',
+                    fontWeight: 600,
                     color: '#1F2937',
                     margin: 0,
                     textAlign: 'center',
+                    lineHeight: 1.35,
                   }}
                 >
                   {category.label}
@@ -520,20 +541,22 @@ export default function HomePage() {
                 <span
                   style={{
                     color: '#FD5A47',
-                    fontSize: 'clamp(1rem, 2.5vw, 1.25rem)',
+                    fontSize: '1rem',
                     fontWeight: 700,
-                    padding: 'clamp(0.375rem, 1vw, 0.5rem) clamp(0.75rem, 2vw, 1rem)',
+                    padding: '0.375rem 0.75rem',
                     borderRadius: '999px',
                     backgroundColor: 'rgba(237, 99, 0, 0.06)',
                     border: '1px solid rgba(237, 99, 0, 0.15)',
                     boxShadow: '0 2px 8px rgba(237, 99, 0, 0.06)',
                     minWidth: 'fit-content',
+                    flexShrink: 0,
                   }}
                 >
-                  {loadingCounts ? '...' : category.count}
+                  {loadingCounts ? '...' : categoryCounts[category.key]}
                 </span>
               </Link>
-            ))}
+            );
+            })}
           </div>
         </section>
 

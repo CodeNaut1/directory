@@ -24,6 +24,7 @@ export default function AllProjects() {
   const API_URL = import.meta.env.VITE_API_URL || '';
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
+  const [actionLoading, setActionLoading] = useState<string | null>(null);
   const [filter, setFilter] = useState<'all' | 'approved' | 'unpublished'>('all');
 
   useEffect(() => {
@@ -34,20 +35,20 @@ export default function AllProjects() {
     setLoading(true);
     try {
       const token = localStorage.getItem('access_token');
-      const response = await fetch(`${API_URL}/api/projects`, {
+      const response = await fetch(`${API_URL}/api/admin/projects`, {
         headers: {
-          'Authorization': `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
         },
       });
 
       if (response.ok) {
         const data = await response.json();
-        if (data.success) {
+        if (data.success && Array.isArray(data.data)) {
           let filtered = data.data;
           if (filter === 'approved') {
             filtered = filtered.filter((p: Project) => p.status === 'approved');
           } else if (filter === 'unpublished') {
-            filtered = filtered.filter((p: Project) => p.status !== 'approved');
+            filtered = filtered.filter((p: Project) => p.status === 'unpublished');
           }
           setProjects(filtered);
         }
@@ -56,6 +57,62 @@ export default function AllProjects() {
       console.error('Error fetching projects:', error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleUnpublish = async (projectId: string) => {
+    if (!confirm("Take this project offline? It won't be visible to public but can be republished anytime.")) {
+      return;
+    }
+
+    setActionLoading(projectId);
+    try {
+      const token = localStorage.getItem('access_token');
+      const response = await fetch(`${API_URL}/api/admin/projects/${projectId}/unpublish`, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (response.ok) {
+        fetchProjects();
+      } else {
+        alert('Failed to unpublish project');
+      }
+    } catch (error) {
+      console.error('Error unpublishing project:', error);
+      alert('An error occurred');
+    } finally {
+      setActionLoading(null);
+    }
+  };
+
+  const handleRepublish = async (projectId: string) => {
+    if (!confirm('Make this project visible to public again?')) {
+      return;
+    }
+
+    setActionLoading(projectId);
+    try {
+      const token = localStorage.getItem('access_token');
+      const response = await fetch(`${API_URL}/api/admin/projects/${projectId}/republish`, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (response.ok) {
+        fetchProjects();
+      } else {
+        alert('Failed to republish project');
+      }
+    } catch (error) {
+      console.error('Error republishing project:', error);
+      alert('An error occurred');
+    } finally {
+      setActionLoading(null);
     }
   };
 
@@ -124,6 +181,7 @@ export default function AllProjects() {
           <tbody>
             {projects.map((project) => {
               const badge = getStatusBadge(project.status);
+              const isBusy = actionLoading === project.id;
               return (
               <tr key={project.id} style={{ borderBottom: '1px solid #F3F4F6' }}>
                 <td style={{ padding: '1rem', fontSize: '0.9375rem', color: '#1F2937', fontWeight: 500 }}>
@@ -154,23 +212,61 @@ export default function AllProjects() {
                   {formatDate(project.createdAt)}
                 </td>
                 <td style={{ padding: '1rem' }}>
-                  <Link
-                    to={`/project/${project.slug}`}
-                    target="_blank"
-                    style={{
-                      padding: '0.5rem 1rem',
-                      background: '#F3F4F6',
-                      color: '#1F2937',
-                      border: '1px solid #D1D5DB',
-                      borderRadius: '6px',
-                      fontSize: '0.875rem',
-                      fontWeight: 500,
-                      textDecoration: 'none',
-                      display: 'inline-block',
-                    }}
-                  >
-                    View
-                  </Link>
+                  <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+                    <Link
+                      to={`/project/${project.slug}`}
+                      target="_blank"
+                      style={{
+                        padding: '0.5rem 1rem',
+                        background: '#F3F4F6',
+                        color: '#1F2937',
+                        border: '1px solid #D1D5DB',
+                        borderRadius: '6px',
+                        fontSize: '0.875rem',
+                        fontWeight: 500,
+                        textDecoration: 'none',
+                        display: 'inline-block',
+                      }}
+                    >
+                      View
+                    </Link>
+                    {project.status === 'approved' && (
+                      <button
+                        onClick={() => handleUnpublish(project.id)}
+                        disabled={isBusy}
+                        style={{
+                          padding: '0.5rem 1rem',
+                          background: isBusy ? '#D1D5DB' : '#F59E0B',
+                          color: '#FFFFFF',
+                          border: 'none',
+                          borderRadius: '6px',
+                          fontSize: '0.875rem',
+                          fontWeight: 500,
+                          cursor: isBusy ? 'not-allowed' : 'pointer',
+                        }}
+                      >
+                        Unpublish
+                      </button>
+                    )}
+                    {project.status === 'unpublished' && (
+                      <button
+                        onClick={() => handleRepublish(project.id)}
+                        disabled={isBusy}
+                        style={{
+                          padding: '0.5rem 1rem',
+                          background: isBusy ? '#D1D5DB' : '#10B981',
+                          color: '#FFFFFF',
+                          border: 'none',
+                          borderRadius: '6px',
+                          fontSize: '0.875rem',
+                          fontWeight: 500,
+                          cursor: isBusy ? 'not-allowed' : 'pointer',
+                        }}
+                      >
+                        Republish
+                      </button>
+                    )}
+                  </div>
                 </td>
               </tr>
             )})}

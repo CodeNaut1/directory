@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { getProjectUrl } from '../utils/projectUrl';
 
 interface SimilarProject {
   id: string;
@@ -213,7 +214,7 @@ export default function DuplicateCheck({
           {similarProjects.map((project) => (
             <Link
               key={project.id}
-              to={`/project/${project.id}`}
+              to={getProjectUrl(project)}
               target="_blank"
               style={{
                 display: 'block',

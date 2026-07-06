@@ -4,6 +4,7 @@ import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import projectsData from '../data/projects.json';
 import coordinatesData from '../data/coordinates.json';
+import { getProjectUrl } from '../utils/projectUrl';
 
 interface BitcoinLiveMapProps {
   width?: string;
@@ -161,6 +162,7 @@ export default function BitcoinLiveMap({
           },
           properties: {
             id: project.id,
+            slug: project.slug || project.id,
             name: project.name,
             description: project.description,
           },
@@ -291,10 +293,10 @@ export default function BitcoinLiveMap({
       e.originalEvent.stopPropagation();
 
       const props = e.features[0].properties;
-      const projectId = props.id;
+      const slug = props.slug || props.id;
 
-      if (projectId) {
-        navigate(`/project/${projectId}`);
+      if (slug) {
+        navigate(`/project/${slug}`);
       }
     });
 

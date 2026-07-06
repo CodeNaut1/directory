@@ -3,11 +3,12 @@ import { Link } from 'react-router-dom';
 
 interface Project {
   id: string;
+  slug: string;
   name: string;
   description: string;
-  category: { name: string };
-  country: { name: string };
-  user: { name: string; email: string };
+  category: { name: string } | null;
+  country: { name: string } | null;
+  user: { name: string; email: string } | null;
   createdAt: string;
   updatedAt: string;
 }
@@ -36,7 +37,7 @@ export default function PendingProjects() {
 
       if (response.ok) {
         const data = await response.json();
-        if (data.success) {
+        if (data.success && Array.isArray(data.data)) {
           setProjects(data.data);
         }
       }
@@ -185,7 +186,7 @@ export default function PendingProjects() {
                       {project.name}
                     </h2>
                     <span style={{ padding: '0.25rem 0.75rem', background: '#FEF3C7', color: '#92400E', borderRadius: '9999px', fontSize: '0.75rem', fontWeight: 600 }}>
-                      {project.category.name}
+                      {project.category?.name || 'Uncategorized'}
                     </span>
                   </div>
 
@@ -195,10 +196,10 @@ export default function PendingProjects() {
 
                   <div style={{ display: 'flex', gap: '2rem', fontSize: '0.875rem', color: '#6B7280' }}>
                     <div>
-                      <strong style={{ color: '#1F2937' }}>Country:</strong> {project.country.name}
+                      <strong style={{ color: '#1F2937' }}>Country:</strong> {project.country?.name || 'Global'}
                     </div>
                     <div>
-                      <strong style={{ color: '#1F2937' }}>Submitted by:</strong> {project.user.name || project.user.email}
+                      <strong style={{ color: '#1F2937' }}>Submitted by:</strong> {project.user?.name || project.user?.email || 'Unknown'}
                     </div>
                     <div>
                       <strong style={{ color: '#1F2937' }}>Date:</strong> {formatDate(project.updatedAt)}
@@ -209,7 +210,7 @@ export default function PendingProjects() {
                 {/* Actions */}
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', minWidth: '200px' }}>
                   <Link
-                    to={`/project/${project.id}`}
+                    to={`/project/${project.slug}`}
                     target="_blank"
                     style={{
                       padding: '0.75rem 1rem',
@@ -331,7 +332,7 @@ export default function PendingProjects() {
               Request Changes
             </h2>
             <p style={{ fontSize: '0.9375rem', color: '#6B7280', marginBottom: '1.5rem' }}>
-              Provide feedback to <strong>{selectedProject.user.name || selectedProject.user.email}</strong> about what needs to be changed in <strong>{selectedProject.name}</strong>.
+              Provide feedback to <strong>{selectedProject.user?.name || selectedProject.user?.email || 'the submitter'}</strong> about what needs to be changed in <strong>{selectedProject.name}</strong>.
             </p>
 
             <textarea

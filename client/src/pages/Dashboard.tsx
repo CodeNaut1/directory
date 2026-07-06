@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { getProjectUrl } from '../utils/projectUrl';
 
 interface Project {
   id: string;
+  slug: string;
   name: string;
   verified: boolean;
   status: string;
@@ -297,13 +299,14 @@ export default function Dashboard() {
     }
   };
 
-  const getActionButton = (status: ProjectStatus, projectId: string) => {
+  const getActionButton = (status: ProjectStatus, project: Project) => {
+    const projectUrl = getProjectUrl(project);
     // For approved projects, show "View" and "Edit Project"
     if (status === 'verified') {
       return (
         <div style={{ display: 'flex', gap: '0.5rem' }}>
           <button
-            onClick={() => navigate(`/project/${projectId}`)}
+            onClick={() => navigate(projectUrl)}
             style={{
               padding: '0.5rem 1rem',
               background: '#FFFFFF',
@@ -327,7 +330,7 @@ export default function Dashboard() {
             View
           </button>
           <button
-            onClick={() => navigate(`/edit-project/${projectId}`)}
+            onClick={() => navigate(`/edit-project/${project.id}`)}
             style={{
               padding: '0.5rem 1rem',
               background: '#FD5A47',
@@ -356,7 +359,7 @@ export default function Dashboard() {
     if (status === 'under_review') {
       return (
         <button
-          onClick={() => navigate(`/project/${projectId}`)}
+          onClick={() => navigate(projectUrl)}
           style={{
             padding: '0.5rem 1rem',
             background: '#FFFFFF',
@@ -386,7 +389,7 @@ export default function Dashboard() {
     if (status === 'unpublished') {
       return (
         <button
-          onClick={() => navigate(`/project/${projectId}`)}
+          onClick={() => navigate(projectUrl)}
           style={{
             padding: '0.5rem 1rem',
             background: '#FFFFFF',
@@ -415,7 +418,7 @@ export default function Dashboard() {
     // For needs update, show "Revise & Resubmit"
     return (
       <button
-        onClick={() => navigate(`/edit-project/${projectId}`)}
+        onClick={() => navigate(`/edit-project/${project.id}`)}
         style={{
           padding: '0.5rem 1rem',
           background: '#FFFFFF',
@@ -736,7 +739,7 @@ export default function Dashboard() {
                                   padding: '1rem',
                                 }}
                               >
-                                {getActionButton(status, project.id)}
+                                {getActionButton(status, project)}
                               </td>
                             </tr>
                           );
@@ -785,7 +788,7 @@ export default function Dashboard() {
                           <p style={{ fontSize: '0.875rem', color: '#6B7280', margin: '0 0 1rem 0' }}>
                             Updated: {formatDate(project.updated_at || project.updatedAt)}
                           </p>
-                          {getActionButton(status, project.id)}
+                          {getActionButton(status, project)}
                         </div>
                       );
                     })}
