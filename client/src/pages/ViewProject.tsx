@@ -574,18 +574,24 @@ export default function ViewProject() {
                     alignItems: 'center',
                     gap: '0.5rem',
                     padding: '0.6875rem 1.25rem',
-                    background: COLORS.surface,
-                    color: COLORS.text,
-                    border: `1px solid ${COLORS.border}`,
+                    background: 'transparent',
+                    color: '#DC2626',
+                    border: '2px solid #DC2626',
                     borderRadius: 8,
                     fontSize: '0.875rem',
-                    fontWeight: 500,
+                    fontWeight: 600,
                     cursor: 'pointer',
                     letterSpacing: '0.01em',
-                    transition: 'border-color 0.15s, background 0.15s',
+                    transition: 'background 0.15s, color 0.15s',
                   }}
-                  onMouseEnter={(e) => { e.currentTarget.style.background = '#F9FAFB'; e.currentTarget.style.borderColor = '#D1D5DB'; }}
-                  onMouseLeave={(e) => { e.currentTarget.style.background = COLORS.surface; e.currentTarget.style.borderColor = COLORS.border; }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = '#DC2626';
+                    e.currentTarget.style.color = '#FFFFFF';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = 'transparent';
+                    e.currentTarget.style.color = '#DC2626';
+                  }}
                 >
                   <ShieldCheck size={15} strokeWidth={1.75} />
                   Claim this project

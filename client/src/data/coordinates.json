@@ -1,17 +1,41 @@
 {
   "project_coordinates": [
     {
+      "proj_id": "ab-abeg",
+      "name": "AB Abeg",
+      "infographic": null,
+      "livemap": {
+        "type": "Point",
+        "coords": [
+          18.747789921036563,
+          15.457799216869502
+        ]
+      }
+    },
+    {
+      "proj_id": "ab-togo-branch",
+      "name": "AB Togo Branch",
+      "infographic": null,
+      "livemap": {
+        "type": "Point",
+        "coords": [
+          19.96169777784405,
+          -0.03213938048432696
+        ]
+      }
+    },
+    {
       "proj_id": "abidjan-bitcoin",
       "name": "Abidjan Bitcoin Meetup",
       "infographic": {
         "type": "rect",
-        "coords": "1000.8433048433048,3298.233618233618,699.4529914529915,96.67236467236489"
+        "coords": "961.0370370370371,3423.3390313390314,705.139601139601,90.98575498575474"
       },
       "livemap": {
         "type": "Point",
         "coords": [
-          -4.169620502285967,
-          5.117876333363569
+          -4.018334302587268,
+          5.386140251941922
         ]
       }
     },
@@ -20,13 +44,40 @@
       "name": "Afribit",
       "infographic": {
         "type": "rect",
-        "coords": "5442.08547008547,3252.740740740741,278.6438746438753,85.29914529914504"
+        "coords": "5442.08547008547,3184.5014245014245,278.6438746438753,85.2991452991455"
       },
       "livemap": {
         "type": "Point",
         "coords": [
-          36.73963387211828,
-          -1.5600587584357881
+          36.85211101765527,
+          -1.256095911173408
+        ]
+      }
+    },
+    {
+      "proj_id": "afribit-kibera",
+      "name": "Afribit Kibera",
+      "infographic": null,
+      "livemap": {
+        "type": "Point",
+        "coords": [
+          37.894800000000004,
+          -0.043518584287042084
+        ]
+      }
+    },
+    {
+      "proj_id": "africa-bitcoin-news",
+      "name": "Africa Bitcoin News",
+      "infographic": {
+        "type": "rect",
+        "coords": "2331.5099715099714,8655.019943019943,602.7806267806268,102.35897435897459"
+      },
+      "livemap": {
+        "type": "Point",
+        "coords": [
+          -9.475525242672623,
+          6.408563443575536
         ]
       }
     },
@@ -35,13 +86,28 @@
       "name": "Africa Free Routing",
       "infographic": {
         "type": "rect",
-        "coords": "2866.051282051282,7563.190883190883,585.7207977207977,85.2991452991455"
+        "coords": "2843.3048433048434,8171.65811965812,602.7806267806268,102.3589743589755"
       },
       "livemap": {
         "type": "Point",
         "coords": [
-          3.190679304818118,
-          6.281843720371456
+          3.346397048550475,
+          6.562135479011139
+        ]
+      }
+    },
+    {
+      "proj_id": "african-bitcoin-corporation",
+      "name": "African Bitcoin Corporation",
+      "infographic": {
+        "type": "rect",
+        "coords": "3542.7578347578346,8655.019943019943,784.7521367521367,96.6723646723658"
+      },
+      "livemap": {
+        "type": "Point",
+        "coords": [
+          19.997282259955043,
+          -0.02585756927957511
         ]
       }
     },
@@ -50,13 +116,28 @@
       "name": "African Bitcoin Mining Summit",
       "infographic": {
         "type": "rect",
-        "coords": "4037.4928774928776,2234.837606837607,875.7378917378919,90.98575498575474"
+        "coords": "3992,2149.5384615384614,898.4843304843307,79.6125356125358"
       },
       "livemap": {
         "type": "Point",
         "coords": [
-          39.12598461014022,
-          8.970697268334783
+          38.768695771993755,
+          9.05338415658052
+        ]
+      }
+    },
+    {
+      "proj_id": "african-bitcoiners",
+      "name": "African Bitcoiners",
+      "infographic": {
+        "type": "rect",
+        "coords": "4771.065527065527,8655.019943019943,580.0341880341884,102.35897435897459"
+      },
+      "livemap": {
+        "type": "Point",
+        "coords": [
+          -9.470644030433702,
+          6.4033781724043175
         ]
       }
     },
@@ -65,13 +146,13 @@
       "name": "Airbtc",
       "infographic": {
         "type": "rect",
-        "coords": "4481.048433048433,7563.190883190883,290.01709401709377,85.2991452991455"
+        "coords": "4446.928774928775,8177.34472934473,301.39031339031317,96.67236467236398"
       },
       "livemap": {
         "type": "Point",
         "coords": [
-          18.501511209133454,
-          -33.67165185856887
+          19.95109261996331,
+          0.010395584540887966
         ]
       }
     },
@@ -82,722 +163,593 @@
       "livemap": {
         "type": "Point",
         "coords": [
-          28.172643583888874,
-          -26.343478666408203
+          28.0215480962545,
+          -26.161241634964895
         ]
       }
     },
     {
       "proj_id": "angovo",
       "name": "Angovo",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "4566.347578347579,5487.578347578347,335.50997150997136,102.35897435897459"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          19.895255774722717,
-          0.0026755702568668147
+          47.04310107176607,
+          -19.861706104502865
         ]
       }
     },
     {
       "proj_id": "bantu-bitcoin",
       "name": "Bantu Bitcoin",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "3866.894586894587,7051.396011396011,443.5555555555552,96.67236467236489"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          28.32329371405923,
-          -15.303066675633984
+          27.83704407040952,
+          -13.160182925824063
         ]
       }
     },
     {
       "proj_id": "beyond-adversity-btc-podcast",
       "name": "Beyond Adversity BTC Podcast",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "4009.059829059829,3645.1168091168092,676.7065527065524,85.29914529914504"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          36.898181612015435,
-          -1.3178530595736717
+          36.7960890603642,
+          -1.3289618419930047
         ]
       }
     },
     {
       "proj_id": "bit-fitness",
       "name": "Bit-Fitness",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "295.7037037037037,6494.108262108262,392.37606837606836,90.9857549857552"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          25.067409553472437,
-          -28.957122163990817
+          18.82528316816631,
+          -34.081597992695926
         ]
       }
     },
     {
       "proj_id": "bitbiashara",
       "name": "BitBiashara",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "4503.794871794872,3178.814814814815,403.74928774928776,96.67236467236489"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          36.760437883823386,
-          -1.606313454458925
+          36.8704147863138,
+          -1.2800039052200167
         ]
       }
     },
     {
       "proj_id": "bitcoin-africa-story",
       "name": "Bitcoin Africa Story",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "1114.5754985754988,4509.481481481482,602.7806267806266,96.67236467236398"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          3.547941288993661,
-          6.372643283070465
+          3.384756741685342,
+          6.555913848096391
         ]
       }
     },
     {
       "proj_id": "bitcoin-anambra",
       "name": "Bitcoin Anambra",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "307.0769230769231,4742.6324786324785,528.8547008547008,102.35897435897459"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          7.913066675633984,
-          8.986706285940773
-        ]
-      }
-    },
-    {
-      "proj_id": "bitcoin-aves-1",
-      "name": "Bitcoin Aves",
-      "infographic": null,
-      "livemap": {
-        "type": "Point",
-        "coords": [
-          -0.04437824288987752,
-          5.929071886436203
+          8.660992179865703,
+          9.104897298596224
         ]
       }
     },
     {
       "proj_id": "bitcoin-aves",
       "name": "BITCOIN AVES",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "750.6324786324786,1296.5470085470085,426.49572649572644,85.29914529914527"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          -0.29484049782058136,
-          5.59232074026664
+          0.8056412082798022,
+          5.971482779073126
         ]
       }
     },
     {
       "proj_id": "bitcoin-badger",
       "name": "Bitcoin Badger",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "301.3903133903134,6721.572649572649,466.30199430199434,96.67236467236489"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          18.291199288491764,
-          -33.60809581699589
+          18.46095819393019,
+          -33.947046637221135
         ]
       }
     },
     {
       "proj_id": "bitcoin-banamayo",
       "name": "Bitcoin Banamayo",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "3269.80056980057,7051.396011396011,574.3475783475783,96.67236467236489"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          28.26022621398391,
-          -15.772575336238054
+          28.27712272711787,
+          -15.407836832153789
         ]
       }
     },
     {
       "proj_id": "bitcoin-benin",
       "name": "Bitcoin Benin",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "1728.7293447293448,1324.980056980057,432.18233618233603,85.29914529914527"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          19.7970130740311,
-          -0.3456217002383513
+          2.4068031067043054,
+          6.391822962689537
         ]
       }
     },
     {
       "proj_id": "bitcoin-boma-coalition",
       "name": "Bitcoin Boma Coalition",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "4429.868945868946,7671.236467236467,705.1396011396009,102.35897435897459"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          19.82436307066518,
-          -0.3361002900465616
+          33.81378842778577,
+          -13.976684146883576
         ]
       }
     },
     {
       "proj_id": "bitcoin-bungoma",
       "name": "Bitcoin Bungoma",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "5197.561253561254,3650.803418803419,534.5413105413108,79.61253561253534"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          34.526539516087695,
-          0.5517952336103454
+          34.57474132741311,
+          0.5863529777486175
         ]
       }
     },
     {
       "proj_id": "bitcoin-burkina-faso",
       "name": "Bitcoin Burkina Faso",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "272.95726495726495,2382.6894586894587,642.5868945868947,90.9857549857552"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          19.88601629623248,
-          0.08473880039458494
+          -1.5384303296707957,
+          12.417759192728338
         ]
       }
     },
     {
       "proj_id": "bitcoin-calabar",
       "name": "Bitcoin Calabar",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "864.3646723646724,4748.319088319088,494.7350427350426,102.35897435897459"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          4.75708355704444,
-          8.647008110139806
+          8.364371964750195,
+          4.954558050838062
         ]
       }
     },
     {
       "proj_id": "bitcoin-campus-zambia",
       "name": "Bitcoin Campus Zambia",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "3286.860398860399,7261.80056980057,540.2279202279201,96.67236467236489"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          28.357696171207945,
-          -15.76874573118869
+          28.36773970231496,
+          -15.409418557339453
         ]
       }
     },
     {
       "proj_id": "bitcoin-chama",
       "name": "Bitcoin Chama",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "4850.678062678063,3429.025641025641,471.98860398860415,85.29914529914504"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          36.680175323553975,
-          -1.1850421959393913
+          36.87177820251299,
+          -1.2955878236872063
         ]
       }
     },
     {
       "proj_id": "bitcoin-dada",
       "name": "Bitcoin DADA",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "4429.868945868946,8416.182336182335,443.55555555555566,90.9857549857552"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          20.27459327869793,
-          0.08942260147133459
+          20.03845046783753,
+          0.011025494232679968
         ]
       }
     },
     {
       "proj_id": "bitcoin-dombo",
       "name": "Bitcoin Dombo",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "4577.720797720798,6499.794871794872,494.73504273504204,102.35897435897368"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          19.98934299303364,
-          -0.2262360313681688
+          32.58401559480312,
+          -26.00248697807033
         ]
       }
     },
     {
       "proj_id": "bitcoin-dua",
       "name": "Bitcoin Dua",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "830.2450142450144,1512.6381766381767,426.4957264957267,96.67236467236467"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          -0.22794268960186165,
-          5.627540561461116
+          0.8664309126378561,
+          6.111033160312807
         ]
       }
     },
     {
       "proj_id": "bitcoin-mining-namibia",
       "name": "Bitcoin eibia",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "659.6467236467237,5862.894586894587,705.139601139601,96.67236467236489"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          20.2927638454924,
-          0.04522105705938863
+          17.086483199964213,
+          -22.578255265461536
         ]
       }
     },
     {
       "proj_id": "bitcoin-ekasi",
       "name": "Bitcoin Ekasi",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "1353.4131054131053,6949.037037037037,437.86894586894596,96.67236467236398"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          25.085936922129633,
-          -28.99577381738259
+          22.142871310699196,
+          -34.1632462331881
         ]
       }
     },
     {
       "proj_id": "bitcoin-ekiti",
       "name": "Bitcoin Ekiti",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "671.019943019943,5186.188034188034,415.12250712250716,90.9857549857552"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          7.850899858155054,
-          8.950470990185611
+          8.650303807621091,
+          9.082436310160933
         ]
       }
     },
     {
       "proj_id": "bitcoin-el-zera",
       "name": "Bitcoin El Zera",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "1882.2678062678062,6721.572649572649,477.6752136752136,102.35897435897459"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          28.27010185523382,
-          -26.0749660254678
+          28.043700783130497,
+          -26.219689921036565
         ]
       }
     },
     {
       "proj_id": "bitcoin-famba",
       "name": "Bitcoin Famba",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "4594.780626780626,6710.19943019943,511.79487179487205,90.9857549857552"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          19.980889254900738,
-          0.18260355010668508
+          32.54869124342432,
+          -25.931459824442456
+        ]
+      }
+    },
+    {
+      "proj_id": "bitcoin-flash",
+      "name": "Bitcoin Flash",
+      "infographic": {
+        "type": "rect",
+        "coords": "1273.8005698005697,1336.3532763532764,426.49572649572656,73.92592592592587"
+      },
+      "livemap": {
+        "type": "Point",
+        "coords": [
+          2.4083490769671734,
+          6.362962613131897
         ]
       }
     },
     {
       "proj_id": "bitcoin-for-aliyense-zambia",
       "name": "Bitcoin for aliyense Zambia",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "3844.1481481481483,6852.3646723646725,597.0940170940171,102.35897435897459"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          28.072410372100133,
-          -15.603789608158989
+          28.307349150281254,
+          -15.435052825814758
         ]
       }
     },
     {
       "proj_id": "bitcoin-for-business",
       "name": "Bitcoin For Business",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "744.9458689458689,6278.017094017094,608.4672364672364,96.67236467236489"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          28.120845050261693,
-          -25.849331749091274
+          28.20348018713501,
+          -25.741689802306926
         ]
       }
     },
     {
       "proj_id": "bitcoin-for-fairness",
       "name": "Bitcoin For Fairness",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "3804.3418803418804,8410.495726495725,608.4672364672365,96.6723646723658"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          19.849560580488113,
-          0.3468223880350687
+          19.950030458649046,
+          0.001744974835125035
         ]
       }
     },
     {
       "proj_id": "bitcoin-for-her",
       "name": "Bitcoin for HER",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "3303.9202279202277,6858.051282051282,517.4814814814818,90.9857549857552"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          28.15279403693983,
-          -15.63017978311724
+          28.304881602522737,
+          -15.34082097867514
         ]
       }
     },
     {
       "proj_id": "bitcoin-frenzy-stack",
       "name": "BITCOIN FRENZY STACK",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "5180.5014245014245,4765.378917378917,500.42165242165265,85.2991452991455"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          32.66067627457812,
-          0.3540838939219355
+          32.62295084971875,
+          0.31821073738537636
         ]
       }
     },
     {
       "proj_id": "bitcoin-hausa",
       "name": "Bitcoin Hausa",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "1728.729344729345,4515.168091168091,454.9287749287746,85.29914529914458"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          12.053821879271595,
-          8.675923683986008
+          8.541677669529664,
+          11.984522330470336
+        ]
+      }
+    },
+    {
+      "proj_id": "bitcoin-high-school",
+      "name": "Bitcoin High School",
+      "infographic": {
+        "type": "rect",
+        "coords": "5009.9031339031335,4941.663817663818,631.2136752136757,96.67236467236398"
+      },
+      "livemap": {
+        "type": "Point",
+        "coords": [
+          32.25108962208712,
+          1.3582485461190974
+        ]
+      }
+    },
+    {
+      "proj_id": "bitcoin-in-africa-show",
+      "name": "Bitcoin In Africa Show",
+      "infographic": {
+        "type": "rect",
+        "coords": "278.64387464387465,8649.333333333334,682.3931623931624,108.04558404558338"
+      },
+      "livemap": {
+        "type": "Point",
+        "coords": [
+          19.980367456331045,
+          -0.0038161799075308945
         ]
       }
     },
     {
       "proj_id": "bitcoin-in-nigeria-media",
       "name": "Bitcoin in Nigeria Media",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "1734.4159544159545,4310.450142450142,716.5128205128206,85.2991452991455"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          3.134571762661863,
-          6.623482069331109
+          3.3627830331203676,
+          6.479294754202276
         ]
       }
     },
     {
       "proj_id": "bitcoin-in-the-wild",
       "name": "Bitcoin In The Wild",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "301.3903133903134,7176.5014245014245,591.4074074074074,102.35897435897459"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          25.176036083686157,
-          -28.79510919363449
+          30.429153633109504,
+          -24.54616216432704
         ]
       }
     },
     {
       "proj_id": "bitcoin-innovation-hub",
       "name": "Bitcoin Innovation Hub",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "4441.242165242165,4759.692307692308,699.4529914529912,90.9857549857552"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          32.76294655167256,
-          0.6975348232506869
+          32.59407676894432,
+          0.3072270087705906
         ]
       }
     },
     {
       "proj_id": "bitcoin-karoo",
       "name": "Bitcoin Karoo",
-      "infographic": null,
-      "livemap": {
-        "type": "Point",
-        "coords": [
-          24.91565486608501,
-          -28.98636554420366
-        ]
-      }
-    },
-    {
-      "proj_id": "bitcoin-kitui",
-      "name": "Bitcoin Kitui",
       "infographic": {
         "type": "rect",
-        "coords": "1000.8433048433048,3298.233618233618,699.4529914529915,96.67236467236489"
+        "coords": "653.960113960114,7398.279202279202,454.92877492877494,96.67236467236489"
       },
       "livemap": {
         "type": "Point",
         "coords": [
-          36.72627631601399,
-          -1.3416218792715942
+          22.514198591336815,
+          -33.48183750060194
         ]
       }
     },
     {
-      "proj_id": "bitcoin-mastermind",
-      "name": "Bitcoin Mastermind",
+      "proj_id": "bitcoin kids",
+      "name": "Bitcoin Kids",
       "infographic": {
         "type": "rect",
-        "coords": "2100.2545109211774,1486.1006647673314,811.289648622982,106.15004748338083"
+        "coords": "2439.5555555555557,1114.5754985754986,409.43589743589746,79.61253561253557"
       },
       "livemap": {
         "type": "Point",
         "coords": [
-          19.702808188982303,
-          -0.00008218271332621763
-        ]
-      }
-    },
-    {
-      "proj_id": "bitcoin-nairobi",
-      "name": "Bitcoin Nairobi",
-      "infographic": null,
-      "livemap": {
-        "type": "Point",
-        "coords": [
-          36.61503188381085,
-          -1.3744301671721195
-        ]
-      }
-    },
-    {
-      "proj_id": "bitcoin-nomads",
-      "name": "Bitcoin Nomads",
-      "infographic": null,
-      "livemap": {
-        "type": "Point",
-        "coords": [
-          36.77646264194772,
-          -1.1592420867344309
-        ]
-      }
-    },
-    {
-      "proj_id": "bitcoin-only",
-      "name": "Bitcoin Only",
-      "infographic": null,
-      "livemap": {
-        "type": "Point",
-        "coords": [
-          25.053847315197554,
-          -29.16594387224581
-        ]
-      }
-    },
-    {
-      "proj_id": "bitcoin-pidgin",
-      "name": "Bitcoin Pidgin",
-      "infographic": null,
-      "livemap": {
-        "type": "Point",
-        "coords": [
-          7.9306221040781,
-          8.908625339493765
-        ]
-      }
-    },
-    {
-      "proj_id": "bitcoin-plett",
-      "name": "Bitcoin Plett",
-      "infographic": null,
-      "livemap": {
-        "type": "Point",
-        "coords": [
-          25.010447196418347,
-          -29.12672624120469
-        ]
-      }
-    },
-    {
-      "proj_id": "bitcoin-reach",
-      "name": "Bitcoin Reach",
-      "infographic": null,
-      "livemap": {
-        "type": "Point",
-        "coords": [
-          30.985227883704816,
-          -17.792604722665004
-        ]
-      }
-    },
-    {
-      "proj_id": "bitcoin-s-n-gal",
-      "name": "Bitcoin Sénégal",
-      "infographic": null,
-      "livemap": {
-        "type": "Point",
-        "coords": [
-          -17.55886001334061,
-          15.00726167230707
-        ]
-      }
-    },
-    {
-      "proj_id": "bitcoin-sisonke",
-      "name": "Bitcoin Sisonke",
-      "infographic": null,
-      "livemap": {
-        "type": "Point",
-        "coords": [
-          27.877106864060636,
-          -26.031926074032036
-        ]
-      }
-    },
-    {
-      "proj_id": "bitcoin-studio",
-      "name": "Bitcoin Studio",
-      "infographic": null,
-      "livemap": {
-        "type": "Point",
-        "coords": [
-          20.293447856706607,
-          0.03897539524700701
-        ]
-      }
-    },
-    {
-      "proj_id": "bitcoin-togo",
-      "name": "Bitcoin Togo",
-      "infographic": null,
-      "livemap": {
-        "type": "Point",
-        "coords": [
-          20.004419433311817,
-          -0.08398606836047959
-        ]
-      }
-    },
-    {
-      "proj_id": "bitcoin-ubuntu",
-      "name": "Bitcoin Ubuntu",
-      "infographic": null,
-      "livemap": {
-        "type": "Point",
-        "coords": [
-          25.05371525486443,
-          -29.078388691080434
-        ]
-      }
-    },
-    {
-      "proj_id": "bitcoin-unical",
-      "name": "Bitcoin Unical",
-      "infographic": null,
-      "livemap": {
-        "type": "Point",
-        "coords": [
-          4.708467409295939,
-          8.513877154626469
-        ]
-      }
-    },
-    {
-      "proj_id": "bitcoin-vending-africa",
-      "name": "Bitcoin Vending Africa",
-      "infographic": null,
-      "livemap": {
-        "type": "Point",
-        "coords": [
-          27.99390448551859,
-          -26.036989672582074
-        ]
-      }
-    },
-    {
-      "proj_id": "bitcoin-victoria-falls",
-      "name": "Bitcoin Victoria Falls",
-      "infographic": null,
-      "livemap": {
-        "type": "Point",
-        "coords": [
-          28.21871911935139,
-          -15.49161007858827
-        ]
-      }
-    },
-    {
-      "proj_id": "bitcoin-witsand",
-      "name": "Bitcoin Witsand",
-      "infographic": null,
-      "livemap": {
-        "type": "Point",
-        "coords": [
-          25.20476155111344,
-          -29.083296185822896
-        ]
-      }
-    },
-    {
-      "proj_id": "bitcoin-witsand-1",
-      "name": "Bitcoin Witsand",
-      "infographic": null,
-      "livemap": {
-        "type": "Point",
-        "coords": [
-          24.985527395365484,
-          -29.229206085853455
-        ]
-      }
-    },
-    {
-      "proj_id": "bitcoin-zambia",
-      "name": "Bitcoin Zambia",
-      "infographic": null,
-      "livemap": {
-        "type": "Point",
-        "coords": [
-          28.547471368154298,
-          -15.495185915237984
-        ]
-      }
-    },
-    {
-      "proj_id": "bitcoinbabies",
-      "name": "BitcoinBabies",
-      "infographic": null,
-      "livemap": {
-        "type": "Point",
-        "coords": [
-          36.845713029873956,
-          -1.642624601888354
-        ]
-      }
-    },
-    {
-      "proj_id": "bitcoinbirr",
-      "name": "BitcoinBirr",
-      "infographic": null,
-      "livemap": {
-        "type": "Point",
-        "coords": [
-          39.03818782392199,
-          8.948065631563683
-        ]
-      }
-    },
-    {
-      "proj_id": "bitcoinfriendlysa",
-      "name": "BitcoinFriendlySA",
-      "infographic": null,
-      "livemap": {
-        "type": "Point",
-        "coords": [
-          18.449685050868137,
-          -33.546993057222075
-        ]
-      }
-    },
-    {
-      "proj_id": "bitcoinjhb",
-      "name": "BitcoinJHB",
-      "infographic": null,
-      "livemap": {
-        "type": "Point",
-        "coords": [
-          28.02214853890528,
-          -25.958023649461392
+          9.810302404807821,
+          4.07759596321166
         ]
       }
     },
@@ -806,7 +758,7 @@
       "name": "Bitcoin Kids",
       "infographic": {
         "type": "rect",
-        "coords": "3267.9050332383667,1493.6828110161443"
+        "coords": "2439.5555555555557,1125.948717948718,409.43589743589746,68.23931623931617"
       },
       "livemap": {
         "type": "Point",
@@ -817,1229 +769,2162 @@
       }
     },
     {
-      "proj_id": "bitcoinloxion",
-      "name": "BitcoinLoxion",
-      "infographic": null,
+      "proj_id": "bitcoin-kitui",
+      "name": "Bitcoin Kitui",
+      "infographic": {
+        "type": "rect",
+        "coords": "5299.920227920228,3832.774928774929,409.43589743589746,90.98575498575474"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          18.48168873945044,
-          -33.53687472967897
+          37.982960132783475,
+          -1.334060088945884
         ]
       }
     },
     {
-      "proj_id": "bitcoinnakfa",
-      "name": "BitcoinNakfa",
+      "proj_id": "bitcoin-mastermind",
+      "name": "Bitcoin Mastermind",
+      "infographic": {
+        "type": "rect",
+        "coords": "1199.8746438746439,1125.948717948718,608.4672364672365,85.29914529914527"
+      },
+      "livemap": {
+        "type": "Point",
+        "coords": [
+          2.393894197381029,
+          6.379260443956389
+        ]
+      }
+    },
+    {
+      "proj_id": "bitcoin-nairobi",
+      "name": "Bitcoin Nairobi",
+      "infographic": {
+        "type": "rect",
+        "coords": "4941.663817663818,3190.188034188034,477.67521367521294,85.2991452991455"
+      },
+      "livemap": {
+        "type": "Point",
+        "coords": [
+          36.814078276747985,
+          -1.3414844170297568
+        ]
+      }
+    },
+    {
+      "proj_id": "bitcoin-nomads",
+      "name": "Bitcoin Nomads",
+      "infographic": {
+        "type": "rect",
+        "coords": "2490.735042735043,8404.809116809116,528.8547008547007,102.35897435897459"
+      },
+      "livemap": {
+        "type": "Point",
+        "coords": [
+          36.830582408883345,
+          -1.2428596123493896
+        ]
+      }
+    },
+    {
+      "proj_id": "bitcoin-only",
+      "name": "Bitcoin Only",
+      "infographic": {
+        "type": "rect",
+        "coords": "301.3903133903134,6278.017094017094,420.80911680911686,90.9857549857552"
+      },
+      "livemap": {
+        "type": "Point",
+        "coords": [
+          22.936662624700112,
+          -30.543521927443926
+        ]
+      }
+    },
+    {
+      "proj_id": "bitcoin-pidgin",
+      "name": "Bitcoin Pidgin",
+      "infographic": {
+        "type": "rect",
+        "coords": "301.3903133903134,4515.168091168091,466.30199430199434,90.98575498575428"
+      },
+      "livemap": {
+        "type": "Point",
+        "coords": [
+          7.095104520174283,
+          6.208545572839034
+        ]
+      }
+    },
+    {
+      "proj_id": "bitcoin-plett",
+      "name": "Bitcoin Plett",
+      "infographic": {
+        "type": "rect",
+        "coords": "2752.319088319088,6949.0370370370365,443.55555555555566,96.67236467236398"
+      },
+      "livemap": {
+        "type": "Point",
+        "coords": [
+          23.3861471109112,
+          -34.045282161504424
+        ]
+      }
+    },
+    {
+      "proj_id": "bitcoin-reach",
+      "name": "Bitcoin Reach",
+      "infographic": {
+        "type": "rect",
+        "coords": "3377.846153846154,5715.042735042735,466.30199430199445,90.98575498575428"
+      },
+      "livemap": {
+        "type": "Point",
+        "coords": [
+          28.595299999999998,
+          -20.173354482671904
+        ]
+      }
+    },
+    {
+      "proj_id": "bitcoin-s-n-gal",
+      "name": "Bitcoin Sénégal",
+      "infographic": {
+        "type": "rect",
+        "coords": "267.27065527065525,2786.4387464387464,534.5413105413106,90.9857549857552"
+      },
+      "livemap": {
+        "type": "Point",
+        "coords": [
+          -17.475808555941892,
+          14.678552243571382
+        ]
+      }
+    },
+    {
+      "proj_id": "bitcoin-sisonke",
+      "name": "Bitcoin Sisonke",
+      "infographic": {
+        "type": "rect",
+        "coords": "1620.6837606837607,7176.5014245014245,511.7948717948716,96.67236467236489"
+      },
+      "livemap": {
+        "type": "Point",
+        "coords": [
+          28.049006170807672,
+          -26.19020435387702
+        ]
+      }
+    },
+    {
+      "proj_id": "bitcoin-students-network",
+      "name": "Bitcoin Students Network",
+      "infographic": {
+        "type": "rect",
+        "coords": "295.7037037037037,8910.917378917378,773.3789173789173,108.0455840455852"
+      },
+      "livemap": {
+        "type": "Point",
+        "coords": [
+          19.96169777784405,
+          -0.03213938048432696
+        ]
+      }
+    },
+    {
+      "proj_id": "bitcoin-studio",
+      "name": "Bitcoin Studio",
+      "infographic": {
+        "type": "rect",
+        "coords": "1398.905982905983,5862.894586894587,477.6752136752136,96.67236467236489"
+      },
+      "livemap": {
+        "type": "Point",
+        "coords": [
+          17.067194491883964,
+          -22.544960884830534
+        ]
+      }
+    },
+    {
+      "proj_id": "bitcoin-study-hubs",
+      "name": "Bitcoin Study Hubs ",
       "infographic": null,
       "livemap": {
         "type": "Point",
         "coords": [
-          19.887235523641316,
-          -0.01335138256101879
+          34.314289636407,
+          -13.259994313003062
+        ]
+      }
+    },
+    {
+      "proj_id": "bitcoin-togo",
+      "name": "Bitcoin Togo",
+      "infographic": {
+        "type": "rect",
+        "coords": "1063.3960113960113,3861.2079772079774,437.86894586894596,90.98575498575474"
+      },
+      "livemap": {
+        "type": "Point",
+        "coords": [
+          1.2248463065428676,
+          6.124507919248752
+        ]
+      }
+    },
+    {
+      "proj_id": "bitcoin-ubuntu",
+      "name": "Bitcoin Ubuntu",
+      "infographic": {
+        "type": "rect",
+        "coords": "835.9316239316239,6949.037037037037,500.42165242165254,96.67236467236398"
+      },
+      "livemap": {
+        "type": "Point",
+        "coords": [
+          20.441976590632418,
+          -34.009034103296365
+        ]
+      }
+    },
+    {
+      "proj_id": "bitcoin-unical",
+      "name": "Bitcoin Unical",
+      "infographic": {
+        "type": "rect",
+        "coords": "2195.031339031339,4515.168091168091,460.61538461538476,85.29914529914458"
+      },
+      "livemap": {
+        "type": "Point",
+        "coords": [
+          8.38737727288213,
+          4.95536316784621
+        ]
+      }
+    },
+    {
+      "proj_id": "bitcoin-vending-africa",
+      "name": "Bitcoin Vending Africa",
+      "infographic": null,
+      "livemap": {
+        "type": "Point",
+        "coords": [
+          28.082896747752496,
+          -26.22996255110087
+        ]
+      }
+    },
+    {
+      "proj_id": "bitcoin-victoria-falls",
+      "name": "Bitcoin Victoria Falls",
+      "infographic": {
+        "type": "rect",
+        "coords": "3298.233618233618,6641.960113960114,648.2735042735044,102.35897435897459"
+      },
+      "livemap": {
+        "type": "Point",
+        "coords": [
+          25.8734,
+          -17.867680762113533
+        ]
+      }
+    },
+    {
+      "proj_id": "bitcoin-witsand",
+      "name": "Bitcoin Witsand",
+      "infographic": {
+        "type": "rect",
+        "coords": "290.017094017094,6949.037037037037,517.4814814814815,96.67236467236398"
+      },
+      "livemap": {
+        "type": "Point",
+        "coords": [
+          20.860941125496957,
+          -34.58205887450305
+        ]
+      }
+    },
+    {
+      "proj_id": "bitcoin-zambia",
+      "name": "Bitcoin Zambia",
+      "infographic": {
+        "type": "rect",
+        "coords": "3963.5669515669515,6641.960113960114,489.04843304843325,108.04558404558429"
+      },
+      "livemap": {
+        "type": "Point",
+        "coords": [
+          28.27949872981078,
+          -15.362499999999999
+        ]
+      }
+    },
+    {
+      "proj_id": "bitcoinbabies",
+      "name": "BitcoinBabies",
+      "infographic": {
+        "type": "rect",
+        "coords": "5265.80056980057,2758.005698005698,477.67521367521385,96.67236467236489"
+      },
+      "livemap": {
+        "type": "Point",
+        "coords": [
+          36.83855810357799,
+          -1.3262541737593683
+        ]
+      }
+    },
+    {
+      "proj_id": "bitcoinbirr",
+      "name": "BitcoinBirr",
+      "infographic": {
+        "type": "rect",
+        "coords": "4930.290598290599,2155.225071225071,392.37606837606836,68.2393162393164"
+      },
+      "livemap": {
+        "type": "Point",
+        "coords": [
+          38.75895168339119,
+          8.99902010270837
+        ]
+      }
+    },
+    {
+      "proj_id": "bitcoinfriendlysa",
+      "name": "BitcoinFriendlySA",
+      "infographic": {
+        "type": "rect",
+        "coords": "1143.008547008547,7392.592592592592,580.034188034188,102.35897435897459"
+      },
+      "livemap": {
+        "type": "Point",
+        "coords": [
+          18.4241,
+          -33.9379
+        ]
+      }
+    },
+    {
+      "proj_id": "bitcoinjhb",
+      "name": "BitcoinJHB",
+      "infographic": {
+        "type": "rect",
+        "coords": "2115.4188034188032,6494.108262108262,688.0797720797723,96.67236467236398"
+      },
+      "livemap": {
+        "type": "Point",
+        "coords": [
+          28.015344772504474,
+          -26.232872616073433
+        ]
+      }
+    },
+    {
+      "proj_id": "bitcoinkids",
+      "name": "BitcoinKids",
+      "infographic": null,
+      "livemap": {
+        "type": "Point",
+        "coords": [
+          9.79435033635316,
+          4.014694235253128
+        ]
+      }
+    },
+    {
+      "proj_id": "bitcoinloxion",
+      "name": "BitcoinLoxion",
+      "infographic": {
+        "type": "rect",
+        "coords": "2263.2706552706554,6949.037037037037,471.9886039886037,96.67236467236398"
+      },
+      "livemap": {
+        "type": "Point",
+        "coords": [
+          18.37774080727166,
+          -33.943630329670796
+        ]
+      }
+    },
+    {
+      "proj_id": "bitcoin-nakfa",
+      "name": "BitcoinNakfa",
+      "infographic": {
+        "type": "rect",
+        "coords": "3969.253561253561,1529.6980056980058,449.24216524216536,90.98575498575497"
+      },
+      "livemap": {
+        "type": "Point",
+        "coords": [
+          38.89470879586449,
+          15.334951662780623
         ]
       }
     },
     {
       "proj_id": "bitcoinsafaritz",
       "name": "BitcoinsafariTz",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "4560.660968660969,6044.866096866097,540.2279202279196,96.67236467236489"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          39.18717377967464,
-          -6.742667358321349
+          39.198234527737526,
+          -6.777477323694009
         ]
       }
     },
     {
       "proj_id": "bitcoinzar",
       "name": "BitcoinZAR",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "699.4529914529915,6494.108262108262,386.68945868945866,96.67236467236489"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          24.90677985178037,
-          -29.148941359695844
+          22.939726769615362,
+          -30.543655710900136
         ]
       }
     },
     {
       "proj_id": "bitdevs-abuja",
       "name": "BitDevs Abuja",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "796.1253561253561,4964.410256410257,454.9287749287748,90.98575498575428"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          7.283781317537623,
-          9.251596528117341
+          7.5404848916287674,
+          9.073527271413944
         ]
       }
     },
     {
       "proj_id": "bitdevs-accra",
       "name": "Bitdevs Accra",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "272.95726495726495,1296.5470085470085,449.2421652421653,90.98575498575497"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          -0.15303860535494862,
-          5.421662488162619
+          -0.19173188543264222,
+          5.637369114337213
         ]
       }
     },
     {
       "proj_id": "bitdevs-gitega",
       "name": "Bitdevs Gitega",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "4691.452991452991,7256.11396011396,489.04843304843325,96.67236467236489"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          20.051070305479293,
-          0.15713632265727612
+          29.910055711392612,
+          -3.4001614087858183
+        ]
+      }
+    },
+    {
+      "proj_id": "bitdevs-ilorin",
+      "name": "BitDevs Ilorin",
+      "infographic": {
+        "type": "rect",
+        "coords": "1950.5071225071224,5407.965811965812,454.92877492877506,90.9857549857552"
+      },
+      "livemap": {
+        "type": "Point",
+        "coords": [
+          8.639400310715354,
+          9.06676148598892
+        ]
+      }
+    },
+    {
+      "proj_id": "bitdevs-kampala",
+      "name": "BitDevs Kampala",
+      "infographic": {
+        "type": "rect",
+        "coords": "5083.82905982906,5135.008547008547,545.9145299145302,96.67236467236489"
+      },
+      "livemap": {
+        "type": "Point",
+        "coords": [
+          32.316201062150384,
+          1.371033950688561
         ]
       }
     },
     {
       "proj_id": "bitdevs-lagos",
       "name": "BitDevs Lagos",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "295.7037037037037,4958.723646723647,489.048433048433,96.67236467236398"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          3.241426761257048,
-          6.684554732548602
+          3.423347379642946,
+          6.500926421860705
+        ]
+      }
+    },
+    {
+      "proj_id": "bitdevs-malawi",
+      "name": "BitDevs Malawi",
+      "infographic": {
+        "type": "rect",
+        "coords": "5225.994301994302,7870.267806267806,511.79487179487205,113.73219373219399"
+      },
+      "livemap": {
+        "type": "Point",
+        "coords": [
+          34.304002951440644,
+          -13.270103013449523
+        ]
+      }
+    },
+    {
+      "proj_id": "bitdevs-mauritius",
+      "name": "Bitdevs Mauritius",
+      "infographic": {
+        "type": "rect",
+        "coords": "4611.840455840455,4208.091168091168,557.2877492877496,96.67236467236489"
+      },
+      "livemap": {
+        "type": "Point",
+        "coords": [
+          57.54420651668131,
+          -20.320523410817792
         ]
       }
     },
     {
       "proj_id": "bitdevs-nairobi",
       "name": "BitDevs Nairobi",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "4702.826210826211,3645.1168091168092,483.36182336182355,79.61253561253534"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          36.8993525510335,
-          -1.6344221074273626
+          36.871413403437074,
+          -1.2851413449519968
         ]
       }
     },
     {
       "proj_id": "bitdevs-uyo",
       "name": "Bitdevs uyo",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "1501.2649572649573,5407.965811965812,437.86894586894596,90.9857549857552"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          4.946366675633984,
-          7.903406285940773
+          7.866225805138752,
+          5.048612250988784
         ]
       }
     },
     {
       "proj_id": "bitdevs-zambia",
       "name": "BitDevs Zambia",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "3269.80056980057,7460.831908831909,517.4814814814813,90.9857549857552"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          28.47051493804097,
-          -15.357435027657306
+          28.33005074182431,
+          -15.42480183297101
         ]
       }
     },
     {
       "proj_id": "bitdevsph",
       "name": "BitDevsPH",
+      "infographic": {
+        "type": "rect",
+        "coords": "1262.4273504273503,4964.410256410257,409.43589743589746,90.98575498575428"
+      },
+      "livemap": {
+        "type": "Point",
+        "coords": [
+          7.034457009862383,
+          4.784142208379529
+        ]
+      }
+    },
+    {
+      "proj_id": "bitedu-network",
+      "name": "BITEDU NETWORK",
       "infographic": null,
       "livemap": {
         "type": "Point",
         "coords": [
-          4.821324269861297,
-          7.08924881550343
+          8.641753177282183,
+          9.103785561400603
         ]
       }
     },
     {
       "proj_id": "bitfiasi-initiative",
       "name": "Bitfiasi Initiative",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "290.017094017094,1506.951566951567,517.4814814814815,102.35897435897436"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          0.0587972027644231,
-          5.54056654274084
+          -0.15294132042225972,
+          5.5892429482458965
         ]
       }
     },
     {
       "proj_id": "bitika",
       "name": "Bitika",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "4935.977207977208,2763.6923076923076,250.21082621082587,79.6125356125358"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          36.93036230645525,
-          -1.4282600204743068
+          36.776960297685044,
+          -1.2701814426605462
+        ]
+      }
+    },
+    {
+      "proj_id": "bitjr-academy-and-space",
+      "name": "BitJR Academy and Space",
+      "infographic": {
+        "type": "rect",
+        "coords": "3844.1481481481483,7261.80056980057,705.1396011396014,102.35897435897459"
+      },
+      "livemap": {
+        "type": "Point",
+        "coords": [
+          27.87596758519607,
+          -13.138123730556087
         ]
       }
     },
     {
       "proj_id": "bitkwa",
       "name": "BitKwa",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "1717.3561253561254,4964.410256410257,284.3304843304843,90.98575498575428"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          7.940410372509397,
-          9.032280209497415
+          8.625915582970244,
+          9.07417827674799
+        ]
+      }
+    },
+    {
+      "proj_id": "bitmernsolo",
+      "name": "BitmernSolo",
+      "infographic": {
+        "type": "rect",
+        "coords": "1376.159544159544,6278.017094017094,454.92877492877506,96.67236467236489"
+      },
+      "livemap": {
+        "type": "Point",
+        "coords": [
+          22.977201846065654,
+          -30.554625226263795
         ]
       }
     },
     {
       "proj_id": "bitnob",
       "name": "Bitnob",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "1097.5156695156695,4310.450142450142,278.6438746438746,85.2991452991455"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          7.957658164670098,
-          8.626912992445241
+          8.673415905575254,
+          9.117950663251165
         ]
       }
     },
     {
       "proj_id": "bitpension",
       "name": "Bitpension",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "705.1396011396012,8183.0313390313395,381.00284900284896,85.2991452991455"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          3.1993085482736072,
-          6.611381232835531
+          3.415539580726595,
+          6.535510124779464
         ]
       }
     },
     {
       "proj_id": "bitsacco",
       "name": "Bitsacco",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "4577.720797720798,2775.065527065527,329.82336182336167,73.9259259259261"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          36.96062232873535,
-          -1.5930951205424284
+          36.87098135917238,
+          -1.2825595502311729
         ]
       }
     },
     {
       "proj_id": "bitsavers-eduhub",
       "name": "Bitsavers Eduhub",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "4299.076923076923,3434.712250712251,540.2279202279205,79.61253561253534"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          36.98578392208663,
-          -1.4571601654598312
-        ]
-      }
-    },
-    {
-      "proj_id": "bitsavers-eduhub-1",
-      "name": "Bitsavers Eduhub",
-      "infographic": null,
-      "livemap": {
-        "type": "Point",
-        "coords": [
-          36.70400359776362,
-          -1.2724801033233661
+          37.00651416263703,
+          -1.0681213812355956
         ]
       }
     },
     {
       "proj_id": "bitshack",
       "name": "Bitshack",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "284.3304843304843,7398.279202279202,352.5698005698006,90.9857549857552"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          24.97393851116006,
-          -28.989715155338143
+          30.37705993282893,
+          -30.899320205787564
         ]
       }
     },
     {
       "proj_id": "bitspenda",
       "name": "BitSpenda",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "756.3190883190885,1734.4159544159545,386.6894586894589,85.29914529914527"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          -0.31305479606250963,
-          5.3846360585292885
+          -0.21168698059628388,
+          5.637678713763748
         ]
       }
     },
     {
       "proj_id": "bitwild-safaris",
       "name": "BitWild Safaris",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "3935.133903133903,8177.34472934473,500.42165242165265,96.67236467236398"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          19.887965529614906,
-          0.007553253396752247
+          19.978081442660546,
+          -0.04493970231495834
         ]
       }
     },
     {
       "proj_id": "bitwriters",
       "name": "Bitwriters",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "295.70370370370375,5186.188034188034,352.5698005698005,90.9857549857552"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          7.954113885091917,
-          9.081915204428899
+          8.927170666458707,
+          9.906733009665295
+        ]
+      }
+    },
+    {
+      "proj_id": "bityara",
+      "name": "Bityara",
+      "infographic": {
+        "type": "rect",
+        "coords": "1114.5754985754986,5407.965811965812,341.19658119658106,90.9857549857552"
+      },
+      "livemap": {
+        "type": "Point",
+        "coords": [
+          8.712643217059888,
+          9.096334717981813
+        ]
+      }
+    },
+    {
+      "proj_id": "bitzed",
+      "name": "Bitzed",
+      "infographic": {
+        "type": "rect",
+        "coords": "4321.823361823362,7051.396011396011,272.95726495726467,90.9857549857552"
+      },
+      "livemap": {
+        "type": "Point",
+        "coords": [
+          27.825826421860704,
+          -13.089752620357054
         ]
       }
     },
     {
       "proj_id": "blocc-media-and-advertising",
       "name": "Blocc Media and Advertising",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "2069.925925925926,8655.019943019943,244.52421652421617,96.6723646723658"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          7.587836379000398,
-          9.008284897700237
+          7.487278276747988,
+          9.107284417029756
         ]
       }
     },
     {
       "proj_id": "botmecash",
       "name": "BotmeCash",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "682.3931623931624,4310.450142450142,398.06267806267806,85.2991452991455"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          3.4198947951279677,
-          6.254088703949311
+          3.335052620357054,
+          6.547873578139295
+        ]
+      }
+    },
+    {
+      "proj_id": "breezee",
+      "name": "Breezee",
+      "infographic": {
+        "type": "rect",
+        "coords": "1853.834757834758,1131.635327635328,318.4501424501427,79.61253561253557"
+      },
+      "livemap": {
+        "type": "Point",
+        "coords": [
+          2.331533476923468,
+          9.346641721891805
         ]
       }
     },
     {
       "proj_id": "briing-financial-services-shekel-app",
       "name": "Briing Financial Services (Shekel App)",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "1103.2022792022792,5186.188034188034,290.017094017094,90.9857549857552"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          3.409920516045563,
-          6.215260754835795
+          3.4284403876506104,
+          6.515717591116654
         ]
       }
     },
     {
       "proj_id": "btc-elephant-fund",
       "name": "BTC Elephant Fund",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "915.5441595441595,7176.5014245014245,625.5270655270657,96.67236467236489"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          25.142645967617515,
-          -29.196946629778708
+          30.438678034438688,
+          -24.523358427734003
         ]
       }
     },
     {
       "proj_id": "btc-shule",
       "name": "BTC Shule",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "4657.333333333333,7051.396011396011,392.37606837606836,90.9857549857552"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          20.041349055272992,
-          0.21943068327678858
+          29.8746,
+          -3.4264
         ]
       }
     },
     {
       "proj_id": "btc-sudan",
       "name": "BTC_Sudan",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "3906.7008547008545,1120.2621082621083,437.86894586894596,79.61253561253557"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          20.054989198414702,
-          0.029037833577257425
+          32.526960088945884,
+          15.473060132783479
         ]
       }
     },
     {
       "proj_id": "btrust-builders",
       "name": "Btrust Builders",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "290.017094017094,8404.809116809116,500.4216524216524,102.35897435897459"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          20.117510507967577,
-          0.1234082292641276
+          20.003487823687205,
+          0.049878202512991215
         ]
       }
     },
     {
       "proj_id": "btrust-developer-day",
       "name": "Btrust Developer Day",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "4805.185185185185,8171.65811965812,671.0199430199427,102.35897435897368"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          19.823060151063178,
-          0.19729375919441794
+          20.04095760221445,
+          -0.028678821817552325
         ]
       }
     },
     {
       "proj_id": "btrust-team",
       "name": "BTrust Team",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "1990.3133903133903,8183.031339031339,278.6438746438748,90.9857549857552"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          19.965120708617416,
-          0.2471067518478043
+          19.982898992833718,
+          -0.04698463103929541
         ]
       }
     },
     {
       "proj_id": "calabar-bitcoin",
       "name": "Calabar Bitcoin Club",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "1723.042735042735,5180.5014245014245,636.9002849002848,96.67236467236489"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          4.648706415614745,
-          8.48931839085789
+          8.334926186923209,
+          5.002868280335727
         ]
       }
     },
     {
       "proj_id": "cardware-wallet",
       "name": "Cardware Wallet",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "1882.2678062678062,6278.017094017094,557.2877492877494,90.9857549857552"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          18.66608548207855,
-          -33.93686218507245
+          18.46555187862775,
+          -33.89694035482646
         ]
       }
     },
     {
       "proj_id": "cashwyre",
       "name": "Cashwyre",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "301.3903133903134,4316.136752136752,369.6296296296297,79.6125356125358"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          3.21256549718534,
-          6.212677236118624
+          3.3363416349648944,
+          6.550151903745503
         ]
       }
     },
     {
       "proj_id": "chapsmart",
       "name": "CHAPSMART",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "5311.293447293448,5862.894586894587,392.37606837606836,102.35897435897459"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          39.19371968525085,
-          -6.670164455829451
+          37.37580579499788,
+          -3.083762330167296
         ]
       }
     },
     {
       "proj_id": "citrusrate",
       "name": "Citrusrate",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "3036.6495726495727,8410.495726495727,381.00284900284896,96.67236467236398"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          19.72949950575617,
-          0.25890849568151714
+          20.032698372321004,
+          -0.029441746679789757
         ]
       }
     },
     {
       "proj_id": "college-btc",
       "name": "College BTC",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "290.01709401709405,1734.4159544159545,443.5555555555556,85.29914529914527"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          -0.07322580969422313,
-          5.513701283643596
+          -0.16050403678833974,
+          5.646102404807821
         ]
       }
     },
     {
       "proj_id": "crack-the-orange",
       "name": "Crack The Orange",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "1359.099715099715,8404.809116809116,562.9743589743591,102.35897435897459"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          8.07168997877986,
-          8.659885463987173
+          8.667659480182655,
+          9.038668458867464
         ]
       }
     },
     {
       "proj_id": "dada-devs",
       "name": "Dada Devs",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "5339.726495726496,3423.3390313390314,375.31623931623926,90.98575498575474"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          36.68805146616737,
-          -1.181285468620762
+          36.836518585236135,
+          -1.3399152377981518
         ]
       }
     },
     {
       "proj_id": "dakar-bitcoin-days",
       "name": "Dakar Bitcoin Days",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "267.27065527065537,2991.156695156695,591.4074074074074,90.9857549857552"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          -17.721310698463924,
-          14.6984937070573
+          -17.46846790588324,
+          14.760693298586881
         ]
       }
     },
     {
       "proj_id": "digi-oats",
       "name": "Digi Oats",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "796.1253561253561,4509.481481481482,301.3903133903134,96.67236467236398"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          7.455717158894727,
-          9.326997142932072
+          7.527045420401891,
+          9.033827399073918
         ]
       }
     },
     {
       "proj_id": "easysats",
       "name": "EasySats",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "272.95726495726495,5857.207977207977,358.25641025641033,96.67236467236489"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          20.13684270441943,
-          0.1292347938546459
+          17.031697047732518,
+          -22.553026713097964
         ]
       }
     },
     {
       "proj_id": "ecobitz",
       "name": "EcoBitz",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "4509.481481481482,3838.4615384615386,307.07692307692287,79.61253561253534"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          36.803830222215595,
-          -1.2967860619515674
+          37.25135397828508,
+          -1.4827158127028253
         ]
       }
     },
     {
       "proj_id": "exonumia-africa",
       "name": "Exonumia Africa",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "3434.712250712251,8404.809116809116,352.56980056980046,102.35897435897459"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          19.91673843595342,
-          0.34325348362758273
+          19.990459550231172,
+          0.0490813591723832
         ]
       }
     },
     {
       "proj_id": "fedi",
       "name": "Fedi",
-      "infographic": null,
-      "livemap": {
-        "type": "Point",
-        "coords": [
-          19.793872359567686,
-          0.05794734411404144
-        ]
-      }
-    },
-    {
-      "proj_id": "bitcoin-flash",
-      "name": "Bitcoin Flash",
       "infographic": {
         "type": "rect",
-        "coords": "1743.8936372269707,1789.3865147198483"
+        "coords": "5487.578347578347,8177.34472934473,250.21082621082678,90.9857549857552"
       },
       "livemap": {
         "type": "Point",
         "coords": [
-          19.905190016552886,
-          -0.03247286684983059
+          20.04871850323926,
+          -0.011247552717193268
+        ]
+      }
+    },
+    {
+      "proj_id": "flash",
+      "name": "Flash",
+      "infographic": null,
+      "livemap": {
+        "type": "Point",
+        "coords": [
+          2.42800802352919,
+          6.35440167535328
         ]
       }
     },
     {
       "proj_id": "free-tech-institute",
       "name": "Free Tech Institute",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "5106.575498575498,7051.396011396011,597.0940170940175,96.67236467236489"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          20.246075352982892,
-          -0.025346818675227936
+          29.897093422191254,
+          -3.446384698577944
         ]
       }
     },
     {
       "proj_id": "geyser",
       "name": "Geyser",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "1654.8034188034187,8183.0313390313395,318.4501424501425,90.98575498575428"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          20.17888153497029,
-          0.14103981663762982
+          19.985381414763864,
+          -0.04781523779815177
         ]
       }
     },
     {
       "proj_id": "gorilla-sats",
       "name": "Gorilla sats",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "4617.527065527065,5135.008547008547,415.12250712250716,96.67236467236489"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          32.7520354961601,
-          0.5677206518021809
+          32.63102313536834,
+          0.3407805180529568
         ]
       }
     },
     {
       "proj_id": "gridless",
       "name": "Gridless Inc",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "4350.25641025641,8660.706552706553,409.43589743589746,96.67236467236398"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          19.952592207843118,
-          -0.11399185071446964
+          19.953015368960706,
+          0.017101007166283443
+        ]
+      }
+    },
+    {
+      "proj_id": "grim-app",
+      "name": "Grimm App",
+      "infographic": {
+        "type": "rect",
+        "coords": "2456.6153846153848,1336.3532763532764,352.56980056980046,85.29914529914527"
+      },
+      "livemap": {
+        "type": "Point",
+        "coords": [
+          12.341026137512799,
+          7.409411780175171
         ]
       }
     },
     {
       "proj_id": "gwensas-mining",
       "name": "Gwensas Mining",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "3224.3076923076924,1336.3532763532764,540.2279202279201,85.29914529914527"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          34.69662713112147,
-          0.881870830209868
+          29.22402023884075,
+          -1.6322489151647774
         ]
       }
     },
     {
-      "proj_id": "hope-with-itcoin",
-      "name": "Hope With ₿itcoin",
-      "infographic": null,
+      "proj_id": "hakifedha-or-bitcoin-and-privacy-for-civil-society-in-africa",
+      "name": "HakiFedha | Bitcoin & Privacy for Civil Society in Africa",
+      "infographic": {
+        "type": "rect",
+        "coords": "1086.1424501424501,8910.917378917378,415.12250712250716,102.35897435897459"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          19.922578580702005,
-          0.12299515033559547
+          19.96939824780918,
+          0.009355894551127586
+        ]
+      }
+    },
+    {
+      "proj_id": "hope-with-bitcoin",
+      "name": "Hope With ₿itcoin",
+      "infographic": {
+        "type": "rect",
+        "coords": "1609.3105413105413,1558.131054131054,562.9743589743589,90.98575498575497"
+      },
+      "livemap": {
+        "type": "Point",
+        "coords": [
+          2.4236072876683177,
+          6.332721153731528
         ]
       }
     },
     {
       "proj_id": "ipaybtc",
       "name": "iPayBTC",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "1393.2193732193732,4310.450142450142,295.7037037037037,85.2991452991455"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          3.5077491653285775,
-          6.457598413995271
+          3.3870217232520115,
+          6.475015582970243
         ]
       }
     },
     {
       "proj_id": "juicy-b",
       "name": "Juicy B",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "4373.002849002849,4560.660968660969,284.33048433048407,90.98575498575428"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          32.40104176079264,
-          0.5287758477403949
+          32.57381759111666,
+          0.3968403876506104
         ]
       }
     },
     {
       "proj_id": "l-afrique-parle-bitcoin",
       "name": "L'Afrique parle Bitcoin",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "278.64387464387465,3417.6524216524217,665.3333333333333,96.67236467236444"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          -3.7903377916154826,
-          5.334292151172253
+          -4.0090328894307525,
+          5.380987207367402
         ]
       }
     },
     {
       "proj_id": "luminous-exchange",
       "name": "Luminous Exchange",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "1381.8461538461538,4748.319088319088,363.94301994301986,102.35897435897459"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          7.966931921739603,
-          9.140710180136908
+          3.344994097118713,
+          6.581606026899045
+        ]
+      }
+    },
+    {
+      "proj_id": "lwandi-bitcoin",
+      "name": "Lwandi Bitcoin",
+      "infographic": {
+        "type": "rect",
+        "coords": "5095.202279202279,6499.794871794872,483.36182336182355,108.04558404558338"
+      },
+      "livemap": {
+        "type": "Point",
+        "coords": [
+          35.52802952264839,
+          -18.62072741278414
         ]
       }
     },
     {
       "proj_id": "mavapay",
       "name": "Mavapay",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "2388.3760683760684,5186.188034188034,346.88319088319076,96.67236467236489"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          3.431342245302479,
-          6.226058195261471
+          3.3757121763127937,
+          6.574278202512991
         ]
       }
     },
     {
       "proj_id": "meta-coffee",
       "name": "META COFFEE",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "4509.481481481482,4941.663817663817,460.61538461538476,96.67236467236398"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          32.46640734527,
-          0.4595456895823148
+          32.57467827674799,
+          0.3969844170297569
         ]
       }
     },
     {
-      "proj_id": "mulastack",
-      "name": "MulaStack",
-      "infographic": null,
+      "proj_id": "money-badger",
+      "name": "Money Badger",
+      "infographic": {
+        "type": "rect",
+        "coords": "3457.4586894586896,8183.0313390313395,466.301994301994,90.98575498575428"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          36.780210866457985,
-          -1.6284742839859039
+          19.970291957937754,
+          0.004175193028801972
         ]
       }
     },
     {
       "proj_id": "mwasi-na-bitcoin",
       "name": "Mwasi na bitcoin",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "3218.6210826210827,1114.5754985754986,557.2877492877492,85.29914529914527"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          34.70302520028106,
-          0.514424415217271
+          29.238357787137385,
+          -1.6293902650954128
         ]
       }
     },
     {
       "proj_id": "neowealth",
       "name": "NeoWealth",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "5322.666666666667,8410.495726495725,381.00284900284896,96.6723646723658"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          20.18037377621009,
-          0.057488668919475516
+          20.004357787137383,
+          0.04980973490458728
         ]
       }
     },
     {
       "proj_id": "ola-bitcoin",
       "name": "Ola Bitcoin",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "3394.905982905983,6181.34472934473,398.06267806267806,96.67236467236398"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          19.971986463245138,
-          -0.12182763852742974
+          25.917260254037846,
+          -24.6232
+        ]
+      }
+    },
+    {
+      "proj_id": "open-study-hubs",
+      "name": "Open Study Hubs",
+      "infographic": {
+        "type": "rect",
+        "coords": "5146.381766381766,7671.236467236467,562.9743589743593,108.04558404558429"
+      },
+      "livemap": {
+        "type": "Point",
+        "coords": [
+          34.30734527024032,
+          -13.212708741112854
         ]
       }
     },
     {
       "proj_id": "orange",
       "name": "Orange",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "2399.7492877492878,6715.88603988604,324.13675213675197,96.67236467236489"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          18.370755746475457,
-          -33.555438546156616
+          18.44494681367059,
+          -33.96250864740699
         ]
       }
     },
     {
       "proj_id": "orphans-of-uganda-children-center",
       "name": "Orphans of Uganda Children Center",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "4663.019943019943,4560.660968660969,1052.0227920227926,96.67236467236398"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          32.60242758877642,
-          0.31386799676270505
+          33.76080536137483,
+          0.5662165379807986
+        ]
+      }
+    },
+    {
+      "proj_id": "osguild",
+      "name": "OSGuild",
+      "infographic": {
+        "type": "rect",
+        "coords": "5186.188034188034,4208.091168091168,352.56980056980046,96.67236467236489"
+      },
+      "livemap": {
+        "type": "Point",
+        "coords": [
+          57.54030968279236,
+          -20.359106089701744
+        ]
+      }
+    },
+    {
+      "proj_id": "pan-african-bitcoin",
+      "name": "Pan African Bitcoin",
+      "infographic": {
+        "type": "rect",
+        "coords": "3963.5669515669515,1717.3561253561254,591.4074074074078,96.67236467236467"
+      },
+      "livemap": {
+        "type": "Point",
+        "coords": [
+          19.955061670936043,
+          -0.002355118030932461
         ]
       }
     },
     {
       "proj_id": "pay-with-flash",
       "name": "Pay With Flash",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "5265.80056980057,2968.4102564102564,489.04843304843325,85.2991452991455"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          36.73336343586745,
-          -1.6518682664393167
+          20.02163159914622,
+          -0.036001026629488724
         ]
       }
     },
     {
       "proj_id": "proof-of-bitcoin",
       "name": "Proof of Bitcoin",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "1097.5156695156695,6499.794871794872,506.1082621082621,90.98575498575428"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          28.204866928201213,
-          -25.546031529081443
+          28.230101197734403,
+          -25.720863134329406
         ]
       }
     },
     {
       "proj_id": "proof-of-work-academy",
       "name": "PROOF OF WORK ACADEMY",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "4566.347578347579,5862.894586894587,733.5726495726494,96.67236467236489"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          39.319512017234956,
-          -6.718518106146085
+          36.71236020352787,
+          -3.4013662478440394
         ]
       }
     },
     {
       "proj_id": "qrb-labs",
       "name": "QRB Labs",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "4060.2393162393164,2359.94301994302,358.25641025641016,85.2991452991455"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          38.71149066664679,
-          9.0003581858547
+          38.7593,
+          9.16665063509461
         ]
       }
     },
     {
       "proj_id": "recursive-capital",
       "name": "Recursive capital",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "2968.4102564102564,8660.706552706553,557.2877492877492,90.9857549857552"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          7.983757738269929,
-          9.118963986743072
+          19.982250033006892,
+          -0.03806492705553929
+        ]
+      }
+    },
+    {
+      "proj_id": "rurbit",
+      "name": "Rurbit",
+      "infographic": {
+        "type": "rect",
+        "coords": "5237.3675213675215,7250.427350427351,307.07692307692287,96.67236467236489"
+      },
+      "livemap": {
+        "type": "Point",
+        "coords": [
+          29.899471350963577,
+          -3.357366990223754
+        ]
+      }
+    },
+    {
+      "proj_id": "sabi-wallet",
+      "name": "Sabi Wallet",
+      "infographic": {
+        "type": "rect",
+        "coords": "2439.5555555555557,5402.279202279202,403.74928774928776,96.67236467236489"
+      },
+      "livemap": {
+        "type": "Point",
+        "coords": [
+          8.658198992833716,
+          9.128984631039296
         ]
       }
     },
     {
       "proj_id": "satoshi-leaners",
       "name": "Satoshi Leaners",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "1541.071225071225,3866.894586894587,540.2279202279201,90.98575498575474"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          19.9816692687739,
-          0.09480998344711415
+          1.2684915960716974,
+          6.145895595796568
+        ]
+      }
+    },
+    {
+      "proj_id": "satoshi-sister-circle",
+      "name": "Satoshi Sister Circle ",
+      "infographic": {
+        "type": "rect",
+        "coords": "1518.3247863247864,8899.544159544159,636.9002849002848,113.73219373219399"
+      },
+      "livemap": {
+        "type": "Point",
+        "coords": [
+          -1.0076100789634364,
+          7.942900783130498
         ]
       }
     },
     {
       "proj_id": "satoshi-s-journal",
       "name": "Satoshi's Journal",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "972.4102564102565,8655.019943019943,528.8547008547008,102.35897435897641"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          19.917413544983606,
-          0.0007729490354237353
+          19.999127379678136,
+          -0.049992384757819565
         ]
       }
     },
     {
       "proj_id": "satoshify-me",
       "name": "Satoshify Me",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "4537.91452991453,2962.7236467236467,426.49572649572656,90.9857549857552"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          37.041115789396386,
-          -1.426214904775929
+          36.85336601955249,
+          -1.3309572980728486
         ]
       }
     },
     {
       "proj_id": "sats2data",
       "name": "Sats2Data",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "4918.917378917379,8416.182336182335,386.68945868945866,90.9857549857552"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          19.90626978298574,
-          0.3330250568072286
+          19.95669872981078,
+          -0.02500000000000001
         ]
       }
     },
     {
       "proj_id": "satscode",
       "name": "Satscode",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "4094.3589743589746,3832.774928774929,346.88319088319076,85.29914529914504"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          36.72072094065545,
-          -1.6484807200569458
+          36.78780008199688,
+          -1.3286676850809584
         ]
       }
     },
     {
       "proj_id": "school-of-bitcoin",
       "name": "School of bitcoin",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "807.4985754985756,8404.809116809116,528.8547008547008,102.35897435897641"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          20.116242858204572,
-          0.30107495823567665
-        ]
-      }
-    },
-    {
-      "proj_id": "shugamine-1",
-      "name": "Shugamine",
-      "infographic": null,
-      "livemap": {
-        "type": "Point",
-        "coords": [
-          7.3972822627172485,
-          8.849152533182657
+          20.021130913087035,
+          0.0453153893518325
         ]
       }
     },
     {
       "proj_id": "shugamine",
       "name": "Shugamine ltd",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "1796.968660968661,4748.319088319088,449.24216524216536,96.67236467236489"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          7.642958302608941,
-          8.904743345464922
+          7.530239962442081,
+          9.08437986101869
         ]
       }
     },
     {
       "proj_id": "simplb",
       "name": "SimplB",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "1182.8148148148148,6727.259259259259,290.017094017094,90.9857549857552"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          24.81314721971333,
-          -29.356918950667623
+          22.77748657782019,
+          -34.04256920350997
         ]
       }
     },
     {
       "proj_id": "simply-sow",
       "name": "Simply Sow",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "1819.7150997150998,6949.037037037037,426.49572649572656,96.67236467236398"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          25.136195405066648,
-          -29.08868629029634
+          22.180099918003126,
+          -34.14643231491904
         ]
       }
     },
     {
       "proj_id": "sowetobtc",
       "name": "SowetoBtc",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "1478.5185185185185,6727.259259259259,381.00284900284896,90.9857549857552"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          25.040512584958346,
-          -29.037181945098013
+          27.856952019020337,
+          -26.26474173180121
         ]
       }
     },
     {
       "proj_id": "sparrow-wallet",
       "name": "Sparrow Wallet",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "2462.3019943019945,6272.330484330484,489.0484330484328,96.67236467236489"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          25.242809433575708,
-          -28.952510047388927
+          22.921718638715593,
+          -30.52714341433323
         ]
       }
     },
     {
       "proj_id": "stealth-money",
       "name": "Stealth Money",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "1108.888888888889,8183.031339031339,483.3618233618231,90.9857549857552"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          3.239407182914487,
-          6.5419453645611245
+          19.96403300998307,
+          0.03473291852294986
         ]
       }
     },
     {
       "proj_id": "tando",
       "name": "Tando",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "4981.470085470086,2968.4102564102564,272.95726495726467,85.2991452991455"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          36.56702626525664,
-          -1.518368573037167
+          36.83681298734513,
+          -1.3133979531515139
         ]
       }
     },
     {
       "proj_id": "tapnob",
       "name": "Tapnob",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "1410.2792022792023,5186.188034188034,290.017094017094,85.2991452991455"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          8.053576689458797,
-          8.717296552390827
+          8.655382844478906,
+          9.06528752214815
         ]
       }
     },
     {
       "proj_id": "the-bitcoiner-test",
       "name": "The Bitcoiner Test",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "2314.4501424501423,8177.34472934473,517.4814814814818,90.9857549857552"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          20.16319975330844,
-          0.23584771621649192
+          19.95048659656292,
+          -0.006958655048003276
         ]
       }
     },
     {
       "proj_id": "the-metamorphosis-hub",
       "name": "The Metamorphosis Hub",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "3343.7264957264956,5476.205128205128,779.0655270655275,90.9857549857552"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          31.10139750454393,
-          -17.748886081963878
+          29.085803906352,
+          -18.304317351806382
         ]
       }
     },
     {
       "proj_id": "the-orange-sun",
       "name": "The Orange Sun",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "1518.3247863247864,8655.019943019943,534.5413105413106,102.35897435897459"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          20.01672041150167,
-          -0.11346586613474866
+          20.0485147863138,
+          -0.012096094779983394
         ]
       }
     },
     {
       "proj_id": "thecore21m",
       "name": "thecore21m",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "4827.931623931624,3838.4615384615386,449.24216524216536,85.29914529914504"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          36.71225555859258,
-          -1.2093347068234426
+          36.85875819393019,
+          -1.2699533627788677
         ]
       }
     },
     {
       "proj_id": "togo-bitcoin-community",
       "name": "TOGO BITCOIN COMMUNITY",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "295.70370370370375,3861.2079772079774,750.6324786324788,96.67236467236444"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          20.0744806212843,
-          0.025806768197315335
+          1.1822662859816635,
+          6.124343273287477
         ]
       }
     },
     {
       "proj_id": "trezor-academy",
       "name": "Trezor Academy",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "1939.133903133903,8410.495726495727,534.5413105413108,96.67236467236398"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          19.90251381012553,
-          0.3715522287795189
+          20.04493970231496,
+          -0.021918557339453852
         ]
       }
     },
     {
       "proj_id": "tri-bitcoin",
       "name": "Tri Bitcoin",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "784.7521367521367,6721.572649572649,381.00284900284896,96.67236467236489"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          18.42731798830667,
-          -34.03333051443322
+          18.39760403678834,
+          -33.967302404807825
         ]
       }
     },
     {
       "proj_id": "trojan-mining",
       "name": "Trojan mining",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "2268.957264957265,4748.319088319088,460.6153846153843,96.67236467236489"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          3.0825900341891472,
-          6.55127489344852
+          3.4151669900169326,
+          6.48966708147705
         ]
       }
     },
     {
       "proj_id": "volt-wallet",
       "name": "Volt Wallet",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "295.7037037037037,8183.0313390313395,392.37606837606836,90.98575498575428"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          19.856870042045028,
-          0.18011920678048382
+          20.02649596321166,
+          0.04240240480782131
         ]
       }
     },
     {
       "proj_id": "wedobitcoin",
       "name": "WeDoBitcoin",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "1620.6837606837607,6494.108262108262,437.86894586894596,90.9857549857552"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          25.109576940849877,
-          -28.959951411594226
+          22.823940611048574,
+          -34.00154004919813
         ]
       }
     },
     {
       "proj_id": "west-data-group",
       "name": "West Data Group",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "4446.928774928775,2354.25641025641,545.9145299145293,96.67236467236489"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          38.96645663071196,
-          8.777174354421362
+          38.75514925399773,
+          8.994092566090126
         ]
       }
     },
     {
       "proj_id": "what-s-haute-with-halima",
       "name": "What's Haute With Halima",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "301.3903133903134,5407.965811965812,784.7521367521367,96.67236467236489"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          7.3202683553411365,
-          8.889243435796907
+          7.541921150810312,
+          9.05380368009086
         ]
       }
     },
     {
       "proj_id": "women-bitcoin",
       "name": "Women Bitcoin Club",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "2018.7464387464388,4958.723646723647,642.5868945868947,96.67236467236398"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          7.712774136577896,
-          9.156491109823964
+          7.445715582970243,
+          9.050078276747989
         ]
       }
     },
     {
       "proj_id": "women-of-satoshi-cooperative",
       "name": "Women of Satoshi Cooperative",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "4299.076923076923,7870.267806267806,904.1709401709404,113.73219373219399"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          19.7122143745126,
-          -0.005720884797395853
+          33.796219959692934,
+          -13.945823995735681
         ]
       }
     },
     {
       "proj_id": "xaml-bitcoin",
       "name": "Xamlé Bitcoin",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "824.5584045584045,2786.4387464387464,483.36182336182344,90.9857549857552"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          -17.389680431572597,
-          14.846632056395666
+          -17.454125330633104,
+          14.692210648200096
+        ]
+      }
+    },
+    {
+      "proj_id": "zazapay-lightning",
+      "name": "ZazaPay lightning",
+      "infographic": {
+        "type": "rect",
+        "coords": "278.64387464387465,1961.8803418803418,585.7207977207977,96.67236467236489"
+      },
+      "livemap": {
+        "type": "Point",
+        "coords": [
+          -1.013659550231173,
+          7.897418640827617
         ]
       }
     },
     {
       "proj_id": "zivo-labs",
       "name": "Zivo Labs",
-      "infographic": null,
+      "infographic": {
+        "type": "rect",
+        "coords": "3855.5213675213677,5715.042735042735,352.5698005698,90.98575498575428"
+      },
       "livemap": {
         "type": "Point",
         "coords": [
-          30.98449553872152,
-          -17.716770353268608
+          29.17736985115748,
+          -19.004440721330273
         ]
       }
     }

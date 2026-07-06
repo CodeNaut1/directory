@@ -19,7 +19,7 @@ export default function Infographic() {
           onClick={() => setShowInstructions(false)}
         >
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <p>Tap a country on the map to see Bitcoin initiatives in that region.</p>
+            <p>Tap on a Project or Country on the map to learn more!</p>
             <button
               className="got-it-btn"
               onClick={() => setShowInstructions(false)}

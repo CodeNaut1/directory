@@ -149,7 +149,7 @@ export default function BitcoinLiveMap({
       .map(coord => {
         // Find matching project data
         const project = projectsData.projects.find(
-          (p) => p.id === coord.proj_id && p.status === 'approved'
+          (p) => (p.id === coord.proj_id || p.slug === coord.proj_id) && p.status === 'approved'
         );
 
         if (!project) return null;

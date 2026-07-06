@@ -230,7 +230,7 @@ export default function HomePage() {
                   style={{
                     fontFamily: '"Instrument Serif", Georgia, serif',
                     fontSize: 'clamp(2rem, 5vw, 4rem)',
-                    fontWeight: 400,
+                    fontWeight: 500,
                     lineHeight: 1.2,
                     color: '#1F2937',
                     margin: 0,

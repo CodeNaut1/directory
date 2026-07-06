@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { getProjectUrl } from '../utils/projectUrl';
+import ProjectStatusBadge, { type ProjectStatus } from '../components/ProjectStatusBadge';
 
 interface Project {
   id: string;
@@ -13,7 +14,7 @@ interface Project {
   updated_at: string;
 }
 
-type ProjectStatus = 'verified' | 'under_review' | 'needs_update' | 'unpublished';
+type ProjectStatusType = ProjectStatus;
 
 export default function Dashboard() {
   const navigate = useNavigate();
@@ -36,7 +37,7 @@ export default function Dashboard() {
   const [isUpdatingEmail, setIsUpdatingEmail] = useState(false);
   const [isUpdatingPassword, setIsUpdatingPassword] = useState(false);
 
-  const getProjectStatus = (project: Project): ProjectStatus => {
+  const getProjectStatus = (project: Project): ProjectStatusType => {
     if (project.status === 'approved') {
       return 'verified';
     }
@@ -103,72 +104,6 @@ export default function Dashboard() {
 
     fetchProjects();
   }, []);
-
-  const getStatusBadge = (status: ProjectStatus) => {
-    switch (status) {
-      case 'verified':
-        return {
-          background: '#ECFDF3',
-          color: '#027A48',
-          icon: (
-            <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor">
-              <path
-                fillRule="evenodd"
-                d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                clipRule="evenodd"
-              />
-            </svg>
-          ),
-          text: 'Verified',
-        };
-      case 'under_review':
-        return {
-          background: '#FFF4E6',
-          color: '#B54708',
-          icon: (
-            <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor">
-              <path
-                fillRule="evenodd"
-                d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
-                clipRule="evenodd"
-              />
-            </svg>
-          ),
-          text: 'Under Review',
-        };
-      case 'needs_update':
-        return {
-          background: '#FEF3F2',
-          color: '#B42318',
-          icon: (
-            <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor">
-              <path
-                fillRule="evenodd"
-                d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
-                clipRule="evenodd"
-              />
-            </svg>
-          ),
-          text: 'Needs Update',
-        };
-      case 'unpublished':
-        return {
-          background: '#F2F4F7',
-          color: '#475467',
-          icon: (
-            <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor">
-              <path
-                fillRule="evenodd"
-                d="M3.707 2.293a1 1 0 00-1.414 1.414l14 14a1 1 0 001.414-1.414l-1.473-1.473A10.014 10.014 0 0019.542 10C18.268 5.943 14.478 3 10 3a9.958 9.958 0 00-4.512 1.074l-1.78-1.781zm4.261 4.26l1.514 1.515a2.003 2.003 0 012.45 2.45l1.514 1.514a4 4 0 00-5.478-5.478z"
-                clipRule="evenodd"
-              />
-              <path d="M12.454 16.697L9.75 13.992a4 4 0 01-3.742-3.741L2.335 6.578A9.98 9.98 0 00.458 10c1.274 4.057 5.065 7 9.542 7 .847 0 1.669-.105 2.454-.303z" />
-            </svg>
-          ),
-          text: 'Unpublished',
-        };
-    }
-  };
 
   const formatDate = (dateString: string | undefined) => {
     // Try both updatedAt and updated_at from API
@@ -685,7 +620,6 @@ export default function Dashboard() {
                       <tbody>
                         {projects.map((project) => {
                           const status = getProjectStatus(project);
-                          const statusBadge = getStatusBadge(status);
                           return (
                             <tr
                               key={project.id}
@@ -708,22 +642,7 @@ export default function Dashboard() {
                                   padding: '1rem',
                                 }}
                               >
-                                <span
-                                  style={{
-                                    display: 'inline-flex',
-                                    alignItems: 'center',
-                                    gap: '0.375rem',
-                                    padding: '0.375rem 0.75rem',
-                                    background: statusBadge.background,
-                                    color: statusBadge.color,
-                                    borderRadius: '9999px',
-                                    fontSize: '0.875rem',
-                                    fontWeight: 600,
-                                  }}
-                                >
-                                  {statusBadge.icon}
-                                  {statusBadge.text}
-                                </span>
+                                <ProjectStatusBadge status={status} />
                               </td>
                               <td
                                 style={{
@@ -752,7 +671,6 @@ export default function Dashboard() {
                   <div className="projects-cards" style={{ display: 'none' }}>
                     {projects.map((project) => {
                       const status = getProjectStatus(project);
-                      const statusBadge = getStatusBadge(status);
                       return (
                         <div
                           key={project.id}
@@ -768,22 +686,7 @@ export default function Dashboard() {
                             {project.name}
                           </h3>
                           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
-                            <span
-                              style={{
-                                display: 'inline-flex',
-                                alignItems: 'center',
-                                gap: '0.375rem',
-                                padding: '0.375rem 0.75rem',
-                                background: statusBadge.background,
-                                color: statusBadge.color,
-                                borderRadius: '9999px',
-                                fontSize: '0.875rem',
-                                fontWeight: 600,
-                              }}
-                            >
-                              {statusBadge.icon}
-                              {statusBadge.text}
-                            </span>
+                            <ProjectStatusBadge status={status} />
                           </div>
                           <p style={{ fontSize: '0.875rem', color: '#6B7280', margin: '0 0 1rem 0' }}>
                             Updated: {formatDate(project.updated_at || project.updatedAt)}

@@ -131,11 +131,11 @@ export default function InfographicMap() {
       style={{ width: '100%' }}
       xmlns="http://www.w3.org/2000/svg"
       xmlnsXlink="http://www.w3.org/1999/xlink"
-      viewBox="0 0 7984 11680"
+      viewBox="0 0 5988 9192"
     >
       <image
         xlinkHref={infographicImage}
-        style={{ width: '7984px' }}
+        style={{ width: '5988px' }}
       />
 
       {/* Render all country regions */}
