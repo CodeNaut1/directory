@@ -1,14 +1,14 @@
 /**
- * Fix malformed project slugs and approve projects that have coordinates.
+ * One-time cleanup (already run). Archived so it is excluded from production builds.
  *
- * Usage: npx tsx scripts/fix-malformed-slugs.ts
+ * Usage: npx tsx scripts/archive/fix-malformed-slugs.ts
  */
 
 import fs from 'fs';
 import path from 'path';
-import { prisma } from '../lib/db';
+import { prisma } from '../../lib/db';
 
-const REPO_ROOT = path.resolve(__dirname, '../..');
+const REPO_ROOT = path.resolve(__dirname, '../../..');
 const PROJECTS_PATH = path.join(REPO_ROOT, 'client/src/data/projects.json');
 const COORDS_PATH = path.join(REPO_ROOT, 'client/src/data/coordinates.json');
 
@@ -111,7 +111,6 @@ async function main() {
     }
 
     project.status = 'approved';
-    project.active = true;
     await approveProjectInDatabase(fix.projectId);
 
     console.log(`🔄 Status corrected: ${fix.name} (was: ${previousStatus} → now: approved)`);

@@ -229,9 +229,9 @@ export default function HomePage() {
                 <h1
                   style={{
                     fontFamily: '"Instrument Serif", Georgia, serif',
-                    fontSize: 'clamp(2rem, 5vw, 4rem)',
+                    fontSize: 'clamp(2rem, 5vw, 4.6rem)',
                     fontWeight: 500,
-                    lineHeight: 1.2,
+                    lineHeight: 1,
                     color: '#1F2937',
                     margin: 0,
                   }}
