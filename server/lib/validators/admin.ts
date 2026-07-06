@@ -16,7 +16,7 @@ export const exportProjectsQuerySchema = z
   .object({
     startDate: dateStringSchema,
     endDate: dateStringSchema,
-    status: z.enum(['pending', 'approved', 'rejected', 'draft']).optional(),
+    status: z.enum(['pending', 'approved', 'rejected', 'unpublished']).optional(),
   })
   .refine((data) => data.startDate <= data.endDate, {
     message: 'startDate must be on or before endDate',

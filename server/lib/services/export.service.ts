@@ -3,13 +3,13 @@
  */
 
 import { prisma } from '@/lib/db';
-import { SubmissionStatus } from '@prisma/client';
+import { ProjectStatus } from '@prisma/client';
 import { toCsv } from '@/lib/utils/csv';
 
 export interface ExportProjectsFilters {
   startDate: Date;
   endDate: Date;
-  status?: SubmissionStatus;
+  status?: ProjectStatus;
 }
 
 type ProjectWithRelations = Awaited<ReturnType<typeof fetchProjectsForExport>>[number];
@@ -100,7 +100,7 @@ function projectToRow(project: ProjectWithRelations): unknown[] {
     project.name,
     project.slug,
     project.status,
-    project.published ? 'Yes' : 'No',
+    project.status === 'approved' ? 'Yes' : 'No',
     project.verified ? 'Yes' : 'No',
     project.featured ? 'Yes' : 'No',
     project.active ? 'Yes' : 'No',

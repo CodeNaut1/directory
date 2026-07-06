@@ -17,7 +17,7 @@ export default function Navbar() {
 
   const isAdmin = user?.role === 'admin' || user?.role === 'moderator';
 
-  const isInfographicPage = location.pathname === '/infographic-q2-2026' || location.pathname === '/infographic-archive';
+  const isInfographicPage = location.pathname === '/infographic-q3-2026' || location.pathname === '/infographic-archive';
 
   // Close menu when clicking outside
   useEffect(() => {
@@ -153,7 +153,7 @@ export default function Navbar() {
               onMouseLeave={() => setShowInfographicDropdown(false)}
             >
               <NavLink
-                to="/infographic-q2-2026"
+                to="/infographic-q3-2026"
                 className="nav-link"
                 style={({ isActive }) => ({
                   borderBottom: (isActive || isInfographicPage) ? '2px solid #FD5A47' : '2px solid transparent',
@@ -209,7 +209,7 @@ export default function Navbar() {
                     }}
                   >
                     <NavLink
-                      to="/infographic-q2-2026"
+                      to="/infographic-q3-2026"
                       onClick={() => setShowInfographicDropdown(false)}
                       className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
                       style={({ isActive }) => ({
@@ -232,7 +232,7 @@ export default function Navbar() {
                         }
                       }}
                     >
-                      Infographic Q2 2026
+                      Infographic Q3 2026
                     </NavLink>
                     <NavLink
                       to="/infographic-archive"
@@ -574,7 +574,7 @@ export default function Navbar() {
                   }}
                 >
                   <NavLink
-                    to="/infographic-q2-2026"
+                    to="/infographic-q3-2026"
                     onClick={() => setShowMobileMenu(false)}
                     style={{
                       flex: 1,
@@ -637,7 +637,7 @@ export default function Navbar() {
                 {showInfographicDropdown && (
                   <div style={{ paddingLeft: '1rem', display: 'flex', flexDirection: 'column' }}>
                     <NavLink
-                      to="/infographic-q2-2026"
+                      to="/infographic-q3-2026"
                       onClick={() => {
                         setShowMobileMenu(false);
                         setShowInfographicDropdown(false);
@@ -658,7 +658,7 @@ export default function Navbar() {
                         e.currentTarget.style.background = 'transparent';
                       }}
                     >
-                      Infographic Q2 2026
+                      Infographic Q3 2026
                     </NavLink>
                     <NavLink
                       to="/infographic-archive"

@@ -208,8 +208,8 @@ async function main() {
           verified: projectData.verified || false,
           featured: projectData.featured || false,
           active: projectData.active !== false, // Default to true
-          status: projectData.status === 'approved' ? 'approved' : 'pending',
-          published: projectData.status === 'approved' ? true : false,
+          status: projectData.status === 'approved' ? 'approved' : projectData.status === 'unpublished' ? 'unpublished' : projectData.status === 'rejected' ? 'rejected' : 'pending',
+          published: projectData.status === 'approved',
           updatedAt: projectData.updated_at ? new Date(projectData.updated_at) : new Date(),
         },
         create: {
@@ -240,8 +240,8 @@ async function main() {
           verified: projectData.verified || false,
           featured: projectData.featured || false,
           active: projectData.active !== false,
-          status: projectData.status === 'approved' ? 'approved' : 'pending',
-          published: projectData.status === 'approved' ? true : false,
+          status: projectData.status === 'approved' ? 'approved' : projectData.status === 'unpublished' ? 'unpublished' : projectData.status === 'rejected' ? 'rejected' : 'pending',
+          published: projectData.status === 'approved',
           createdAt: projectData.created_at ? new Date(projectData.created_at) : new Date(),
           updatedAt: projectData.updated_at ? new Date(projectData.updated_at) : new Date(),
         },

@@ -5,20 +5,26 @@ interface Project {
   id: string;
   name: string;
   slug: string;
-  published: boolean;
-  verified: boolean;
   status: string;
+  verified: boolean;
   category: { name: string } | null;
   country: { name: string } | null;
   user: { name: string; email: string } | null;
   createdAt: string;
 }
 
+const STATUS_LABELS: Record<string, { label: string; background: string; color: string }> = {
+  approved: { label: 'Approved', background: '#D1FAE5', color: '#065F46' },
+  pending: { label: 'Pending', background: '#FEF3C7', color: '#92400E' },
+  rejected: { label: 'Rejected', background: '#FEE2E2', color: '#991B1B' },
+  unpublished: { label: 'Unpublished', background: '#F2F4F7', color: '#475467' },
+};
+
 export default function AllProjects() {
   const API_URL = import.meta.env.VITE_API_URL || '';
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
-  const [filter, setFilter] = useState<'all' | 'published' | 'unpublished'>('all');
+  const [filter, setFilter] = useState<'all' | 'approved' | 'unpublished'>('all');
 
   useEffect(() => {
     fetchProjects();
@@ -38,10 +44,10 @@ export default function AllProjects() {
         const data = await response.json();
         if (data.success) {
           let filtered = data.data;
-          if (filter === 'published') {
-            filtered = filtered.filter((p: Project) => p.published);
+          if (filter === 'approved') {
+            filtered = filtered.filter((p: Project) => p.status === 'approved');
           } else if (filter === 'unpublished') {
-            filtered = filtered.filter((p: Project) => !p.published);
+            filtered = filtered.filter((p: Project) => p.status !== 'approved');
           }
           setProjects(filtered);
         }
@@ -58,6 +64,9 @@ export default function AllProjects() {
     return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
   };
 
+  const getStatusBadge = (status: string) =>
+    STATUS_LABELS[status] || { label: status, background: '#F3F4F6', color: '#4B5563' };
+
   if (loading) {
     return (
       <div style={{ textAlign: 'center', padding: '3rem' }}>
@@ -68,7 +77,6 @@ export default function AllProjects() {
 
   return (
     <div>
-      {/* Header */}
       <div style={{ marginBottom: '2rem' }}>
         <h1 style={{ fontSize: '2rem', fontWeight: 700, color: '#1F2937', margin: '0 0 0.5rem 0' }}>
           All Projects
@@ -78,9 +86,8 @@ export default function AllProjects() {
         </p>
       </div>
 
-      {/* Filter Tabs */}
       <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '2rem', borderBottom: '1px solid #E5E7EB' }}>
-        {(['all', 'published', 'unpublished'] as const).map((tab) => (
+        {(['all', 'approved', 'unpublished'] as const).map((tab) => (
           <button
             key={tab}
             onClick={() => setFilter(tab)}
@@ -101,7 +108,6 @@ export default function AllProjects() {
         ))}
       </div>
 
-      {/* Projects Table */}
       <div style={{ background: '#FFFFFF', borderRadius: '12px', boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)', overflowX: 'auto' }}>
         <table style={{ width: '100%', borderCollapse: 'collapse' }}>
           <thead>
@@ -116,7 +122,9 @@ export default function AllProjects() {
             </tr>
           </thead>
           <tbody>
-            {projects.map((project) => (
+            {projects.map((project) => {
+              const badge = getStatusBadge(project.status);
+              return (
               <tr key={project.id} style={{ borderBottom: '1px solid #F3F4F6' }}>
                 <td style={{ padding: '1rem', fontSize: '0.9375rem', color: '#1F2937', fontWeight: 500 }}>
                   {project.name}
@@ -133,13 +141,13 @@ export default function AllProjects() {
                 <td style={{ padding: '1rem' }}>
                   <span style={{
                     padding: '0.25rem 0.75rem',
-                    background: project.published ? '#D1FAE5' : '#FEF3C7',
-                    color: project.published ? '#065F46' : '#92400E',
+                    background: badge.background,
+                    color: badge.color,
                     borderRadius: '9999px',
                     fontSize: '0.75rem',
                     fontWeight: 600,
                   }}>
-                    {project.published ? 'Published' : 'Unpublished'}
+                    {badge.label}
                   </span>
                 </td>
                 <td style={{ padding: '1rem', fontSize: '0.875rem', color: '#4B5563' }}>
@@ -165,7 +173,7 @@ export default function AllProjects() {
                   </Link>
                 </td>
               </tr>
-            ))}
+            )})}
           </tbody>
         </table>
       </div>

@@ -86,6 +86,7 @@ export default function CategoryProjects() {
 
         // Fallback to local JSON
         const filtered = projectsData.projects.filter((project: any) => {
+          if (project.status !== 'approved') return false;
           const categories = project.categories || [];
           const categoriesStr = categories.join(' ').toLowerCase();
           return categoriesStr.includes(categorySlug.toLowerCase());

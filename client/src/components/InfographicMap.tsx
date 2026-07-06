@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import projectsData from '../data/projects.json';
 import coordinatesData from '../data/coordinates.json';
 import type { Project, ProjectCoordinate, CountryRegion } from '../data/projects.types';
-import infographicImage from '../assets/African Bitcoin Ecosystem Infographic Q2 2026.png';
+import infographicImage from '../assets/African Bitcoin Ecosystem Infographic Q3 2026.png';
 
 export default function InfographicMap() {
   const navigate = useNavigate();

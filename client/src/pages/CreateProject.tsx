@@ -390,7 +390,7 @@ export default function CreateProject() {
 
   if (loadingData) {
     return (
-      <main className="app-main" style={{ background: '#F5F5F5', minHeight: '100vh', padding: 'clamp(2rem, 5vw, 4rem) clamp(1rem, 4vw, 1rem)' }}>
+      <main className="app-main" style={{ background: '#F5F5F5', minHeight: '100vh', padding: '0 0 100px' }}>
         <div className="container" style={{ maxWidth: 900, margin: '0 auto', textAlign: 'center' }}>
           <p>Loading form...</p>
         </div>

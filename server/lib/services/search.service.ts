@@ -35,7 +35,6 @@ export async function searchProjects(query: SearchQuery) {
 
   // Build where clause
   const where: any = {
-    published: true,
     status: 'approved',
     OR: [
       { name: { contains: q, mode: 'insensitive' } },

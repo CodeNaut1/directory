@@ -43,14 +43,14 @@ export async function GET(req: NextRequest) {
       // Total projects
       prisma.project.count(),
 
-      // Published projects
+      // Live projects (status = approved)
       prisma.project.count({
-        where: { published: true },
+        where: { status: 'approved' },
       }),
 
-      // Pending approvals (not published)
+      // Pending approvals
       prisma.project.count({
-        where: { published: false },
+        where: { status: 'pending' },
       }),
 
       // Total users

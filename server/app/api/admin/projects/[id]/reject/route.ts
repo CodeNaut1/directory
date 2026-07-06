@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getAuthenticatedUser } from '@/lib/auth/middleware';
 import { successResponse } from '@/lib/utils/api-response';
 import { prisma } from '@/lib/db';
+import { scheduleProjectsJsonSync } from '@/lib/services/projects-json-sync.service';
 
 interface RouteParams {
   params: Promise<{
@@ -15,7 +16,6 @@ interface RouteParams {
  */
 export async function POST(req: NextRequest, context: RouteParams) {
   try {
-    // Authenticate and check admin role
     const user = await getAuthenticatedUser(req);
 
     if (!user || (user.role !== 'admin' && user.role !== 'moderator')) {
@@ -27,7 +27,6 @@ export async function POST(req: NextRequest, context: RouteParams) {
 
     const { id } = await context.params;
 
-    // Check if project exists
     const existingProject = await prisma.project.findUnique({
       where: { id },
       select: { id: true, name: true, status: true },
@@ -40,21 +39,20 @@ export async function POST(req: NextRequest, context: RouteParams) {
       );
     }
 
-    // Update project to rejected
     const project = await prisma.project.update({
       where: { id },
       data: {
         status: 'rejected',
-        published: false, // Keep unpublished
       },
       select: {
         id: true,
         name: true,
         slug: true,
-        published: true,
         status: true,
       },
     });
+
+    scheduleProjectsJsonSync(project.id);
 
     return NextResponse.json(
       successResponse({

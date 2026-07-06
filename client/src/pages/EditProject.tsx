@@ -391,7 +391,7 @@ export default function EditProject() {
               {hasChanges() ? 'Changes Submitted for Review' : 'No Changes Made'}
             </h1>
             <p style={{ fontSize: 'clamp(0.875rem, 2vw, 1rem)', color: '#4B5563', lineHeight: 1.6, margin: '0 0 2rem 0' }}>
-              {hasChanges() ? "Your updates have been received. Our team will review the changes to ensure everything meets our guidelines. You'll receive an update within 2 days." : 'No changes were detected. Your project remains published.'}
+              {hasChanges() ? "Your updates have been received. Our team will review the changes to ensure everything meets our guidelines. You'll receive an update within 2 days." : 'No changes were detected. Your project remains live.'}
             </p>
             <button onClick={() => navigate('/dashboard')} style={{ padding: '0.75rem 2rem', background: '#FD5A47', color: '#FFFFFF', border: 'none', borderRadius: '8px', fontSize: '0.9375rem', fontWeight: 600, cursor: 'pointer', width: '100%' }}>Go to Dashboard</button>
           </div>

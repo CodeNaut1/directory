@@ -18,12 +18,20 @@ enum UserRole {
   admin // System administrator
 }
 
-// Submission status enum
+// Submission status enum (submissions table)
 enum SubmissionStatus {
   pending // Awaiting moderation
-  approved // Approved and published
+  approved // Approved
   rejected // Rejected by moderator
   draft // Draft/saved but not submitted
+}
+
+// Project visibility/lifecycle status (projects table)
+enum ProjectStatus {
+  pending // New submissions awaiting admin review (not public)
+  approved // Live and visible to public
+  rejected // Rejected by admin (not public)
+  unpublished // Was approved but admin took it down (not public)
 }
 
 // Project claim status enum
@@ -157,7 +165,7 @@ model Project {
   active    Boolean           @default(true) // Active/Inactive
   featured  Boolean           @default(false)
   verified  Boolean           @default(false)
-  status    SubmissionStatus  @default(pending) // Approval status
+  status    ProjectStatus @default(pending) // Visibility controlled by status only
 
   // Classification - MADE OPTIONAL
   categoryId String?

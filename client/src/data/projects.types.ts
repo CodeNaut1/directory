@@ -33,9 +33,9 @@ export type ProjectCategory =
   | 'Tech Meetup';
 
 /**
- * Project Status - flexible to allow any string value
+ * Project Status
  */
-export type ProjectStatus = string; // Common values: 'pending' | 'approved' | 'archived'
+export type ProjectStatus = 'pending' | 'approved' | 'rejected' | 'unpublished' | string;
 
 /**
  * Social Media Links
@@ -135,10 +135,7 @@ export interface Project {
   /** Featured project flag */
   featured: boolean;
 
-  /** Published status - optional for backwards compatibility with projects.json */
-  published?: boolean;  // ← ADD ? HERE
-
-  /** Project status */
+  /** Project status controls public visibility */
   status: ProjectStatus;
 
   /** Year founded (YYYY format) */

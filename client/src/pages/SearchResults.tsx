@@ -59,9 +59,9 @@ export default function SearchResults() {
         if (data?.projects) {
           const searchQuery = query.toLowerCase();
 
-          // Filter active/published projects only
+          // Filter approved projects only
           const activeProjects = data.projects.filter((project: any) =>
-            project.active !== false && project.status === 'approved'
+            project.status === 'approved'
           );
 
           // Search across multiple fields

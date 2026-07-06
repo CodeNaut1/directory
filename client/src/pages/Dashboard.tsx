@@ -5,14 +5,13 @@ import { useAuth } from '../contexts/AuthContext';
 interface Project {
   id: string;
   name: string;
-  published: boolean;
   verified: boolean;
   status: string;
   updatedAt: string;
   updated_at: string;
 }
 
-type ProjectStatus = 'verified' | 'under_review' | 'needs_update';
+type ProjectStatus = 'verified' | 'under_review' | 'needs_update' | 'unpublished';
 
 export default function Dashboard() {
   const navigate = useNavigate();
@@ -36,20 +35,22 @@ export default function Dashboard() {
   const [isUpdatingPassword, setIsUpdatingPassword] = useState(false);
 
   const getProjectStatus = (project: Project): ProjectStatus => {
-    // Check the actual status field from database
-    if (project.published === true && (project as any).status === 'approved') {
-      return 'verified'; // Live and approved
+    if (project.status === 'approved') {
+      return 'verified';
     }
 
-    if ((project as any).status === 'pending' || !project.published) {
-      return 'under_review'; // Pending approval
+    if (project.status === 'pending') {
+      return 'under_review';
     }
 
-    if ((project as any).status === 'rejected') {
-      return 'needs_update'; // Rejected, needs revision
+    if (project.status === 'rejected') {
+      return 'needs_update';
     }
 
-    // Default
+    if (project.status === 'unpublished') {
+      return 'unpublished';
+    }
+
     return 'under_review';
   };
 
@@ -147,6 +148,22 @@ export default function Dashboard() {
             </svg>
           ),
           text: 'Needs Update',
+        };
+      case 'unpublished':
+        return {
+          background: '#F2F4F7',
+          color: '#475467',
+          icon: (
+            <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor">
+              <path
+                fillRule="evenodd"
+                d="M3.707 2.293a1 1 0 00-1.414 1.414l14 14a1 1 0 001.414-1.414l-1.473-1.473A10.014 10.014 0 0019.542 10C18.268 5.943 14.478 3 10 3a9.958 9.958 0 00-4.512 1.074l-1.78-1.781zm4.261 4.26l1.514 1.515a2.003 2.003 0 012.45 2.45l1.514 1.514a4 4 0 00-5.478-5.478z"
+                clipRule="evenodd"
+              />
+              <path d="M12.454 16.697L9.75 13.992a4 4 0 01-3.742-3.741L2.335 6.578A9.98 9.98 0 00.458 10c1.274 4.057 5.065 7 9.542 7 .847 0 1.669-.105 2.454-.303z" />
+            </svg>
+          ),
+          text: 'Unpublished',
         };
     }
   };
@@ -281,7 +298,7 @@ export default function Dashboard() {
   };
 
   const getActionButton = (status: ProjectStatus, projectId: string) => {
-    // For verified (published & approved) projects, show "View" and "Edit Project"
+    // For approved projects, show "View" and "Edit Project"
     if (status === 'verified') {
       return (
         <div style={{ display: 'flex', gap: '0.5rem' }}>
@@ -361,6 +378,36 @@ export default function Dashboard() {
           }}
         >
           View Submission
+        </button>
+      );
+    }
+
+    // For unpublished projects, show view-only access
+    if (status === 'unpublished') {
+      return (
+        <button
+          onClick={() => navigate(`/project/${projectId}`)}
+          style={{
+            padding: '0.5rem 1rem',
+            background: '#FFFFFF',
+            color: '#1F2937',
+            border: '1px solid #D1D5DB',
+            borderRadius: '6px',
+            fontSize: '0.875rem',
+            fontWeight: 500,
+            cursor: 'pointer',
+            transition: 'all 0.2s',
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.background = '#F9FAFB';
+            e.currentTarget.style.borderColor = '#9CA3AF';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.background = '#FFFFFF';
+            e.currentTarget.style.borderColor = '#D1D5DB';
+          }}
+        >
+          View
         </button>
       );
     }

@@ -18,9 +18,11 @@ export default function CountryProjects() {
       return;
     }
 
-    // Filter projects by country code
+    // Filter approved projects by country code
     const countryProjects = projectsData.projects.filter(
-      (p) => p.country_code.toLowerCase() === countryCode.toLowerCase()
+      (p) =>
+        p.status === 'approved' &&
+        p.country_code.toLowerCase() === countryCode.toLowerCase()
     );
 
     setProjects(countryProjects);

@@ -8,6 +8,7 @@ import { Prisma } from '@prisma/client';
 import { NotFoundError, AuthorizationError } from '@/lib/utils/errors';
 import type { CreateProjectInput, UpdateProjectInput, ProjectListQuery } from '@/lib/validators';
 import { AuthenticatedUser } from '@/lib/auth/middleware';
+import { scheduleProjectsJsonSync } from '@/lib/services/projects-json-sync.service';
 // @ts-ignore - slugify doesn't have types
 import slugify from 'slugify';
 
@@ -77,7 +78,6 @@ function transformProjectToJsonFormat(project: any) {
     // Status - KEEP THESE FROM DATABASE
     verified: project.verified || false,
     featured: project.featured || false,
-    published: project.published || false,  // ← ADD THIS
     status: project.status || 'pending',
     active: project.active !== undefined ? project.active : true,
 
@@ -131,8 +131,7 @@ export async function listProjects(query: ProjectListQuery) {
 
   // Build where clause
   const where: any = {
-    published: true, // Only show published
-    status: 'approved', // Only show approved projects
+    status: 'approved',
     ...(featured !== undefined && { featured }),
     ...(category && {
       OR: [
@@ -222,7 +221,6 @@ export async function getUserProjects(userId: string) {
       impact: true,
       challenges: true,
       foundedYear: true,
-      published: true,
       verified: true,
       featured: true,
       active: true,
@@ -297,12 +295,11 @@ export async function getProjectById(idOrSlug: string, requestingUser?: Authenti
       impact: true,
       challenges: true,
       foundedYear: true,
-      published: true,
       verified: true,
       featured: true,
       active: true,
       status: true,
-      userId: true,  // ← CRITICAL for ownership check
+      userId: true,
       createdAt: true,
       updatedAt: true,
       publishedAt: true,
@@ -345,13 +342,13 @@ export async function getProjectById(idOrSlug: string, requestingUser?: Authenti
   // Check visibility rules
   const isOwner = requestingUser && project.userId === requestingUser.id;
   const isAdmin = requestingUser && (requestingUser.role === 'admin' || requestingUser.role === 'moderator');
-  const isPublished = project.published && project.status === 'approved';
+  const isPublic = project.status === 'approved';
 
   // Allow access if:
-  // 1. Project is published and approved (public)
+  // 1. Project is approved (public)
   // 2. User is the owner (can view their own submissions)
   // 3. User is admin/moderator
-  if (!isPublished && !isOwner && !isAdmin) {
+  if (!isPublic && !isOwner && !isAdmin) {
     throw new Error('This project is currently under review and will be visible once approved.');
   }
 
@@ -387,7 +384,6 @@ export async function createProject(user: AuthenticatedUser, input: CreateProjec
       city: input.city || null,
       address: input.address || null,
       userId: user.id,
-      published: false,
       status: 'pending',
       email: details?.contactEmail || null,
       foundedYear: input.foundedYear || null,
@@ -416,6 +412,8 @@ export async function createProject(user: AuthenticatedUser, input: CreateProjec
       tags: { include: { tag: true } },
     },
   });
+
+  scheduleProjectsJsonSync(project.id);
 
   return transformProjectToJsonFormat(project);
 }
@@ -471,6 +469,8 @@ export async function updateProject(
       tags: { include: { tag: true } },
     },
   });
+
+  scheduleProjectsJsonSync(updated.id);
 
   return transformProjectToJsonFormat(updated);
 }

@@ -1,15 +1,16 @@
 import { useEffect } from 'react';
 import { jsPDF } from 'jspdf';
-import infographicQ42023 from '../assets/infographic_q4_2023.png';
-import infographicQ12024 from '../assets/infographic_q1_2024.png';
-import infographicQ22024 from '../assets/infographic_q2_2024.png';
-import infographicQ32024 from '../assets/infographic_q3_2024.png';
-import infographicQ42024 from '../assets/infographic_q4_2024.png';
-import infographicQ1 from '../assets/infographic_q1_2025.png';
-import infographicQ2 from '../assets/infographic_q2_2025.png';
-import infographicQ3 from '../assets/infographic_q3_2025.png';
-import infographicQ4 from '../assets/infographic_q4_2025.png';
-import infographicQ12026 from '../assets/infographic_q1_2026.png';
+import infographicQ42023 from '../assets/archives/infographic_q4_2023.png';
+import infographicQ12024 from '../assets/archives/infographic_q1_2024.png';
+import infographicQ22024 from '../assets/archives/infographic_q2_2024.png';
+import infographicQ32024 from '../assets/archives/infographic_q3_2024.png';
+import infographicQ42024 from '../assets/archives/infographic_q4_2024.png';
+import infographicQ1 from '../assets/archives/infographic_q1_2025.png';
+import infographicQ2 from '../assets/archives/infographic_q2_2025.png';
+import infographicQ3 from '../assets/archives/infographic_q3_2025.png';
+import infographicQ4 from '../assets/archives/infographic_q4_2025.png';
+import infographicQ12026 from '../assets/archives/infographic_q1_2026.png';
+import infographicQ22026 from '../assets/archives/infographic_q2_2026.png';
 import '../styles/global.css';
 
 interface InfographicVersion {
@@ -24,6 +25,11 @@ export default function InfographicArchive() {
   }, []);
 
   const infographics: InfographicVersion[] = [
+    {
+      id: 'q2-2026',
+      name: 'Infographic Q2 2026',
+      image: infographicQ22026,
+    },
     {
       id: 'q1-2026',
       name: 'Infographic Q1 2026',

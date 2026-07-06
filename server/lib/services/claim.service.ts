@@ -22,7 +22,6 @@ export async function submitClaim(
     select: {
       id: true,
       userId: true,
-      published: true,
       status: true,
       name: true,
     },
@@ -32,8 +31,8 @@ export async function submitClaim(
     throw new NotFoundError('Project not found');
   }
 
-  // Project must be published and approved to be claimable
-  if (!project.published || project.status !== 'approved') {
+  // Project must be approved to be claimable
+  if (project.status !== 'approved') {
     throw new ValidationError('This project is not available for claiming');
   }
 

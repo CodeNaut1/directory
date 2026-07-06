@@ -53,7 +53,7 @@ export default function AdminDashboard() {
 
   const statCards = [
     { label: 'Total Projects', value: stats?.totalProjects || 0, color: '#3B82F6', icon: '📁', link: '/admin/projects' },
-    { label: 'Published', value: stats?.publishedProjects || 0, color: '#10B981', icon: '✅', link: '/admin/projects?filter=published' },
+    { label: 'Approved', value: stats?.publishedProjects || 0, color: '#10B981', icon: '✅', link: '/admin/projects?filter=approved' },
     { label: 'Pending Approvals', value: stats?.pendingApprovals || 0, color: '#F59E0B', icon: '⏳', link: '/admin/projects/pending', highlight: true },
     { label: 'Total Users', value: stats?.totalUsers || 0, color: '#8B5CF6', icon: '👥', link: '/admin/users' },
     { label: 'New This Week', value: stats?.newSubmissionsThisWeek || 0, color: '#EC4899', icon: '🆕', link: '/admin/projects?filter=recent' },

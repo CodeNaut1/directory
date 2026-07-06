@@ -126,8 +126,9 @@ export default function HomePage() {
             communities: 0,
           };
 
+          // Filter approved projects only
           const activeProjects = data.projects.filter((project: any) =>
-            project.active !== false && project.status === 'approved'
+            project.status === 'approved'
           );
 
           activeProjects.forEach((project: any) => {
