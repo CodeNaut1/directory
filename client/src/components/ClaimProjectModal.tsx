@@ -58,7 +58,7 @@ export default function ClaimProjectModal({ projectId, projectName, onClose, onS
         </h2>
 
         <p style={{ fontSize: 'clamp(0.875rem, 2vw, 0.9375rem)', color: '#4B5563', lineHeight: 1.6, marginBottom: '1.5rem' }}>
-          You're about to submit a claim for <strong>{projectName}</strong>. Our team will review your request and get back to you within 2 business days.
+          You're about to submit a claim for <strong>{projectName}</strong>. Our team will review your request and get back to you within 7 business days.
         </p>
 
         <form onSubmit={handleSubmit}>
