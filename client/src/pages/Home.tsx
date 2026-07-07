@@ -144,7 +144,7 @@ export default function HomePage() {
       <main className="app-main" style={{ background: '#FFFDFA', minHeight: '100vh' }}>
         <section
           style={{
-            padding: '2rem 0 1rem',
+            padding: '2rem 0 clamp(1rem, 3vw, 4rem) 0',
             maxWidth: '100%',
             margin: '0 auto',
             overflow: 'hidden',
