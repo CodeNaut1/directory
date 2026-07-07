@@ -144,7 +144,7 @@ export default function HomePage() {
       <main className="app-main" style={{ background: '#FFFDFA', minHeight: '100vh' }}>
         <section
           style={{
-            padding: '5rem 0 6rem',
+            padding: '2rem 0 1rem',
             maxWidth: '100%',
             margin: '0 auto',
             overflow: 'hidden',
@@ -194,15 +194,15 @@ export default function HomePage() {
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'space-between',
-                gap: '2rem',
-                padding: '2rem 0',
+                gap: '1rem',
+                padding: '1rem 0',
               }}
             >
               <div style={{ textAlign: 'center' }}>
                 <h1
                   style={{
                     fontFamily: '"Instrument Serif", Georgia, serif',
-                    fontSize: 'clamp(2rem, 5vw, 4.6rem)',
+                    fontSize: 'clamp(3rem, 5vw, 4.6rem)',
                     fontWeight: 500,
                     lineHeight: 1,
                     color: '#1F2937',

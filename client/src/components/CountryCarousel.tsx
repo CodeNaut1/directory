@@ -71,7 +71,7 @@ export default function CountryCarousel() {
     <>
       <style>{`
         .country-carousel-section {
-          padding: 2rem 0 3rem;
+          padding: 1rem 0 1rem;
           width: 100%;
         }
 
@@ -100,7 +100,7 @@ export default function CountryCarousel() {
           --flag-gap: 2rem;
           --flags-visible: 10;
           --flag-width: calc((100cqi - (var(--flags-visible) - 1) * var(--flag-gap)) / var(--flags-visible));
-          padding: 3rem 0;
+          padding: 1rem 0;
           mask-image: linear-gradient(
             to right,
             transparent 0%,
