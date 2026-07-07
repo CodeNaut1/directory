@@ -1,10 +1,12 @@
 import { useState, useEffect, FormEvent } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 
 export default function RegisterPage() {
   const navigate = useNavigate();
+  const location = useLocation();
   const { register } = useAuth();
+  const from = (location.state as { from?: { pathname: string } })?.from?.pathname || '/dashboard';
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -48,7 +50,7 @@ export default function RegisterPage() {
 
     try {
       await register(fullName, email, password);
-      navigate('/dashboard', { replace: true });
+      navigate(from === '/register' ? '/dashboard' : from, { replace: true });
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : 'Registration failed';
       setError(message);

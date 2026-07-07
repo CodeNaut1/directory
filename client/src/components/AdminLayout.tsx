@@ -11,6 +11,7 @@ import {
   Hash,
   Users,
   Download,
+  Mail,
   Settings,
   LogOut,
   ArrowLeft,
@@ -78,6 +79,7 @@ export default function AdminLayout() {
     { path: '/admin/tags', label: 'Tags', icon: Hash },
     { path: '/admin/users', label: 'Users', icon: Users },
     { path: '/admin/export', label: 'Export CSV', icon: Download },
+    { path: '/admin/emails', label: 'Email Templates', icon: Mail },
     { path: '/admin/settings', label: 'Settings', icon: Settings },
   ];
 

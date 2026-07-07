@@ -317,6 +317,11 @@ async function main() {
     console.log('⚠️  No admin emails found in ADMIN_EMAIL env variable');
   }
 
+  console.log('📧 Seeding email templates...');
+  const { seedEmailTemplates } = await import('../lib/services/email-template.service');
+  await seedEmailTemplates();
+  console.log('✅ Email templates seeded');
+
   console.log('🎉 Database seed completed successfully!');
 }
 

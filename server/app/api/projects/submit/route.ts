@@ -5,7 +5,7 @@ import { successResponse } from '@/lib/utils/api-response';
 import { createProjectSchema, type CreateProjectInput } from '@/lib/validators';
 import { createProject } from '@/lib/services/project.service';
 import { appendToSheet } from '@/lib/services/googleSheets';
-import { sendProjectSubmissionConfirmation, sendAdminNotification } from '@/lib/services/email.service';
+import { sendSubmissionConfirmationToUser, sendNewSubmissionToTeam } from '@/lib/services/email.service';
 import { writeFile } from 'fs/promises';
 import { join } from 'path';
 import { nanoid } from 'nanoid';
@@ -188,8 +188,8 @@ export async function POST(req: NextRequest) {
         };
 
         await Promise.all([
-          sendProjectSubmissionConfirmation(emailData),
-          sendAdminNotification(emailData),
+          sendSubmissionConfirmationToUser(emailData),
+          sendNewSubmissionToTeam(emailData),
         ]);
 
         console.log('✅ Project synced to Google Sheet and emails sent');

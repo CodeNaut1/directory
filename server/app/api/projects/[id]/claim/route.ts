@@ -3,6 +3,11 @@ import { createPostHandler, getValidatedBody, getRequestUser } from '@/lib/utils
 import { successResponse } from '@/lib/utils/api-response';
 import { submitClaimSchema, type SubmitClaimInput } from '@/lib/validators';
 import { submitClaim } from '@/lib/services/claim.service';
+import {
+  buildClaimEmailData,
+  sendClaimSubmittedToAdmin,
+  sendClaimSubmittedToUser,
+} from '@/lib/services/email.service';
 
 interface RouteParams {
   params: {
@@ -20,6 +25,18 @@ export const POST = createPostHandler(
     const body = getValidatedBody<SubmitClaimInput>(req);
 
     const claim = await submitClaim(user, params.id, body);
+
+    setImmediate(async () => {
+      try {
+        const emailData = buildClaimEmailData(claim);
+        await Promise.all([
+          sendClaimSubmittedToUser(emailData),
+          sendClaimSubmittedToAdmin(emailData),
+        ]);
+      } catch (error) {
+        console.error('⚠️ Failed to send claim submission emails:', error);
+      }
+    });
 
     return NextResponse.json(
       successResponse({

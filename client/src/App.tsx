@@ -27,6 +27,8 @@ import Countries from './pages/admin/Countries';
 import Users from './pages/admin/Users';
 import Settings from './pages/admin/Settings';
 import ExportProjects from './pages/admin/ExportProjects';
+import EmailTemplates from './pages/admin/EmailTemplates';
+import EditEmailTemplate from './pages/admin/EditEmailTemplate';
 import Infographic from './pages/Infographic';
 import InfographicArchive from './pages/InfographicArchive';
 import LiveMap from './pages/LiveMap';
@@ -85,6 +87,8 @@ export default function App() {
           <Route path="countries" element={<Countries />} />
           <Route path="users" element={<Users />} />
           <Route path="export" element={<ExportProjects />} />
+          <Route path="emails" element={<EmailTemplates />} />
+          <Route path="emails/:id" element={<EditEmailTemplate />} />
           <Route path="settings" element={<Settings />} />
         </Route>
       </Routes>

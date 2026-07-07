@@ -1,30 +1,6 @@
 {
   "project_coordinates": [
     {
-      "proj_id": "ab-abeg",
-      "name": "AB Abeg",
-      "infographic": null,
-      "livemap": {
-        "type": "Point",
-        "coords": [
-          18.747789921036563,
-          15.457799216869502
-        ]
-      }
-    },
-    {
-      "proj_id": "ab-togo-branch",
-      "name": "AB Togo Branch",
-      "infographic": null,
-      "livemap": {
-        "type": "Point",
-        "coords": [
-          19.96169777784405,
-          -0.03213938048432696
-        ]
-      }
-    },
-    {
       "proj_id": "abidjan-bitcoin",
       "name": "Abidjan Bitcoin Meetup",
       "infographic": {

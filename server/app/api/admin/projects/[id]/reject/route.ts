@@ -3,6 +3,11 @@ import { getAuthenticatedUser } from '@/lib/auth/middleware';
 import { successResponse } from '@/lib/utils/api-response';
 import { prisma } from '@/lib/db';
 import { scheduleProjectsJsonSync } from '@/lib/services/projects-json-sync.service';
+import {
+  buildProjectActionEmailData,
+  sendProjectRejectedToTeam,
+  sendProjectRejectedToUser,
+} from '@/lib/services/email.service';
 
 interface RouteParams {
   params: Promise<{
@@ -53,6 +58,37 @@ export async function POST(req: NextRequest, context: RouteParams) {
     });
 
     scheduleProjectsJsonSync(project.id);
+
+    setImmediate(async () => {
+      try {
+        const fullProject = await prisma.project.findUnique({
+          where: { id: project.id },
+          select: {
+            name: true,
+            slug: true,
+            user: { select: { name: true, email: true } },
+          },
+        });
+
+        if (!fullProject) return;
+
+        const emailData = buildProjectActionEmailData(fullProject);
+        const tasks = [sendProjectRejectedToTeam(emailData || {
+          userName: 'Unknown',
+          userEmail: '',
+          projectName: fullProject.name,
+          projectSlug: fullProject.slug,
+        })];
+
+        if (emailData) {
+          tasks.unshift(sendProjectRejectedToUser(emailData));
+        }
+
+        await Promise.all(tasks);
+      } catch (error) {
+        console.error('⚠️ Failed to send rejection emails:', error);
+      }
+    });
 
     return NextResponse.json(
       successResponse({

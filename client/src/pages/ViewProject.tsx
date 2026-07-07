@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useLocation, useNavigate } from 'react-router-dom';
 import type { Project } from '../data/projects.types';
 import { useAuth } from '../contexts/AuthContext';
 import ClaimProjectModal from '../components/ClaimProjectModal';
@@ -121,6 +121,8 @@ function EditorialBlock({ title, content }: { title: string; content: string }) 
 
 export default function ViewProject() {
   const { id } = useParams<{ id: string }>();
+  const location = useLocation();
+  const navigate = useNavigate();
   const API_URL = import.meta.env.VITE_API_URL || '';
 
   const [project, setProject] = useState<ProjectWithUser | null>(null);
@@ -129,6 +131,15 @@ export default function ViewProject() {
   const { user, isLoggedIn } = useAuth();
   const [claimStatus, setClaimStatus] = useState<any>(null);
   const [showClaimModal, setShowClaimModal] = useState(false);
+  const [showAuthPrompt, setShowAuthPrompt] = useState(false);
+
+  const handleClaimClick = () => {
+    if (!isLoggedIn) {
+      setShowAuthPrompt(true);
+      return;
+    }
+    setShowClaimModal(true);
+  };
 
   useEffect(() => {
     document.title = 'Project - African Bitcoin Directory';
@@ -565,10 +576,10 @@ export default function ViewProject() {
                 </span>
               )}
 
-              {isLoggedIn && user && !hasOwner && !isOwner && !claimStatus && (
+              {!hasOwner && !isOwner && !claimStatus && (
                 <button
                   type="button"
-                  onClick={() => setShowClaimModal(true)}
+                  onClick={handleClaimClick}
                   style={{
                     display: 'inline-flex',
                     alignItems: 'center',
@@ -641,7 +652,7 @@ export default function ViewProject() {
               {claimStatus?.status === 'rejected' && (
                 <button
                   type="button"
-                  onClick={() => setShowClaimModal(true)}
+                  onClick={handleClaimClick}
                   style={{
                     display: 'inline-flex',
                     alignItems: 'center',
@@ -852,6 +863,92 @@ export default function ViewProject() {
           </div>
         </div>
       </main>
+
+      {showAuthPrompt && (
+        <div
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            background: 'rgba(0, 0, 0, 0.5)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 10000,
+            padding: '1rem',
+          }}
+          onClick={() => setShowAuthPrompt(false)}
+        >
+          <div
+            style={{
+              background: '#FFFFFF',
+              borderRadius: '12px',
+              padding: 'clamp(2rem, 5vw, 3rem)',
+              maxWidth: '480px',
+              width: '100%',
+              boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1)',
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h2 style={{ fontSize: 'clamp(1.25rem, 4vw, 1.5rem)', fontWeight: 700, color: '#1F2937', margin: '0 0 0.75rem' }}>
+              Sign in to claim this project
+            </h2>
+            <p style={{ fontSize: '0.9375rem', color: '#4B5563', lineHeight: 1.6, margin: '0 0 1.5rem' }}>
+              Create a free account or log in to submit an ownership claim for <strong>{project.name}</strong>. Our team will review your request within 2 business days.
+            </p>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+              <button
+                type="button"
+                onClick={() => navigate('/login', { state: { from: location } })}
+                style={{
+                  padding: '0.75rem 1.5rem',
+                  background: '#DC2626',
+                  color: '#FFFFFF',
+                  border: 'none',
+                  borderRadius: '8px',
+                  fontSize: '0.9375rem',
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                }}
+              >
+                Log in
+              </button>
+              <button
+                type="button"
+                onClick={() => navigate('/register', { state: { from: location } })}
+                style={{
+                  padding: '0.75rem 1.5rem',
+                  background: '#FFFFFF',
+                  color: '#1F2937',
+                  border: '1px solid #D1D5DB',
+                  borderRadius: '8px',
+                  fontSize: '0.9375rem',
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                }}
+              >
+                Create an account
+              </button>
+              <button
+                type="button"
+                onClick={() => setShowAuthPrompt(false)}
+                style={{
+                  padding: '0.5rem',
+                  background: 'transparent',
+                  color: '#6B7280',
+                  border: 'none',
+                  fontSize: '0.875rem',
+                  cursor: 'pointer',
+                }}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {showClaimModal && (
         <ClaimProjectModal

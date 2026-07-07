@@ -7668,7 +7668,7 @@
       "country_code": "bj",
       "country_name": "Benin",
       "city": "",
-      "location": "",
+      "location": "Benin",
       "image": "",
       "website": "https://developers.usebreezee.xyz",
       "email": "",
@@ -7720,8 +7720,8 @@
       "country_code": "ke",
       "country_name": "Kenya",
       "city": "",
-      "location": "",
-      "image": "/uploads/logos/qxkmQMP6EGTnaWc9AbyB2.PNG",
+      "location": "Kenya",
+      "image": "https://pub-d2aef463d8a6497d90ac252cbcb0dcbf.r2.dev/uploads/logos/qxkmQMP6EGTnaWc9AbyB2.PNG",
       "website": "https://afribit.africa",
       "email": "",
       "categories": [
@@ -7773,8 +7773,8 @@
       "country_code": "ng",
       "country_name": "Nigeria",
       "city": "",
-      "location": "",
-      "image": "/uploads/logos/fK9TUxCUPM0MwFrkqWUeq.png",
+      "location": "Nigeria",
+      "image": "https://pub-d2aef463d8a6497d90ac252cbcb0dcbf.r2.dev/uploads/logos/fK9TUxCUPM0MwFrkqWUeq.png",
       "website": "https://sabiwallet.online",
       "email": "",
       "categories": [
@@ -7826,8 +7826,8 @@
       "country_code": "ng",
       "country_name": "Nigeria",
       "city": "",
-      "location": "",
-      "image": "/uploads/logos/E2r9aITfbtff4AJ92Ia9_.png",
+      "location": "Nigeria",
+      "image": "https://pub-d2aef463d8a6497d90ac252cbcb0dcbf.r2.dev/uploads/logos/E2r9aITfbtff4AJ92Ia9_.png",
       "website": "",
       "email": "",
       "categories": [
@@ -7879,8 +7879,8 @@
       "country_code": "ng",
       "country_name": "Nigeria",
       "city": "",
-      "location": "",
-      "image": "/uploads/logos/RcbA7AuI44vUwZtsi_Knw.png",
+      "location": "Nigeria",
+      "image": "https://pub-d2aef463d8a6497d90ac252cbcb0dcbf.r2.dev/uploads/logos/RcbA7AuI44vUwZtsi_Knw.png",
       "website": "",
       "email": "",
       "categories": [
@@ -7932,8 +7932,8 @@
       "country_code": "ng",
       "country_name": "Nigeria",
       "city": "",
-      "location": "",
-      "image": "/uploads/logos/Ai_g_w5Zn5eOLKGDDFSMR.png",
+      "location": "Nigeria",
+      "image": "https://pub-d2aef463d8a6497d90ac252cbcb0dcbf.r2.dev/uploads/logos/Ai_g_w5Zn5eOLKGDDFSMR.png",
       "website": "",
       "email": "",
       "categories": [
@@ -7979,14 +7979,14 @@
     },
     {
       "id": "cmlr0v5gs0001vd6zk2u9npjt",
-      "name": "Satoshi Sister Circle ",
+      "name": "Satoshi Sister Circle",
       "slug": "satoshi-sister-circle",
-      "description": "Satoshi Sister Circle (SSC) is a global initiative rooted in Africa that empowers women to rise, lead and build in the Bitcoin ecosystem. Through mentorship, skills training, and leadership development, SSC creates spaces where African women gain confidence, build authentic personal brands, and unlock opportunities in the Bitcoin ecosystem.\n",
+      "description": "Satoshi Sister Circle (SSC) is a global initiative rooted in Africa that empowers women to rise, lead and build in the Bitcoin ecosystem. Through mentorship, skills training, and leadership development, SSC creates spaces where African women gain confidence, build authentic personal brands, and unlock opportunities in the Bitcoin ecosystem.",
       "country_code": "gh",
       "country_name": "Ghana",
       "city": "",
-      "location": "",
-      "image": "/uploads/logos/RNbhYi9r1LUYtMN4K1pZ2.jpg",
+      "location": "Ghana",
+      "image": "https://pub-d2aef463d8a6497d90ac252cbcb0dcbf.r2.dev/uploads/logos/RNbhYi9r1LUYtMN4K1pZ2.jpg",
       "website": "https://www.satoshisisters.org",
       "email": "",
       "categories": [
@@ -8025,14 +8025,14 @@
     },
     {
       "id": "cmlrki9y30001hc3k1isr0dli",
-      "name": "Bitcoin Study Hubs ",
+      "name": "Bitcoin Study Hubs",
       "slug": "bitcoin-study-hubs",
       "description": "This work is about laying a strong, durable foundation for decentralized, physical Bitcoin learning spaces:\n\n* Physical, decentralized Bitcoin learning spaces\n    \n* Bitcoin — no shitcoinery\n    \n* Local-language education\n    \n* Practical Bitcoin usage (Machankura, offline tools, mesh networks)\n    \n* Onboarding families and merchants\n    \n*  Training facilitators, not influencers\n    \n*  Building village-level circular economies\n    \nThis is Bitcoin as money, education, and sovereignty.",
       "country_code": "mw",
       "country_name": "Malawi",
       "city": "",
-      "location": "",
-      "image": "/uploads/logos/pRCRASTBulqooZOPSC5mL.webp",
+      "location": "Malawi",
+      "image": "https://pub-d2aef463d8a6497d90ac252cbcb0dcbf.r2.dev/uploads/logos/pRCRASTBulqooZOPSC5mL.webp",
       "website": "https://studyhubs.space",
       "email": "",
       "categories": [
@@ -8082,8 +8082,8 @@
       "country_code": "gh",
       "country_name": "Ghana",
       "city": "",
-      "location": "",
-      "image": "/uploads/logos/ruC6aM7u3NlC0Q2uNxZbd.jpg",
+      "location": "Ghana",
+      "image": "https://pub-d2aef463d8a6497d90ac252cbcb0dcbf.r2.dev/uploads/logos/ruC6aM7u3NlC0Q2uNxZbd.jpg",
       "website": "https://onzazapay.com",
       "email": "",
       "categories": [
@@ -8126,12 +8126,12 @@
       "id": "cmmc3t62c00011x1usd27l8g4",
       "name": "Bitzed",
       "slug": "bitzed",
-      "description": "Buy and spend Bitcoin with mobile money in Zambia on the Lightning Network",
+      "description": "Bitzed is a non-KYC Bitcoin app in Zambia that lets users sell and buy Bitcoin directly into a wallet they control using mobile money, starting from as little as K1 (~60 sats). Transactions are instant and low-cost, powered by the Lightning Network.\n\nKey Features:\n• Lightning Network payments\n• Ultra-low transaction fees\n• Simple, user-friendly interface",
       "country_code": "zm",
       "country_name": "Zambia",
       "city": "",
       "location": "Zambia",
-      "image": "/uploads/logos/LQXp1Pmozd1wvyjpwVko4.png",
+      "image": "https://pub-d2aef463d8a6497d90ac252cbcb0dcbf.r2.dev/uploads/logos/LQXp1Pmozd1wvyjpwVko4.png",
       "website": "https://bitzed.xyz/",
       "email": "support@bitzed.xyz",
       "categories": [
@@ -8177,12 +8177,12 @@
       "id": "cmmcp6jyh0001d6u1e33x18ss",
       "name": "Open Study Hubs",
       "slug": "open-study-hubs",
-      "description": "This work is all about decentralized, physical Bitcoin learning spaces, to ensure that Bitcoin circular economies are built naturally among the rural communities. Main focus is on the rural communities, where there's no Main-grid electricity, and internet connection is either unreliable or unavailable.",
+      "description": "WHAT OPEN STUDY HUBS ARE\n\n(https://geyser.fund/project/bitcoinstudyhubs)\n*  Physical, decentralized Bitcoin learning spaces, modeled after the MyFirstBitcoin \n    \n*  Bitcoin and Freedom — no shitcoinery\n    \n*  Local-language education\n    \n*  Practical Bitcoin usage (powered by Machankura)\n    \n*  Onboarding families and merchants\n    \n*  Training facilitators, not influencers\n    \n*   Building village-level circular economies\n    \n\nThis is Bitcoin as money, education, and sovereignty.\n\nHOW THIS SCALES (Decentralized By Design, Just The Same Way MyFirstBitcoin Is)\n\nWe begin with one hub.\n\nThe first phase prioritizes training facilitators instead of building centralized control.\n\nOnce facilitators are trained:\n\n*   Communities operate their own hubs\n    \n*   Materials are localized\n    \n*   Guidance remains available without dependency\n    \n*   Growth happens horizontally, not top-down\n    \n\nThis ensures genuine ownership and long-term sustainability.",
       "country_code": "mw",
       "country_name": "Malawi",
       "city": "",
       "location": "Malawi",
-      "image": "/uploads/logos/lPYwnd1ShIBNAUr7xqTfe.png",
+      "image": "https://pub-d2aef463d8a6497d90ac252cbcb0dcbf.r2.dev/uploads/logos/lPYwnd1ShIBNAUr7xqTfe.png",
       "website": "",
       "email": "osh.wiring329@passinbox.com",
       "categories": [
@@ -8230,8 +8230,8 @@
       "country_code": "cd",
       "country_name": "Congo, Democratic Republic",
       "city": "",
-      "location": "",
-      "image": "/uploads/logos/uzFD6u0F6oIgjGqGX-9r4.jpg",
+      "location": "Congo, Democratic Republic",
+      "image": "https://pub-d2aef463d8a6497d90ac252cbcb0dcbf.r2.dev/uploads/logos/uzFD6u0F6oIgjGqGX-9r4.jpg",
       "website": "",
       "email": "",
       "categories": [
@@ -8328,14 +8328,14 @@
     },
     {
       "id": "cmmfle30b0001ksyiop9vw3kd",
-      "name": "Brefcrypto ",
+      "name": "Brefcrypto",
       "slug": "brefcrypto",
       "description": "BrefCrypto is a Bitcoin and crypto news and education media outlet built for everyday people. It delivers fast, clear updates, without jargon, on what’s happening across Bitcoin and the wider crypto market (prices, regulation, major events, innovations) and, above all, what it means in real life. Positioned as a trusted entry point, BrefCrypto helps even complete beginners stay informed and learn how to avoid common risks and scams.",
       "country_code": "cd",
       "country_name": "Congo, Democratic Republic",
       "city": "",
-      "location": "",
-      "image": "/uploads/logos/r6drBuww0WkTpayCEe7PH.jpeg",
+      "location": "Congo, Democratic Republic",
+      "image": "https://pub-d2aef463d8a6497d90ac252cbcb0dcbf.r2.dev/uploads/logos/r6drBuww0WkTpayCEe7PH.jpeg",
       "website": "http://brefcrypto.com/",
       "email": "",
       "categories": [
@@ -8378,14 +8378,14 @@
     },
     {
       "id": "cmmktyd9u0002c70yat6h5whi",
-      "name": "Fastconvert.co.ke ",
+      "name": "Fastconvert.co.ke",
       "slug": "fastconvertcoke",
       "description": "FastConvert is a lightweight web tool that converts popular cryptocurrencies like Bitcoin, Ethereum, and Worldcoin into Kenyan Shillings (KSh) in real time. It helps users in Kenya quickly understand the local value of their crypto assets without needing complex exchanges or calculations.",
       "country_code": "ke",
       "country_name": "Kenya",
       "city": "",
-      "location": "",
-      "image": "/uploads/logos/arDye9qH2Fzophv5a-hUU.png",
+      "location": "Kenya",
+      "image": "https://pub-d2aef463d8a6497d90ac252cbcb0dcbf.r2.dev/uploads/logos/arDye9qH2Fzophv5a-hUU.png",
       "website": "https://Fastconvert.co.ke",
       "email": "",
       "categories": [
@@ -8479,12 +8479,12 @@
       "id": "cmmm7w5o40001zgw98vpo6mwd",
       "name": "Lwandi Bitcoin",
       "slug": "lwandi-bitcoin",
-      "description": "Building a Bitcoin Circular Economy in Mozambique Ponta do Ouro Beach Community. Mentored and supported by Bitcoin Famba and Lwandi Surf.",
+      "description": "Vision\nBuild a chill Bitcoin-powered community in Ponta do Ouro where locals can use Bitcoin easily, keep money circulating right here on the beach, stay financially free, protect the ocean, and just live better together.\n\nMission \nTaking the heart of Lwandi Surf’s social project, we’re teaching people (especially the youth) how Bitcoin works, getting local businesses and tourism spots to accept it, and creating a loop where the value stays in the community. Through surf sessions, capoeira vibes, workshops and real-life use, we help everyone level up economically while keeping things sustainable, fun and 100% local.",
       "country_code": "mz",
       "country_name": "Mozambique",
       "city": "",
       "location": "Mozambique",
-      "image": "/uploads/logos/F1idZMY5RQaRuShqFIXWC.jpg",
+      "image": "https://pub-d2aef463d8a6497d90ac252cbcb0dcbf.r2.dev/uploads/logos/F1idZMY5RQaRuShqFIXWC.jpg",
       "website": "",
       "email": "lwandibitcoin@gmail.com",
       "categories": [
@@ -8532,12 +8532,12 @@
       "id": "cmmvg35b00001147v3mbvtgi0",
       "name": "Bitdevs Mauritius",
       "slug": "bitdevs-mauritius",
-      "description": "Mauritius Bitcoin Developers Community",
+      "description": "BitDevsMauritius is a community in Mauritius, for those interested in discussing and participating in the research and development of Bitcoin and related protocols and software.",
       "country_code": "mu",
       "country_name": "Mauritius",
       "city": "",
       "location": "Mauritius",
-      "image": "/uploads/logos/xaQ4Ll4eX5N-34mIOQ2ep.png",
+      "image": "https://pub-d2aef463d8a6497d90ac252cbcb0dcbf.r2.dev/uploads/logos/xaQ4Ll4eX5N-34mIOQ2ep.png",
       "website": "https://bitdevsmauritius.org",
       "email": "sadiq@bitdevsmauritius.org",
       "categories": [
@@ -8586,7 +8586,7 @@
       "country_name": "Liberia",
       "city": "",
       "location": "Liberia",
-      "image": "/uploads/logos/8SR2BXxIm13CvYQaZ7PFH.png",
+      "image": "https://pub-d2aef463d8a6497d90ac252cbcb0dcbf.r2.dev/uploads/logos/8SR2BXxIm13CvYQaZ7PFH.png",
       "website": "https://www.bitcoiners.africa",
       "email": "africanbitcoiners@bitcoiners.africa",
       "categories": [
@@ -8636,7 +8636,7 @@
       "country_name": "Liberia",
       "city": "",
       "location": "Liberia",
-      "image": "/uploads/logos/1mx0S4TutCUCnwig1s8iL.png",
+      "image": "https://pub-d2aef463d8a6497d90ac252cbcb0dcbf.r2.dev/uploads/logos/1mx0S4TutCUCnwig1s8iL.png",
       "website": "https://bitcoinnews.africa/",
       "email": "africanbitcoiners@bitcoiners.africa",
       "categories": [
@@ -8680,12 +8680,12 @@
       "id": "cmn3ck8ba0001oa52n7iliwkr",
       "name": "BitDevs Kampala",
       "slug": "bitdevs-kampala",
-      "description": "BitDevs Kampala is a Bitcoin-only technical community in Kampala, Uganda, dedicated to exploring, discussing, and participating in the research and development of Bitcoin and related protocols.",
+      "description": "BitDevs Kampala is Kampala's Bitcoin developers community. It is local chapter based in Kampala, Uganda, part of a broader global network of technically focused Bitcoin meetup groups.\n\nIt follows the BitDevs format: monthly meetups that are Bitcoin-only, technically focused, non-commercial, and privacy-respecting, using a Socratic discussion style that encourages participants to think critically and engage meaningfully regardless of their experience level.\n\nThe community is supported by Btrust, which provides administration, communication, and funding assistance. It serves as a local hub for developers, researchers, and technically curious individuals in Uganda to deepen their understanding of Bitcoin and has helped members gain access to broader opportunities in Bitcoin open-source development.",
       "country_code": "ug",
       "country_name": "Uganda",
       "city": "",
       "location": "Uganda",
-      "image": "/uploads/logos/La97G_Kr7DSUDOKmzthsG.jpeg",
+      "image": "https://pub-d2aef463d8a6497d90ac252cbcb0dcbf.r2.dev/uploads/logos/La97G_Kr7DSUDOKmzthsG.jpeg",
       "website": "https://bitdevskla.org",
       "email": "bitdevskampala@gmail.com",
       "categories": [
@@ -8732,12 +8732,12 @@
       "id": "cmn3tyt330001i7siv5gg9twa",
       "name": "BitJR Academy and Space",
       "slug": "bitjr-academy-and-space",
-      "description": "BitJR Academy and Space introduces Bitcoin education to children aged 6 -17 in Livingstone, Zambia through hands-on learning and real-world use. By combining games, classes, and Lightning-powered activities, the initiative helps children earn, spend, and save sats while building a small circular economy.",
+      "description": "BitJR Academy and Space is a kid's Bitcoin community, founded in October 2024, focuses on teaching children in Livingstone, Zambia about money and Bitcoin from an early age through practical, engaging experiences. Learning is delivered through games, classes, meetups, competitions, and project fairs, alongside field trips where children can spend Bitcoin using the Lightning Network.\n\nThe initiative goes beyond theory by introducing real ownership and responsibility through tools like NFC cards and simple wallets like Blink. Children are not only learning about Bitcoin but actively using it in their daily lives.\n\nThe project is building a small kids-led Bitcoin circular economy by working with local merchants and local schools to enable everyday Lightning transactions. Connected to Bitcoin Victoria Falls and the global My First Bitcoin network, this work demonstrates how early Bitcoin education can drive grassroots adoption.\n\nBy empowering children to earn, use, and understand Bitcoin, the initiative creates a ripple effect where knowledge spreads into homes and communities, supporting long-term adoption.",
       "country_code": "zm",
       "country_name": "Zambia",
       "city": "",
       "location": "Zambia",
-      "image": "/uploads/logos/1EMgBTvo-K1iI44NN6JOg.png",
+      "image": "https://pub-d2aef463d8a6497d90ac252cbcb0dcbf.r2.dev/uploads/logos/1EMgBTvo-K1iI44NN6JOg.png",
       "website": "https://bitjracademyandspace.org/",
       "email": "bitjracademyandspace@gmail.com",
       "categories": [
@@ -8788,7 +8788,7 @@
       "country_code": "cg",
       "country_name": "Congo",
       "city": "",
-      "location": "",
+      "location": "Congo",
       "image": "",
       "website": "https://anotherbanga.com",
       "email": "",
@@ -8831,56 +8831,6 @@
       "updated_at": "2026-04-07T14:49:53.252Z"
     },
     {
-      "id": "cmnoduk8q0007yf0fdwmcbgjp",
-      "name": "AB Togo Branch",
-      "slug": "ab-togo-branch",
-      "description": "We do nothing!",
-      "country_code": "xx",
-      "country_name": "Global/Africa Wide",
-      "city": "",
-      "location": "",
-      "image": "",
-      "website": "https://wedonothing.com",
-      "email": "",
-      "categories": [
-        "Tech Meetup"
-      ],
-      "tags": [
-        "Custodial",
-        "Infrastructure",
-        "Desktop"
-      ],
-      "social": {
-        "twitter": "",
-        "linkedin": "",
-        "instagram": "",
-        "facebook": "",
-        "youtube": "",
-        "telegram": "",
-        "nostr": ""
-      },
-      "bitcoin_acceptance": {
-        "onchain": false,
-        "lightning": false,
-        "gift_cards": false
-      },
-      "founder": {
-        "name": "",
-        "twitter": "",
-        "email": ""
-      },
-      "initiatives": "",
-      "impact": "",
-      "challenges": "",
-      "verified": false,
-      "featured": false,
-      "status": "approved",
-      "founded_year": "",
-      "active": true,
-      "created_at": "2026-04-07T08:54:12.986Z",
-      "updated_at": "2026-04-07T14:41:56.604Z"
-    },
-    {
       "id": "cmnwysh2d0001ds68rh5jd4vh",
       "name": "Bitterm",
       "slug": "bitterm",
@@ -8888,8 +8838,8 @@
       "country_code": "ng",
       "country_name": "Nigeria",
       "city": "",
-      "location": "",
-      "image": "/uploads/logos/3ZC9zv5Nxu26M8QksHOfQ.png",
+      "location": "Nigeria",
+      "image": "https://pub-d2aef463d8a6497d90ac252cbcb0dcbf.r2.dev/uploads/logos/3ZC9zv5Nxu26M8QksHOfQ.png",
       "website": "https://www.bitterms.com/en",
       "email": "",
       "categories": [
@@ -8934,14 +8884,14 @@
       "id": "cmnyjclv60001d0avvmkrz1ei",
       "name": "BitDevs Malawi",
       "slug": "bitdevs-malawi",
-      "description": "BitDevs Malawi is a grassroots Bitcoin education and developer community focused on building local capacity through meetups and university programs. We create spaces for students, developers, and builders to learn Bitcoin fundamentals, explore open-source tools, and gain practical hands-on experience with real Bitcoin infrastructure. By connecting education with community engagement, BitDevs Malawi helps nurture the next generation of Bitcoin contributors in Malawi and beyond.",
+      "description": "BitDevs Malawi is a grassroots Bitcoin education and developer community committed to growing technical understanding, practical skills, and open-source participation in Malawi’s Bitcoin ecosystem. We bring together students, developers, builders, and curious learners through meetups and university programs designed to make Bitcoin more accessible, more understandable, and more useful in real-world contexts.\n\nVision:\n\nTo build a financially empowered and technically skilled Malawi where individuals and communities can understand, build, and contribute to Bitcoin and open-source infrastructure.\n\nMission:  \n\nTo educate and equip Malawians with practical Bitcoin knowledge, foster a strong local developer community, and create learning spaces that encourage collaboration, experimentation, and contribution to the global Bitcoin ecosystem.\n\nWhat we do:\n  \n- Run Bitcoin-focused meetups and technical discussions.  \n- Host hands-on Bitcoin development and tooling.  \n- Organize university outreach and training programs to introduce students to Bitcoin, open source, and protocol development.  \n- Support community members in learning, building, and contributing to Bitcoin-related projects.  \n- Create a bridge between local talent in Malawi and the global Bitcoin developer community.\n\nOur focus: \n\nBitDevs Malawi is centered on education, community building, and technical growth. We aim to nurture a generation of Bitcoin builders who can participate meaningfully in open-source development while also helping expand Bitcoin knowledge across universities and local communities.",
       "country_code": "mw",
       "country_name": "Malawi",
       "city": "",
-      "location": "",
-      "image": "/uploads/logos/ybWPaY_D1yGFoz9VFcsKD.jpg",
+      "location": "Malawi",
+      "image": "https://pub-d2aef463d8a6497d90ac252cbcb0dcbf.r2.dev/uploads/logos/ybWPaY_D1yGFoz9VFcsKD.jpg",
       "website": "",
-      "email": "",
+      "email": "codamw011@gmail.com",
       "categories": [
         "Developer Community"
       ],
@@ -8954,7 +8904,7 @@
         "Lightning Network"
       ],
       "social": {
-        "twitter": "",
+        "twitter": "https://twitter.com/https://x.com/Bitdevs_Malawi",
         "linkedin": "",
         "instagram": "",
         "facebook": "",
@@ -8963,22 +8913,22 @@
         "nostr": ""
       },
       "bitcoin_acceptance": {
-        "onchain": false,
-        "lightning": false,
+        "onchain": true,
+        "lightning": true,
         "gift_cards": false
       },
       "founder": {
-        "name": "",
-        "twitter": "",
-        "email": ""
+        "name": "Yankho Ngolleka",
+        "twitter": "https://twitter.com/codaMW",
+        "email": "codamw011@gmail.com"
       },
-      "initiatives": "",
-      "impact": "",
-      "challenges": "",
+      "initiatives": "Core Values and Principles\n1. Bitcoin-only focus\n2. Technical depth and curiosity \n3. Open-source collaboration \n4. Neutral and non-commercial space\n5. Privacy and respect\n6. Local leadership, global connection\n7. Inclusion and accessibility",
+      "impact": "Key achievements include:\n- Running community learning sessions focused on Bitcoin development and tooling.\n- Introducing students and developers to Bitcoin open-source collaboration.\n- Building relationships with university communities and student leaders.\n- Creating momentum around BitDevs-style technical meetups in Malawi.\n- Helping connect local interest in Bitcoin with practical learning opportunities and real projects.",
+      "challenges": "Like many grassroots communities, BitDevs Malawi faces a few important challenges as it grows. The biggest challenge is limited funding for consistent meetups, training materials, venue costs, internet access, and travel for outreach activities across universities and communities.\n\nAnother challenge is the limited number of local Bitcoin developers and mentors available to support new learners at scale. We also face the broader issue of low awareness of Bitcoin development opportunities in Malawi, which means we often need to spend extra time on education before contributors can begin working on technical projects.\n\nAdditional challenges include:\n- Limited access to reliable infrastructure for in-person and hybrid sessions.\n- Difficulty sustaining regular programs without dedicated financial support.\n- The need for more structured pathways from learning to contribution.\n- Time and resource constraints for volunteer organizers.\n\nDespite these challenges, we remain committed to growing a strong, practical, and sustainable Bitcoin learning community in Malawi.",
       "verified": false,
       "featured": false,
       "status": "approved",
-      "founded_year": "",
+      "founded_year": "2026",
       "active": true,
       "created_at": "2026-04-14T11:25:54.739Z",
       "updated_at": "2026-06-25T06:04:30.658Z"
@@ -8987,14 +8937,14 @@
       "id": "cmo60dyam00017lodp50oji2z",
       "name": "Grimm App",
       "slug": "grim-app",
-      "description": "Grimm App is an open-source, self-custodial Bitcoin wallet designed to make Bitcoin simple, secure, and accessible for everyone.",
+      "description": "Your bank, in your hands.\n\nGrimm App is an open-source, self-custodial Bitcoin wallet built to make Bitcoin simple, accessible, and secure for everyone.\n\nToday, using Bitcoin is still too complicated for most people especially in Africa. Many users face overly technical interfaces, dependence on centralized platforms that can freeze funds, limited control over their money, and experiences that are not designed for their realities.\n\nGrimm App solves these problems by providing a simple and intuitive solution that allows anyone to:\n\nFully own and control their funds through self-custody\nSend and receive Bitcoin both on-chain and via the Lightning Network\nUse Bitcoin without requiring advanced technical knowledge\n\nWhether you are a beginner or an experienced user, Grimm App gives you the freedom to use Bitcoin with a smooth, secure, and user-friendly experience.",
       "country_code": "cm",
       "country_name": "Cameroon",
       "city": "",
-      "location": "",
-      "image": "/uploads/logos/5Q0zzMvjMVXx3nKir2wgZ.png",
+      "location": "Cameroon",
+      "image": "https://pub-d2aef463d8a6497d90ac252cbcb0dcbf.r2.dev/uploads/logos/5Q0zzMvjMVXx3nKir2wgZ.png",
       "website": "https://usegrimm.app",
-      "email": "",
+      "email": "contact@usegrimm.app",
       "categories": [
         "Wallet"
       ],
@@ -9006,31 +8956,31 @@
         "Open Source"
       ],
       "social": {
-        "twitter": "",
-        "linkedin": "",
+        "twitter": "https://twitter.com/useGrimmApp",
+        "linkedin": "https://linkedin.com/in/Grimm App",
         "instagram": "",
-        "facebook": "",
+        "facebook": "https://facebook.com/Grimm App",
         "youtube": "",
         "telegram": "",
-        "nostr": ""
+        "nostr": "https://njump.me/npub1033534774jyjeyzj8qtzpvpuqw6q54lmu7k0k88fua97wx8ensrql3kapl"
       },
       "bitcoin_acceptance": {
-        "onchain": false,
-        "lightning": false,
+        "onchain": true,
+        "lightning": true,
         "gift_cards": false
       },
       "founder": {
-        "name": "",
-        "twitter": "",
-        "email": ""
+        "name": "Jonathan Nenba",
+        "twitter": "https://twitter.com/nejos97",
+        "email": "jonathan.nenba@usegrimm.app"
       },
       "initiatives": "",
       "impact": "",
-      "challenges": "",
+      "challenges": "Grimm App is currently facing challenges mainly around growth, community engagement, and ecosystem development:\n\nLimited open-source contributions, as it remains difficult to attract and retain active contributors\nIncreasing visibility and adoption through participation in events and consistent promotion of the app\nOrganizing educational initiatives around Bitcoin, particularly within French-speaking communities where access to quality resources is still limited\nBuilding a strong and engaged community to support long-term adoption and collaboration",
       "verified": false,
       "featured": false,
       "status": "approved",
-      "founded_year": "",
+      "founded_year": "2025",
       "active": true,
       "created_at": "2026-04-19T16:57:14.207Z",
       "updated_at": "2026-06-25T06:04:24.276Z"
@@ -9039,14 +8989,14 @@
       "id": "cmoincqsg000114dyhdx3l4ov",
       "name": "Rurbit",
       "slug": "rurbit",
-      "description": "Rurbit is a Bitcoin Lightning gateway for rural circular economies. It enables secure, offline-compatible payments in \"no-internet\" zones, bypassing traditional banks to keep value within the community. With Rurbit, everyone taste the Bitcoin magic - Lightning with feature phones.",
+      "description": "Rurbit is designed to bring financial sovereignty to rural and remote communities where traditional banking infrastructure is limited, unreliable, or entirely absent. Many rural regions face unstable internet connectivity, long distances to bank branches, high remittance fees, and exclusion from digital financial services. Rurbit changes that!\n\nBuilt on the Bitcoin Lightning Network, Rurbit enables instant, low-fee, peer-to-peer payments that work even in low-connectivity or no-internet environments. Through USSD on feature phone or smartphones.\nRurbit is not just a payment tool. It is infrastructure for a circular economy, where farmers, artisans, shopkeepers, and neighbors trade directly with one another, keeping wealth circulating locally instead of losing it to intermediaries, payment processors, and distant financial institutions.\n\nBy combining Bitcoin’s global liquidity with Lightning’s instant settlement and rural-first design principles, Rurbit empowers communities to:\n\nAccept and send payments instantly\nOperate in low-bandwidth or offline scenarios\nEliminate excessive transaction fees\nReduce reliance on centralized banking systems\nBuild resilient, self-sustaining local economies\n\nWith Rurbit, even a basic feature phone can become a gateway to the global Bitcoin network.\n\nOur mission is to empower rural and underserved communities with accessible, low-cost, and resilient Bitcoin payment infrastructure that enables true financial sovereignty.\nOur vision is a future where you can arrive in Burundi with nothing but a Bitcoin wallet and live entirely off your sats.\n\nTen years from now, we'll see in Burundi: Farmers in open-air markets accept sats for their harvest as naturally as they do cash, cross-border traders settle transactions instantly across mountains without the risk of physical cash transport and youth freelancers in Burundi earn global wages without ever leaving their homes.\n\nRurbit is the bridge to this future ensuring that the magic of Bitcoin reaches the last mile, so that every village can stand independent, connected, and economically sovereign.",
       "country_code": "bi",
       "country_name": "Burundi",
       "city": "",
-      "location": "",
-      "image": "/uploads/logos/wxIvYg7FdrcKuH1B3PQU2.png",
+      "location": "Burundi",
+      "image": "https://pub-d2aef463d8a6497d90ac252cbcb0dcbf.r2.dev/uploads/logos/wxIvYg7FdrcKuH1B3PQU2.png",
       "website": "",
-      "email": "",
+      "email": "koraboysana@gmail.com",
       "categories": [
         "Wallet"
       ],
@@ -9059,31 +9009,31 @@
         "Education"
       ],
       "social": {
-        "twitter": "",
+        "twitter": "https://twitter.com/https://x.com/rurbit",
         "linkedin": "",
-        "instagram": "",
+        "instagram": "https://instagram.com/https://www.instagram.com/cubafrid/",
         "facebook": "",
         "youtube": "",
         "telegram": "",
-        "nostr": ""
+        "nostr": "https://njump.me/npub12jtfz57kdcczgjy9u0awfjv5yahzs07za8w35j6cqm8es36ztk7spfnfc7"
       },
       "bitcoin_acceptance": {
-        "onchain": false,
-        "lightning": false,
-        "gift_cards": false
+        "onchain": true,
+        "lightning": true,
+        "gift_cards": true
       },
       "founder": {
-        "name": "",
-        "twitter": "",
-        "email": ""
+        "name": "Wilfrid Cubahiro",
+        "twitter": "https://twitter.com/young2_go",
+        "email": "cubahirowilfrid@gmail.com"
       },
-      "initiatives": "",
-      "impact": "",
-      "challenges": "",
+      "initiatives": "• Rural Community building\n• Remittance channel\n• Merchants onboarding\n• Rural Bitcoiners\n• Circular Economy\n• Bitcoin Adoption",
+      "impact": "As we just started, Rurbit’s biggest achievement right now is turning Bitcoin from a distant global technology into a practical tool for rural freedom. It is laying the groundwork for a future where people in villages can accept sats, spend sats, earn globally, trade locally, and participate confidently in the Bitcoin economy, even without reliable internet.",
+      "challenges": "•The \"USSD Tax\": Mobile Network Operators (MNOs) often charge high fees for access to USSD codes. Navigating the cost-per-session model while trying to keep Bitcoin transaction fees low for farmers is a difficult balancing act.\n• Central Bank Compliance: The BRB (Bank of the Republic of Burundi) is still defining how to handle \"Virtual Asset Service Providers\" (VASPs). Operating a USSD service that touches both the telecom network and Bitcoin puts RuBit in a \"gray zone\" that could lead to sudden licensing requirements or shutdowns.",
       "verified": false,
       "featured": false,
       "status": "approved",
-      "founded_year": "",
+      "founded_year": "2026",
       "active": true,
       "created_at": "2026-04-28T13:13:23.105Z",
       "updated_at": "2026-06-25T06:06:10.243Z"
@@ -9096,10 +9046,10 @@
       "country_code": "xx",
       "country_name": "Global/Africa Wide",
       "city": "",
-      "location": "",
-      "image": "/uploads/logos/1uDKU_gm6yy1Hf_L1h4N9.jpeg",
+      "location": "Global/Africa Wide",
+      "image": "https://pub-d2aef463d8a6497d90ac252cbcb0dcbf.r2.dev/uploads/logos/1uDKU_gm6yy1Hf_L1h4N9.jpeg",
       "website": "https://Www.Bitcoinstudentsnetwork.org",
-      "email": "",
+      "email": "kyle@bitcoinstudentsnetwork.org",
       "categories": [
         "Community"
       ],
@@ -9110,8 +9060,8 @@
         "Summit"
       ],
       "social": {
-        "twitter": "",
-        "linkedin": "",
+        "twitter": "https://twitter.com/btcstudents",
+        "linkedin": "https://www.linkedin.com/company/btcstudents/",
         "instagram": "",
         "facebook": "",
         "youtube": "",
@@ -9143,14 +9093,14 @@
       "id": "cmp555g1b0001we9h752gw7df",
       "name": "BitmernSolo",
       "slug": "bitmernsolo",
-      "description": "“BitmernSolo empowers African Bitcoin miners with open‑source tools, trusted vendor support, and streamlined solo‑mining solutions.”",
+      "description": "BitmernSolo is an independent Bitcoin mining initiative dedicated to empowering African miners through open‑source innovation, trusted vendor support, and streamlined solo‑mining solutions. By combining technical expertise with community‑driven standards, BitmernSolo helps miners maximize efficiency, maintain sovereignty, and contribute to the decentralization of the Bitcoin network.\n\nMission\nOur mission is to make Bitcoin mining accessible, transparent, and sustainable for individuals and small businesses across Africa. We aim to provide miners with reliable tools, accurate branding resources, and vendor pathways that strengthen trust within the global Bitcoin ecosystem.\n\nVision\nWe envision a thriving African Bitcoin mining community where miners operate independently, supported by open‑source technologies and verified vendor networks. BitmernSolo seeks to position Africa as a key contributor to Bitcoin’s resilience, ensuring that miners on the continent can participate fully in the global economy while maintaining control over their operations.",
       "country_code": "za",
       "country_name": "South Africa",
       "city": "",
-      "location": "",
+      "location": "South Africa",
       "image": "",
       "website": "https://www.bitmernsolo.com/",
-      "email": "",
+      "email": "charmaine.c@bitmernsolo.com",
       "categories": [
         "Business"
       ],
@@ -9159,31 +9109,31 @@
         "Mining"
       ],
       "social": {
-        "twitter": "",
+        "twitter": "https://twitter.com/https://www.x.com/BitmernMining",
         "linkedin": "",
-        "instagram": "",
-        "facebook": "",
+        "instagram": "https://instagram.com/https://www.instagram.com/bitmern",
+        "facebook": "https://www.facebook.com/profile.php?id=61569741784760",
         "youtube": "",
-        "telegram": "",
+        "telegram": "https://t.me/bitmernsolo",
         "nostr": ""
       },
       "bitcoin_acceptance": {
-        "onchain": false,
-        "lightning": false,
+        "onchain": true,
+        "lightning": true,
         "gift_cards": false
       },
       "founder": {
-        "name": "",
-        "twitter": "",
+        "name": "Giannis Andreou",
+        "twitter": "https://twitter.com/gandreou007",
         "email": ""
       },
       "initiatives": "",
-      "impact": "",
-      "challenges": "",
+      "impact": "Impact & Achievements\nVerified Vendor Pathway: Successfully submitted vendor entry and branding assets for review in the Bitaxe open‑source ecosystem, positioning BitmernSolo as a trusted African vendor.\n\nOpen‑Source Contribution: Actively engaged in GitHub repository management, ensuring transparent workflows and compliance with community standards.\n\nBrand Identity Established: Developed and published a consistent logo and vendor profile, strengthening recognition and credibility in the bitcoin mining space.\n\nCommunity Engagement: Supported African miners with clear documentation, step‑by‑step onboarding guidance, and alignment with open‑source best practices.\n\nRegional Representation: Advanced visibility of African mining initiatives by integrating BitmernSolo into global Bitcoin vendor networks.",
+      "challenges": "Brand Visibility: Establishing stronger recognition within the African Bitcoin mining community and global open‑source ecosystem.\n\nResource Constraints: Limited access to funding and infrastructure for scaling solo‑mining operations across diverse regions.\n\nCommunity Outreach: Expanding educational efforts to onboard new miners and ensure adoption of open‑source standards.\n\nTechnical Integration: Ensuring compatibility of mining tools with evolving Bitcoin protocols and hardware updates.",
       "verified": false,
       "featured": false,
       "status": "approved",
-      "founded_year": "",
+      "founded_year": "2023",
       "active": true,
       "created_at": "2026-05-14T07:02:31.535Z",
       "updated_at": "2026-05-14T07:02:31.535Z"
@@ -9192,14 +9142,14 @@
       "id": "cmpyjp21v0005bei8c47ircmb",
       "name": "Bannga",
       "slug": "bannga",
-      "description": "Earn bitcoin when you Spending. ",
+      "description": "Earn bitcoin when you Spending.",
       "country_code": "za",
       "country_name": "South Africa",
       "city": "",
-      "location": "",
-      "image": "/uploads/logos/W2beO8WMLrnzln_MIT4pR.png",
+      "location": "South Africa",
+      "image": "https://pub-d2aef463d8a6497d90ac252cbcb0dcbf.r2.dev/uploads/logos/W2beO8WMLrnzln_MIT4pR.png",
       "website": "https://www.bannga.co.za",
-      "email": "",
+      "email": "roman@bannga.co.za",
       "categories": [
         "Wallet"
       ],
@@ -9209,31 +9159,31 @@
         "Lightning Network"
       ],
       "social": {
-        "twitter": "",
-        "linkedin": "",
-        "instagram": "",
-        "facebook": "",
+        "twitter": "https://twitter.com/banngaofficial",
+        "linkedin": "https://linkedin.com/in/Bannga",
+        "instagram": "https://instagram.com/banngaofficial",
+        "facebook": "https://facebook.com/banngaofficial",
         "youtube": "",
         "telegram": "",
         "nostr": ""
       },
       "bitcoin_acceptance": {
         "onchain": false,
-        "lightning": false,
+        "lightning": true,
         "gift_cards": false
       },
       "founder": {
-        "name": "",
-        "twitter": "",
-        "email": ""
+        "name": "Roman Makananisa",
+        "twitter": "https://twitter.com/romanmak29",
+        "email": "roman@bannga.co.za"
       },
-      "initiatives": "",
+      "initiatives": "- Community building\n- Bitcoin Adoption \n- Marchant acceptance",
       "impact": "",
       "challenges": "",
       "verified": false,
       "featured": false,
       "status": "pending",
-      "founded_year": "",
+      "founded_year": "2025",
       "active": true,
       "created_at": "2026-06-03T20:55:00.257Z",
       "updated_at": "2026-06-03T20:55:00.257Z"
@@ -9242,14 +9192,14 @@
       "id": "cmq92nyfw0001ed6bhk4d76o0",
       "name": "Bityara",
       "slug": "bityara",
-      "description": "Bityara is a Bitcoin education initiative focused on introducing children to Bitcoin and financial literacy through storytelling, creativity and art based learning.\nBy nurturing curiosity and learning from a young age, we aim to raise a generation of youth equipped to understand and participate in the future of money. ",
+      "description": "BitYara (Bitcoin Yara) is a child-focused Bitcoin education initiative dedicated to introducing children and young people across Nigeria to Bitcoin, financial literacy, and digital innovation through creative, engaging, and culturally relevant learning experiences.\nWe believe that understanding money, value, savings, and emerging technologies should begin early. Through storytelling, art, games, school outreach programs, workshops, and community activities, BitYara makes Bitcoin education accessible and enjoyable for young learners.\n\nOur mission is to equip the next generation with the knowledge and skills needed to navigate an increasingly digital world while fostering critical thinking, creativity, and financial responsibility.\n\nOur vision is to build a future where every African child has the opportunity to understand Bitcoin and participate confidently in the evolving global economy.",
       "country_code": "ng",
       "country_name": "Nigeria",
       "city": "",
-      "location": "",
-      "image": "/uploads/logos/AIWN21SiCfBwalWNbLK18.jpg",
+      "location": "Nigeria",
+      "image": "https://pub-d2aef463d8a6497d90ac252cbcb0dcbf.r2.dev/uploads/logos/AIWN21SiCfBwalWNbLK18.jpg",
       "website": "",
-      "email": "",
+      "email": "bitcionyara@gmail.com",
       "categories": [
         "Education"
       ],
@@ -9258,7 +9208,7 @@
         "Education"
       ],
       "social": {
-        "twitter": "",
+        "twitter": "https://twitter.com/bitcoinyara",
         "linkedin": "",
         "instagram": "",
         "facebook": "",
@@ -9267,22 +9217,22 @@
         "nostr": ""
       },
       "bitcoin_acceptance": {
-        "onchain": false,
-        "lightning": false,
+        "onchain": true,
+        "lightning": true,
         "gift_cards": false
       },
       "founder": {
-        "name": "",
-        "twitter": "",
-        "email": ""
+        "name": "Aliu Toheeb Olaitan",
+        "twitter": "https://twitter.com/techproczar",
+        "email": "techproczar@gmail.com"
       },
-      "initiatives": "",
-      "impact": "",
-      "challenges": "",
+      "initiatives": "•Education Programs \n•School outreach \n•Community Engagement",
+      "impact": "Since its launch, BitYara has taken meaningful steps toward advancing youth Bitcoin education. A key milestone was the successful organizing of a Kids Bitcoin Pizza Day event, where children learned about Bitcoin, money, and the history of the Bitcoin pizza day through storytelling, creativity activities, and interactive discussions. BitYara is also  actively preparing for school outreach programs designed to introduce students to Bitcoin, financial literacy, and digital innovation in engaging and age-appropriate ways.",
+      "challenges": "As a growing initiative, BitYara faces challenges related to mostly to  funding, and the development of high-quality learning resources for children. We are also working to increase awareness and understanding of Bitcoin education among parents, educators, and communities while building sustainable structures that will allow us to scale our impact across Nigeria.",
       "verified": false,
       "featured": false,
       "status": "approved",
-      "founded_year": "",
+      "founded_year": "2025",
       "active": true,
       "created_at": "2026-06-11T05:43:43.388Z",
       "updated_at": "2026-06-11T05:43:43.388Z"
@@ -9291,14 +9241,14 @@
       "id": "cmqexgha6000176rijv8vpxdy",
       "name": "HakiFedha | Bitcoin & Privacy for Civil Society in Africa",
       "slug": "hakifedha-or-bitcoin-and-privacy-for-civil-society-in-africa",
-      "description": "HakiFedha is an Africa-centered multilingual knowledge hub equipping activists, journalists, whistleblowers, human rights defenders, and community organisers with practical guidance on Bitcoin, financial sovereignty, and privacy-preserving tools.",
+      "description": "HakiFedha takes its name from two Swahili words: Haki, meaning justice, rights, and fairness, and Fedha, meaning money and finance. The name reflects a core conviction: financial sovereignty and privacy are not technical luxuries reserved for the wealthy or the technically skilled. They are fundamental rights, and in many parts of Africa, they are under direct threat.\n\nAcross the continent, civil society actors face increasing financial and digital pressure. Bank accounts are frozen without court orders. Cross-border transfers are blocked. Donor funds are restricted at the point of entry. Governments use financial infrastructure as a tool of political control, dissolving dissent not through arrests but through strangulation. HakiFedha exists to help civil society build the resilience to survive and operate in exactly these conditions.\n\nThe platform provides non-technical, experience-based guidance on Bitcoin, the Lightning Network, self-custody, privacy and anti-censorship platforms, and the operational security practices that protect people working in high-pressure environments. All content is written for non-technical users and grounded in African realities, with resources available in English and Swahili, and additional languages in development.\n\nAlongside the knowledge hub, HakiFedha operates BitMentor, a peer-to-peer volunteer network connecting experienced Bitcoiners with civil society groups who need hands-on guidance. BitMentor supports organisations with self-custody setups, multisig treasury management, Bitcoin accounting and compliance, BTCPay Server configuration, Bitcoin payroll, and how to communicate Bitcoin adoption clearly to donors and boards. \n\nLooking ahead, HakiFedha plans to use Nostr for BitMentor mentor verification and reputation, building trust infrastructure in a decentralised way.\n\nHakiFedha also maintains the Africa Financial Tyranny Index (AFTI), an open dataset tracking documented incidents in which African governments have used financial mechanisms to restrict, surveil, weaken, or dissolve civil society organisations and human rights defenders.\n\nMission\nTo equip civil society actors across Africa with the knowledge, tools, and human support they need to achieve financial sovereignty, protect their communications, and continue their work regardless of the financial and digital pressures they face.\n\nVision\nA continent where every human rights defender, journalist, whistleblower, and community organiser has access to the financial tools and privacy knowledge they need to operate freely, safely, and with dignity, and where financial access can never again be weaponised to silence those who speak truth to power.",
       "country_code": "xx",
       "country_name": "Global/Africa Wide",
       "city": "",
-      "location": "",
+      "location": "Global/Africa Wide",
       "image": "",
       "website": "https://hakifedha.org/",
-      "email": "",
+      "email": "hakifedha@proton.me",
       "categories": [
         "Education"
       ],
@@ -9309,25 +9259,25 @@
         "Workshops"
       ],
       "social": {
-        "twitter": "",
+        "twitter": "https://twitter.com/HakiFedha",
         "linkedin": "",
         "instagram": "",
         "facebook": "",
         "youtube": "",
         "telegram": "",
-        "nostr": ""
+        "nostr": "https://njump.me/nprofile1qqsfec9mjjma0r234us9edkw8pc6fhfftyy2ylf666l3ghsjdmd2k8g35z2h5"
       },
       "bitcoin_acceptance": {
-        "onchain": false,
-        "lightning": false,
-        "gift_cards": false
+        "onchain": true,
+        "lightning": true,
+        "gift_cards": true
       },
       "founder": {
         "name": "",
         "twitter": "",
         "email": ""
       },
-      "initiatives": "",
+      "initiatives": "1. HakiFedha Knowledge Hub — Multilingual, non-technical guides on Bitcoin, financial sovereignty, privacy tools, and operational security, built specifically for African civil society contexts\n2. BitMentor Network — Peer-to-peer volunteer mentorship connecting experienced Bitcoiners with NGOs, activists, and defenders needing hands-on guidance\n3. Faragha Assistant — An embedded guidance tool helping users navigate the hub in real time, bridging static documentation and human mentorship\n4. Africa Financial Tyranny Index (AFTI) — An open dataset documenting incidents where African governments have used financial mechanisms to suppress civil society\n5. Templates and Toolkits — Free, practical resources for NGO Bitcoin governance, treasury management, accounting, compliance, and crisis preparedness",
       "impact": "",
       "challenges": "",
       "verified": false,
@@ -9342,14 +9292,14 @@
       "id": "cmqqfhcyh0001j6w9jvlzzcz5",
       "name": "OSGuild",
       "slug": "osguild",
-      "description": "OSGuild is a structured pathway for new developers to enter the Bitcoin open-source ecosystem. It provides a guided environment where contributors learn by working on forked, real-world projects, earning feedback and recognition for quality contributions. In short, OSGuild aims to turn beginners into trusted open-source developers.\n",
+      "description": "OSGuild is a structured pathway for new developers to enter the Bitcoin open-source ecosystem. It provides a guided environment where contributors learn by working on forked, real-world projects, earning feedback and recognition for quality contributions. In short, OSGuild aims to turn beginners into trusted open-source developers.",
       "country_code": "mu",
       "country_name": "Mauritius",
       "city": "",
-      "location": "",
-      "image": "/uploads/logos/O2YP5f_-7G_yzhnqGlEZg.png",
+      "location": "Mauritius",
+      "image": "https://pub-d2aef463d8a6497d90ac252cbcb0dcbf.r2.dev/uploads/logos/O2YP5f_-7G_yzhnqGlEZg.png",
       "website": "https://osguild.dev",
-      "email": "",
+      "email": "sadiq@osguil.dev",
       "categories": [
         "Developer Community"
       ],
@@ -9359,7 +9309,7 @@
         "Open Source"
       ],
       "social": {
-        "twitter": "",
+        "twitter": "https://twitter.com/OsguilHQ",
         "linkedin": "",
         "instagram": "",
         "facebook": "",
@@ -9368,22 +9318,22 @@
         "nostr": ""
       },
       "bitcoin_acceptance": {
-        "onchain": false,
-        "lightning": false,
+        "onchain": true,
+        "lightning": true,
         "gift_cards": false
       },
       "founder": {
-        "name": "",
-        "twitter": "",
-        "email": ""
+        "name": "Sadiq Rabiu",
+        "twitter": "https://twitter.com/rsadiqra",
+        "email": "sadiq@osguild.dev"
       },
-      "initiatives": "",
+      "initiatives": "-Pathways \n-Open source community in africa",
       "impact": "",
       "challenges": "",
       "verified": false,
       "featured": false,
       "status": "approved",
-      "founded_year": "",
+      "founded_year": "2025",
       "active": true,
       "created_at": "2026-06-23T09:14:35.609Z",
       "updated_at": "2026-06-23T09:14:35.609Z"
@@ -9392,11 +9342,11 @@
       "id": "cmr8l3uoj00012c87vdff0gcw",
       "name": "BearBull",
       "slug": "bearbull",
-      "description": "BearBull is a Lightning-native Bitcoin price prediction platform. Users stake sats on BTC's short-term direction — Bear (down) or Bull (up) — and winners split the pool instantly via the Lightning Network. Fully non-custodial: funds never leave the user's wallet, and settlement is peer-to-peer.\n\n",
+      "description": "BearBull is a Lightning-native Bitcoin price prediction platform. Users stake sats on BTC's short-term direction — Bear (down) or Bull (up) — and winners split the pool instantly via the Lightning Network. Fully non-custodial: funds never leave the user's wallet, and settlement is peer-to-peer.",
       "country_code": "xx",
       "country_name": "Global/Africa Wide",
       "city": "",
-      "location": "",
+      "location": "Global/Africa Wide",
       "image": "",
       "website": "https://bearbull.xyz/",
       "email": "deyafrank@gmail.com",
@@ -9440,57 +9390,6 @@
       "active": true,
       "created_at": "2026-07-06T02:11:54.260Z",
       "updated_at": "2026-07-06T02:11:54.260Z"
-    },
-    {
-      "id": "cmr8opjz500013n5j1627w706",
-      "name": "AB Abeg",
-      "slug": "ab-abeg",
-      "description": "No short description",
-      "country_code": "td",
-      "country_name": "Chad",
-      "city": "",
-      "location": "",
-      "image": "",
-      "website": "",
-      "email": "jidialu88@gmail.com",
-      "categories": [
-        "Non Profit"
-      ],
-      "tags": [
-        "Education",
-        "Open Source",
-        "Trading",
-        "Summit"
-      ],
-      "social": {
-        "twitter": "",
-        "linkedin": "",
-        "instagram": "",
-        "facebook": "",
-        "youtube": "",
-        "telegram": "",
-        "nostr": ""
-      },
-      "bitcoin_acceptance": {
-        "onchain": true,
-        "lightning": true,
-        "gift_cards": false
-      },
-      "founder": {
-        "name": "",
-        "twitter": "",
-        "email": ""
-      },
-      "initiatives": "",
-      "impact": "",
-      "challenges": "",
-      "verified": false,
-      "featured": false,
-      "status": "approved",
-      "founded_year": "2011",
-      "active": true,
-      "created_at": "2026-07-06T03:52:45.665Z",
-      "updated_at": "2026-07-06T04:06:52.998Z"
     },
     {
       "id": "pan-african-bitcoin",

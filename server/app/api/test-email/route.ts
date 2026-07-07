@@ -9,8 +9,9 @@ export async function GET(req: NextRequest) {
       success: true,
       emailConfigured: isConnected,
       environment: process.env.NODE_ENV,
-      gmailUser: process.env.GMAIL_USER ? '✅ Configured' : '❌ Missing',
-      gmailPassword: process.env.GMAIL_APP_PASSWORD ? '✅ Configured' : '❌ Missing',
+      serviceAccountEmail: process.env.GMAIL_SERVICE_ACCOUNT_EMAIL ? '✅ Configured' : '❌ Missing',
+      privateKey: process.env.GMAIL_PRIVATE_KEY ? '✅ Configured' : '❌ Missing',
+      delegatedUser: process.env.GMAIL_DELEGATED_USER ? '✅ Configured' : '❌ Missing',
     });
   } catch (error) {
     return NextResponse.json(

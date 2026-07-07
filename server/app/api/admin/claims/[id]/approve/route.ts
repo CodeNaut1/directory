@@ -3,6 +3,12 @@ import { createPostHandler, getValidatedBody, getRequestUser } from '@/lib/utils
 import { successResponse } from '@/lib/utils/api-response';
 import { approveClaimSchema, type ApproveClaimInput } from '@/lib/validators';
 import { approveClaim } from '@/lib/services/claim.service';
+import { prisma } from '@/lib/db';
+import {
+  buildClaimEmailData,
+  sendClaimApprovedToTeam,
+  sendClaimApprovedToUser,
+} from '@/lib/services/email.service';
 
 interface RouteParams {
   params: Promise<{
@@ -21,6 +27,28 @@ export const POST = createPostHandler(
     const body = getValidatedBody<ApproveClaimInput>(req);
 
     const claim = await approveClaim(admin, id, body);
+
+    setImmediate(async () => {
+      try {
+        const fullClaim = await prisma.projectClaim.findUnique({
+          where: { id: claim.id },
+          include: {
+            user: { select: { name: true, email: true } },
+            project: { select: { name: true, slug: true } },
+          },
+        });
+
+        if (!fullClaim) return;
+
+        const emailData = buildClaimEmailData(fullClaim);
+        await Promise.all([
+          sendClaimApprovedToUser(emailData),
+          sendClaimApprovedToTeam(emailData),
+        ]);
+      } catch (error) {
+        console.error('⚠️ Failed to send claim approval emails:', error);
+      }
+    });
 
     return NextResponse.json(
       successResponse({

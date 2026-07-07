@@ -52,6 +52,16 @@ enum AuditAction {
   unpublish
 }
 
+// Email template categories
+enum EmailTemplateCategory {
+  submission
+  approval
+  rejection
+  changes
+  ownership
+  other
+}
+
 // User model - Authentication and authorization
 model User {
   id           String   @id @default(cuid())
@@ -342,4 +352,23 @@ model ProjectClaim {
   @@index([status])
   @@index([createdAt])
   @@map("project_claims")
+}
+
+// EmailTemplate model - Admin-editable notification templates
+model EmailTemplate {
+  id          String               @id @default(cuid())
+  key         String               @unique
+  name        String
+  description String               @db.Text
+  subject     String
+  htmlBody    String               @db.Text
+  variables   Json
+  category    EmailTemplateCategory
+  isActive    Boolean              @default(true)
+  createdAt   DateTime             @default(now())
+  updatedAt   DateTime             @updatedAt
+
+  @@index([category])
+  @@index([key])
+  @@map("email_templates")
 }

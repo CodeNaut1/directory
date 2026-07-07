@@ -11,14 +11,16 @@ export default function LiveMap() {
     <div style={{ minHeight: '100vh', background: '#f8f9fa' }}>
       {/* Map Container */}
       <div style={{
+        display: 'flex',
+        justifyContent: 'center',
         maxWidth: '100%',
         margin: '0 auto',
-        padding: '0 0 4rem 0'
+        padding: '0 1rem 4rem'
       }}>
         <BitcoinLiveMap
           width="100%"
-          height="900px"
-          lat={1.0}
+          height="700px"
+          lat={-10.0}
           lng={24.0}
           zoom={3}
           pitch={40}

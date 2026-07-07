@@ -3,6 +3,11 @@ import { createPostHandler, getValidatedBody, getRequestUser } from '@/lib/utils
 import { successResponse } from '@/lib/utils/api-response';
 import { rejectClaimSchema, type RejectClaimInput } from '@/lib/validators';
 import { rejectClaim } from '@/lib/services/claim.service';
+import {
+  buildClaimEmailData,
+  sendClaimRejectedToTeam,
+  sendClaimRejectedToUser,
+} from '@/lib/services/email.service';
 
 interface RouteParams {
   params: Promise<{
@@ -21,6 +26,18 @@ export const POST = createPostHandler(
     const body = getValidatedBody<RejectClaimInput>(req);
 
     const claim = await rejectClaim(admin, id, body);
+
+    setImmediate(async () => {
+      try {
+        const emailData = buildClaimEmailData(claim);
+        await Promise.all([
+          sendClaimRejectedToUser(emailData),
+          sendClaimRejectedToTeam(emailData),
+        ]);
+      } catch (error) {
+        console.error('⚠️ Failed to send claim rejection emails:', error);
+      }
+    });
 
     return NextResponse.json(
       successResponse({
