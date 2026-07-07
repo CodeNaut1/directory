@@ -458,6 +458,39 @@ export async function sendClaimRejectedToTeam(data: ClaimEmailData) {
   });
 }
 
+function buildRevocationReasonBlock(reason?: string): Record<string, string> {
+  const trimmed = reason?.trim();
+  if (!trimmed) {
+    return { revocationReason: '', revocationReasonBlock: '' };
+  }
+
+  const escaped = escapeHtml(trimmed);
+  return {
+    revocationReason: escaped,
+    revocationReasonBlock: `<p style="margin: 0 0 16px; font-size: 15px; line-height: 1.7; color: #374151;"><strong>Reason:</strong> ${escaped}</p>`,
+  };
+}
+
+export async function sendClaimRevokedToUser(data: ClaimEmailData, reason?: string) {
+  await dispatchTemplateEmail('claim_revoked_user', data.claimantEmail, {
+    claimantName: data.claimantName,
+    projectName: data.projectName,
+    ...buildRevocationReasonBlock(reason),
+  });
+}
+
+export async function sendClaimRevokedToTeam(data: ClaimEmailData, reason?: string) {
+  const teamEmails = getTeamEmails();
+  if (teamEmails.length === 0) return;
+
+  await dispatchTemplateEmail('claim_revoked_team', teamEmails, {
+    claimantName: data.claimantName,
+    claimantEmail: data.claimantEmail,
+    projectName: data.projectName,
+    ...buildRevocationReasonBlock(reason),
+  });
+}
+
 export function buildProjectActionEmailData(project: {
   name: string;
   slug: string;

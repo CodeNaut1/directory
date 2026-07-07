@@ -80,7 +80,7 @@ export default function SubmitSuccess() {
         >
           Your project has been received. Our team will review it to ensure everything meets our
           guidelines. You'll receive an update once it's approved or if we need any changes —
-          usually within 2 days.
+          up to 2 weeks.
         </p>
 
         {/* Buttons - stack vertically on mobile, side-by-side on tablet+ */}

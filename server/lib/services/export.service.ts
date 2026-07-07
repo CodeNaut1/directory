@@ -1,5 +1,6 @@
 /**
  * Export service — CSV export of submitted projects
+ * Column order matches Google Sheets sync (googleSheets.ts appendToSheet)
  */
 
 import { prisma } from '@/lib/db';
@@ -14,49 +15,28 @@ export interface ExportProjectsFilters {
 
 type ProjectWithRelations = Awaited<ReturnType<typeof fetchProjectsForExport>>[number];
 
+/** Matches Google Sheets "Live Directory Entries" column order (A–T) */
 const CSV_HEADERS = [
-  'Submitted At',
-  'Project ID',
-  'Project Name',
-  'Slug',
-  'Status',
-  'Published',
-  'Verified',
-  'Featured',
-  'Active',
-  'Country',
-  'Country Code',
-  'City',
-  'Location',
-  'Address',
-  'Category',
-  'Categories',
-  'Tags',
-  'Short Description',
-  'Initiatives',
-  'Impact',
-  'Challenges',
-  'Website',
-  'Email',
-  'Founded Year',
-  'Logo URL',
-  'Bitcoin Onchain',
-  'Lightning Network',
-  'Gift Cards',
-  'Twitter',
-  'LinkedIn',
-  'Instagram',
-  'Facebook',
-  'YouTube',
-  'Telegram',
-  'Nostr',
-  'Founder Name',
-  'Founder Twitter',
-  'Founder Email',
-  'Submitted By Name',
-  'Submitted By Email',
-  'Published At',
-  'Updated At',
+  'DATE',
+  'PROJECT NAME',
+  'COUNTRY',
+  'CATEGORY',
+  'TAGS',
+  'BITCOIN ACCEPTANCE',
+  'SHORT DESCRIPTION',
+  'LONG DESCRIPTION',
+  'CORE INITIATIVES',
+  'IMPACT & ACHIEVEMENTS',
+  'CHALLENGES',
+  'WEBSITE',
+  'EMAIL',
+  'PHONE',
+  'PROJECT SOCIALS',
+  'FOUNDER NAME',
+  'FOUNDER TWITTER',
+  'FOUNDER EMAIL',
+  'YEAR FOUNDED',
+  'SUBMITTED BY',
 ];
 
 async function fetchProjectsForExport(filters: ExportProjectsFilters) {
@@ -78,6 +58,22 @@ async function fetchProjectsForExport(filters: ExportProjectsFilters) {
   });
 }
 
+function formatSubmittedAt(date: Date): string {
+  return date.toLocaleString('en-US', {
+    timeZone: 'Africa/Lagos',
+    dateStyle: 'medium',
+    timeStyle: 'short',
+  });
+}
+
+function buildBitcoinAcceptance(project: ProjectWithRelations): string {
+  const parts: string[] = [];
+  if (project.acceptsOnchain) parts.push('Bitcoin Onchain');
+  if (project.acceptsLightning) parts.push('Lightning Network');
+  if (project.acceptsGiftCards) parts.push('Gift Cards');
+  return parts.length > 0 ? parts.join(', ') : 'None';
+}
+
 function getSocialLink(links: unknown, key: string): string {
   if (!links || typeof links !== 'object' || Array.isArray(links)) {
     return '';
@@ -86,57 +82,54 @@ function getSocialLink(links: unknown, key: string): string {
   return value ? String(value) : '';
 }
 
+function buildProjectSocials(project: ProjectWithRelations): string {
+  const links = project.socialLinks;
+  const socials: string[] = [];
+  const twitter = getSocialLink(links, 'twitter');
+  const linkedin = getSocialLink(links, 'linkedin');
+  const facebook = getSocialLink(links, 'facebook');
+  const youtube = getSocialLink(links, 'youtube');
+  const telegram = getSocialLink(links, 'telegram');
+  const nostr = getSocialLink(links, 'nostr');
+  const instagram = getSocialLink(links, 'instagram');
+
+  if (twitter) socials.push(`Twitter: ${twitter}`);
+  if (linkedin) socials.push(`LinkedIn: ${linkedin}`);
+  if (facebook) socials.push(`Facebook: ${facebook}`);
+  if (youtube) socials.push(`YouTube: ${youtube}`);
+  if (telegram) socials.push(`Telegram: ${telegram}`);
+  if (nostr) socials.push(`Nostr: ${nostr}`);
+  if (instagram) socials.push(`Instagram: ${instagram}`);
+
+  return socials.join('\n');
+}
+
 function projectToRow(project: ProjectWithRelations): unknown[] {
   const countryName = project.countryName || project.country?.name || '';
-  const countryCode = project.countryCode || project.country?.code || '';
-  const tagNames = project.tags.map((pt) => pt.tag.name).join('; ');
-  const categoryNames = project.categories.length
-    ? project.categories.join('; ')
-    : project.category?.name || '';
+  const categoryName = project.category?.name || project.categories[0] || '';
+  const tagNames = project.tags.map((pt) => pt.tag.name).join(', ');
 
   return [
-    project.createdAt.toISOString(),
-    project.id,
+    formatSubmittedAt(project.createdAt),
     project.name,
-    project.slug,
-    project.status,
-    project.status === 'approved' ? 'Yes' : 'No',
-    project.verified ? 'Yes' : 'No',
-    project.featured ? 'Yes' : 'No',
-    project.active ? 'Yes' : 'No',
     countryName,
-    countryCode,
-    project.city || '',
-    project.location || '',
-    project.address || '',
-    project.category?.name || '',
-    categoryNames,
+    categoryName,
     tagNames,
+    buildBitcoinAcceptance(project),
     project.description,
+    '', // longDescription not stored in DB after schema change
     project.initiatives || '',
     project.impact || '',
     project.challenges || '',
     project.website || '',
     project.email || '',
-    project.foundedYear || '',
-    project.logo || '',
-    project.acceptsOnchain ? 'Yes' : 'No',
-    project.acceptsLightning ? 'Yes' : 'No',
-    project.acceptsGiftCards ? 'Yes' : 'No',
-    getSocialLink(project.socialLinks, 'twitter'),
-    getSocialLink(project.socialLinks, 'linkedin'),
-    getSocialLink(project.socialLinks, 'instagram'),
-    getSocialLink(project.socialLinks, 'facebook'),
-    getSocialLink(project.socialLinks, 'youtube'),
-    getSocialLink(project.socialLinks, 'telegram'),
-    getSocialLink(project.socialLinks, 'nostr'),
+    '', // phone not stored in DB after schema change
+    buildProjectSocials(project),
     project.founderName || '',
     project.founderTwitter || '',
     project.founderEmail || '',
-    project.user?.name || '',
+    project.foundedYear || '',
     project.user?.email || '',
-    project.publishedAt?.toISOString() || '',
-    project.updatedAt.toISOString(),
   ];
 }
 

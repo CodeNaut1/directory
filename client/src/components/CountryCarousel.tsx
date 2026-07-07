@@ -216,6 +216,18 @@ export default function CountryCarousel() {
         .country-flag-rect--globe .country-flag-tooltip {
           background: rgba(17, 24, 39, 0.72);
         }
+
+        @media (max-width: 767px) {
+          .country-marquee-viewport {
+            --flag-width: 72px;
+            --flag-gap: 1.25rem;
+          }
+
+          .country-flag-rect--globe svg {
+            width: 36px;
+            height: 36px;
+          }
+        }
       `}</style>
 
       <section className="country-carousel-section">

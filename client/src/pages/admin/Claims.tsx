@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ClipboardList, Eye, CheckCircle2, XCircle } from 'lucide-react';
+import { ClipboardList, Eye, CheckCircle2, XCircle, ShieldOff } from 'lucide-react';
 import {
   AdminBadge,
   AdminButton,
@@ -38,8 +38,10 @@ export default function Claims() {
   const [filter, setFilter] = useState<'pending' | 'approved' | 'rejected' | 'all'>('pending');
   const [actionLoading, setActionLoading] = useState<string | null>(null);
   const [showRejectModal, setShowRejectModal] = useState(false);
+  const [showRevokeModal, setShowRevokeModal] = useState(false);
   const [selectedClaim, setSelectedClaim] = useState<Claim | null>(null);
   const [rejectionReason, setRejectionReason] = useState('');
+  const [revokeReason, setRevokeReason] = useState('');
 
   useEffect(() => {
     fetchClaims();
@@ -96,6 +98,45 @@ export default function Claims() {
   const handleReject = (claim: Claim) => {
     setSelectedClaim(claim);
     setShowRejectModal(true);
+  };
+
+  const handleRevoke = (claim: Claim) => {
+    setSelectedClaim(claim);
+    setRevokeReason('');
+    setShowRevokeModal(true);
+  };
+
+  const submitRevoke = async () => {
+    if (!selectedClaim) return;
+
+    setActionLoading(selectedClaim.id);
+    try {
+      const token = localStorage.getItem('access_token');
+      const response = await fetch(`${API_URL}/api/admin/claims/${selectedClaim.id}/revoke`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ reason: revokeReason.trim() || undefined }),
+      });
+
+      if (response.ok) {
+        alert('Ownership claim revoked');
+        setShowRevokeModal(false);
+        setRevokeReason('');
+        setSelectedClaim(null);
+        fetchClaims();
+      } else {
+        const data = await response.json();
+        alert(data.error?.message || 'Failed to revoke claim');
+      }
+    } catch (error) {
+      console.error('Error revoking claim:', error);
+      alert('An error occurred');
+    } finally {
+      setActionLoading(null);
+    }
   };
 
   const submitRejection = async () => {
@@ -246,6 +287,18 @@ export default function Claims() {
                         </AdminButton>
                       </>
                     )}
+
+                    {claim.status === 'approved' && (
+                      <AdminButton
+                        variant="danger"
+                        block
+                        icon={ShieldOff}
+                        onClick={() => handleRevoke(claim)}
+                        disabled={busy}
+                      >
+                        Revoke Claim
+                      </AdminButton>
+                    )}
                   </div>
                 </div>
               </div>
@@ -289,6 +342,50 @@ export default function Claims() {
               disabled={actionLoading === selectedClaim.id}
             >
               {actionLoading === selectedClaim.id ? 'Rejecting...' : 'Reject Claim'}
+            </AdminButton>
+          </div>
+        </AdminModal>
+      )}
+
+      {showRevokeModal && selectedClaim && (
+        <AdminModal
+          title="Revoke Claim"
+          description={`Are you sure? This will remove ${selectedClaim.user.name || selectedClaim.user.email}'s ownership of ${selectedClaim.project.name}.`}
+          onClose={() => {
+            setShowRevokeModal(false);
+            setRevokeReason('');
+            setSelectedClaim(null);
+          }}
+        >
+          <label htmlFor="revoke-reason" style={{ display: 'block', fontSize: '0.8125rem', fontWeight: 600, color: '#374151', marginBottom: '0.5rem' }}>
+            Reason (optional)
+          </label>
+          <textarea
+            id="revoke-reason"
+            value={revokeReason}
+            onChange={(e) => setRevokeReason(e.target.value)}
+            placeholder="e.g. Ownership could not be verified..."
+            rows={6}
+            className="admin-textarea"
+          />
+
+          <div className="admin-form-actions">
+            <AdminButton
+              variant="ghost"
+              onClick={() => {
+                setShowRevokeModal(false);
+                setRevokeReason('');
+                setSelectedClaim(null);
+              }}
+            >
+              Cancel
+            </AdminButton>
+            <AdminButton
+              variant="danger"
+              onClick={submitRevoke}
+              disabled={actionLoading === selectedClaim.id}
+            >
+              {actionLoading === selectedClaim.id ? 'Revoking...' : 'Revoke Claim'}
             </AdminButton>
           </div>
         </AdminModal>

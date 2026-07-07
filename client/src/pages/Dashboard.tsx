@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { HandHeart } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { getProjectUrl } from '../utils/projectUrl';
 import ProjectStatusBadge, { type ProjectStatus } from '../components/ProjectStatusBadge';
@@ -439,31 +440,63 @@ export default function Dashboard() {
               </p>
             </div>
             {activeTab === 'projects' && (
-              <Link
-                to="/create-project"
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '0.5rem',
-                  padding: '0.75rem 1.5rem',
-                  background: '#FD5A47',
-                  color: '#FFFFFF',
-                  borderRadius: '8px',
-                  fontSize: '0.9375rem',
-                  fontWeight: 600,
-                  textDecoration: 'none',
-                  transition: 'background 0.2s',
-                  whiteSpace: 'nowrap',
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.background = '#E04835';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.background = '#FD5A47';
-                }}
-              >
-                Submit New Project
-              </Link>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem', alignItems: 'center' }}>
+                <Link
+                  to="/create-project"
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '0.5rem',
+                    padding: '0.75rem 1.5rem',
+                    background: '#FD5A47',
+                    color: '#FFFFFF',
+                    borderRadius: '8px',
+                    fontSize: '0.9375rem',
+                    fontWeight: 600,
+                    textDecoration: 'none',
+                    transition: 'background 0.2s',
+                    whiteSpace: 'nowrap',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = '#E04835';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = '#FD5A47';
+                  }}
+                >
+                  Submit New Project
+                </Link>
+                <Link
+                  to="/directory"
+                  title="Find your project in the directory and click Claim This Project"
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '0.5rem',
+                    padding: '0.75rem 1.5rem',
+                    background: '#FFFFFF',
+                    color: '#1F2937',
+                    border: '1px solid #D1D5DB',
+                    borderRadius: '8px',
+                    fontSize: '0.9375rem',
+                    fontWeight: 600,
+                    textDecoration: 'none',
+                    transition: 'all 0.2s',
+                    whiteSpace: 'nowrap',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = '#F9FAFB';
+                    e.currentTarget.style.borderColor = '#9CA3AF';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = '#FFFFFF';
+                    e.currentTarget.style.borderColor = '#D1D5DB';
+                  }}
+                >
+                  <HandHeart size={18} strokeWidth={1.75} aria-hidden="true" />
+                  Claim an Existing Project
+                </Link>
+              </div>
             )}
           </div>
 

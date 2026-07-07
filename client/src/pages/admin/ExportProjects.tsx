@@ -144,9 +144,9 @@ export default function ExportProjects() {
         </div>
 
         <p style={{ fontSize: '0.8125rem', color: '#6b7280', marginBottom: '1.25rem', lineHeight: 1.6 }}>
-          The CSV includes project details such as name, country, category, tags, descriptions,
-          contact info, social links, founder info, Bitcoin acceptance, submission status, and
-          submitter details.
+          The CSV mirrors the Google Sheets sync format: date, project name, country, category,
+          tags, Bitcoin acceptance, descriptions, contact info, social links, founder info, and
+          submitter email.
         </p>
 
         {error && <div className="admin-alert admin-alert-error">{error}</div>}
@@ -165,10 +165,10 @@ export default function ExportProjects() {
       <div className="admin-card admin-card-lg" style={{ maxWidth: '720px', marginTop: '1rem' }}>
         <h2 className="admin-card-section-title">CSV Columns</h2>
         <p style={{ fontSize: '0.8125rem', color: '#6b7280', margin: 0, lineHeight: 1.7 }}>
-          Submitted At, Project ID, Name, Slug, Status, Published, Verified, Featured, Active,
-          Country, Country Code, City, Location, Address, Category, Categories, Tags, Short
-          Description, Initiatives, Impact, Challenges, Website, Email, Founded Year, Logo URL,
-          Bitcoin acceptance flags, social links, founder info, submitter name/email, and timestamps.
+          DATE, PROJECT NAME, COUNTRY, CATEGORY, TAGS, BITCOIN ACCEPTANCE, SHORT DESCRIPTION,
+          LONG DESCRIPTION, CORE INITIATIVES, IMPACT &amp; ACHIEVEMENTS, CHALLENGES, WEBSITE,
+          EMAIL, PHONE, PROJECT SOCIALS, FOUNDER NAME, FOUNDER TWITTER, FOUNDER EMAIL, YEAR
+          FOUNDED, SUBMITTED BY
         </p>
       </div>
     </div>

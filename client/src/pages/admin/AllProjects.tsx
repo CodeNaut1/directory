@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Eye, RotateCcw, EyeOff } from 'lucide-react';
+import { Eye, RotateCcw, EyeOff, ShieldOff } from 'lucide-react';
 import {
   AdminBadge,
+  AdminButton,
   AdminLoading,
+  AdminModal,
   AdminPageHeader,
   AdminTabs,
   statusToBadgeVariant,
@@ -18,6 +20,7 @@ interface Project {
   category: { name: string } | null;
   country: { name: string } | null;
   user: { name: string; email: string } | null;
+  claims?: { id: string }[];
   createdAt: string;
 }
 
@@ -34,6 +37,9 @@ export default function AllProjects() {
   const [loading, setLoading] = useState(true);
   const [actionLoading, setActionLoading] = useState<string | null>(null);
   const [filter, setFilter] = useState<'all' | 'approved' | 'unpublished'>('all');
+  const [showRevokeModal, setShowRevokeModal] = useState(false);
+  const [revokeTarget, setRevokeTarget] = useState<{ claimId: string; projectName: string } | null>(null);
+  const [revokeReason, setRevokeReason] = useState('');
 
   useEffect(() => {
     fetchProjects();
@@ -82,10 +88,54 @@ export default function AllProjects() {
       if (response.ok) {
         fetchProjects();
       } else {
-        alert('Failed to unpublish project');
+        const data = await response.json().catch(() => null);
+        alert(data?.error?.message || 'Failed to unpublish project');
       }
     } catch (error) {
       console.error('Error unpublishing project:', error);
+      alert('An error occurred');
+    } finally {
+      setActionLoading(null);
+    }
+  };
+
+  const openRevokeModal = (project: Project) => {
+    const claimId = project.claims?.[0]?.id;
+    if (!claimId) {
+      alert('No approved ownership claim found for this project.');
+      return;
+    }
+    setRevokeTarget({ claimId, projectName: project.name });
+    setRevokeReason('');
+    setShowRevokeModal(true);
+  };
+
+  const submitRevoke = async () => {
+    if (!revokeTarget) return;
+
+    setActionLoading(revokeTarget.claimId);
+    try {
+      const token = localStorage.getItem('access_token');
+      const response = await fetch(`${API_URL}/api/admin/claims/${revokeTarget.claimId}/revoke`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ reason: revokeReason.trim() || undefined }),
+      });
+
+      if (response.ok) {
+        setShowRevokeModal(false);
+        setRevokeTarget(null);
+        setRevokeReason('');
+        fetchProjects();
+      } else {
+        const data = await response.json().catch(() => null);
+        alert(data?.error?.message || 'Failed to revoke ownership');
+      }
+    } catch (error) {
+      console.error('Error revoking ownership:', error);
       alert('An error occurred');
     } finally {
       setActionLoading(null);
@@ -159,8 +209,9 @@ export default function AllProjects() {
           </thead>
           <tbody>
             {projects.map((project) => {
-              const isBusy = actionLoading === project.id;
+              const isBusy = actionLoading === project.id || actionLoading === project.claims?.[0]?.id;
               const statusLabel = STATUS_LABELS[project.status] || project.status;
+              const approvedClaimId = project.claims?.[0]?.id;
 
               return (
                 <tr key={project.id}>
@@ -206,6 +257,17 @@ export default function AllProjects() {
                           Republish
                         </button>
                       )}
+                      {project.user && approvedClaimId && (
+                        <button
+                          type="button"
+                          onClick={() => openRevokeModal(project)}
+                          disabled={isBusy}
+                          className="admin-btn admin-btn-danger admin-btn-sm"
+                        >
+                          <ShieldOff size={14} strokeWidth={1.75} />
+                          Revoke Ownership
+                        </button>
+                      )}
                     </div>
                   </td>
                 </tr>
@@ -214,6 +276,50 @@ export default function AllProjects() {
           </tbody>
         </table>
       </div>
+
+      {showRevokeModal && revokeTarget && (
+        <AdminModal
+          title="Revoke Ownership"
+          description={`Are you sure? This will remove the current owner's access to ${revokeTarget.projectName}.`}
+          onClose={() => {
+            setShowRevokeModal(false);
+            setRevokeTarget(null);
+            setRevokeReason('');
+          }}
+        >
+          <label htmlFor="revoke-reason" style={{ display: 'block', fontSize: '0.8125rem', fontWeight: 600, color: '#374151', marginBottom: '0.5rem' }}>
+            Reason (optional)
+          </label>
+          <textarea
+            id="revoke-reason"
+            value={revokeReason}
+            onChange={(e) => setRevokeReason(e.target.value)}
+            placeholder="e.g. Ownership could not be verified..."
+            rows={4}
+            className="admin-textarea"
+          />
+
+          <div className="admin-form-actions">
+            <AdminButton
+              variant="ghost"
+              onClick={() => {
+                setShowRevokeModal(false);
+                setRevokeTarget(null);
+                setRevokeReason('');
+              }}
+            >
+              Cancel
+            </AdminButton>
+            <AdminButton
+              variant="danger"
+              onClick={submitRevoke}
+              disabled={actionLoading === revokeTarget.claimId}
+            >
+              {actionLoading === revokeTarget.claimId ? 'Revoking...' : 'Revoke Ownership'}
+            </AdminButton>
+          </div>
+        </AdminModal>
+      )}
     </div>
   );
 }

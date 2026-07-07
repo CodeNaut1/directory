@@ -30,6 +30,11 @@ export async function GET(req: NextRequest) {
         user: {
           select: { id: true, name: true, email: true },
         },
+        claims: {
+          where: { status: 'approved' },
+          select: { id: true },
+          take: 1,
+        },
       },
     });
 

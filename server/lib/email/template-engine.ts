@@ -3,12 +3,16 @@ import { DEFAULT_TEMPLATES_BY_KEY, buildDefaultHtmlBody } from '@/lib/email/defa
 const FRONTEND_URL =
   process.env.FRONTEND_URL || process.env.VITE_APP_URL || 'http://localhost:5173';
 
+export const EMAIL_LOGO_URL =
+  process.env.EMAIL_LOGO_URL ||
+  'https://pub-d2aef463d8a6497d90ac252cbcb0dcbf.r2.dev/African-Bitcoiners-official_logo.png';
+
 export function getCommonEmailVariables(): Record<string, string> {
   const base = FRONTEND_URL.replace(/\/$/, '');
   return {
     siteName: 'African Bitcoin Directory',
     frontendUrl: base,
-    logoUrl: `${base}/logo.png`,
+    logoUrl: EMAIL_LOGO_URL,
     contactEmail: 'hello@bitcoiners.africa',
     dashboardUrl: `${base}/dashboard`,
     adminPendingUrl: `${base}/admin/projects/pending`,
@@ -175,6 +179,23 @@ export const SAMPLE_EMAIL_VARIABLES: Record<string, Record<string, string>> = {
     claimantName: 'John Smith',
     claimantEmail: 'john@example.com',
     projectName: 'Bitcoin Lagos Hub',
+  },
+  claim_revoked_user: {
+    ...getCommonEmailVariables(),
+    claimantName: 'John Smith',
+    projectName: 'Bitcoin Lagos Hub',
+    revocationReason: 'Insufficient verification of ownership.',
+    revocationReasonBlock:
+      '<p style="margin: 0 0 16px; font-size: 15px; line-height: 1.7; color: #374151;"><strong>Reason:</strong> Insufficient verification of ownership.</p>',
+  },
+  claim_revoked_team: {
+    ...getCommonEmailVariables(),
+    claimantName: 'John Smith',
+    claimantEmail: 'john@example.com',
+    projectName: 'Bitcoin Lagos Hub',
+    revocationReason: 'Insufficient verification of ownership.',
+    revocationReasonBlock:
+      '<p style="margin: 0 0 16px; font-size: 15px; line-height: 1.7; color: #374151;"><strong>Reason:</strong> Insufficient verification of ownership.</p>',
   },
 };
 

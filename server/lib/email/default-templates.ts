@@ -63,7 +63,7 @@ export function wrapEmailLayout(params: {
         <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width: 600px; background-color: #ffffff; border-radius: 8px; overflow: hidden; border: 1px solid #E5E7EB;">
           <tr>
             <td style="padding: 28px 32px 20px; text-align: center; border-bottom: 3px solid #FD5A47;">
-              <img src="{{logoUrl}}" alt="{{siteName}}" width="180" style="display: block; margin: 0 auto; max-width: 180px; height: auto;" />
+              <img src="{{logoUrl}}" alt="African Bitcoiners" width="200" style="display: block; margin: 0 auto; max-width: 200px; height: auto;" />
             </td>
           </tr>
           <tr>
@@ -497,6 +497,44 @@ export const DEFAULT_EMAIL_TEMPLATES: DefaultEmailTemplate[] = [
       ${p('The ownership claim from {{claimantName}} ({{claimantEmail}}) for <strong>{{projectName}}</strong> was rejected.')}
     `,
   },
+  {
+    key: 'claim_revoked_user',
+    name: 'Claim Revoked - User',
+    description: 'Sent to the former owner when an approved ownership claim is revoked.',
+    category: 'ownership',
+    subject: 'Your project ownership has been revoked',
+    variables: [
+      ...COMMON_VARS,
+      { name: 'claimantName', description: "Former owner's display name", required: true },
+      { name: 'projectName', description: 'Project name', required: true },
+      { name: 'revocationReason', description: 'Reason for revocation (may be empty)', required: false },
+    ],
+    bodyContent: `
+      ${p('Hi {{claimantName}},')}
+      ${p('Your ownership of <strong>{{projectName}}</strong> has been revoked.')}
+      {{revocationReasonBlock}}
+      ${p('If you have questions about this decision, please reply to this email and our team will be happy to help.')}
+      ${p('<strong>The African Bitcoiners Team</strong>')}
+    `,
+  },
+  {
+    key: 'claim_revoked_team',
+    name: 'Claim Revoked - Team',
+    description: 'Sent to TEAM_EMAIL when an approved ownership claim is revoked.',
+    category: 'ownership',
+    subject: 'Ownership revoked: {{projectName}}',
+    variables: [
+      ...COMMON_VARS,
+      { name: 'claimantName', description: "Former owner's name", required: true },
+      { name: 'claimantEmail', description: "Former owner's email", required: true },
+      { name: 'projectName', description: 'Project name', required: true },
+      { name: 'revocationReason', description: 'Reason for revocation (may be empty)', required: false },
+    ],
+    bodyContent: `
+      ${p('Ownership of <strong>{{projectName}}</strong> was revoked from {{claimantName}} ({{claimantEmail}}).')}
+      {{revocationReasonBlock}}
+    `,
+  },
 ];
 
 export function buildDefaultHtmlBody(template: DefaultEmailTemplate): string {
@@ -519,6 +557,8 @@ export function buildDefaultHtmlBody(template: DefaultEmailTemplate): string {
     claim_approved_team: 'Ownership claim approved',
     claim_rejected_user: 'Update on your ownership claim',
     claim_rejected_team: 'Ownership claim rejected',
+    claim_revoked_user: 'Your project ownership has been revoked',
+    claim_revoked_team: 'Ownership revoked',
   };
 
   const preheaders: Record<string, string> = {
@@ -540,6 +580,8 @@ export function buildDefaultHtmlBody(template: DefaultEmailTemplate): string {
     claim_approved_team: '{{claimantEmail}} now owns {{projectName}}',
     claim_rejected_user: 'An update regarding your claim for {{projectName}}',
     claim_rejected_team: 'Claim rejected for {{projectName}}',
+    claim_revoked_user: 'Your ownership of {{projectName}} has been revoked',
+    claim_revoked_team: 'Ownership revoked for {{projectName}}',
   };
 
   return wrapEmailLayout({

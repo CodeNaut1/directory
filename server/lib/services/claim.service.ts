@@ -6,7 +6,7 @@
 import { prisma } from '@/lib/db';
 import { NotFoundError, AuthorizationError, ValidationError } from '@/lib/utils/errors';
 import type { AuthenticatedUser } from '@/lib/auth/middleware';
-import type { SubmitClaimInput, ApproveClaimInput, RejectClaimInput, ClaimListQuery } from '@/lib/validators';
+import type { SubmitClaimInput, ApproveClaimInput, RejectClaimInput, RevokeClaimInput, ClaimListQuery } from '@/lib/validators';
 
 /**
  * Submit a claim for a project
@@ -303,6 +303,70 @@ export async function rejectClaim(
   });
 
   return updatedClaim;
+}
+
+/**
+ * Revoke an approved claim (admin only)
+ * Removes project ownership and marks the claim as rejected.
+ */
+export async function revokeClaim(
+  admin: AuthenticatedUser,
+  claimId: string,
+  input: RevokeClaimInput
+) {
+  const claim = await prisma.projectClaim.findUnique({
+    where: { id: claimId },
+    include: {
+      project: {
+        select: {
+          id: true,
+          userId: true,
+          name: true,
+          slug: true,
+        },
+      },
+      user: {
+        select: {
+          id: true,
+          name: true,
+          email: true,
+        },
+      },
+    },
+  });
+
+  if (!claim) {
+    throw new NotFoundError('Claim not found');
+  }
+
+  if (claim.status !== 'approved') {
+    throw new ValidationError(`Cannot revoke claim with status: ${claim.status}`);
+  }
+
+  const result = await prisma.$transaction(async (tx) => {
+    const updatedClaim = await tx.projectClaim.update({
+      where: { id: claimId },
+      data: {
+        status: 'rejected',
+        moderatedBy: admin.id,
+        moderatedAt: new Date(),
+        rejectionReason: input.reason?.trim() || 'Ownership revoked by administrator',
+      },
+    });
+
+    await tx.project.update({
+      where: { id: claim.projectId },
+      data: { userId: null },
+    });
+
+    return updatedClaim;
+  });
+
+  return {
+    ...result,
+    project: claim.project,
+    user: claim.user,
+  };
 }
 
 /**

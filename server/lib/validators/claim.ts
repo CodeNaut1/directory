@@ -23,6 +23,10 @@ export const rejectClaimSchema = z.object({
     .max(1000, 'Rejection reason is too long'),
 });
 
+export const revokeClaimSchema = z.object({
+  reason: z.string().max(1000, 'Reason is too long').optional(),
+});
+
 export const claimListQuerySchema = z.object({
   status: z.enum(['pending', 'approved', 'rejected']).optional(),
   projectId: z.string().cuid().optional(),
@@ -34,4 +38,5 @@ export const claimListQuerySchema = z.object({
 export type SubmitClaimInput = z.infer<typeof submitClaimSchema>;
 export type ApproveClaimInput = z.infer<typeof approveClaimSchema>;
 export type RejectClaimInput = z.infer<typeof rejectClaimSchema>;
+export type RevokeClaimInput = z.infer<typeof revokeClaimSchema>;
 export type ClaimListQuery = z.infer<typeof claimListQuerySchema>;

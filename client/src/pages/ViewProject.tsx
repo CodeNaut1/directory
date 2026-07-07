@@ -896,7 +896,7 @@ export default function ViewProject() {
               Sign in to claim this project
             </h2>
             <p style={{ fontSize: '0.9375rem', color: '#4B5563', lineHeight: 1.6, margin: '0 0 1.5rem' }}>
-              Create a free account or log in to submit an ownership claim for <strong>{project.name}</strong>. Our team will review your request within 2 business days.
+              Create a free account or log in to submit an ownership claim for <strong>{project.name}</strong>. Our team will review your request within 7 business days.
             </p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
               <button
