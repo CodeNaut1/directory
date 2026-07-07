@@ -1,6 +1,8 @@
 import { useEffect, useState, type CSSProperties } from 'react';
 import { Link } from 'react-router-dom';
 import { Globe } from 'lucide-react';
+import { fetchAllApprovedProjects } from '../lib/projectsApi';
+import ProjectsLoadError from './ProjectsLoadError';
 
 interface CountryEntry {
   code: string;
@@ -36,58 +38,31 @@ function buildCountryList(projects: Array<{ status?: string; country_code?: stri
 }
 
 export default function CountryCarousel() {
-  const API_URL = import.meta.env.VITE_API_URL || '';
   const [countries, setCountries] = useState<CountryEntry[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
   const [paused, setPaused] = useState(false);
+  const [retryKey, setRetryKey] = useState(0);
 
   useEffect(() => {
     const loadCountries = async () => {
       setLoading(true);
+      setError(false);
 
       try {
-        if (API_URL) {
-          let allProjects: any[] = [];
-          let page = 1;
-          let hasMore = true;
-
-          while (hasMore) {
-            const response = await fetch(`${API_URL}/api/projects?page=${page}&limit=100`);
-            if (!response.ok) break;
-
-            const data = await response.json();
-            if (data.success && data.data) {
-              allProjects = [...allProjects, ...data.data];
-              const total = data.meta?.total || 0;
-              hasMore = allProjects.length < total;
-              page += 1;
-            } else {
-              hasMore = false;
-            }
-          }
-
-          if (allProjects.length > 0) {
-            setCountries(buildCountryList(allProjects));
-            setLoading(false);
-            return;
-          }
-        }
-      } catch {
-        // fall through to local data
-      }
-
-      try {
-        const projectsModule = await import('../data/projects.json');
-        setCountries(buildCountryList(projectsModule.default.projects || []));
-      } catch (error) {
-        console.error('Error loading countries:', error);
+        const allProjects = await fetchAllApprovedProjects({ force: retryKey > 0 });
+        setCountries(buildCountryList(allProjects));
+      } catch (err) {
+        console.error('Error loading countries:', err);
+        setError(true);
+        setCountries([]);
       } finally {
         setLoading(false);
       }
     };
 
     loadCountries();
-  }, [API_URL]);
+  }, [retryKey]);
 
   const loopItems = countries.length > 0 ? [...countries, ...countries] : [];
   const duration = Math.max(countries.length * 2.8, 48);
@@ -250,6 +225,8 @@ export default function CountryCarousel() {
           <p style={{ textAlign: 'center', color: '#6B7280', fontSize: '0.9375rem', padding: '0 1rem' }}>
             Loading countries...
           </p>
+        ) : error ? (
+          <ProjectsLoadError onRetry={() => setRetryKey((k) => k + 1)} />
         ) : countries.length === 0 ? null : (
           <div className="country-marquee-fullbleed">
             <div

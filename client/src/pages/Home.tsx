@@ -30,80 +30,53 @@ export default function HomePage() {
   });
   const [searchQuery, setSearchQuery] = useState('');
   const [loadingCounts, setLoadingCounts] = useState(true);
+  const [countsError, setCountsError] = useState(false);
+  const [retryKey, setRetryKey] = useState(0);
 
   useEffect(() => {
     const fetchCategoryCounts = async () => {
       setLoadingCounts(true);
+      setCountsError(false);
 
       try {
-        if (API_URL) {
-          try {
-            // Fetch ALL projects using pagination
-            let allProjects: any[] = [];
-            let page = 1;
-            const limit = 100;
-            let hasMore = true;
+        if (!API_URL) {
+          throw new Error('API URL not configured');
+        }
 
-            while (hasMore) {
-              const response = await fetch(`${API_URL}/api/projects?page=${page}&limit=${limit}`);
-              if (response.ok) {
-                const data = await response.json();
+        let allProjects: any[] = [];
+        let page = 1;
+        const limit = 100;
+        let hasMore = true;
 
-                // console.log('API Response:', data);
-                // console.log('Sample project:', data.data?.[0]);
+        while (hasMore) {
+          const response = await fetch(`${API_URL}/api/projects?page=${page}&limit=${limit}`);
+          if (!response.ok) {
+            throw new Error('Failed to fetch projects');
+          }
 
-                if (data.success && data.data) {
-                  allProjects = [...allProjects, ...data.data];
-
-                  // Check if there are more pages
-                  const total = data.meta?.total || 0;
-                  hasMore = allProjects.length < total;
-                  page++;
-                } else {
-                  hasMore = false;
-                }
-              } else {
-                hasMore = false;
-              }
-            }
-
-            // Filter for verified projects only
-            const verifiedProjects = allProjects.filter(
-              (project: any) => project.verified === true
-            );
-
-            setCategoryCounts(countCategories(verifiedProjects));
-            setLoadingCounts(false);
-            return;
-          } catch (apiError) {
-            console.warn('API request failed, falling back to local data:', apiError);
+          const data = await response.json();
+          if (data.success && data.data) {
+            allProjects = [...allProjects, ...data.data];
+            const total = data.meta?.total || 0;
+            hasMore = allProjects.length < total;
+            page++;
+          } else {
+            throw new Error('Invalid API response');
           }
         }
+
+        const verifiedProjects = allProjects.filter((project: any) => project.verified === true);
+        setCategoryCounts(countCategories(verifiedProjects));
       } catch (apiError) {
-        console.warn('API not available, falling back to local data:', apiError);
-      }
-
-      // Fallback to local data (keep existing code)
-      try {
-        const module = await import('../data/projects.json');
-        const data = module.default;
-
-        if (data?.projects) {
-          const activeProjects = data.projects.filter((project: any) =>
-            project.status === 'approved'
-          );
-
-          setCategoryCounts(countCategories(activeProjects));
-        }
-      } catch (localError) {
-        console.error('Error loading local data:', localError);
+        console.error('Error loading category counts:', apiError);
+        setCountsError(true);
       } finally {
         setLoadingCounts(false);
       }
     };
 
     fetchCategoryCounts();
-  }, [API_URL]);
+  }, [API_URL, retryKey]);
 
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -552,12 +525,35 @@ export default function HomePage() {
                     flexShrink: 0,
                   }}
                 >
-                  {loadingCounts ? '...' : categoryCounts[category.key]}
+                  {loadingCounts ? '...' : countsError ? '—' : categoryCounts[category.key]}
                 </span>
               </Link>
             );
             })}
           </div>
+          {countsError && (
+            <div style={{ textAlign: 'center', marginTop: '1.5rem' }}>
+              <p style={{ color: '#6B7280', marginBottom: '0.75rem', fontSize: '0.9375rem' }}>
+                Unable to load projects. Please try again.
+              </p>
+              <button
+                type="button"
+                onClick={() => setRetryKey((k) => k + 1)}
+                style={{
+                  padding: '0.625rem 1.25rem',
+                  background: '#FD5A47',
+                  color: '#FFFFFF',
+                  border: 'none',
+                  borderRadius: '8px',
+                  fontSize: '0.875rem',
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                }}
+              >
+                Retry
+              </button>
+            </div>
+          )}
         </section>
 
         <section

@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import projectsData from '../data/projects.json';
 import type { Project } from '../data/projects.types';
+import { fetchAllApprovedProjects } from '../lib/projectsApi';
+import ProjectsLoadError from '../components/ProjectsLoadError';
 import { getProjectUrl } from '../utils/projectUrl';
 import markerPinIcon from '../assets/marker-pin.png';
 import bitcoinIcon from '../assets/bitcoin-icon.png';
@@ -15,77 +16,40 @@ import {
 
 export default function CategoryProjects() {
   const { categorySlug } = useParams<{ categorySlug: string }>();
-  const API_URL = import.meta.env.VITE_API_URL || '';
-
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [retryKey, setRetryKey] = useState(0);
+
+  const loadProjects = useCallback(async () => {
+    if (!categorySlug) {
+      setError('Category is required');
+      setLoading(false);
+      return;
+    }
+
+    setLoading(true);
+    setError(null);
+
+    try {
+      const allProjects = await fetchAllApprovedProjects({ force: retryKey > 0 });
+      const filtered = allProjects.filter((project) => {
+        const categoriesStr = (project.categories || []).join(' ').toLowerCase();
+        return matchesCategory(categoriesStr, categorySlug);
+      });
+      setProjects(filtered);
+    } catch (err) {
+      console.error('Error fetching category projects:', err);
+      setError('Unable to load projects. Please try again.');
+      setProjects([]);
+    } finally {
+      setLoading(false);
+    }
+  }, [categorySlug, retryKey]);
 
   useEffect(() => {
-    const fetchProjects = async () => {
-      if (!categorySlug) {
-        setError('Category is required');
-        setLoading(false);
-        return;
-      }
-
-      try {
-        if (API_URL) {
-          try {
-            let allProjects: any[] = [];
-            let page = 1;
-            const limit = 100;
-            let hasMore = true;
-
-            while (hasMore) {
-              const response = await fetch(`${API_URL}/api/projects?page=${page}&limit=${limit}`);
-              if (response.ok) {
-                const data = await response.json();
-                if (data.success && data.data) {
-                  allProjects = [...allProjects, ...data.data];
-                  const total = data.meta?.total || 0;
-                  hasMore = allProjects.length < total;
-                  page++;
-                } else {
-                  hasMore = false;
-                }
-              } else {
-                hasMore = false;
-              }
-            }
-
-            const filtered = allProjects.filter((project: any) => {
-              const categories = project.categories || [];
-              const categoriesStr = categories.join(' ').toLowerCase();
-              return matchesCategory(categoriesStr, categorySlug);
-            });
-
-            setProjects(filtered);
-            setLoading(false);
-            return;
-          } catch (apiError) {
-            console.warn('API failed, using fallback');
-          }
-        }
-
-        const filtered = projectsData.projects.filter((project: any) => {
-          if (project.status !== 'approved') return false;
-          const categories = project.categories || [];
-          const categoriesStr = categories.join(' ').toLowerCase();
-          return matchesCategory(categoriesStr, categorySlug);
-        });
-
-        setProjects(filtered as Project[]);
-      } catch (err) {
-        console.error('Error fetching category projects:', err);
-        setError('Failed to load projects');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchProjects();
-  }, [categorySlug, API_URL]);
+    loadProjects();
+  }, [loadProjects]);
 
   useEffect(() => {
     const categoryName = CATEGORY_NAMES[categorySlug || ''] || categorySlug;
@@ -106,9 +70,8 @@ export default function CategoryProjects() {
     return (
       <main style={{ background: '#F5F5F5', minHeight: '100vh', padding: 'clamp(2rem, 5vw, 4rem) clamp(1rem, 4vw, 1rem)' }}>
         <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-          <h1>Error</h1>
-          <p>{error}</p>
           <Link to="/" style={{ color: '#FD5A47', textDecoration: 'none' }}>← Back to Home</Link>
+          <ProjectsLoadError onRetry={() => setRetryKey((k) => k + 1)} />
         </div>
       </main>
     );
@@ -142,19 +105,7 @@ export default function CategoryProjects() {
 
             <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '0.75rem' }}>
               {CategoryIcon && (
-                <div
-                  style={{
-                    width: 48,
-                    height: 48,
-                    borderRadius: 12,
-                    background: '#F3F4F6',
-                    border: '1px solid #E5E7EB',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    flexShrink: 0,
-                  }}
-                >
+                <div style={{ width: 48, height: 48, borderRadius: 12, background: '#F3F4F6', border: '1px solid #E5E7EB', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                   <CategoryIcon size={24} strokeWidth={1.75} color="#4B5563" aria-hidden />
                 </div>
               )}
@@ -178,16 +129,7 @@ export default function CategoryProjects() {
                 <Link
                   key={project.id}
                   to={getProjectUrl(project)}
-                  style={{
-                    display: 'block',
-                    background: '#FFFFFF',
-                    borderRadius: '12px',
-                    padding: '1.5rem',
-                    boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
-                    textDecoration: 'none',
-                    color: 'inherit',
-                    transition: 'all 0.2s',
-                  }}
+                  style={{ display: 'block', background: '#FFFFFF', borderRadius: '12px', padding: '1.5rem', boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)', textDecoration: 'none', color: 'inherit', transition: 'all 0.2s' }}
                   onMouseEnter={(e) => {
                     e.currentTarget.style.transform = 'translateY(-4px)';
                     e.currentTarget.style.boxShadow = '0 12px 24px rgba(0, 0, 0, 0.15)';

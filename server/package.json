@@ -4,8 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "sync": "tsx lib/jobs/sync-projects.ts",
-    "watch": "tsx watch lib/jobs/watch-projects.ts",
+    "sync": "tsx scripts/sync-projects-json.ts",
     "postinstall": "prisma generate",
     "build": "rm -rf .next && next build",
     "start": "next start",

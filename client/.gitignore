@@ -33,8 +33,8 @@ pnpm-debug.log*
 # TypeScript
 *.tsbuildinfo
 
-# Vite
-.vite/
+# Vite local dev export (auto-generated via `npm run sync` in server/)
+src/data/projects.json
 
 # IDE & Editors
 .vscode/

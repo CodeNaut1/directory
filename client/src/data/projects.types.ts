@@ -158,6 +158,8 @@ export interface Project {
  * Projects Collection
  */
 export interface ProjectsData {
+  /** Present on auto-generated exports from `npm run sync` */
+  _notice?: string;
   projects: Project[];
 }
 

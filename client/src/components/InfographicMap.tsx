@@ -1,52 +1,61 @@
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import projectsData from '../data/projects.json';
 import coordinatesData from '../data/coordinates.json';
 import type { Project, ProjectCoordinate, CountryRegion } from '../data/projects.types';
+import { buildProjectLookup, fetchAllApprovedProjects } from '../lib/projectsApi';
+import ProjectsLoadError from './ProjectsLoadError';
 import { getProjectUrl } from '../utils/projectUrl';
 import infographicImage from '../assets/African Bitcoin Ecosystem Infographic Q3 2026.png';
 
 export default function InfographicMap() {
   const navigate = useNavigate();
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [retryKey, setRetryKey] = useState(0);
 
-  // Extract data from imports (with type assertions for JSON compatibility)
-  const projects = projectsData.projects as unknown as Project[];
   const projectCoordinates = coordinatesData.project_coordinates as unknown as ProjectCoordinate[];
   const countryRegions = coordinatesData.country_regions as unknown as CountryRegion[];
 
-  // Group projects by country code
-  const projectsByCountry = projects.reduce(
-    (acc, project) => {
-      const countryCode = project.country_code.toLowerCase();
-      if (!acc[countryCode]) acc[countryCode] = [];
-      acc[countryCode].push(project);
-      return acc;
-    },
-    {} as Record<string, Project[]>
-  );
+  const loadProjects = useCallback(async () => {
+    setLoading(true);
+    setError(null);
 
-  // Helper to find project by ID or name
-  const findProjectById = (projId: string): Project | null => {
-    return projects.find((p) => p.id === projId || p.slug === projId) || null;
-  };
+    try {
+      const data = await fetchAllApprovedProjects({ force: retryKey > 0 });
+      setProjects(data);
+    } catch (err) {
+      console.error('Error loading infographic projects:', err);
+      setError('Unable to load projects. Please try again.');
+      setProjects([]);
+    } finally {
+      setLoading(false);
+    }
+  }, [retryKey]);
 
-  // Navigate to country projects page
+  useEffect(() => {
+    loadProjects();
+  }, [loadProjects]);
+
+  const projectLookup = useMemo(() => buildProjectLookup(projects), [projects]);
+
+  const approvedProjectCoordinates = useMemo(() => {
+    return projectCoordinates.filter((coord) => {
+      const project = projectLookup.get(coord.proj_id);
+      return project?.status === 'approved';
+    });
+  }, [projectCoordinates, projectLookup]);
+
   const handleRegionClick = (countryCode: string) => {
     navigate(`/country/${countryCode.toLowerCase()}`);
   };
 
-  // Navigate directly to project page
   const handleIndividualProjectClick = (projId: string) => {
-    const project = findProjectById(projId);
-
-    if (!project) {
-      console.log(`Project not found: ${projId}`);
-      return;
-    }
-
+    const project = projectLookup.get(projId);
+    if (!project) return;
     navigate(getProjectUrl(project));
   };
 
-  // Render country region SVG shapes
   const renderCountryShape = (region: CountryRegion, onClick: () => void) => {
     const baseProps = {
       onClick,
@@ -84,12 +93,10 @@ export default function InfographicMap() {
     return null;
   };
 
-  // Render individual project SVG shapes
   const renderProjectShape = (coord: ProjectCoordinate, idx: number) => {
     if (!coord.infographic) return null;
 
     const onClick = () => handleIndividualProjectClick(coord.proj_id);
-
     const baseProps = {
       onClick,
       style: { cursor: 'pointer' },
@@ -126,6 +133,18 @@ export default function InfographicMap() {
     return null;
   };
 
+  if (loading) {
+    return (
+      <div style={{ padding: '4rem', textAlign: 'center', color: '#6B7280' }}>
+        Loading infographic...
+      </div>
+    );
+  }
+
+  if (error) {
+    return <ProjectsLoadError onRetry={() => setRetryKey((k) => k + 1)} />;
+  }
+
   return (
     <svg
       style={{ width: '100%' }}
@@ -133,18 +152,13 @@ export default function InfographicMap() {
       xmlnsXlink="http://www.w3.org/1999/xlink"
       viewBox="0 0 5988 9192"
     >
-      <image
-        xlinkHref={infographicImage}
-        style={{ width: '5988px' }}
-      />
+      <image xlinkHref={infographicImage} style={{ width: '5988px' }} />
 
-      {/* Render all country regions */}
       {countryRegions.map((region) =>
         renderCountryShape(region, () => handleRegionClick(region.code))
       )}
 
-      {/* Render all individual project shapes */}
-      {projectCoordinates.map((coord, idx) => renderProjectShape(coord, idx))}
+      {approvedProjectCoordinates.map((coord, idx) => renderProjectShape(coord, idx))}
     </svg>
   );
 }

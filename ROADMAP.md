@@ -83,21 +83,28 @@ The **African Bitcoin Directory** is a **public, curated platform** that maps an
     │  AuthContext (JWT)    │  REST     │  Handlers:                 │
     │  Mapbox GL + GA4      │           │  • Auth (register/login)   │
     │                       │           │  • Projects (CRUD)         │
-    │  Pages:               │           │  • Taxonomy (categories)   │
-    │  • Home               │           │  • Claims (ownership)      │
-    │  • Directory          │           │  • Admin (moderation)      │
-    │  • Search             │           │  • Search                  │
-    │  • Project Details    │           │  • Health checks           │
+    │  Pages fetch via API  │           │  • Taxonomy (categories)   │
+    │  (no static JSON)     │           │  • Claims (ownership)      │
+    │                       │           │  • Admin (moderation)      │
+    │  coordinates.json     │           │  • Search                  │
+    │  (map positions only) │           │  • Health checks           │
+    │                       │           │                            │
+    │  Pages:               │           │  Side Effects:             │
+    │  • Home               │           │  • Gmail API (email)       │
+    │  • Directory          │           │  • Google Sheets           │
+    │  • Search             │           │  • projects.json sync      │
+    │  • Project Details    │           │    (local dev export only) │
     │  • Dashboard (user)   │           │                            │
-    │  • Admin Console      │           │  Side Effects:             │
-    │  • Claim Ownership    │           │  • Nodemailer (Gmail)      │
-    │                       │           │  • Google Sheets           │
-    └───────────────────────┘           └────────────────────────────┘
+    │  • Admin Console      │           │                            │
+    │  • Claim Ownership    │           │                            │
+    └──────────────────────┘           └────────────────────────────┘
                                                │
                                                ▼
                                         ┌────────────────┐
                                         │  PostgreSQL    │
                                         │  (Neon hosted) │
+                                        │  SOURCE OF     │
+                                        │  TRUTH         │
                                         └────────────────┘
 ```
 
@@ -609,39 +616,27 @@ async function authenticatedFetch(url, options = {}) {
 
 ## 5.4 Static Data Files
 
-### `client/src/data/projects.json`
-- **Purpose:** Backup/legacy; NOT actively used in queries
-- **Content:** Array of ~100 projects (pre-seeded from old WordPress export)
-- **Status:** Kept for reference; syncing from DB is **disabled** (deleted sync scripts)
-- **Update:** Manually mirror DB updates (not automated)
+### `client/src/data/projects.json` (local dev export — NOT deployed)
+- **Purpose:** Optional local snapshot for browsing/filtering project data offline during development
+- **Source:** Auto-generated from database via `npm run sync` (run from `server/`)
+- **Git:** Listed in `client/.gitignore` — never committed or deployed to Render
+- **Frontend:** **Not imported by the SPA.** All pages read from `GET /api/projects` and related API endpoints
+- **Regenerate:** `cd server && npm run sync`
+- **Format:** Includes `_notice` header + `projects[]` array mirroring API shape
 
 ### `client/src/data/coordinates.json`
-- **Purpose:** Map marker positions ONLY
-- **Content:** Array of objects with `{ proj_id (slug), name, livemap: { coords: [lng, lat] } }`
-- **Status:** Actively used by `BitcoinLiveMap.tsx`
-- **Update:** Admin manually adds entries when approving projects for the map
-- **Format:**
-```json
-{
-  "project_coordinates": [
-    {
-      "proj_id": "bitcoin-flash",
-      "name": "Bitcoin Flash",
-      "livemap": {
-        "type": "Point",
-        "coords": [19.905, -0.032]  // [longitude, latitude]
-      }
-    }
-  ]
-}
-```
+- **Purpose:** Map marker positions ONLY (infographic + live map overlays)
+- **Content:** `{ project_coordinates[], country_regions[] }` keyed by `proj_id` (slug)
+- **Status:** Committed to git; used by `BitcoinLiveMap.tsx` and `InfographicMap.tsx` for coordinates
+- **Project data:** Fetched from API at runtime; matched to coordinates by slug
+- **Update:** Admin scripts when adding map positions for new projects
 
 ## 5.5 Frontend Data Flow
 
 ```
 User Action (form submit, click)
   ↓
-API call via authenticatedFetch()
+API call (fetch / authenticatedFetch)
   ↓
 Response { success, data, error }
   ↓
@@ -649,6 +644,12 @@ State update (React state / Context)
   ↓
 Re-render
 ```
+
+**Public project listing:** All directory pages fetch approved projects from `GET /api/projects` (paginated). Shared helper: `client/src/lib/projectsApi.ts` (`fetchAllApprovedProjects` with session cache).
+
+**Map components:** `BitcoinLiveMap` and `InfographicMap` fetch project data from API once on mount, match to `coordinates.json` entries by slug. Only approved projects render as clickable markers.
+
+**Error handling:** No fallback to static JSON. API failures show "Unable to load projects" with a Retry button.
 
 **Example: Submit Project**
 1. User fills form in `CreateProject.tsx`, clicks "Submit"
@@ -1185,25 +1186,9 @@ if (project.status === 'rejected') {
 
 ### 3. **"View Submission" Returns "Project Not Found"**
 - **Location:** `client/src/pages/ViewProject.tsx`
-- **Problem:** Fallback to `projects.json` masks API errors; users can't view pending submissions
-- **Problem:** Owners cannot see their pending/rejected projects
-- **Fix:** Remove `projects.json` fallback entirely; only fetch from API
-- **Impact:** 🔴 High — core UX broken for project owners
-
-```typescript
-// BEFORE (has fallback)
-if (response.ok) { setProject(...); }
-else if (response.status === 404) { setError('Project not found'); }
-// Falls through to projects.json lookup ← WRONG
-
-// AFTER (no fallback)
-if (response.ok) { setProject(...); return; }
-if (response.status === 403 || response.status === 401) {
-  setError('This project is under review');
-  return;
-}
-// No fallback — use API as single source of truth
-```
+- **Status:** ✅ Fixed — API-only, no projects.json fallback
+- **Problem (was):** Fallback to `projects.json` masked API errors; owners couldn't see pending submissions
+- **Fix:** Only fetch from API; show appropriate error for 403/404
 
 ### 4. **Search Crashes After Approving/Rejecting Projects**
 - **Location:** `server/lib/services/search.service.ts`
@@ -2124,7 +2109,7 @@ directory/
 │   │   │   │   └── ...
 │   │   │   └── ...
 │   │   ├── data/
-│   │   │   ├── projects.json           # Backup/legacy (not actively used)
+│   │   │   ├── projects.json           # Local dev export (gitignored, npm run sync)
 │   │   │   ├── coordinates.json        # Map marker positions
 │   │   │   └── projects.types.ts
 │   │   ├── utils/
@@ -2289,7 +2274,8 @@ rm -rf node_modules package-lock.json && npm install
 
 1. **Always read this ROADMAP first** before making changes. It's your source of truth.
 
-2. **Database is single source of truth.** Do NOT rely on `projects.json` for queries.
+2. **Database is single source of truth.** Frontend reads exclusively from API. `projects.json` is a local dev export only (`npm run sync`).
+3. **CountryProjects, InfographicMap, BitcoinLiveMap** fetch from `GET /api/projects` — not static JSON.
 
 3. **Coordinate with team** when:
    - Adding new model fields (may require migrations)

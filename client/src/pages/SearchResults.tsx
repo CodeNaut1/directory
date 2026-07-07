@@ -25,6 +25,7 @@ export default function SearchResults() {
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [retryKey, setRetryKey] = useState(0);
 
   useEffect(() => {
     const searchProjects = async () => {
@@ -37,62 +38,27 @@ export default function SearchResults() {
       setError(null);
 
       try {
-        // Try API first
-        if (API_URL) {
-          const response = await fetch(
-            `${API_URL}/api/search?q=${encodeURIComponent(query)}&page=1&limit=50`
-          );
-
-          if (response.ok) {
-            const data = await response.json();
-            if (data.success && data.data) {
-              setProjects(data.data);
-              setLoading(false);
-              return;
-            }
-          }
+        if (!API_URL) {
+          throw new Error('API URL not configured');
         }
 
-        // Fallback to local data (NEW STRUCTURE)
-        const module = await import('../data/projects.json');
-        const data = module.default;
+        const response = await fetch(
+          `${API_URL}/api/search?q=${encodeURIComponent(query)}&page=1&limit=50`
+        );
 
-        if (data?.projects) {
-          const searchQuery = query.toLowerCase();
+        if (!response.ok) {
+          throw new Error('Search request failed');
+        }
 
-          // Filter approved projects only
-          const activeProjects = data.projects.filter((project: any) =>
-            project.status === 'approved'
-          );
-
-          // Search across multiple fields
-          const matches = activeProjects.filter((project: any) => {
-            const name = (project.name || '').toLowerCase();
-            const location = (project.location || '').toLowerCase();
-            const description = (project.description || '').toLowerCase();
-            const city = (project.city || '').toLowerCase();
-            const countryName = (project.country_name || '').toLowerCase();
-            const categories = (project.categories || []).join(' ').toLowerCase();
-            const tags = (project.tags || []).join(' ').toLowerCase();
-
-            return (
-              name.includes(searchQuery) ||
-              location.includes(searchQuery) ||
-              description.includes(searchQuery) ||
-              city.includes(searchQuery) ||
-              countryName.includes(searchQuery) ||
-              categories.includes(searchQuery) ||
-              tags.includes(searchQuery)
-            );
-          });
-
-          setProjects(matches);
+        const data = await response.json();
+        if (data.success && data.data) {
+          setProjects(data.data);
         } else {
-          setProjects([]);
+          throw new Error('Invalid search response');
         }
       } catch (err) {
         console.error('Error searching:', err);
-        setError('An error occurred while searching. Please try again.');
+        setError('Unable to load projects. Please try again.');
         setProjects([]);
       } finally {
         setLoading(false);
@@ -100,7 +66,7 @@ export default function SearchResults() {
     };
 
     searchProjects();
-  }, [query, API_URL]);
+  }, [query, API_URL, retryKey]);
 
   useEffect(() => {
     document.title = query ? `Search: ${query} - African Bitcoin Directory` : 'Search - African Bitcoin Directory';
@@ -157,16 +123,24 @@ export default function SearchResults() {
             <p style={{ color: '#6B7280' }}>Searching...</p>
           </div>
         ) : error ? (
-          <div
-            style={{
-              background: '#FEF3F2',
-              color: '#B42318',
-              padding: '1rem 1.5rem',
-              borderRadius: '8px',
-              marginBottom: '2rem',
-            }}
-          >
-            {error}
+          <div style={{ textAlign: 'center', padding: '4rem 0' }}>
+            <p style={{ color: '#6B7280', marginBottom: '1rem' }}>{error}</p>
+            <button
+              type="button"
+              onClick={() => setRetryKey((k) => k + 1)}
+              style={{
+                padding: '0.75rem 1.5rem',
+                background: '#FD5A47',
+                color: '#FFFFFF',
+                border: 'none',
+                borderRadius: '8px',
+                fontSize: '0.9375rem',
+                fontWeight: 600,
+                cursor: 'pointer',
+              }}
+            >
+              Retry
+            </button>
           </div>
         ) : projects.length === 0 ? (
           <div style={{ textAlign: 'center', padding: '4rem 0' }}>

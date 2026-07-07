@@ -5,26 +5,7 @@
 
 import { prisma } from '@/lib/db';
 import type { SearchQuery } from '@/lib/validators';
-
-/**
- * Transform database project to match frontend format
- */
-function transformProjectToJsonFormat(project: any) {
-  return {
-    id: project.id,
-    name: project.name,
-    slug: project.slug,
-    description: project.description,
-    image: project.logo || '',
-    website: project.website || '',
-    verified: project.verified || false,
-    categories: project.categories || [project.category?.name].filter(Boolean) || [],
-    country_name: project.countryName || project.country?.name || '',
-    country_code: project.countryCode || project.country?.code || '',
-    city: project.city || '',
-    tags: project.tags?.map((pt: any) => pt.tag?.name || pt.name).filter(Boolean) || [],
-  };
-}
+import { transformDbProjectToJsonEntry } from '@/lib/services/projects-json-sync.service';
 
 /**
  * Search projects
@@ -80,7 +61,7 @@ export async function searchProjects(query: SearchQuery) {
   ]);
 
   return {
-    data: projects.map(transformProjectToJsonFormat),
+    data: projects.map(transformDbProjectToJsonEntry),
     meta: {
       page,
       limit,

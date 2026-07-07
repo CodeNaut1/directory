@@ -8,88 +8,9 @@ import { Prisma } from '@prisma/client';
 import { NotFoundError, AuthorizationError } from '@/lib/utils/errors';
 import type { CreateProjectInput, UpdateProjectInput, ProjectListQuery } from '@/lib/validators';
 import { AuthenticatedUser } from '@/lib/auth/middleware';
-import { scheduleProjectsJsonSync } from '@/lib/services/projects-json-sync.service';
+import { scheduleProjectsJsonSync, scheduleRemoveProjectFromJson, transformDbProjectToJsonEntry } from '@/lib/services/projects-json-sync.service';
 // @ts-ignore - slugify doesn't have types
 import slugify from 'slugify';
-
-
-/**
- * Transform database project to match projects.json format for frontend compatibility
- */
-/**
- * Transform database project to match projects.json format for frontend compatibility
- */
-function transformProjectToJsonFormat(project: any) {
-  return {
-    id: project.id,
-    name: project.name,
-    slug: project.slug,
-    description: project.description,
-
-    // Location
-    country_code: project.countryCode || project.country?.code || '',
-    country_name: project.countryName || project.country?.name || '',
-    city: project.city || '',
-    location: project.location || (project.city && project.country?.name ? `${project.city}, ${project.country.name}` : ''),
-
-    // Images
-    image: project.logo || '',
-
-    // Contact
-    website: project.website || '',
-    email: project.email || '',
-
-    // Categories
-    categories: project.categories || [project.category?.name].filter(Boolean) || [],
-
-    // Tags
-    tags: project.tags?.map((pt: any) => pt.tag?.name || pt.name).filter(Boolean) || [],
-
-    // Social links
-    social: project.socialLinks || {
-      twitter: '',
-      linkedin: '',
-      instagram: '',
-      facebook: '',
-      youtube: '',
-      telegram: '',
-      nostr: '',
-    },
-
-    // Bitcoin acceptance
-    bitcoin_acceptance: {
-      onchain: project.acceptsOnchain || false,
-      lightning: project.acceptsLightning || false,
-      gift_cards: project.acceptsGiftCards || false,
-    },
-
-    // Founder
-    founder: {
-      name: project.founderName || '',
-      twitter: project.founderTwitter || '',
-      email: project.founderEmail || '',
-    },
-
-    // Text fields
-    initiatives: project.initiatives || '',
-    impact: project.impact || '',
-    challenges: project.challenges || '',
-
-    // Status - KEEP THESE FROM DATABASE
-    verified: project.verified || false,
-    featured: project.featured || false,
-    status: project.status || 'pending',
-    active: project.active !== undefined ? project.active : true,
-
-    // Timestamps
-    founded_year: project.foundedYear || '',
-    created_at: project.createdAt?.toISOString() || new Date().toISOString(),
-    updated_at: project.updatedAt?.toISOString() || new Date().toISOString(),
-
-    // CRITICAL: Include userId for ownership checks
-    userId: project.userId || null,  // ← ADD THIS
-  };
-}
 
 
 /**
@@ -182,7 +103,7 @@ export async function listProjects(query: ProjectListQuery) {
   ]);
 
   return {
-    data: projects.map(transformProjectToJsonFormat),
+    data: projects.map(transformDbProjectToJsonEntry),
     meta: { page, limit, total },
   };
 }
@@ -256,7 +177,7 @@ export async function getUserProjects(userId: string) {
     },
   });
 
-  return projects.map(transformProjectToJsonFormat);
+  return projects.map(transformDbProjectToJsonEntry);
 }
 
 /**
@@ -352,7 +273,7 @@ export async function getProjectById(idOrSlug: string, requestingUser?: Authenti
     throw new AuthorizationError('This project is currently under review and will be visible once approved.');
   }
 
-  return transformProjectToJsonFormat(project);
+  return transformDbProjectToJsonEntry(project);
 }
 
 /**
@@ -415,7 +336,7 @@ export async function createProject(user: AuthenticatedUser, input: CreateProjec
 
   scheduleProjectsJsonSync(project.id);
 
-  return transformProjectToJsonFormat(project);
+  return transformDbProjectToJsonEntry(project);
 }
 
 /**
@@ -470,7 +391,7 @@ export async function updateProject(
 
   scheduleProjectsJsonSync(updated.id);
 
-  return transformProjectToJsonFormat(updated);
+  return transformDbProjectToJsonEntry(updated);
 }
 
 /**
@@ -479,7 +400,7 @@ export async function updateProject(
 export async function deleteProject(user: AuthenticatedUser, projectId: string) {
   const project = await prisma.project.findUnique({
     where: { id: projectId },
-    select: { id: true, userId: true },
+    select: { id: true, userId: true, slug: true },
   });
 
   if (!project) throw new NotFoundError('Project not found');
@@ -489,6 +410,7 @@ export async function deleteProject(user: AuthenticatedUser, projectId: string) 
   }
 
   await prisma.project.delete({ where: { id: projectId } });
+  scheduleRemoveProjectFromJson(project.slug);
 }
 
 /**
@@ -519,6 +441,8 @@ export async function submitProjectForReview(user: AuthenticatedUser, projectId:
       },
     },
   });
+
+  scheduleProjectsJsonSync(projectId);
 
   return submission;
 }

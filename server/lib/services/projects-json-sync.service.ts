@@ -11,7 +11,7 @@ const PROJECTS_JSON_PATH = path.join(process.cwd(), '../client/src/data/projects
 
 type JsonProject = Record<string, unknown>;
 
-function defaultSocialLinks() {
+export function defaultSocialLinks() {
   return {
     twitter: '',
     linkedin: '',
@@ -23,8 +23,13 @@ function defaultSocialLinks() {
   };
 }
 
-function transformDbProjectToJsonEntry(project: any): JsonProject {
+/**
+ * Single source of truth for DB → JSON project shape.
+ * Used by sync hooks and API responses that mirror projects.json format.
+ */
+export function transformDbProjectToJsonEntry(project: any): JsonProject {
   const social = (project.socialLinks as Record<string, string> | null) ?? {};
+  const countryName = project.countryName || project.country?.name || '';
 
   return {
     id: project.id,
@@ -32,16 +37,18 @@ function transformDbProjectToJsonEntry(project: any): JsonProject {
     slug: project.slug,
     description: project.description ?? '',
     country_code: project.countryCode || project.country?.code?.toLowerCase() || '',
-    country_name: project.countryName || project.country?.name || '',
+    country_name: countryName,
     city: project.city || '',
-    location: project.location || '',
+    location:
+      project.location ||
+      (project.city && countryName ? `${project.city}, ${countryName}` : ''),
     image: project.logo || '',
     website: project.website || '',
     email: project.email || '',
     categories: project.categories?.length
       ? project.categories
       : [project.category?.name].filter(Boolean),
-    tags: project.tags?.map((pt: any) => pt.tag?.name).filter(Boolean) || [],
+    tags: project.tags?.map((pt: any) => pt.tag?.name || pt.name).filter(Boolean) || [],
     social: {
       ...defaultSocialLinks(),
       ...social,
@@ -66,6 +73,7 @@ function transformDbProjectToJsonEntry(project: any): JsonProject {
     active: project.active !== false,
     created_at: project.createdAt?.toISOString() || new Date().toISOString(),
     updated_at: project.updatedAt?.toISOString() || new Date().toISOString(),
+    userId: project.userId || null,
   };
 }
 
@@ -74,9 +82,14 @@ async function readProjectsJson(): Promise<{ projects: JsonProject[] }> {
   return JSON.parse(raw);
 }
 
-async function writeProjectsJson(data: { projects: JsonProject[] }) {
+async function writeProjectsJson(data: { _notice?: string; projects: JsonProject[] }) {
   const tmpPath = `${PROJECTS_JSON_PATH}.tmp`;
-  await fs.writeFile(tmpPath, `${JSON.stringify(data, null, 2)}\n`, 'utf-8');
+  const output = {
+    _notice:
+      'AUTO-GENERATED FROM DATABASE. DO NOT EDIT MANUALLY. Run \'npm run sync\' to regenerate.',
+    projects: data.projects,
+  };
+  await fs.writeFile(tmpPath, `${JSON.stringify(output, null, 2)}\n`, 'utf-8');
   await fs.rename(tmpPath, PROJECTS_JSON_PATH);
 }
 
@@ -113,6 +126,18 @@ export async function upsertProjectInJson(project: any) {
   await writeProjectsJson(data);
 }
 
+export async function removeProjectFromJson(slugOrId: string) {
+  const data = await readProjectsJson();
+  const before = data.projects.length;
+  data.projects = data.projects.filter(
+    (p) => p.slug !== slugOrId && p.id !== slugOrId
+  );
+
+  if (data.projects.length < before) {
+    await writeProjectsJson(data);
+  }
+}
+
 export async function syncAllProjectsFromDb() {
   const projects = await prisma.project.findMany({
     orderBy: { createdAt: 'asc' },
@@ -133,6 +158,16 @@ export function scheduleProjectsJsonSync(projectId: string) {
       await syncProjectById(projectId);
     } catch (error) {
       console.error('⚠️ projects.json sync failed:', error);
+    }
+  });
+}
+
+export function scheduleRemoveProjectFromJson(slugOrId: string) {
+  setImmediate(async () => {
+    try {
+      await removeProjectFromJson(slugOrId);
+    } catch (error) {
+      console.error('⚠️ projects.json remove failed:', error);
     }
   });
 }

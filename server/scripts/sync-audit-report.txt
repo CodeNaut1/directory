@@ -1,0 +1,156 @@
+PROJECTS.JSON ↔ DATABASE RECONCILIATION AUDIT
+Generated: 2026-07-07T12:45:49.921Z
+JSON path: /Users/admin/dev/directory/client/src/data/projects.json
+Matching rule: slug first, fallback to id (exact match only)
+
+================================================================================
+SUMMARY
+================================================================================
+Total in projects.json:     204
+Total in DB:                206
+Matched (both sources):     204
+Will need to CREATE:        0  (in JSON, not in DB)
+Will need to UPDATE:        0  (in both, with field diffs)
+Will need to DELETE:        2  (in DB, not in JSON)
+  C1 Approved missing:      2
+  C2 Pending missing:       0
+  C3 Rejected missing:        0
+  C4 Unpublished missing:     0
+  C5 With claims (all DB):    5 (0 also missing from JSON)
+Risky deletions:            2  (userId, pending status, or active/pending claims)
+
+Status distribution:
+  JSON: {"approved":194,"unpublished":1,"pending":9}
+  DB:   {"approved":196,"pending":9,"unpublished":1}
+  JSON pending projects (all matched in DB): 9
+  Pending slugs in JSON: bannga, bearbull, bitcoin-nyiragongo-hub, bitterm, brefcrypto, fastconvertcoke, my-project-67, poldot-mining, poldotmining
+
+================================================================================
+SECTION A: PROJECTS TO CREATE (0)
+In projects.json but NOT in DB
+================================================================================
+(none)
+
+================================================================================
+SECTION B: PROJECTS TO UPDATE (0)
+In both sources but with field differences
+================================================================================
+(none)
+
+Note: All 204 matched projects have identical comparable fields (content, status, metadata).
+Timestamp fields compared by date only (YYYY-MM-DD); intraday drift is ignored.
+
+================================================================================
+SECTION C: PROJECTS TO DELETE (2)
+In DB but NOT in projects.json
+================================================================================
+
+C1. APPROVED in DB, missing from JSON (2)
+------------------------------------------------------------
+  slug: ab-abeg
+  name: AB Abeg
+  published: true | status: approved
+  userId: yes (emilyyywells@proton.me)
+  claims: 0
+  createdAt: 2026-07-06T03:52:45.665Z
+
+  slug: ab-togo-branch
+  name: AB Togo Branch
+  published: true | status: approved
+  userId: yes (emilyyywells@proton.me)
+  claims: 0
+  createdAt: 2026-04-07T08:54:12.986Z
+
+
+C2. PENDING in DB, missing from JSON (0)
+------------------------------------------------------------
+(none)
+
+C3. REJECTED in DB, missing from JSON (0)
+------------------------------------------------------------
+(none)
+
+C4. UNPUBLISHED in DB, missing from JSON (0)
+------------------------------------------------------------
+(none)
+
+C5. PROJECTS WITH OWNERSHIP CLAIMS (5 projects in DB with pending or approved claims)
+CRITICAL: Do not delete these without migrating claim records.
+------------------------------------------------------------
+  bitnob | Bitnob | project status=approved | claim=approved | claimant=emilyyywells@proton.me | IN JSON
+  citrusrate | Citrusrate | project status=approved | claim=approved | claimant=orangeman@bitcoiners.africa | IN JSON
+  sats2data | Sats2Data | project status=approved | claim=approved | claimant=blackman@bitcoiners.africa | IN JSON
+  simplb | SimplB | project status=approved | claim=pending | claimant=james@simplb.com | IN JSON
+  the-bitcoiner-test | The Bitcoiner Test | project status=approved | claim=approved | claimant=sarahwhite@bitcoiners.africa | IN JSON
+
+================================================================================
+SECTION D: DATA QUALITY ISSUES
+================================================================================
+
+Duplicate slugs in projects.json:
+  (none)
+
+Duplicate ids in projects.json:
+  (none)
+
+Duplicate slugs in DB:
+  (none)
+
+Malformed JSON projects:
+  (none)
+
+Schema notes:
+  Fields in JSON not in standard schema: (none)
+  Fields in DB not exported to JSON: published, countryId, categoryId, coverImage, address, userId, publishedAt
+
+Legacy (non-CUID) ids in JSON: 170
+  (showing first 20 of 170)
+  bitcoinfriendlysa -> id="bitcoinfriendlysa"
+  bitcoin-aves -> id="bitcoin-aves-1"
+  mulastack -> id="mulastack"
+  what-s-haute-with-halima -> id="what-s-haute-with-halima"
+  bitcoin-calabar -> id="bitcoin-calabar"
+  bitcoin-mining-namibia -> id="bitcoin-mining-namibia"
+  bitcoin-in-nigeria-media -> id="bitcoin-in-nigeria-media"
+  bitcoin-sisonke -> id="bitcoin-sisonke"
+  bitcoinbabies -> id="bitcoinbabies"
+  bitcoinsafaritz -> id="bitcoinsafaritz"
+  bitdevs-zambia -> id="bitdevs-zambia"
+  orphans-of-uganda-children-center -> id="orphans-of-uganda-children-center"
+  tapnob -> id="tapnob"
+  africa-free-routing -> id="africa-free-routing"
+  bitcoin-campus-zambia -> id="bitcoin-campus-zambia"
+  beyond-adversity-btc-podcast -> id="beyond-adversity-btc-podcast"
+  bitcoin-anambra -> id="bitcoin-anambra"
+  bitcoin-bungoma -> id="bitcoin-bungoma"
+  bitcoin-dombo -> id="bitcoin-dombo"
+  bitcoin-for-her -> id="bitcoin-for-her"
+
+Legacy (non-CUID) ids in DB: 170
+  (showing first 20 of 170)
+  abidjan-bitcoin -> id="abidjan-bitcoin"
+  afribit -> id="afribit"
+  africa-free-routing -> id="africa-free-routing"
+  african-bitcoin-corporation -> id="african-bitcoin-corporation"
+  african-bitcoin-mining-summit -> id="african-bitcoin-mining-summit"
+  airbtc -> id="airbtc"
+  altvest-capital -> id="altvest-capital"
+  angovo -> id="angovo"
+  bantu-bitcoin -> id="bantu-bitcoin"
+  beyond-adversity-btc-podcast -> id="beyond-adversity-btc-podcast"
+  bit-fitness -> id="bit-fitness"
+  bitbiashara -> id="bitbiashara"
+  bitcoin kids -> id="bitcoin-kids"
+  bitcoin-africa-story -> id="bitcoin-africa-story"
+  bitcoin-anambra -> id="bitcoin-anambra"
+  bitcoin-aves -> id="bitcoin-aves-1"
+  bitcoin-badger -> id="bitcoin-badger"
+  bitcoin-banamayo -> id="bitcoin-banamayo"
+  bitcoin-benin -> id="bitcoin-benin"
+  bitcoin-boma-coalition -> id="bitcoin-boma-coalition"
+
+Slug/ID mismatches in matched pairs: 0
+
+================================================================================
+END OF REPORT
+================================================================================
