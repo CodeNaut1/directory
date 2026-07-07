@@ -1,4 +1,13 @@
 import { useEffect, useState } from 'react';
+import {
+  AdminBadge,
+  AdminButton,
+  AdminLoading,
+  AdminModal,
+  AdminPageHeader,
+  AdminTabs,
+  roleToBadgeVariant,
+} from '../../components/admin/AdminUI';
 
 interface User {
   id: string;
@@ -97,197 +106,107 @@ export default function Users() {
     return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
   };
 
-  const getRoleBadge = (role: string) => {
+  const getRoleLabel = (role: string) => {
     switch (role) {
       case 'admin':
-        return { bg: '#FEE2E2', color: '#991B1B', text: 'Admin' };
+        return 'Admin';
       case 'moderator':
-        return { bg: '#FEF3C7', color: '#92400E', text: 'Moderator' };
+        return 'Moderator';
       case 'builder':
-        return { bg: '#DBEAFE', color: '#1E40AF', text: 'Builder' };
+        return 'Builder';
       default:
-        return { bg: '#F3F4F6', color: '#1F2937', text: 'User' };
+        return 'User';
     }
   };
 
   if (loading) {
-    return (
-      <div style={{ textAlign: 'center', padding: '3rem' }}>
-        <p style={{ color: '#6B7280' }}>Loading users...</p>
-      </div>
-    );
+    return <AdminLoading message="Loading users..." />;
   }
 
   return (
     <div>
-      {/* Header */}
-      <div style={{ marginBottom: '2rem' }}>
-        <h1 style={{ fontSize: '2rem', fontWeight: 700, color: '#1F2937', margin: '0 0 0.5rem 0' }}>
-          Users
-        </h1>
-        <p style={{ fontSize: '1rem', color: '#6B7280', margin: 0 }}>
-          {users.length} users in the system
-        </p>
-      </div>
+      <AdminPageHeader title="Users" subtitle={`${users.length} users in the system`} />
 
-      {/* Filter Tabs */}
-      <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '2rem', borderBottom: '1px solid #E5E7EB' }}>
-        {(['all', 'admin', 'moderator', 'builder', 'user'] as const).map((tab) => (
-          <button
-            key={tab}
-            onClick={() => setFilter(tab)}
-            style={{
-              padding: '0.75rem 1.5rem',
-              background: 'transparent',
-              border: 'none',
-              borderBottom: filter === tab ? '2px solid #FD5A47' : '2px solid transparent',
-              color: filter === tab ? '#FD5A47' : '#6B7280',
-              fontSize: '0.9375rem',
-              fontWeight: filter === tab ? 600 : 500,
-              cursor: 'pointer',
-              transition: 'all 0.2s',
-            }}
-          >
-            {tab.charAt(0).toUpperCase() + tab.slice(1)}
-          </button>
-        ))}
-      </div>
+      <AdminTabs
+        tabs={[
+          { id: 'all', label: 'All' },
+          { id: 'admin', label: 'Admin' },
+          { id: 'moderator', label: 'Moderator' },
+          { id: 'builder', label: 'Builder' },
+          { id: 'user', label: 'User' },
+        ]}
+        active={filter}
+        onChange={setFilter}
+      />
 
-      {/* Users Table */}
-      <div style={{ background: '#FFFFFF', borderRadius: '12px', boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)', overflowX: 'auto' }}>
-        <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+      <div className="admin-table-wrap">
+        <table className="admin-table">
           <thead>
             <tr>
-              <th style={{ textAlign: 'left', padding: '1rem', fontSize: '0.875rem', fontWeight: 600, color: '#6B7280', borderBottom: '1px solid #E5E7EB' }}>Name</th>
-              <th style={{ textAlign: 'left', padding: '1rem', fontSize: '0.875rem', fontWeight: 600, color: '#6B7280', borderBottom: '1px solid #E5E7EB' }}>Email</th>
-              <th style={{ textAlign: 'left', padding: '1rem', fontSize: '0.875rem', fontWeight: 600, color: '#6B7280', borderBottom: '1px solid #E5E7EB' }}>Role</th>
-              <th style={{ textAlign: 'left', padding: '1rem', fontSize: '0.875rem', fontWeight: 600, color: '#6B7280', borderBottom: '1px solid #E5E7EB' }}>Joined</th>
-              <th style={{ textAlign: 'left', padding: '1rem', fontSize: '0.875rem', fontWeight: 600, color: '#6B7280', borderBottom: '1px solid #E5E7EB' }}>Last Login</th>
-              <th style={{ textAlign: 'left', padding: '1rem', fontSize: '0.875rem', fontWeight: 600, color: '#6B7280', borderBottom: '1px solid #E5E7EB' }}>Actions</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Role</th>
+              <th>Joined</th>
+              <th>Last Login</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
-            {users.map((user) => {
-              const roleBadge = getRoleBadge(user.role);
-              return (
-                <tr key={user.id} style={{ borderBottom: '1px solid #F3F4F6' }}>
-                  <td style={{ padding: '1rem', fontSize: '0.9375rem', color: '#1F2937', fontWeight: 500 }}>
-                    {user.name || '-'}
-                  </td>
-                  <td style={{ padding: '1rem', fontSize: '0.875rem', color: '#4B5563' }}>
-                    {user.email}
-                  </td>
-                  <td style={{ padding: '1rem' }}>
-                    <span style={{
-                      padding: '0.25rem 0.75rem',
-                      background: roleBadge.bg,
-                      color: roleBadge.color,
-                      borderRadius: '9999px',
-                      fontSize: '0.75rem',
-                      fontWeight: 600,
-                    }}>
-                      {roleBadge.text}
-                    </span>
-                  </td>
-                  <td style={{ padding: '1rem', fontSize: '0.875rem', color: '#4B5563' }}>
-                    {formatDate(user.createdAt)}
-                  </td>
-                  <td style={{ padding: '1rem', fontSize: '0.875rem', color: '#4B5563' }}>
-                    {formatDate(user.lastLoginAt)}
-                  </td>
-                  <td style={{ padding: '1rem' }}>
-                    <button
-                      onClick={() => handleOpenRoleModal(user)}
-                      style={{
-                        padding: '0.5rem 1rem',
-                        background: '#F3F4F6',
-                        color: '#1F2937',
-                        border: '1px solid #D1D5DB',
-                        borderRadius: '6px',
-                        fontSize: '0.875rem',
-                        fontWeight: 500,
-                        cursor: 'pointer',
-                      }}
-                    >
-                      Change Role
-                    </button>
-                  </td>
-                </tr>
-              );
-            })}
+            {users.map((user) => (
+              <tr key={user.id}>
+                <td className="cell-primary">{user.name || '—'}</td>
+                <td>{user.email}</td>
+                <td>
+                  <AdminBadge variant={roleToBadgeVariant(user.role)}>
+                    {getRoleLabel(user.role)}
+                  </AdminBadge>
+                </td>
+                <td>{formatDate(user.createdAt)}</td>
+                <td>{formatDate(user.lastLoginAt)}</td>
+                <td>
+                  <AdminButton variant="ghost" size="sm" onClick={() => handleOpenRoleModal(user)}>
+                    Change Role
+                  </AdminButton>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
 
-      {/* Role Modal */}
       {showRoleModal && selectedUser && (
-        <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', background: 'rgba(0, 0, 0, 0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 10000, padding: '1rem' }}>
-          <div style={{ background: '#FFFFFF', borderRadius: '12px', padding: '2rem', maxWidth: '500px', width: '100%', boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1)' }}>
-            <h2 style={{ fontSize: '1.5rem', fontWeight: 700, color: '#1F2937', marginBottom: '1rem' }}>
-              Change User Role
-            </h2>
-            <p style={{ fontSize: '0.9375rem', color: '#6B7280', marginBottom: '1.5rem' }}>
-              Update role for <strong>{selectedUser.name || selectedUser.email}</strong>
-            </p>
-
-            <div style={{ marginBottom: '1.5rem' }}>
-              <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: 600, color: '#1F2937', marginBottom: '0.5rem' }}>
-                Select Role
-              </label>
-              <select
-                value={newRole}
-                onChange={(e) => setNewRole(e.target.value as User['role'])}
-                style={{
-                  width: '100%',
-                  padding: '0.75rem 1rem',
-                  fontSize: '0.9375rem',
-                  border: '1px solid #D1D5DB',
-                  borderRadius: '8px',
-                  cursor: 'pointer',
-                }}
-              >
-                <option value="user">User</option>
-                <option value="builder">Builder</option>
-                <option value="moderator">Moderator</option>
-                <option value="admin">Admin</option>
-              </select>
-            </div>
-
-            <div style={{ display: 'flex', gap: '1rem', justifyContent: 'flex-end' }}>
-              <button
-                onClick={handleCloseRoleModal}
-                style={{
-                  padding: '0.75rem 1.5rem',
-                  background: '#FFFFFF',
-                  color: '#1F2937',
-                  border: '1px solid #D1D5DB',
-                  borderRadius: '8px',
-                  fontSize: '0.9375rem',
-                  fontWeight: 600,
-                  cursor: 'pointer',
-                }}
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handleUpdateRole}
-                disabled={isSubmitting || newRole === selectedUser.role}
-                style={{
-                  padding: '0.75rem 1.5rem',
-                  background: (isSubmitting || newRole === selectedUser.role) ? '#D1D5DB' : '#FD5A47',
-                  color: '#FFFFFF',
-                  border: 'none',
-                  borderRadius: '8px',
-                  fontSize: '0.9375rem',
-                  fontWeight: 600,
-                  cursor: (isSubmitting || newRole === selectedUser.role) ? 'not-allowed' : 'pointer',
-                }}
-              >
-                {isSubmitting ? 'Updating...' : 'Update Role'}
-              </button>
-            </div>
+        <AdminModal
+          title="Change User Role"
+          description={`Update role for ${selectedUser.name || selectedUser.email}`}
+          onClose={handleCloseRoleModal}
+        >
+          <div className="admin-form-group">
+            <label className="admin-form-label">Select Role</label>
+            <select
+              value={newRole}
+              onChange={(e) => setNewRole(e.target.value as User['role'])}
+              className="admin-select"
+            >
+              <option value="user">User</option>
+              <option value="builder">Builder</option>
+              <option value="moderator">Moderator</option>
+              <option value="admin">Admin</option>
+            </select>
           </div>
-        </div>
+
+          <div className="admin-form-actions">
+            <AdminButton variant="ghost" onClick={handleCloseRoleModal}>
+              Cancel
+            </AdminButton>
+            <AdminButton
+              variant="primary"
+              onClick={handleUpdateRole}
+              disabled={isSubmitting || newRole === selectedUser.role}
+            >
+              {isSubmitting ? 'Updating...' : 'Update Role'}
+            </AdminButton>
+          </div>
+        </AdminModal>
       )}
     </div>
   );

@@ -1,6 +1,7 @@
 import { NavLink, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { useState, useRef, useEffect } from 'react';
+import { Shield, LayoutDashboard, LogOut } from 'lucide-react';
 import logoUrl from '../assets/African-Bitcoiners-official_logo.png';
 import '../styles/global.css';
 
@@ -366,14 +367,14 @@ export default function Navbar() {
                       background: '#FFFFFF',
                       border: '1px solid #E5E7EB',
                       borderRadius: '8px',
-                      boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)',
-                      minWidth: '200px',
+                      boxShadow: '0 4px 16px rgba(17, 24, 39, 0.08)',
+                      minWidth: '220px',
                       overflow: 'hidden',
                       zIndex: 1000,
                     }}
                   >
-                    <div style={{ padding: '0.75rem 1rem', borderBottom: '1px solid #E5E7EB', background: '#F9FAFB' }}>
-                      <p style={{ fontSize: '0.875rem', fontWeight: 600, color: '#1F2937', margin: 0 }}>
+                    <div style={{ padding: '0.875rem 1rem', borderBottom: '1px solid #E5E7EB' }}>
+                      <p style={{ fontSize: '0.875rem', fontWeight: 600, color: '#111827', margin: 0, letterSpacing: '-0.01em' }}>
                         {user?.name || 'User'}
                       </p>
                       <p style={{ fontSize: '0.75rem', color: '#6B7280', margin: '0.25rem 0 0 0' }}>
@@ -381,7 +382,7 @@ export default function Navbar() {
                       </p>
                     </div>
 
-                    <div style={{ padding: '0.5rem 0' }}>
+                    <div style={{ padding: '0.375rem' }}>
                       {isAdmin && (
                         <button
                           onClick={() => {
@@ -390,27 +391,30 @@ export default function Navbar() {
                           }}
                           style={{
                             width: '100%',
-                            padding: '0.75rem 1rem',
+                            padding: '0.625rem 0.75rem',
                             background: 'none',
                             border: 'none',
+                            borderRadius: '6px',
                             textAlign: 'left',
                             cursor: 'pointer',
-                            fontSize: '0.875rem',
+                            fontSize: '0.8125rem',
                             fontWeight: 500,
-                            color: '#1F2937',
+                            color: '#374151',
                             display: 'flex',
                             alignItems: 'center',
-                            gap: '0.75rem',
-                            transition: 'background 0.2s',
+                            gap: '0.625rem',
+                            transition: 'background 0.15s ease, color 0.15s ease',
                           }}
                           onMouseEnter={(e) => {
-                            e.currentTarget.style.background = '#F9FAFB';
+                            e.currentTarget.style.background = '#F3F4F6';
+                            e.currentTarget.style.color = '#111827';
                           }}
                           onMouseLeave={(e) => {
                             e.currentTarget.style.background = 'transparent';
+                            e.currentTarget.style.color = '#374151';
                           }}
                         >
-                          <span style={{ fontSize: '1rem' }}>⚙️</span>
+                          <Shield size={15} strokeWidth={1.75} />
                           Admin Panel
                         </button>
                       )}
@@ -422,48 +426,52 @@ export default function Navbar() {
                         }}
                         style={{
                           width: '100%',
-                          padding: '0.75rem 1rem',
+                          padding: '0.625rem 0.75rem',
                           background: 'none',
                           border: 'none',
+                          borderRadius: '6px',
                           textAlign: 'left',
                           cursor: 'pointer',
-                          fontSize: '0.875rem',
+                          fontSize: '0.8125rem',
                           fontWeight: 500,
-                          color: '#1F2937',
+                          color: '#374151',
                           display: 'flex',
                           alignItems: 'center',
-                          gap: '0.75rem',
-                          transition: 'background 0.2s',
+                          gap: '0.625rem',
+                          transition: 'background 0.15s ease, color 0.15s ease',
                         }}
                         onMouseEnter={(e) => {
-                          e.currentTarget.style.background = '#F9FAFB';
+                          e.currentTarget.style.background = '#F3F4F6';
+                          e.currentTarget.style.color = '#111827';
                         }}
                         onMouseLeave={(e) => {
                           e.currentTarget.style.background = 'transparent';
+                          e.currentTarget.style.color = '#374151';
                         }}
                       >
-                        <span style={{ fontSize: '1rem' }}>📊</span>
+                        <LayoutDashboard size={15} strokeWidth={1.75} />
                         My Dashboard
                       </button>
 
-                      <div style={{ height: '1px', background: '#E5E7EB', margin: '0.5rem 0' }} />
+                      <div style={{ height: '1px', background: '#E5E7EB', margin: '0.375rem 0' }} />
 
                       <button
                         onClick={handleLogout}
                         style={{
                           width: '100%',
-                          padding: '0.75rem 1rem',
+                          padding: '0.625rem 0.75rem',
                           background: 'none',
                           border: 'none',
+                          borderRadius: '6px',
                           textAlign: 'left',
                           cursor: 'pointer',
-                          fontSize: '0.875rem',
+                          fontSize: '0.8125rem',
                           fontWeight: 500,
-                          color: '#DC2626',
+                          color: '#991B1B',
                           display: 'flex',
                           alignItems: 'center',
-                          gap: '0.75rem',
-                          transition: 'background 0.2s',
+                          gap: '0.625rem',
+                          transition: 'background 0.15s ease',
                         }}
                         onMouseEnter={(e) => {
                           e.currentTarget.style.background = '#FEF2F2';
@@ -472,7 +480,7 @@ export default function Navbar() {
                           e.currentTarget.style.background = 'transparent';
                         }}
                       >
-                        <span style={{ fontSize: '1rem' }}>🚪</span>
+                        <LogOut size={15} strokeWidth={1.75} />
                         Logout
                       </button>
                     </div>

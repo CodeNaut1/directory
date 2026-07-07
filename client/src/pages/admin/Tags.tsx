@@ -1,4 +1,10 @@
 import { useEffect, useState } from 'react';
+import {
+  AdminButton,
+  AdminLoading,
+  AdminModal,
+  AdminPageHeader,
+} from '../../components/admin/AdminUI';
 
 interface Tag {
   id: string;
@@ -114,166 +120,69 @@ export default function Tags() {
   };
 
   if (loading) {
-    return (
-      <div style={{ textAlign: 'center', padding: '3rem' }}>
-        <p style={{ color: '#6B7280' }}>Loading tags...</p>
-      </div>
-    );
+    return <AdminLoading message="Loading tags..." />;
   }
 
   return (
     <div>
-      {/* Header */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
-        <div>
-          <h1 style={{ fontSize: '2rem', fontWeight: 700, color: '#1F2937', margin: '0 0 0.5rem 0' }}>
-            Tags
-          </h1>
-          <p style={{ fontSize: '1rem', color: '#6B7280', margin: 0 }}>
-            {tags.length} tags in the directory
-          </p>
-        </div>
-        <button
-          onClick={() => handleOpenModal()}
-          style={{
-            padding: '0.75rem 1.5rem',
-            background: '#FD5A47',
-            color: '#FFFFFF',
-            border: 'none',
-            borderRadius: '8px',
-            fontSize: '0.9375rem',
-            fontWeight: 600,
-            cursor: 'pointer',
-          }}
-        >
-          + Add Tag
-        </button>
-      </div>
+      <AdminPageHeader
+        title="Tags"
+        subtitle={`${tags.length} tags in the directory`}
+        action={
+          <AdminButton variant="primary" size="lg" onClick={() => handleOpenModal()}>
+            Add Tag
+          </AdminButton>
+        }
+      />
 
-      {/* Tags Grid */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '1rem' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '0.75rem' }}>
         {tags.map((tag) => (
-          <div key={tag.id} style={{ background: '#FFFFFF', borderRadius: '12px', padding: '1.5rem', boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', marginBottom: '1rem' }}>
-              <div>
-                <h3 style={{ fontSize: '1.125rem', fontWeight: 600, color: '#1F2937', margin: '0 0 0.25rem 0' }}>
-                  {tag.name}
-                </h3>
-                <p style={{ fontSize: '0.875rem', color: '#6B7280', margin: 0 }}>
-                  {tag.slug}
-                </p>
-              </div>
+          <div key={tag.id} className="admin-card">
+            <div style={{ marginBottom: '1rem' }}>
+              <h3 style={{ fontSize: '0.9375rem', fontWeight: 600, color: '#111827', margin: '0 0 0.125rem' }}>
+                {tag.name}
+              </h3>
+              <p style={{ fontSize: '0.8125rem', color: '#6b7280', margin: 0 }}>{tag.slug}</p>
             </div>
-            <div style={{ display: 'flex', gap: '0.5rem' }}>
-              <button
-                onClick={() => handleOpenModal(tag)}
-                style={{
-                  flex: 1,
-                  padding: '0.5rem',
-                  background: '#F3F4F6',
-                  color: '#1F2937',
-                  border: '1px solid #D1D5DB',
-                  borderRadius: '6px',
-                  fontSize: '0.875rem',
-                  fontWeight: 500,
-                  cursor: 'pointer',
-                }}
-              >
+            <div className="admin-actions-row">
+              <AdminButton variant="ghost" size="sm" onClick={() => handleOpenModal(tag)} style={{ flex: 1 }}>
                 Edit
-              </button>
-              <button
-                onClick={() => handleDelete(tag.id, tag.name)}
-                style={{
-                  flex: 1,
-                  padding: '0.5rem',
-                  background: '#FEE2E2',
-                  color: '#991B1B',
-                  border: '1px solid #EF4444',
-                  borderRadius: '6px',
-                  fontSize: '0.875rem',
-                  fontWeight: 500,
-                  cursor: 'pointer',
-                }}
-              >
+              </AdminButton>
+              <AdminButton variant="danger" size="sm" onClick={() => handleDelete(tag.id, tag.name)} style={{ flex: 1 }}>
                 Delete
-              </button>
+              </AdminButton>
             </div>
           </div>
         ))}
       </div>
 
-      {/* Modal */}
       {showModal && (
-        <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', background: 'rgba(0, 0, 0, 0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 10000, padding: '1rem' }}>
-          <div style={{ background: '#FFFFFF', borderRadius: '12px', padding: '2rem', maxWidth: '500px', width: '100%', boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1)' }}>
-            <h2 style={{ fontSize: '1.5rem', fontWeight: 700, color: '#1F2937', marginBottom: '1.5rem' }}>
-              {editingTag ? 'Edit Tag' : 'Add Tag'}
-            </h2>
+        <AdminModal title={editingTag ? 'Edit Tag' : 'Add Tag'} onClose={handleCloseModal}>
+          <form onSubmit={handleSubmit}>
+            <div className="admin-form-group">
+              <label className="admin-form-label">Tag Name *</label>
+              <input
+                type="text"
+                value={tagName}
+                onChange={(e) => setTagName(e.target.value)}
+                required
+                placeholder="e.g. Education, Remittances"
+                className="admin-input"
+              />
+            </div>
 
-            <form onSubmit={handleSubmit}>
-              <div style={{ marginBottom: '1.5rem' }}>
-                <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: 600, color: '#1F2937', marginBottom: '0.5rem' }}>
-                  Tag Name <span style={{ color: '#EF4444' }}>*</span>
-                </label>
-                <input
-                  type="text"
-                  value={tagName}
-                  onChange={(e) => setTagName(e.target.value)}
-                  required
-                  placeholder="e.g. Education, Remittances"
-                  style={{
-                    width: '100%',
-                    padding: '0.75rem 1rem',
-                    fontSize: '0.9375rem',
-                    border: '1px solid #D1D5DB',
-                    borderRadius: '8px',
-                  }}
-                />
-              </div>
+            {error && <div className="admin-alert admin-alert-error">{error}</div>}
 
-              {error && (
-                <div style={{ padding: '0.75rem', background: '#FEE2E2', color: '#991B1B', borderRadius: '8px', fontSize: '0.875rem', marginBottom: '1rem' }}>
-                  {error}
-                </div>
-              )}
-
-              <div style={{ display: 'flex', gap: '1rem', justifyContent: 'flex-end' }}>
-                <button
-                  type="button"
-                  onClick={handleCloseModal}
-                  style={{
-                    padding: '0.75rem 1.5rem',
-                    background: '#FFFFFF',
-                    color: '#1F2937',
-                    border: '1px solid #D1D5DB',
-                    borderRadius: '8px',
-                    fontSize: '0.9375rem',
-                    fontWeight: 600,
-                    cursor: 'pointer',
-                  }}
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  style={{
-                    padding: '0.75rem 1.5rem',
-                    background: isSubmitting ? '#D1D5DB' : '#FD5A47',
-                    color: '#FFFFFF',
-                    border: 'none',
-                    borderRadius: '8px',
-                    fontSize: '0.9375rem',
-                    fontWeight: 600,
-                    cursor: isSubmitting ? 'not-allowed' : 'pointer',
-                  }}
-                >
-                  {isSubmitting ? 'Saving...' : editingTag ? 'Update' : 'Create'}
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
+            <div className="admin-form-actions">
+              <AdminButton type="button" variant="ghost" onClick={handleCloseModal}>
+                Cancel
+              </AdminButton>
+              <AdminButton type="submit" variant="primary" disabled={isSubmitting}>
+                {isSubmitting ? 'Saving...' : editingTag ? 'Update' : 'Create'}
+              </AdminButton>
+            </div>
+          </form>
+        </AdminModal>
       )}
     </div>
   );

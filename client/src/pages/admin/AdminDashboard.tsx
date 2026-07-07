@@ -1,5 +1,17 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import {
+  FolderKanban,
+  CheckCircle2,
+  Clock,
+  Users,
+  Sparkles,
+  Tags,
+  Globe,
+  Hash,
+} from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
+import { AdminLoading, AdminPageHeader, ICON_STROKE } from '../../components/admin/AdminUI';
 
 interface DashboardStats {
   totalProjects: number;
@@ -12,6 +24,14 @@ interface DashboardStats {
   totalTags: number;
 }
 
+interface StatCard {
+  label: string;
+  value: number;
+  icon: LucideIcon;
+  link: string;
+  highlight?: boolean;
+}
+
 export default function AdminDashboard() {
   const API_URL = import.meta.env.VITE_API_URL || '';
   const [stats, setStats] = useState<DashboardStats | null>(null);
@@ -22,9 +42,7 @@ export default function AdminDashboard() {
       try {
         const token = localStorage.getItem('access_token');
         const response = await fetch(`${API_URL}/api/admin/stats`, {
-          headers: {
-            'Authorization': `Bearer ${token}`,
-          },
+          headers: { Authorization: `Bearer ${token}` },
         });
 
         if (response.ok) {
@@ -44,185 +62,84 @@ export default function AdminDashboard() {
   }, [API_URL]);
 
   if (loading) {
-    return (
-      <div style={{ textAlign: 'center', padding: '3rem' }}>
-        <p style={{ color: '#6B7280', fontSize: '1rem' }}>Loading dashboard...</p>
-      </div>
-    );
+    return <AdminLoading message="Loading dashboard..." />;
   }
 
-  const statCards = [
-    { label: 'Total Projects', value: stats?.totalProjects || 0, color: '#3B82F6', icon: '📁', link: '/admin/projects' },
-    { label: 'Approved', value: stats?.publishedProjects || 0, color: '#10B981', icon: '✅', link: '/admin/projects?filter=approved' },
-    { label: 'Pending Approvals', value: stats?.pendingApprovals || 0, color: '#F59E0B', icon: '⏳', link: '/admin/projects/pending', highlight: true },
-    { label: 'Total Users', value: stats?.totalUsers || 0, color: '#8B5CF6', icon: '👥', link: '/admin/users' },
-    { label: 'New This Week', value: stats?.newSubmissionsThisWeek || 0, color: '#EC4899', icon: '🆕', link: '/admin/projects?filter=recent' },
-    { label: 'Categories', value: stats?.totalCategories || 0, color: '#14B8A6', icon: '🏷️', link: '/admin/categories' },
-    { label: 'Countries', value: stats?.totalCountries || 0, color: '#F97316', icon: '🌍', link: '/admin/countries' },
-    { label: 'Tags', value: stats?.totalTags || 0, color: '#06B6D4', icon: '🔖', link: '/admin/tags' },
+  const statCards: StatCard[] = [
+    { label: 'Total Projects', value: stats?.totalProjects || 0, icon: FolderKanban, link: '/admin/projects' },
+    { label: 'Approved', value: stats?.publishedProjects || 0, icon: CheckCircle2, link: '/admin/projects?filter=approved' },
+    { label: 'Pending Approvals', value: stats?.pendingApprovals || 0, icon: Clock, link: '/admin/projects/pending', highlight: true },
+    { label: 'Total Users', value: stats?.totalUsers || 0, icon: Users, link: '/admin/users' },
+    { label: 'New This Week', value: stats?.newSubmissionsThisWeek || 0, icon: Sparkles, link: '/admin/projects?filter=recent' },
+    { label: 'Categories', value: stats?.totalCategories || 0, icon: Tags, link: '/admin/categories' },
+    { label: 'Countries', value: stats?.totalCountries || 0, icon: Globe, link: '/admin/countries' },
+    { label: 'Tags', value: stats?.totalTags || 0, icon: Hash, link: '/admin/tags' },
+  ];
+
+  const quickActions = [
+    {
+      to: '/admin/projects/pending',
+      icon: Clock,
+      title: 'Review Pending Projects',
+      description: `${stats?.pendingApprovals || 0} waiting for approval`,
+    },
+    {
+      to: '/admin/categories',
+      icon: Tags,
+      title: 'Manage Categories',
+      description: 'Add, edit, or delete',
+    },
+    {
+      to: '/admin/users',
+      icon: Users,
+      title: 'Manage Users',
+      description: 'View and edit user accounts',
+    },
   ];
 
   return (
     <div>
-      {/* Header */}
-      <div style={{ marginBottom: '2rem' }}>
-        <h1 style={{ fontSize: '2.5rem', fontWeight: 700, color: '#1F2937', margin: '0 0 0.5rem 0' }}>
-          Admin Dashboard
-        </h1>
-        <p style={{ fontSize: '1rem', color: '#6B7280', margin: 0 }}>
-          Welcome back! Here's what's happening with your directory.
-        </p>
+      <AdminPageHeader
+        title="Dashboard"
+        subtitle="Welcome back. Here's what's happening with your directory."
+      />
+
+      <div className="admin-stats-grid">
+        {statCards.map((stat) => {
+          const Icon = stat.icon;
+          return (
+            <Link
+              key={stat.label}
+              to={stat.link}
+              className={`admin-stat-card ${stat.highlight ? 'highlight' : ''}`}
+            >
+              <p className="admin-stat-label">
+                <Icon size={14} strokeWidth={ICON_STROKE} />
+                {stat.label}
+              </p>
+              <p className="admin-stat-value">{stat.value}</p>
+            </Link>
+          );
+        })}
       </div>
 
-      {/* Stats Grid */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1.5rem', marginBottom: '3rem' }}>
-        {statCards.map((stat, index) => (
-          <Link
-            key={index}
-            to={stat.link}
-            style={{
-              background: '#FFFFFF',
-              borderRadius: '12px',
-              padding: '1.5rem',
-              boxShadow: stat.highlight ? '0 4px 12px rgba(253, 90, 71, 0.15)' : '0 1px 3px rgba(0, 0, 0, 0.1)',
-              border: stat.highlight ? '2px solid #FD5A47' : 'none',
-              textDecoration: 'none',
-              transition: 'all 0.2s',
-              position: 'relative',
-              overflow: 'hidden',
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform = 'translateY(-4px)';
-              e.currentTarget.style.boxShadow = stat.highlight ? '0 8px 20px rgba(253, 90, 71, 0.25)' : '0 4px 12px rgba(0, 0, 0, 0.15)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = 'translateY(0)';
-              e.currentTarget.style.boxShadow = stat.highlight ? '0 4px 12px rgba(253, 90, 71, 0.15)' : '0 1px 3px rgba(0, 0, 0, 0.1)';
-            }}
-          >
-            {/* Background Icon */}
-            <div style={{ position: 'absolute', right: '-10px', top: '-10px', fontSize: '5rem', opacity: 0.05 }}>
-              {stat.icon}
-            </div>
-
-            {/* Content */}
-            <div style={{ position: 'relative', zIndex: 1 }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.75rem' }}>
-                <span style={{ fontSize: '1.5rem' }}>{stat.icon}</span>
-                <p style={{ fontSize: '0.875rem', fontWeight: 600, color: '#6B7280', margin: 0, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                  {stat.label}
-                </p>
-              </div>
-              <p style={{ fontSize: '2.5rem', fontWeight: 700, color: stat.color, margin: 0 }}>
-                {stat.value}
-              </p>
-            </div>
-          </Link>
-        ))}
-      </div>
-
-      {/* Quick Actions */}
-      <div style={{ background: '#FFFFFF', borderRadius: '12px', padding: '2rem', boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)' }}>
-        <h2 style={{ fontSize: '1.5rem', fontWeight: 700, color: '#1F2937', marginBottom: '1.5rem' }}>
-          Quick Actions
-        </h2>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem' }}>
-          <Link
-            to="/admin/projects/pending"
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '1rem',
-              padding: '1.25rem',
-              background: '#FEF3F2',
-              border: '2px solid #FD5A47',
-              borderRadius: '8px',
-              textDecoration: 'none',
-              transition: 'all 0.2s',
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.background = '#FD5A47';
-              (e.currentTarget.querySelector('.action-icon') as HTMLElement).style.color = '#FFFFFF';
-              (e.currentTarget.querySelector('.action-text') as HTMLElement).style.color = '#FFFFFF';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.background = '#FEF3F2';
-              (e.currentTarget.querySelector('.action-icon') as HTMLElement).style.color = '#FD5A47';
-              (e.currentTarget.querySelector('.action-text') as HTMLElement).style.color = '#1F2937';
-            }}
-          >
-            <div className="action-icon" style={{ fontSize: '2rem', color: '#FD5A47', transition: 'color 0.2s' }}>⏳</div>
-            <div>
-              <p className="action-text" style={{ fontSize: '1rem', fontWeight: 600, color: '#1F2937', margin: 0, transition: 'color 0.2s' }}>
-                Review Pending Projects
-              </p>
-              <p style={{ fontSize: '0.875rem', color: '#6B7280', margin: '0.25rem 0 0 0' }}>
-                {stats?.pendingApprovals || 0} waiting for approval
-              </p>
-            </div>
-          </Link>
-
-          <Link
-            to="/admin/categories"
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '1rem',
-              padding: '1.25rem',
-              background: '#F9FAFB',
-              border: '1px solid #D1D5DB',
-              borderRadius: '8px',
-              textDecoration: 'none',
-              transition: 'all 0.2s',
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.background = '#F3F4F6';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.background = '#F9FAFB';
-            }}
-          >
-            <div style={{ fontSize: '2rem' }}>🏷️</div>
-            <div>
-              <p style={{ fontSize: '1rem', fontWeight: 600, color: '#1F2937', margin: 0 }}>
-                Manage Categories
-              </p>
-              <p style={{ fontSize: '0.875rem', color: '#6B7280', margin: '0.25rem 0 0 0' }}>
-                Add, edit, or delete
-              </p>
-            </div>
-          </Link>
-
-          <Link
-            to="/admin/users"
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '1rem',
-              padding: '1.25rem',
-              background: '#F9FAFB',
-              border: '1px solid #D1D5DB',
-              borderRadius: '8px',
-              textDecoration: 'none',
-              transition: 'all 0.2s',
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.background = '#F3F4F6';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.background = '#F9FAFB';
-            }}
-          >
-            <div style={{ fontSize: '2rem' }}>👥</div>
-            <div>
-              <p style={{ fontSize: '1rem', fontWeight: 600, color: '#1F2937', margin: 0 }}>
-                Manage Users
-              </p>
-              <p style={{ fontSize: '0.875rem', color: '#6B7280', margin: '0.25rem 0 0 0' }}>
-                View and edit user accounts
-              </p>
-            </div>
-          </Link>
+      <div className="admin-card admin-card-lg">
+        <h2 className="admin-card-section-title">Quick Actions</h2>
+        <div className="admin-quick-actions">
+          {quickActions.map((action) => {
+            const Icon = action.icon;
+            return (
+              <Link key={action.to} to={action.to} className="admin-quick-action">
+                <div className="admin-quick-action-icon">
+                  <Icon size={16} strokeWidth={ICON_STROKE} />
+                </div>
+                <div>
+                  <p className="admin-quick-action-title">{action.title}</p>
+                  <p className="admin-quick-action-desc">{action.description}</p>
+                </div>
+              </Link>
+            );
+          })}
         </div>
       </div>
     </div>

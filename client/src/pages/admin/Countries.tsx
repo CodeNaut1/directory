@@ -1,4 +1,10 @@
 import { useEffect, useState } from 'react';
+import {
+  AdminButton,
+  AdminLoading,
+  AdminModal,
+  AdminPageHeader,
+} from '../../components/admin/AdminUI';
 
 interface Country {
   id: string;
@@ -115,214 +121,104 @@ export default function Countries() {
   };
 
   if (loading) {
-    return (
-      <div style={{ textAlign: 'center', padding: '3rem' }}>
-        <p style={{ color: '#6B7280' }}>Loading countries...</p>
-      </div>
-    );
+    return <AdminLoading message="Loading countries..." />;
   }
 
   return (
     <div>
-      {/* Header */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
-        <div>
-          <h1 style={{ fontSize: '2rem', fontWeight: 700, color: '#1F2937', margin: '0 0 0.5rem 0' }}>
-            Countries
-          </h1>
-          <p style={{ fontSize: '1rem', color: '#6B7280', margin: 0 }}>
-            {countries.length} African countries in the directory
-          </p>
-        </div>
-        <button
-          onClick={() => handleOpenModal()}
-          style={{
-            padding: '0.75rem 1.5rem',
-            background: '#FD5A47',
-            color: '#FFFFFF',
-            border: 'none',
-            borderRadius: '8px',
-            fontSize: '0.9375rem',
-            fontWeight: 600,
-            cursor: 'pointer',
-          }}
-        >
-          + Add Country
-        </button>
-      </div>
+      <AdminPageHeader
+        title="Countries"
+        subtitle={`${countries.length} African countries in the directory`}
+        action={
+          <AdminButton variant="primary" size="lg" onClick={() => handleOpenModal()}>
+            Add Country
+          </AdminButton>
+        }
+      />
 
-      {/* Countries Grid */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '1rem' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '0.75rem' }}>
         {countries.map((country) => (
-          <div key={country.id} style={{ background: '#FFFFFF', borderRadius: '12px', padding: '1.5rem', boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', marginBottom: '1rem' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                {country.flag && (
-                  <span style={{ fontSize: '2rem' }}>{country.flag}</span>
-                )}
-                <div>
-                  <h3 style={{ fontSize: '1.125rem', fontWeight: 600, color: '#1F2937', margin: '0 0 0.25rem 0' }}>
-                    {country.name}
-                  </h3>
-                  <p style={{ fontSize: '0.875rem', color: '#6B7280', margin: 0 }}>
-                    Code: {country.code.toUpperCase()}
-                  </p>
-                </div>
+          <div key={country.id} className="admin-card">
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
+              {country.flag && <span style={{ fontSize: '1.5rem', lineHeight: 1 }}>{country.flag}</span>}
+              <div>
+                <h3 style={{ fontSize: '0.9375rem', fontWeight: 600, color: '#111827', margin: '0 0 0.125rem' }}>
+                  {country.name}
+                </h3>
+                <p style={{ fontSize: '0.8125rem', color: '#6b7280', margin: 0 }}>
+                  {country.code.toUpperCase()}
+                </p>
               </div>
             </div>
-            <div style={{ display: 'flex', gap: '0.5rem' }}>
-              <button
-                onClick={() => handleOpenModal(country)}
-                style={{
-                  flex: 1,
-                  padding: '0.5rem',
-                  background: '#F3F4F6',
-                  color: '#1F2937',
-                  border: '1px solid #D1D5DB',
-                  borderRadius: '6px',
-                  fontSize: '0.875rem',
-                  fontWeight: 500,
-                  cursor: 'pointer',
-                }}
-              >
+            <div className="admin-actions-row">
+              <AdminButton variant="ghost" size="sm" onClick={() => handleOpenModal(country)} style={{ flex: 1 }}>
                 Edit
-              </button>
-              <button
-                onClick={() => handleDelete(country.id, country.name)}
-                style={{
-                  flex: 1,
-                  padding: '0.5rem',
-                  background: '#FEE2E2',
-                  color: '#991B1B',
-                  border: '1px solid #EF4444',
-                  borderRadius: '6px',
-                  fontSize: '0.875rem',
-                  fontWeight: 500,
-                  cursor: 'pointer',
-                }}
-              >
+              </AdminButton>
+              <AdminButton variant="danger" size="sm" onClick={() => handleDelete(country.id, country.name)} style={{ flex: 1 }}>
                 Delete
-              </button>
+              </AdminButton>
             </div>
           </div>
         ))}
       </div>
 
-      {/* Modal */}
       {showModal && (
-        <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', background: 'rgba(0, 0, 0, 0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 10000, padding: '1rem' }}>
-          <div style={{ background: '#FFFFFF', borderRadius: '12px', padding: '2rem', maxWidth: '500px', width: '100%', boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1)' }}>
-            <h2 style={{ fontSize: '1.5rem', fontWeight: 700, color: '#1F2937', marginBottom: '1.5rem' }}>
-              {editingCountry ? 'Edit Country' : 'Add Country'}
-            </h2>
+        <AdminModal
+          title={editingCountry ? 'Edit Country' : 'Add Country'}
+          onClose={handleCloseModal}
+        >
+          <form onSubmit={handleSubmit}>
+            <div className="admin-form-group">
+              <label className="admin-form-label">Country Name *</label>
+              <input
+                type="text"
+                value={formData.name}
+                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                required
+                placeholder="e.g. Nigeria"
+                className="admin-input"
+              />
+            </div>
 
-            <form onSubmit={handleSubmit}>
-              <div style={{ marginBottom: '1rem' }}>
-                <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: 600, color: '#1F2937', marginBottom: '0.5rem' }}>
-                  Country Name <span style={{ color: '#EF4444' }}>*</span>
-                </label>
-                <input
-                  type="text"
-                  value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  required
-                  placeholder="e.g. Nigeria"
-                  style={{
-                    width: '100%',
-                    padding: '0.75rem 1rem',
-                    fontSize: '0.9375rem',
-                    border: '1px solid #D1D5DB',
-                    borderRadius: '8px',
-                  }}
-                />
-              </div>
+            <div className="admin-form-group">
+              <label className="admin-form-label">ISO Code (2 letters) *</label>
+              <input
+                type="text"
+                value={formData.code}
+                onChange={(e) => setFormData({ ...formData, code: e.target.value.toUpperCase() })}
+                required
+                maxLength={2}
+                placeholder="e.g. NG"
+                className="admin-input"
+              />
+              <p style={{ fontSize: '0.8125rem', color: '#6b7280', marginTop: '0.375rem' }}>
+                Use ISO 3166-1 alpha-2 code
+              </p>
+            </div>
 
-              <div style={{ marginBottom: '1rem' }}>
-                <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: 600, color: '#1F2937', marginBottom: '0.5rem' }}>
-                  ISO Code (2 letters) <span style={{ color: '#EF4444' }}>*</span>
-                </label>
-                <input
-                  type="text"
-                  value={formData.code}
-                  onChange={(e) => setFormData({ ...formData, code: e.target.value.toUpperCase() })}
-                  required
-                  maxLength={2}
-                  placeholder="e.g. NG"
-                  style={{
-                    width: '100%',
-                    padding: '0.75rem 1rem',
-                    fontSize: '0.9375rem',
-                    border: '1px solid #D1D5DB',
-                    borderRadius: '8px',
-                  }}
-                />
-                <p style={{ fontSize: '0.8125rem', color: '#6B7280', marginTop: '0.5rem' }}>
-                  Use ISO 3166-1 alpha-2 code
-                </p>
-              </div>
+            <div className="admin-form-group">
+              <label className="admin-form-label">Flag Emoji (optional)</label>
+              <input
+                type="text"
+                value={formData.flag}
+                onChange={(e) => setFormData({ ...formData, flag: e.target.value })}
+                placeholder="🇳🇬"
+                className="admin-input"
+              />
+            </div>
 
-              <div style={{ marginBottom: '1.5rem' }}>
-                <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: 600, color: '#1F2937', marginBottom: '0.5rem' }}>
-                  Flag Emoji (optional)
-                </label>
-                <input
-                  type="text"
-                  value={formData.flag}
-                  onChange={(e) => setFormData({ ...formData, flag: e.target.value })}
-                  placeholder="🇳🇬"
-                  style={{
-                    width: '100%',
-                    padding: '0.75rem 1rem',
-                    fontSize: '0.9375rem',
-                    border: '1px solid #D1D5DB',
-                    borderRadius: '8px',
-                  }}
-                />
-              </div>
+            {error && <div className="admin-alert admin-alert-error">{error}</div>}
 
-              {error && (
-                <div style={{ padding: '0.75rem', background: '#FEE2E2', color: '#991B1B', borderRadius: '8px', fontSize: '0.875rem', marginBottom: '1rem' }}>
-                  {error}
-                </div>
-              )}
-
-              <div style={{ display: 'flex', gap: '1rem', justifyContent: 'flex-end' }}>
-                <button
-                  type="button"
-                  onClick={handleCloseModal}
-                  style={{
-                    padding: '0.75rem 1.5rem',
-                    background: '#FFFFFF',
-                    color: '#1F2937',
-                    border: '1px solid #D1D5DB',
-                    borderRadius: '8px',
-                    fontSize: '0.9375rem',
-                    fontWeight: 600,
-                    cursor: 'pointer',
-                  }}
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  style={{
-                    padding: '0.75rem 1.5rem',
-                    background: isSubmitting ? '#D1D5DB' : '#FD5A47',
-                    color: '#FFFFFF',
-                    border: 'none',
-                    borderRadius: '8px',
-                    fontSize: '0.9375rem',
-                    fontWeight: 600,
-                    cursor: isSubmitting ? 'not-allowed' : 'pointer',
-                  }}
-                >
-                  {isSubmitting ? 'Saving...' : editingCountry ? 'Update' : 'Create'}
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
+            <div className="admin-form-actions">
+              <AdminButton type="button" variant="ghost" onClick={handleCloseModal}>
+                Cancel
+              </AdminButton>
+              <AdminButton type="submit" variant="primary" disabled={isSubmitting}>
+                {isSubmitting ? 'Saving...' : editingCountry ? 'Update' : 'Create'}
+              </AdminButton>
+            </div>
+          </form>
+        </AdminModal>
       )}
     </div>
   );

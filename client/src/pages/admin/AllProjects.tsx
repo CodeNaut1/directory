@@ -1,5 +1,13 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Eye, RotateCcw, EyeOff } from 'lucide-react';
+import {
+  AdminBadge,
+  AdminLoading,
+  AdminPageHeader,
+  AdminTabs,
+  statusToBadgeVariant,
+} from '../../components/admin/AdminUI';
 
 interface Project {
   id: string;
@@ -13,11 +21,11 @@ interface Project {
   createdAt: string;
 }
 
-const STATUS_LABELS: Record<string, { label: string; background: string; color: string }> = {
-  approved: { label: 'Approved', background: '#D1FAE5', color: '#065F46' },
-  pending: { label: 'Pending', background: '#FEF3C7', color: '#92400E' },
-  rejected: { label: 'Rejected', background: '#FEE2E2', color: '#991B1B' },
-  unpublished: { label: 'Unpublished', background: '#F2F4F7', color: '#475467' },
+const STATUS_LABELS: Record<string, string> = {
+  approved: 'Approved',
+  pending: 'Pending',
+  rejected: 'Rejected',
+  unpublished: 'Unpublished',
 };
 
 export default function AllProjects() {
@@ -36,9 +44,7 @@ export default function AllProjects() {
     try {
       const token = localStorage.getItem('access_token');
       const response = await fetch(`${API_URL}/api/admin/projects`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers: { Authorization: `Bearer ${token}` },
       });
 
       if (response.ok) {
@@ -70,9 +76,7 @@ export default function AllProjects() {
       const token = localStorage.getItem('access_token');
       const response = await fetch(`${API_URL}/api/admin/projects/${projectId}/unpublish`, {
         method: 'POST',
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers: { Authorization: `Bearer ${token}` },
       });
 
       if (response.ok) {
@@ -98,9 +102,7 @@ export default function AllProjects() {
       const token = localStorage.getItem('access_token');
       const response = await fetch(`${API_URL}/api/admin/projects/${projectId}/republish`, {
         method: 'POST',
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers: { Authorization: `Bearer ${token}` },
       });
 
       if (response.ok) {
@@ -121,155 +123,94 @@ export default function AllProjects() {
     return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
   };
 
-  const getStatusBadge = (status: string) =>
-    STATUS_LABELS[status] || { label: status, background: '#F3F4F6', color: '#4B5563' };
-
   if (loading) {
-    return (
-      <div style={{ textAlign: 'center', padding: '3rem' }}>
-        <p style={{ color: '#6B7280' }}>Loading projects...</p>
-      </div>
-    );
+    return <AdminLoading message="Loading projects..." />;
   }
 
   return (
     <div>
-      <div style={{ marginBottom: '2rem' }}>
-        <h1 style={{ fontSize: '2rem', fontWeight: 700, color: '#1F2937', margin: '0 0 0.5rem 0' }}>
-          All Projects
-        </h1>
-        <p style={{ fontSize: '1rem', color: '#6B7280', margin: 0 }}>
-          {projects.length} total projects in the directory
-        </p>
-      </div>
+      <AdminPageHeader
+        title="All Projects"
+        subtitle={`${projects.length} total projects in the directory`}
+      />
 
-      <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '2rem', borderBottom: '1px solid #E5E7EB' }}>
-        {(['all', 'approved', 'unpublished'] as const).map((tab) => (
-          <button
-            key={tab}
-            onClick={() => setFilter(tab)}
-            style={{
-              padding: '0.75rem 1.5rem',
-              background: 'transparent',
-              border: 'none',
-              borderBottom: filter === tab ? '2px solid #FD5A47' : '2px solid transparent',
-              color: filter === tab ? '#FD5A47' : '#6B7280',
-              fontSize: '0.9375rem',
-              fontWeight: filter === tab ? 600 : 500,
-              cursor: 'pointer',
-              transition: 'all 0.2s',
-            }}
-          >
-            {tab.charAt(0).toUpperCase() + tab.slice(1)}
-          </button>
-        ))}
-      </div>
+      <AdminTabs
+        tabs={[
+          { id: 'all', label: 'All' },
+          { id: 'approved', label: 'Approved' },
+          { id: 'unpublished', label: 'Unpublished' },
+        ]}
+        active={filter}
+        onChange={setFilter}
+      />
 
-      <div style={{ background: '#FFFFFF', borderRadius: '12px', boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)', overflowX: 'auto' }}>
-        <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+      <div className="admin-table-wrap">
+        <table className="admin-table">
           <thead>
             <tr>
-              <th style={{ textAlign: 'left', padding: '1rem', fontSize: '0.875rem', fontWeight: 600, color: '#6B7280', borderBottom: '1px solid #E5E7EB' }}>Project Name</th>
-              <th style={{ textAlign: 'left', padding: '1rem', fontSize: '0.875rem', fontWeight: 600, color: '#6B7280', borderBottom: '1px solid #E5E7EB' }}>Category</th>
-              <th style={{ textAlign: 'left', padding: '1rem', fontSize: '0.875rem', fontWeight: 600, color: '#6B7280', borderBottom: '1px solid #E5E7EB' }}>Country</th>
-              <th style={{ textAlign: 'left', padding: '1rem', fontSize: '0.875rem', fontWeight: 600, color: '#6B7280', borderBottom: '1px solid #E5E7EB' }}>Owner</th>
-              <th style={{ textAlign: 'left', padding: '1rem', fontSize: '0.875rem', fontWeight: 600, color: '#6B7280', borderBottom: '1px solid #E5E7EB' }}>Status</th>
-              <th style={{ textAlign: 'left', padding: '1rem', fontSize: '0.875rem', fontWeight: 600, color: '#6B7280', borderBottom: '1px solid #E5E7EB' }}>Created</th>
-              <th style={{ textAlign: 'left', padding: '1rem', fontSize: '0.875rem', fontWeight: 600, color: '#6B7280', borderBottom: '1px solid #E5E7EB' }}>Actions</th>
+              <th>Project Name</th>
+              <th>Category</th>
+              <th>Country</th>
+              <th>Owner</th>
+              <th>Status</th>
+              <th>Created</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
             {projects.map((project) => {
-              const badge = getStatusBadge(project.status);
               const isBusy = actionLoading === project.id;
+              const statusLabel = STATUS_LABELS[project.status] || project.status;
+
               return (
-              <tr key={project.id} style={{ borderBottom: '1px solid #F3F4F6' }}>
-                <td style={{ padding: '1rem', fontSize: '0.9375rem', color: '#1F2937', fontWeight: 500 }}>
-                  {project.name}
-                </td>
-                <td style={{ padding: '1rem', fontSize: '0.875rem', color: '#4B5563' }}>
-                  {project.category?.name || '-'}
-                </td>
-                <td style={{ padding: '1rem', fontSize: '0.875rem', color: '#4B5563' }}>
-                  {project.country?.name || '-'}
-                </td>
-                <td style={{ padding: '1rem', fontSize: '0.875rem', color: '#4B5563' }}>
-                  {project.user ? (project.user.name || project.user.email) : 'No owner'}
-                </td>
-                <td style={{ padding: '1rem' }}>
-                  <span style={{
-                    padding: '0.25rem 0.75rem',
-                    background: badge.background,
-                    color: badge.color,
-                    borderRadius: '9999px',
-                    fontSize: '0.75rem',
-                    fontWeight: 600,
-                  }}>
-                    {badge.label}
-                  </span>
-                </td>
-                <td style={{ padding: '1rem', fontSize: '0.875rem', color: '#4B5563' }}>
-                  {formatDate(project.createdAt)}
-                </td>
-                <td style={{ padding: '1rem' }}>
-                  <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
-                    <Link
-                      to={`/project/${project.slug}`}
-                      target="_blank"
-                      style={{
-                        padding: '0.5rem 1rem',
-                        background: '#F3F4F6',
-                        color: '#1F2937',
-                        border: '1px solid #D1D5DB',
-                        borderRadius: '6px',
-                        fontSize: '0.875rem',
-                        fontWeight: 500,
-                        textDecoration: 'none',
-                        display: 'inline-block',
-                      }}
-                    >
-                      View
-                    </Link>
-                    {project.status === 'approved' && (
-                      <button
-                        onClick={() => handleUnpublish(project.id)}
-                        disabled={isBusy}
-                        style={{
-                          padding: '0.5rem 1rem',
-                          background: isBusy ? '#D1D5DB' : '#F59E0B',
-                          color: '#FFFFFF',
-                          border: 'none',
-                          borderRadius: '6px',
-                          fontSize: '0.875rem',
-                          fontWeight: 500,
-                          cursor: isBusy ? 'not-allowed' : 'pointer',
-                        }}
+                <tr key={project.id}>
+                  <td className="cell-primary">{project.name}</td>
+                  <td>{project.category?.name || '—'}</td>
+                  <td>{project.country?.name || '—'}</td>
+                  <td>{project.user ? (project.user.name || project.user.email) : 'No owner'}</td>
+                  <td>
+                    <AdminBadge variant={statusToBadgeVariant(project.status)}>
+                      {statusLabel}
+                    </AdminBadge>
+                  </td>
+                  <td>{formatDate(project.createdAt)}</td>
+                  <td>
+                    <div className="admin-actions-row">
+                      <Link
+                        to={`/project/${project.slug}`}
+                        target="_blank"
+                        className="admin-btn admin-btn-ghost admin-btn-sm"
                       >
-                        Unpublish
-                      </button>
-                    )}
-                    {project.status === 'unpublished' && (
-                      <button
-                        onClick={() => handleRepublish(project.id)}
-                        disabled={isBusy}
-                        style={{
-                          padding: '0.5rem 1rem',
-                          background: isBusy ? '#D1D5DB' : '#10B981',
-                          color: '#FFFFFF',
-                          border: 'none',
-                          borderRadius: '6px',
-                          fontSize: '0.875rem',
-                          fontWeight: 500,
-                          cursor: isBusy ? 'not-allowed' : 'pointer',
-                        }}
-                      >
-                        Republish
-                      </button>
-                    )}
-                  </div>
-                </td>
-              </tr>
-            )})}
+                        <Eye size={14} strokeWidth={1.75} />
+                        View
+                      </Link>
+                      {project.status === 'approved' && (
+                        <button
+                          type="button"
+                          onClick={() => handleUnpublish(project.id)}
+                          disabled={isBusy}
+                          className="admin-btn admin-btn-warning admin-btn-sm"
+                        >
+                          <EyeOff size={14} strokeWidth={1.75} />
+                          Unpublish
+                        </button>
+                      )}
+                      {project.status === 'unpublished' && (
+                        <button
+                          type="button"
+                          onClick={() => handleRepublish(project.id)}
+                          disabled={isBusy}
+                          className="admin-btn admin-btn-success admin-btn-sm"
+                        >
+                          <RotateCcw size={14} strokeWidth={1.75} />
+                          Republish
+                        </button>
+                      )}
+                    </div>
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>

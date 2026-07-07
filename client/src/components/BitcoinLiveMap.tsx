@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Home } from 'lucide-react';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import projectsData from '../data/projects.json';
@@ -311,8 +312,20 @@ export default function BitcoinLiveMap({
   };
 
   return (
-    <div style={{ position: 'relative', width, height }}>
+    <div className="bitcoin-livemap-wrapper" style={{ position: 'relative', width, height }}>
       <div ref={mapContainer} style={{ width: '100%', height: '100%' }} />
+      <div className="livemap-overlay-controls">
+        <button
+          type="button"
+          className="livemap-overlay-btn livemap-home-btn"
+          onClick={() => navigate('/')}
+          aria-label="Back to home"
+          title="Back to home"
+        >
+          <Home size={22} strokeWidth={2.25} />
+          <span>Home</span>
+        </button>
+      </div>
     </div>
   );
 }
