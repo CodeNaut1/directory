@@ -64,6 +64,25 @@ export function isUnchangedFromDefault(
   return subject.trim() === def.subject.trim() && htmlBody.trim() === defaultHtml.trim();
 }
 
+/** True when DB still has an old seeded layout (large centered logo) that predates the compact header. */
+export function isStaleSeededTemplate(htmlBody: string): boolean {
+  const hasLegacyLargeLogo =
+    htmlBody.includes('width="180"') || htmlBody.includes('width="200"');
+  const hasCompactHeader = htmlBody.includes('width="44"');
+  return hasLegacyLargeLogo && !hasCompactHeader;
+}
+
+export function shouldSyncTemplateFromDefaults(
+  key: string,
+  subject: string,
+  htmlBody: string
+): boolean {
+  return (
+    isUnchangedFromDefault(key, subject, htmlBody) ||
+    isStaleSeededTemplate(htmlBody)
+  );
+}
+
 export const SAMPLE_EMAIL_VARIABLES: Record<string, Record<string, string>> = {
   project_submission_user: {
     ...getCommonEmailVariables(),

@@ -11,6 +11,7 @@ import {
   getSampleVariables,
   isUnchangedFromDefault,
   sanitizeEmailHtml,
+  shouldSyncTemplateFromDefaults,
   substituteTemplate,
   validateTemplateContent,
 } from '@/lib/email/template-engine';
@@ -38,11 +39,21 @@ export async function renderEmailTemplate(
   const dbTemplate = await prisma.emailTemplate.findUnique({ where: { key } });
 
   if (dbTemplate) {
+    const fallback = DEFAULT_TEMPLATES_BY_KEY[key];
+    const useCurrentDefaults =
+      fallback &&
+      shouldSyncTemplateFromDefaults(key, dbTemplate.subject, dbTemplate.htmlBody);
+
+    const subject = useCurrentDefaults ? fallback.subject : dbTemplate.subject;
+    const htmlBody = useCurrentDefaults
+      ? buildDefaultHtmlBody(fallback)
+      : dbTemplate.htmlBody;
+
     return {
-      subject: substituteTemplate(dbTemplate.subject, mergedVars),
-      html: sanitizeEmailHtml(substituteTemplate(dbTemplate.htmlBody, mergedVars)),
+      subject: substituteTemplate(subject, mergedVars),
+      html: sanitizeEmailHtml(substituteTemplate(htmlBody, mergedVars)),
       isActive: dbTemplate.isActive,
-      source: 'database',
+      source: useCurrentDefaults ? 'fallback' : 'database',
     };
   }
 
@@ -162,18 +173,37 @@ export async function previewEmailTemplate(id: string) {
 export async function seedEmailTemplates() {
   for (const def of DEFAULT_EMAIL_TEMPLATES) {
     const htmlBody = buildDefaultHtmlBody(def);
-    await prisma.emailTemplate.upsert({
+    const existing = await prisma.emailTemplate.findUnique({ where: { key: def.key } });
+
+    if (!existing) {
+      await prisma.emailTemplate.create({
+        data: {
+          key: def.key,
+          name: def.name,
+          description: def.description,
+          subject: def.subject,
+          htmlBody,
+          variables: def.variables as unknown as Prisma.InputJsonValue,
+          category: def.category,
+          isActive: true,
+        },
+      });
+      continue;
+    }
+
+    if (!shouldSyncTemplateFromDefaults(def.key, existing.subject, existing.htmlBody)) {
+      continue;
+    }
+
+    await prisma.emailTemplate.update({
       where: { key: def.key },
-      update: {},
-      create: {
-        key: def.key,
+      data: {
         name: def.name,
         description: def.description,
         subject: def.subject,
         htmlBody,
         variables: def.variables as unknown as Prisma.InputJsonValue,
         category: def.category,
-        isActive: true,
       },
     });
   }
