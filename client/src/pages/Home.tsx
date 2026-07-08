@@ -193,9 +193,10 @@ export default function HomePage() {
               style={{
                 display: 'flex',
                 flexDirection: 'column',
-                justifyContent: 'space-between',
+                justifyContent: 'space-evenly',
                 gap: '1rem',
-                padding: '1rem 0',
+                paddingTop: 'clamp(1rem, 2vw, 3rem)',
+                paddingBottom: 'clamp(1rem, 2vw, 3rem)',
               }}
             >
               <div style={{ textAlign: 'center' }}>
@@ -219,7 +220,7 @@ export default function HomePage() {
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  flex: 1,
+                  // flex: 1,
                 }}
               >
                 <p
@@ -455,80 +456,80 @@ export default function HomePage() {
             {FEATURED_CATEGORIES.map((category) => {
               const Icon = category.icon;
               return (
-              <Link
-                key={category.label}
-                className="category-item"
-                to={`/category/${category.slug}`}
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  gap: '0.625rem',
-                  textDecoration: 'none',
-                  color: 'inherit',
-                  transition: 'box-shadow 0.2s, transform 0.2s',
-                  flex: '1 1 0',
-                  minWidth: 0,
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-3px)';
-                  e.currentTarget.style.boxShadow = '0 6px 16px rgba(0, 0, 0, 0.08)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = 'none';
-                }}
-              >
-                <div
+                <Link
+                  key={category.label}
+                  className="category-item"
+                  to={`/category/${category.slug}`}
                   style={{
-                    width: 44,
-                    height: 44,
-                    borderRadius: '12px',
-                    background: '#F3F4F6',
-                    border: '1px solid #E5E7EB',
                     display: 'flex',
+                    flexDirection: 'column',
                     alignItems: 'center',
-                    justifyContent: 'center',
-                    flexShrink: 0,
+                    gap: '0.625rem',
+                    textDecoration: 'none',
+                    color: 'inherit',
+                    transition: 'box-shadow 0.2s, transform 0.2s',
+                    flex: '1 1 0',
+                    minWidth: 0,
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'translateY(-3px)';
+                    e.currentTarget.style.boxShadow = '0 6px 16px rgba(0, 0, 0, 0.08)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'translateY(0)';
+                    e.currentTarget.style.boxShadow = 'none';
                   }}
                 >
-                  <Icon
-                    size={20}
-                    strokeWidth={1.75}
-                    color="#4B5563"
-                    aria-hidden
-                  />
-                </div>
-                <p
-                  style={{
-                    fontSize: '0.9375rem',
-                    fontWeight: 600,
-                    color: '#1F2937',
-                    margin: 0,
-                    textAlign: 'center',
-                    lineHeight: 1.35,
-                  }}
-                >
-                  {category.label}
-                </p>
-                <span
-                  style={{
-                    color: '#FD5A47',
-                    fontSize: '1rem',
-                    fontWeight: 700,
-                    padding: '0.375rem 0.75rem',
-                    borderRadius: '999px',
-                    backgroundColor: 'rgba(237, 99, 0, 0.06)',
-                    border: '1px solid rgba(237, 99, 0, 0.15)',
-                    boxShadow: '0 2px 8px rgba(237, 99, 0, 0.06)',
-                    minWidth: 'fit-content',
-                    flexShrink: 0,
-                  }}
-                >
-                  {loadingCounts ? '...' : countsError ? '—' : categoryCounts[category.key]}
-                </span>
-              </Link>
-            );
+                  <div
+                    style={{
+                      width: 44,
+                      height: 44,
+                      borderRadius: '12px',
+                      background: '#F3F4F6',
+                      border: '1px solid #E5E7EB',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      flexShrink: 0,
+                    }}
+                  >
+                    <Icon
+                      size={20}
+                      strokeWidth={1.75}
+                      color="#4B5563"
+                      aria-hidden
+                    />
+                  </div>
+                  <p
+                    style={{
+                      fontSize: '0.9375rem',
+                      fontWeight: 600,
+                      color: '#1F2937',
+                      margin: 0,
+                      textAlign: 'center',
+                      lineHeight: 1.35,
+                    }}
+                  >
+                    {category.label}
+                  </p>
+                  <span
+                    style={{
+                      color: '#FD5A47',
+                      fontSize: '1rem',
+                      fontWeight: 700,
+                      padding: '0.375rem 0.75rem',
+                      borderRadius: '999px',
+                      backgroundColor: 'rgba(237, 99, 0, 0.06)',
+                      border: '1px solid rgba(237, 99, 0, 0.15)',
+                      boxShadow: '0 2px 8px rgba(237, 99, 0, 0.06)',
+                      minWidth: 'fit-content',
+                      flexShrink: 0,
+                    }}
+                  >
+                    {loadingCounts ? '...' : countsError ? '—' : categoryCounts[category.key]}
+                  </span>
+                </Link>
+              );
             })}
           </div>
           {countsError && (
@@ -733,7 +734,7 @@ export default function HomePage() {
                 e.currentTarget.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.15)';
               }}
             >
-              List Your Project
+              List or Update Your Project
             </Link>
           </div>
         </section>
