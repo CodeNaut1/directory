@@ -63,7 +63,16 @@ export function wrapEmailLayout(params: {
         <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width: 600px; background-color: #ffffff; border-radius: 8px; overflow: hidden; border: 1px solid #E5E7EB;">
           <tr>
             <td style="padding: 28px 32px 20px; text-align: center; border-bottom: 3px solid #FD5A47;">
-              <img src="{{logoUrl}}" alt="African Bitcoiners" width="200" style="display: block; margin: 0 auto; max-width: 200px; height: auto;" />
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0" align="center">
+                <tr>
+                  <td style="padding-right: 10px; vertical-align: middle;">
+                    <img src="{{logoUrl}}" alt="African Bitcoiners" width="44" style="display: block; width: 44px; max-width: 44px; height: auto; border-radius: 50%;" />
+                  </td>
+                  <td style="vertical-align: middle; font-family: Arial, Helvetica, sans-serif; font-size: 17px; font-weight: 700; color: #111827; letter-spacing: -0.01em; white-space: nowrap;">
+                    African Bitcoiners
+                  </td>
+                </tr>
+              </table>
             </td>
           </tr>
           <tr>

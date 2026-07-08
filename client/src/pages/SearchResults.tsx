@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
 import { getProjectUrl } from '../utils/projectUrl';
+import VerifiedBadge from '../components/VerifiedBadge';
 
 interface Project {
   id: string;
@@ -218,23 +219,7 @@ export default function SearchResults() {
                       >
                         {project.name}
                       </h2>
-                      {project.verified && (
-                        <span
-                          style={{
-                            display: 'inline-flex',
-                            alignItems: 'center',
-                            gap: '0.25rem',
-                            padding: '0.25rem 0.5rem',
-                            background: '#10B981',
-                            color: '#FFFFFF',
-                            borderRadius: '9999px',
-                            fontSize: '0.75rem',
-                            fontWeight: 600,
-                          }}
-                        >
-                          ✓ Verified
-                        </span>
-                      )}
+                      {project.verified && <VerifiedBadge />}
                     </div>
                     {project.description && (
                       <p
