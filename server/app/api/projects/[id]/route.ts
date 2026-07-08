@@ -4,6 +4,10 @@ import { successResponse } from '@/lib/utils/api-response';
 import { updateProjectSchema, type UpdateProjectInput } from '@/lib/validators';
 import { getProjectById, updateProject, deleteProject } from '@/lib/services/project.service';
 import { verifyAuth } from '@/lib/auth/middleware';
+import {
+  sendProjectUpdateToTeam,
+  sendProjectUpdateToUser,
+} from '@/lib/services/email.service';
 
 interface RouteParams {
   params: Promise<{
@@ -43,7 +47,37 @@ export const PATCH = createPatchHandler(
     const user = getRequestUser(req);
     const body = getValidatedBody<UpdateProjectInput>(req);
 
-    const project = await updateProject(user, id, body);
+    const { project, submittedForReview } = await updateProject(user, id, body);
+
+    if (submittedForReview) {
+      setImmediate(async () => {
+        try {
+          const submittedAt = new Date().toLocaleString('en-US', {
+            timeZone: 'Africa/Lagos',
+            dateStyle: 'medium',
+            timeStyle: 'short',
+          });
+
+          const emailData = {
+            userName: user.name || user.email.split('@')[0],
+            userEmail: user.email,
+            projectName: project.name as string,
+            country: (project.country_name as string) || '',
+            category: ((project.categories as string[]) || [])[0] || '',
+            description: (project.description as string) || '',
+            website: (project.website as string) || undefined,
+            submittedAt,
+          };
+
+          await Promise.all([
+            sendProjectUpdateToUser(emailData),
+            sendProjectUpdateToTeam(emailData),
+          ]);
+        } catch (error) {
+          console.error('⚠️ Failed to send project update emails:', error);
+        }
+      });
+    }
 
     return NextResponse.json(successResponse(project));
   },

@@ -175,6 +175,72 @@ export const DEFAULT_EMAIL_TEMPLATES: DefaultEmailTemplate[] = [
     ctaHref: '{{adminPendingUrl}}',
   },
   {
+    key: 'project_update_user',
+    name: 'Project Update - User',
+    description: 'Sent to the project owner when they save edits to a live listing.',
+    category: 'changes',
+    subject: 'Your project updates are under review',
+    variables: [
+      ...COMMON_VARS,
+      { name: 'userName', description: "The owner's display name", required: true },
+      { name: 'projectName', description: 'Project name', required: true },
+      { name: 'country', description: 'Project country', required: true },
+      { name: 'category', description: 'Project category', required: true },
+      { name: 'updatedAt', description: 'Update timestamp', required: true },
+      { name: 'dashboardUrl', description: 'Link to user dashboard', required: true },
+      { name: 'contactEmail', description: 'Support contact email', required: true },
+    ],
+    bodyContent: `
+      ${p('Hi {{userName}},')}
+      ${p('We have received your updates to <strong>{{projectName}}</strong>. Thank you for keeping your listing accurate.')}
+      ${infoBox(`
+        <p style="margin: 0 0 8px;"><strong>Project:</strong> {{projectName}}</p>
+        <p style="margin: 0 0 8px;"><strong>Country:</strong> {{country}}</p>
+        <p style="margin: 0 0 8px;"><strong>Category:</strong> {{category}}</p>
+        <p style="margin: 0;"><strong>Updated:</strong> {{updatedAt}}</p>
+      `)}
+      ${p('Your project is <strong>temporarily off the public directory</strong> while our team reviews the changes. Reviews typically take up to <strong>two weeks</strong>. You will receive an email once your updates are approved.')}
+      ${p('You can track the review status anytime from your dashboard.')}
+      ${p('If you did <strong>not</strong> make these changes, please contact us immediately at <a href="mailto:{{contactEmail}}" style="color:#FD5A47;">{{contactEmail}}</a> so we can help secure your listing.')}
+      ${p('<strong>The African Bitcoiners Team</strong>')}
+    `,
+    ctaLabel: 'View Dashboard',
+    ctaHref: '{{dashboardUrl}}',
+  },
+  {
+    key: 'project_update_team',
+    name: 'Project Update - Team',
+    description: 'Sent to TEAM_EMAIL when an owner updates a previously live project.',
+    category: 'changes',
+    subject: 'Project updated — re-review needed: {{projectName}}',
+    variables: [
+      ...COMMON_VARS,
+      { name: 'projectName', description: 'Project name', required: true },
+      { name: 'country', description: 'Project country', required: true },
+      { name: 'category', description: 'Project category', required: true },
+      { name: 'userName', description: "Owner's name", required: true },
+      { name: 'userEmail', description: "Owner's email", required: true },
+      { name: 'website', description: 'Project website (may be empty)', required: false },
+      { name: 'description', description: 'Short project description', required: true },
+      { name: 'updatedAt', description: 'Update timestamp', required: true },
+      { name: 'adminPendingUrl', description: 'Admin pending review URL', required: true },
+    ],
+    bodyContent: `
+      ${p('A project owner has submitted updates to a listing that was previously live. The project is now <strong>pending</strong> and needs re-approval before it returns to the public directory.')}
+      ${infoBox(`
+        <p style="margin: 0 0 8px;"><strong>Project:</strong> {{projectName}}</p>
+        <p style="margin: 0 0 8px;"><strong>Country:</strong> {{country}}</p>
+        <p style="margin: 0 0 8px;"><strong>Category:</strong> {{category}}</p>
+        <p style="margin: 0 0 8px;"><strong>Owner:</strong> {{userName}} ({{userEmail}})</p>
+        <p style="margin: 0 0 8px;"><strong>Website:</strong> {{website}}</p>
+        <p style="margin: 0 0 8px;"><strong>Description:</strong> {{description}}</p>
+        <p style="margin: 0;"><strong>Updated:</strong> {{updatedAt}}</p>
+      `)}
+    `,
+    ctaLabel: 'Review Updates',
+    ctaHref: '{{adminPendingUrl}}',
+  },
+  {
     key: 'project_approved_user',
     name: 'Project Approved - User',
     description: 'Sent to the project owner when an admin approves their submission.',
@@ -550,6 +616,8 @@ export function buildDefaultHtmlBody(template: DefaultEmailTemplate): string {
   const titles: Record<string, string> = {
     project_submission_user: 'Thank you for your submission',
     project_submission_team: 'New project submission',
+    project_update_user: 'Your project updates are under review',
+    project_update_team: 'Project updated — re-review needed',
     project_approved_user: 'Your project is now live',
     project_approved_team: 'Project approved',
     project_rejected_user: 'Update on your project submission',
@@ -573,6 +641,8 @@ export function buildDefaultHtmlBody(template: DefaultEmailTemplate): string {
   const preheaders: Record<string, string> = {
     project_submission_user: 'We received your project: {{projectName}}',
     project_submission_team: '{{projectName}} submitted by {{userEmail}}',
+    project_update_user: 'We received your updates to {{projectName}}',
+    project_update_team: '{{projectName}} updated by {{userEmail}}',
     project_approved_user: '{{projectName}} has been approved',
     project_approved_team: '{{projectName}} is now live',
     project_rejected_user: 'An update regarding {{projectName}}',

@@ -7,6 +7,7 @@ import instagramIcon from '../assets/instagram-icon.png';
 import bitcoinIcon from '../assets/bitcoin-icon.png';
 import lightningIcon from '../assets/lightning-icon.png';
 import DuplicateCheck from '../components/DuplicateCheck';
+import { useFeedback } from '../contexts/FeedbackContext';
 
 interface Country {
   id: string;
@@ -57,6 +58,7 @@ interface FormData {
 }
 
 export default function CreateProject() {
+  const { alert } = useFeedback();
   const navigate = useNavigate();
   const API_URL = import.meta.env.VITE_API_URL || '';
 
@@ -270,7 +272,7 @@ export default function CreateProject() {
       const token = localStorage.getItem('access_token');
 
       if (!token) {
-        alert('You must be logged in to submit a project');
+        await alert('You must be logged in to submit a project');
         navigate('/login');
         return;
       }
@@ -378,11 +380,16 @@ export default function CreateProject() {
         navigate('/project-submitted');
       } else {
         const data = await response.json();
-        alert(data.error?.message || data.error || `Failed to submit project. Please try again.`);
+        const message = data.error?.message || data.error || 'Failed to submit project. Please try again.';
+        if (response.status === 409) {
+          await alert({ message, variant: 'error' });
+        } else {
+          await alert(message);
+        }
       }
     } catch (error) {
       console.error('Error submitting project:', error);
-      alert('An error occurred while submitting your project. Please try again later.');
+      await alert('An error occurred while submitting your project. Please try again later.');
     } finally {
       setIsSubmitting(false);
     }

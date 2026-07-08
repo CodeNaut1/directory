@@ -53,7 +53,9 @@ export async function POST(req: NextRequest, context: RouteParams) {
     const project = await prisma.project.update({
       where: { id },
       data: {
-        status: 'rejected',
+        status: 'changes_requested',
+        adminFeedbackNotes: body.notes,
+        adminFeedbackAt: new Date(),
       },
       select: {
         id: true,
@@ -102,7 +104,7 @@ export async function POST(req: NextRequest, context: RouteParams) {
 
     return NextResponse.json(
       successResponse({
-        message: 'Feedback recorded and project marked as rejected',
+        message: 'Feedback recorded — project marked as needing updates',
         project,
         notes: body.notes,
       })

@@ -14,6 +14,7 @@ import SubmitSuccess from './pages/SubmitSuccess';
 import ViewProject from './pages/ViewProject';
 import CountryProjects from './pages/CountryProjects';
 import CategoryProjects from './pages/CategoryProjects';
+import Directory from './pages/Directory';
 import EditProject from './pages/EditProject';
 import NotFound from './pages/NotFound';
 import AdminLayout from './components/AdminLayout';
@@ -67,6 +68,7 @@ export default function App() {
         <Route path="/project/:id" element={<ViewProject />} />
         <Route path="/country/:countryCode" element={<CountryProjects />} />
         <Route path="/category/:categorySlug" element={<CategoryProjects />} />
+        <Route path="/directory" element={<Directory />} />
 
         {/* Protected routes */}
         <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />

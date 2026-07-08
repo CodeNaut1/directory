@@ -10,6 +10,7 @@ import {
   AdminTabs,
   statusToBadgeVariant,
 } from '../../components/admin/AdminUI';
+import { useFeedback } from '../../contexts/FeedbackContext';
 
 interface Project {
   id: string;
@@ -28,10 +29,12 @@ const STATUS_LABELS: Record<string, string> = {
   approved: 'Approved',
   pending: 'Pending',
   rejected: 'Rejected',
+  changes_requested: 'Needs Update',
   unpublished: 'Unpublished',
 };
 
 export default function AllProjects() {
+  const { alert, confirm } = useFeedback();
   const API_URL = import.meta.env.VITE_API_URL || '';
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
@@ -73,7 +76,12 @@ export default function AllProjects() {
   };
 
   const handleUnpublish = async (projectId: string) => {
-    if (!confirm("Take this project offline? It won't be visible to public but can be republished anytime.")) {
+    const ok = await confirm({
+      title: 'Unpublish Project',
+      message: "Take this project offline? It won't be visible to public but can be republished anytime.",
+      variant: 'warning',
+    });
+    if (!ok) {
       return;
     }
 
@@ -89,20 +97,20 @@ export default function AllProjects() {
         fetchProjects();
       } else {
         const data = await response.json().catch(() => null);
-        alert(data?.error?.message || 'Failed to unpublish project');
+        await alert({ message: data?.error?.message || 'Failed to unpublish project', variant: 'error' });
       }
     } catch (error) {
       console.error('Error unpublishing project:', error);
-      alert('An error occurred');
+      await alert({ message: 'An error occurred', variant: 'error' });
     } finally {
       setActionLoading(null);
     }
   };
 
-  const openRevokeModal = (project: Project) => {
+  const openRevokeModal = async (project: Project) => {
     const claimId = project.claims?.[0]?.id;
     if (!claimId) {
-      alert('No approved ownership claim found for this project.');
+      await alert({ message: 'No approved ownership claim found for this project.', variant: 'warning' });
       return;
     }
     setRevokeTarget({ claimId, projectName: project.name });
@@ -132,18 +140,22 @@ export default function AllProjects() {
         fetchProjects();
       } else {
         const data = await response.json().catch(() => null);
-        alert(data?.error?.message || 'Failed to revoke ownership');
+        await alert({ message: data?.error?.message || 'Failed to revoke ownership', variant: 'error' });
       }
     } catch (error) {
       console.error('Error revoking ownership:', error);
-      alert('An error occurred');
+      await alert({ message: 'An error occurred', variant: 'error' });
     } finally {
       setActionLoading(null);
     }
   };
 
   const handleRepublish = async (projectId: string) => {
-    if (!confirm('Make this project visible to public again?')) {
+    const ok = await confirm({
+      title: 'Republish Project',
+      message: 'Make this project visible to public again?',
+    });
+    if (!ok) {
       return;
     }
 
@@ -158,11 +170,11 @@ export default function AllProjects() {
       if (response.ok) {
         fetchProjects();
       } else {
-        alert('Failed to republish project');
+        await alert({ message: 'Failed to republish project', variant: 'error' });
       }
     } catch (error) {
       console.error('Error republishing project:', error);
-      alert('An error occurred');
+      await alert({ message: 'An error occurred', variant: 'error' });
     } finally {
       setActionLoading(null);
     }

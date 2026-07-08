@@ -21,7 +21,12 @@ export const createProjectSchema = z.object({
   coverImage: z.string().url('Invalid cover image URL').optional().or(z.literal('')),
   city: z.string().max(100, 'City name is too long').optional(),
   address: z.string().max(500, 'Address is too long').optional(),
-  tagIds: z.array(z.string().cuid('Invalid tag ID')).max(6, 'Maximum 6 tags allowed').optional(),
+  tagIds: z
+    .array(z.union([z.string(), z.null(), z.undefined()]))
+    .max(6, 'Maximum 6 tags allowed')
+    .optional()
+    .transform((ids) => ids?.filter((id): id is string => typeof id === 'string' && id.length > 0))
+    .pipe(z.array(z.string().cuid('Invalid tag ID')).max(6, 'Maximum 6 tags allowed').optional()),
 
   // OPTIONAL ADDITIONAL FIELDS (New structure)
   foundedYear: z.string().max(4, 'Invalid year format').optional().or(z.literal('')), // Allow empty string

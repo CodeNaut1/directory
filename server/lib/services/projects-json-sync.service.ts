@@ -69,6 +69,8 @@ export function transformDbProjectToJsonEntry(project: any): JsonProject {
     verified: project.verified || false,
     featured: project.featured || false,
     status: project.status || 'pending',
+    admin_feedback_notes: project.adminFeedbackNotes || null,
+    admin_feedback_at: project.adminFeedbackAt?.toISOString() || null,
     founded_year: project.foundedYear || '',
     active: project.active !== false,
     created_at: project.createdAt?.toISOString() || new Date().toISOString(),
@@ -107,6 +109,11 @@ export async function syncProjectById(projectId: string) {
 
   if (!project) return;
 
+  if (project.status !== 'approved') {
+    await removeProjectFromJson(project.slug || project.id);
+    return;
+  }
+
   await upsertProjectInJson(project);
 }
 
@@ -140,6 +147,7 @@ export async function removeProjectFromJson(slugOrId: string) {
 
 export async function syncAllProjectsFromDb() {
   const projects = await prisma.project.findMany({
+    where: { status: 'approved' },
     orderBy: { createdAt: 'asc' },
     include: projectInclude,
   });

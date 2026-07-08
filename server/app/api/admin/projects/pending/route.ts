@@ -25,7 +25,7 @@ export async function GET(req: NextRequest) {
         status: 'pending',
       },
       orderBy: {
-        createdAt: 'desc', // Newest submissions first
+        updatedAt: 'desc',
       },
       include: {
         country: {

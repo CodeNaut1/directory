@@ -5,6 +5,7 @@ import {
   AdminModal,
   AdminPageHeader,
 } from '../../components/admin/AdminUI';
+import { useFeedback } from '../../contexts/FeedbackContext';
 
 interface Category {
   id: string;
@@ -15,6 +16,7 @@ interface Category {
 }
 
 export default function Categories() {
+  const { alert, confirm } = useFeedback();
   const API_URL = import.meta.env.VITE_API_URL || '';
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
@@ -99,7 +101,12 @@ export default function Categories() {
   };
 
   const handleDelete = async (id: string, name: string) => {
-    if (!confirm(`Are you sure you want to delete "${name}"? This cannot be undone.`)) return;
+    const ok = await confirm({
+      title: 'Delete Category',
+      message: `Are you sure you want to delete "${name}"? This cannot be undone.`,
+      variant: 'danger',
+    });
+    if (!ok) return;
 
     try {
       const token = localStorage.getItem('access_token');
@@ -113,11 +120,11 @@ export default function Categories() {
       if (response.ok) {
         await fetchCategories();
       } else {
-        alert('Failed to delete category');
+        await alert({ message: 'Failed to delete category', variant: 'error' });
       }
     } catch (error) {
       console.error('Error deleting category:', error);
-      alert('An error occurred');
+      await alert({ message: 'An error occurred', variant: 'error' });
     }
   };
 

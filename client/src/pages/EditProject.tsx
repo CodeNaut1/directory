@@ -6,6 +6,7 @@ import nostrIcon from '../assets/nostr-icon.png';
 import instagramIcon from '../assets/instagram-icon.png';
 import bitcoinIcon from '../assets/bitcoin-icon.png';
 import lightningIcon from '../assets/lightning-icon.png';
+import { useFeedback } from '../contexts/FeedbackContext';
 
 interface Country {
   id: string;
@@ -52,7 +53,78 @@ interface FormData {
   instagramUsername: string;
 }
 
+function stripSocialPrefix(url: string | undefined, prefixes: string[]): string {
+  if (!url) return '';
+  let value = url;
+  for (const prefix of prefixes) {
+    if (value.startsWith(prefix)) {
+      value = value.slice(prefix.length);
+      break;
+    }
+  }
+  return value.replace('@', '');
+}
+
+function mapProjectToFormData(
+  project: Record<string, any>,
+  countries: Country[],
+  categories: Category[],
+  tags: Tag[]
+): FormData {
+  const tagIdsFromApi = Array.isArray(project.tagIds)
+    ? project.tagIds.filter((id: unknown): id is string => typeof id === 'string' && id.length > 0)
+    : [];
+
+  const tagIdsFromNames = Array.isArray(project.tags)
+    ? project.tags
+        .map((name: string) => tags.find((t) => t.name === name)?.id)
+        .filter((id: string | undefined): id is string => Boolean(id))
+    : [];
+
+  const countryId =
+    project.countryId ||
+    countries.find((c) => c.code.toLowerCase() === project.country_code)?.id ||
+    '';
+
+  const categoryId =
+    project.categoryId ||
+    categories.find((c) => c.name === project.categories?.[0])?.id ||
+    '';
+
+  const social = project.social || {};
+
+  return {
+    projectName: project.name || '',
+    countryId,
+    categoryId,
+    selectedTags: tagIdsFromApi.length > 0 ? tagIdsFromApi : tagIdsFromNames,
+    bitcoinOnchain: project.bitcoin_acceptance?.onchain || false,
+    lightning: project.bitcoin_acceptance?.lightning || false,
+    giftCards: project.bitcoin_acceptance?.gift_cards || false,
+    description: project.description || '',
+    longDescription: project.long_description || '',
+    initiatives: project.initiatives || '',
+    impact: project.impact || '',
+    challenges: project.challenges || '',
+    websiteUrl: project.website || '',
+    email: project.email || '',
+    phone: project.phone || '',
+    foundedYear: project.founded_year || '',
+    founderName: project.founder?.name || '',
+    founderTwitter: stripSocialPrefix(project.founder?.twitter, ['https://twitter.com/', 'https://x.com/']),
+    founderEmail: project.founder?.email || '',
+    twitterHandle: stripSocialPrefix(social.twitter, ['https://twitter.com/', 'https://x.com/']),
+    linkedinUsername: stripSocialPrefix(social.linkedin, ['https://linkedin.com/in/', 'https://www.linkedin.com/in/']),
+    facebookUsername: stripSocialPrefix(social.facebook, ['https://facebook.com/', 'https://www.facebook.com/']),
+    youtubeChannel: stripSocialPrefix(social.youtube, ['https://youtube.com/', 'https://www.youtube.com/']),
+    telegramGroup: stripSocialPrefix(social.telegram, ['https://t.me/']),
+    nostrAddress: stripSocialPrefix(social.nostr, ['https://njump.me/']),
+    instagramUsername: stripSocialPrefix(social.instagram, ['https://instagram.com/', 'https://www.instagram.com/']),
+  };
+}
+
 export default function EditProject() {
+  const { alert } = useFeedback();
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
   const API_URL = import.meta.env.VITE_API_URL || '';
@@ -108,12 +180,14 @@ export default function EditProject() {
   }, []);
 
   useEffect(() => {
-    const fetchProject = async () => {
-      if (!id) {
-        navigate('/dashboard');
-        return;
-      }
+    if (!id) {
+      navigate('/dashboard');
+      return;
+    }
 
+    if (loadingData) return;
+
+    const fetchProject = async () => {
       try {
         const token = localStorage.getItem('access_token');
         const response = await fetch(`${API_URL}/api/projects/${id}`, {
@@ -125,47 +199,17 @@ export default function EditProject() {
         if (response.ok) {
           const data = await response.json();
           if (data.success && data.data) {
-            const project = data.data;
-
-            const loadedData: FormData = {
-              projectName: project.name || '',
-              countryId: project.country?.id || '',
-              categoryId: project.category?.id || '',
-              selectedTags: project.tags?.map((tag: any) => tag.id) || [],
-              bitcoinOnchain: project.details?.bitcoinOnly || false,
-              lightning: project.details?.lightningNetwork || false,
-              giftCards: project.details?.giftCards || false,
-              description: project.description || '',
-              longDescription: project.details?.longDescription || '',
-              initiatives: project.details?.initiatives || '',
-              impact: project.details?.impact || '',
-              challenges: project.details?.challenges || '',
-              websiteUrl: project.website || '',
-              email: project.details?.contactEmail || '',
-              phone: project.details?.contactPhone || '',
-              foundedYear: project.foundedYear || '',
-              founderName: project.details?.founderName || '',
-              founderTwitter: project.details?.founderTwitter?.replace('https://twitter.com/', '').replace('@', '') || '',
-              founderEmail: project.details?.founderEmail || '',
-              twitterHandle: project.details?.socialLinks?.twitter?.replace('https://twitter.com/', '').replace('@', '') || '',
-              linkedinUsername: project.details?.socialLinks?.linkedin?.replace('https://linkedin.com/in/', '') || '',
-              facebookUsername: project.details?.socialLinks?.facebook?.replace('https://facebook.com/', '') || '',
-              youtubeChannel: project.details?.socialLinks?.youtube?.replace('https://youtube.com/', '') || '',
-              telegramGroup: project.details?.socialLinks?.telegram?.replace('https://t.me/', '') || '',
-              nostrAddress: project.details?.socialLinks?.nostr?.replace('https://njump.me/', '') || '',
-              instagramUsername: project.details?.socialLinks?.instagram?.replace('https://instagram.com/', '').replace('@', '') || '',
-            };
-
+            const loadedData = mapProjectToFormData(data.data, countries, categories, tags);
             setFormData(loadedData);
             setOriginalData(loadedData);
           }
         } else {
-          alert('Failed to load project');
+          await alert('Failed to load project');
           navigate('/dashboard');
         }
       } catch (error) {
         console.error('Error fetching project:', error);
-        alert('Failed to load project');
+        await alert('Failed to load project');
         navigate('/dashboard');
       } finally {
         setLoadingProject(false);
@@ -173,7 +217,7 @@ export default function EditProject() {
     };
 
     fetchProject();
-  }, [id, navigate, API_URL]);
+  }, [id, navigate, API_URL, loadingData, countries, categories, tags]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -250,7 +294,7 @@ export default function EditProject() {
     try {
       const token = localStorage.getItem('access_token');
       if (!token) {
-        alert('You must be logged in');
+        await alert('You must be logged in');
         navigate('/login');
         return;
       }
@@ -291,6 +335,8 @@ export default function EditProject() {
         socialLinks.telegram = group.startsWith('http') ? group : `https://t.me/${group}`;
       }
 
+      const validTagIds = formData.selectedTags.filter((id): id is string => typeof id === 'string' && id.length > 0);
+
       const payload = {
         name: formData.projectName,
         description: formData.description,
@@ -298,7 +344,7 @@ export default function EditProject() {
         countryId: formData.countryId,
         categoryId: formData.categoryId,
         foundedYear: formData.foundedYear || undefined,
-        tagIds: formData.selectedTags.length > 0 ? formData.selectedTags : undefined,
+        tagIds: validTagIds.length > 0 ? validTagIds : undefined,
         details: {
           contactEmail: formData.email,
           contactPhone: formData.phone || undefined,
@@ -332,11 +378,11 @@ export default function EditProject() {
         setShowSuccessModal(true);
       } else {
         const data = await response.json();
-        alert(data.error?.message || 'Failed to update project');
+        await alert(data.error?.message || 'Failed to update project');
       }
     } catch (error) {
       console.error('Error:', error);
-      alert('An error occurred');
+      await alert('An error occurred');
     } finally {
       setIsSubmitting(false);
     }

@@ -8,6 +8,7 @@ import {
   AdminModal,
   AdminPageHeader,
 } from '../../components/admin/AdminUI';
+import { useFeedback } from '../../contexts/FeedbackContext';
 
 interface TemplateVariable {
   name: string;
@@ -30,6 +31,7 @@ interface EmailTemplateDetail {
 
 export default function EditEmailTemplate() {
   const { id } = useParams<{ id: string }>();
+  const { confirm } = useFeedback();
   const [searchParams] = useSearchParams();
   const API_URL = import.meta.env.VITE_API_URL || '';
 
@@ -144,7 +146,13 @@ export default function EditEmailTemplate() {
   };
 
   const handleSendTest = async () => {
-    if (!confirm('Send a test email to your account with the current saved template?')) return;
+    const ok = await confirm({
+      title: 'Send test email?',
+      message: 'Send a test email to your account with the current saved template?',
+      confirmLabel: 'Send test',
+      variant: 'primary',
+    });
+    if (!ok) return;
 
     setTesting(true);
     setError('');

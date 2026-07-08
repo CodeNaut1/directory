@@ -5,6 +5,7 @@ import {
   AdminModal,
   AdminPageHeader,
 } from '../../components/admin/AdminUI';
+import { useFeedback } from '../../contexts/FeedbackContext';
 
 interface Country {
   id: string;
@@ -14,6 +15,7 @@ interface Country {
 }
 
 export default function Countries() {
+  const { alert, confirm } = useFeedback();
   const API_URL = import.meta.env.VITE_API_URL || '';
   const [countries, setCountries] = useState<Country[]>([]);
   const [loading, setLoading] = useState(true);
@@ -98,7 +100,12 @@ export default function Countries() {
   };
 
   const handleDelete = async (id: string, name: string) => {
-    if (!confirm(`Are you sure you want to delete "${name}"? This cannot be undone.`)) return;
+    const ok = await confirm({
+      title: 'Delete Country',
+      message: `Are you sure you want to delete "${name}"? This cannot be undone.`,
+      variant: 'danger',
+    });
+    if (!ok) return;
 
     try {
       const token = localStorage.getItem('access_token');
@@ -112,11 +119,11 @@ export default function Countries() {
       if (response.ok) {
         await fetchCountries();
       } else {
-        alert('Failed to delete country');
+        await alert({ message: 'Failed to delete country', variant: 'error' });
       }
     } catch (error) {
       console.error('Error deleting country:', error);
-      alert('An error occurred');
+      await alert({ message: 'An error occurred', variant: 'error' });
     }
   };
 

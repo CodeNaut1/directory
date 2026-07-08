@@ -308,6 +308,35 @@ export async function sendNewSubmissionToTeam(data: SubmissionEmailData) {
   });
 }
 
+export async function sendProjectUpdateToUser(data: SubmissionEmailData) {
+  await dispatchTemplateEmail('project_update_user', data.userEmail, {
+    userName: data.userName,
+    projectName: data.projectName,
+    country: data.country,
+    category: data.category,
+    updatedAt: data.submittedAt,
+  });
+}
+
+export async function sendProjectUpdateToTeam(data: SubmissionEmailData) {
+  const teamEmails = getTeamEmails();
+  if (teamEmails.length === 0) return;
+
+  await dispatchTemplateEmail('project_update_team', teamEmails, {
+    userName: data.userName,
+    userEmail: data.userEmail,
+    projectName: data.projectName,
+    country: data.country,
+    category: data.category,
+    website: data.website || '—',
+    description:
+      data.description.length > 300
+        ? `${data.description.slice(0, 300)}...`
+        : data.description,
+    updatedAt: data.submittedAt,
+  });
+}
+
 export async function sendProjectApprovedToUser(data: ProjectActionEmailData) {
   await dispatchTemplateEmail('project_approved_user', data.userEmail, {
     userName: data.userName,

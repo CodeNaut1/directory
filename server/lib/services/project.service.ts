@@ -5,13 +5,135 @@
 
 import { prisma } from '@/lib/db';
 import { Prisma } from '@prisma/client';
-import { NotFoundError, AuthorizationError } from '@/lib/utils/errors';
+import { NotFoundError, AuthorizationError, ConflictError } from '@/lib/utils/errors';
 import type { CreateProjectInput, UpdateProjectInput, ProjectListQuery } from '@/lib/validators';
 import { AuthenticatedUser } from '@/lib/auth/middleware';
 import { scheduleProjectsJsonSync, scheduleRemoveProjectFromJson, transformDbProjectToJsonEntry } from '@/lib/services/projects-json-sync.service';
 // @ts-ignore - slugify doesn't have types
 import slugify from 'slugify';
 
+function normalizeWebsite(url: string): string {
+  return url
+    .toLowerCase()
+    .replace(/^https?:\/\//, '')
+    .replace(/^www\./, '')
+    .replace(/\/$/, '');
+}
+
+function normalizeTwitterHandle(urlOrHandle: string): string {
+  return urlOrHandle
+    .toLowerCase()
+    .replace('@', '')
+    .split('/')
+    .pop()
+    ?.split('?')[0] ?? '';
+}
+
+export interface DuplicateProjectMatch {
+  id: string;
+  name: string;
+  slug: string;
+  status: string;
+  website: string | null;
+  countryName: string | null;
+  matchReasons: string[];
+}
+
+/**
+ * Find projects that conflict with a new submission.
+ * Checks pending and approved projects only — rejected/unpublished can be resubmitted.
+ */
+export async function findDuplicateProjects(input: {
+  name: string;
+  website?: string;
+  twitter?: string;
+  excludeProjectId?: string;
+}): Promise<DuplicateProjectMatch[]> {
+  const trimmedName = input.name.trim();
+  if (!trimmedName) return [];
+
+  const candidates = await prisma.project.findMany({
+    where: {
+      status: { in: ['pending', 'approved'] },
+      ...(input.excludeProjectId && { id: { not: input.excludeProjectId } }),
+    },
+    select: {
+      id: true,
+      name: true,
+      slug: true,
+      status: true,
+      website: true,
+      socialLinks: true,
+      countryName: true,
+      country: { select: { name: true } },
+    },
+  });
+
+  const normalizedWebsite = input.website ? normalizeWebsite(input.website) : null;
+  const normalizedTwitter = input.twitter ? normalizeTwitterHandle(input.twitter) : null;
+  const matches: DuplicateProjectMatch[] = [];
+
+  for (const project of candidates) {
+    const reasons: string[] = [];
+
+    if (project.name.trim().toLowerCase() === trimmedName.toLowerCase()) {
+      reasons.push('Same project name');
+    }
+
+    if (normalizedWebsite && project.website) {
+      if (normalizeWebsite(project.website) === normalizedWebsite) {
+        reasons.push('Same website');
+      }
+    }
+
+    if (normalizedTwitter) {
+      const social = project.socialLinks as Record<string, string> | null;
+      const projectTwitter = social?.twitter;
+      if (projectTwitter && normalizeTwitterHandle(projectTwitter) === normalizedTwitter) {
+        reasons.push('Same Twitter handle');
+      }
+    }
+
+    if (reasons.length > 0) {
+      matches.push({
+        id: project.id,
+        name: project.name,
+        slug: project.slug,
+        status: project.status,
+        website: project.website,
+        countryName: project.countryName || project.country?.name || null,
+        matchReasons: reasons,
+      });
+    }
+  }
+
+  return matches;
+}
+
+async function assertNoDuplicateProject(input: {
+  name: string;
+  website?: string;
+  twitter?: string;
+  excludeProjectId?: string;
+}) {
+  const duplicates = await findDuplicateProjects(input);
+  if (duplicates.length === 0) return;
+
+  const nameDuplicate = duplicates.find((d) => d.matchReasons.includes('Same project name'));
+  if (nameDuplicate) {
+    const statusNote =
+      nameDuplicate.status === 'pending'
+        ? 'A submission with this name is already awaiting review.'
+        : 'A project with this name is already listed in the directory.';
+    throw new ConflictError(
+      `${statusNote} Please wait for a decision, or edit your existing submission from your dashboard instead of submitting again.`
+    );
+  }
+
+  throw new ConflictError(
+    'This project appears to already exist in our directory (matching website or social handle). Please review your existing submission or contact support.'
+  );
+}
 
 /**
  * Generate a unique slug from name
@@ -146,6 +268,8 @@ export async function getUserProjects(userId: string) {
       featured: true,
       active: true,
       status: true,
+      adminFeedbackNotes: true,
+      adminFeedbackAt: true,
       userId: true,
       createdAt: true,
       updatedAt: true,
@@ -200,6 +324,7 @@ export async function getProjectById(idOrSlug: string, requestingUser?: Authenti
       countryId: true,
       countryCode: true,
       countryName: true,
+      categoryId: true,
       logo: true,
       coverImage: true,
       website: true,
@@ -220,6 +345,8 @@ export async function getProjectById(idOrSlug: string, requestingUser?: Authenti
       featured: true,
       active: true,
       status: true,
+      adminFeedbackNotes: true,
+      adminFeedbackAt: true,
       userId: true,
       createdAt: true,
       updatedAt: true,
@@ -273,15 +400,32 @@ export async function getProjectById(idOrSlug: string, requestingUser?: Authenti
     throw new AuthorizationError('This project is currently under review and will be visible once approved.');
   }
 
-  return transformDbProjectToJsonEntry(project);
+  const entry = transformDbProjectToJsonEntry(project);
+
+  return {
+    ...entry,
+    countryId: project.countryId,
+    categoryId: project.categoryId,
+    tagIds: project.tags
+      ?.map((pt) => pt.tag?.id)
+      .filter((id): id is string => Boolean(id)) ?? [],
+  };
 }
 
 /**
  * Create a new project
  */
 export async function createProject(user: AuthenticatedUser, input: CreateProjectInput) {
-  const slug = await ensureUniqueSlug(generateSlug(input.name));
   const details = input.details;
+  const twitter = details?.socialLinks?.twitter;
+
+  await assertNoDuplicateProject({
+    name: input.name,
+    website: input.website || undefined,
+    twitter: twitter || undefined,
+  });
+
+  const slug = await ensureUniqueSlug(generateSlug(input.name));
 
   const countryId = input.countryId === 'global' ? null : input.countryId;
 
@@ -340,16 +484,16 @@ export async function createProject(user: AuthenticatedUser, input: CreateProjec
 }
 
 /**
- * Update a project
+ * Update a project. Owner edits are sent back for review (status → pending).
  */
 export async function updateProject(
   user: AuthenticatedUser,
   projectId: string,
   input: UpdateProjectInput
-) {
+): Promise<{ project: ReturnType<typeof transformDbProjectToJsonEntry>; submittedForReview: boolean }> {
   const project = await prisma.project.findUnique({
     where: { id: projectId },
-    select: { id: true, userId: true, slug: true, name: true },
+    select: { id: true, userId: true, slug: true, name: true, status: true },
   });
 
   if (!project) throw new NotFoundError('Project not found');
@@ -358,8 +502,9 @@ export async function updateProject(
     throw new AuthorizationError('You do not have permission to update this project');
   }
 
-  let slug = project.slug;
-  // Slug is immutable once set — do not regenerate when name changes
+  const isStaffEdit = user.role === 'admin' || user.role === 'moderator';
+  const isOwnerEdit = project.userId === user.id && !isStaffEdit;
+  const submittedForReview = isOwnerEdit;
 
   const updateData: any = {};
   if (input.name) updateData.name = input.name;
@@ -367,8 +512,6 @@ export async function updateProject(
   if (input.website !== undefined) updateData.website = input.website || null;
   if (input.logo !== undefined) updateData.logo = input.logo || null;
   if (input.coverImage !== undefined) updateData.coverImage = input.coverImage || null;
-  if (input.countryId) updateData.countryId = input.countryId;
-  if (input.categoryId) updateData.categoryId = input.categoryId;
   if (input.city !== undefined) updateData.city = input.city || null;
   if (input.address !== undefined) updateData.address = input.address || null;
 
@@ -377,6 +520,48 @@ export async function updateProject(
       deleteMany: {},
       create: input.tagIds.map((tagId) => ({ tagId })),
     };
+  }
+
+  if (input.foundedYear !== undefined) {
+    updateData.foundedYear = input.foundedYear || null;
+  }
+
+  const details = input.details;
+  if (details) {
+    if (details.contactEmail !== undefined) updateData.email = details.contactEmail || null;
+    if (details.socialLinks !== undefined) updateData.socialLinks = details.socialLinks;
+    if (details.bitcoinOnly !== undefined) updateData.acceptsOnchain = details.bitcoinOnly;
+    if (details.lightningNetwork !== undefined) updateData.acceptsLightning = details.lightningNetwork;
+    if (details.giftCards !== undefined) updateData.acceptsGiftCards = details.giftCards;
+    if (details.founderName !== undefined) updateData.founderName = details.founderName || null;
+    if (details.founderTwitter !== undefined) updateData.founderTwitter = details.founderTwitter || null;
+    if (details.founderEmail !== undefined) updateData.founderEmail = details.founderEmail || null;
+    if (details.initiatives !== undefined) updateData.initiatives = details.initiatives || null;
+    if (details.impact !== undefined) updateData.impact = details.impact || null;
+    if (details.challenges !== undefined) updateData.challenges = details.challenges || null;
+  }
+
+  if (input.countryId) {
+    const countryId = input.countryId === 'global' ? null : input.countryId;
+    updateData.countryId = countryId;
+    const country = countryId
+      ? await prisma.country.findUnique({ where: { id: countryId }, select: { code: true, name: true } })
+      : null;
+    updateData.countryCode = country?.code?.toLowerCase() || null;
+    updateData.countryName = country?.name || null;
+  }
+
+  if (input.categoryId) {
+    updateData.categoryId = input.categoryId;
+    const category = await prisma.category.findUnique({
+      where: { id: input.categoryId },
+      select: { name: true },
+    });
+    if (category) updateData.categories = [category.name];
+  }
+
+  if (submittedForReview) {
+    updateData.status = 'pending';
   }
 
   const updated = await prisma.project.update({
@@ -391,7 +576,10 @@ export async function updateProject(
 
   scheduleProjectsJsonSync(updated.id);
 
-  return transformDbProjectToJsonEntry(updated);
+  return {
+    project: transformDbProjectToJsonEntry(updated),
+    submittedForReview,
+  };
 }
 
 /**

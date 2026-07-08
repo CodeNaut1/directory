@@ -1,6 +1,6 @@
 import { BadgeCheck, Clock, XCircle, EyeOff, type LucideIcon } from 'lucide-react';
 
-export type ProjectStatus = 'verified' | 'under_review' | 'needs_update' | 'unpublished';
+export type ProjectStatus = 'verified' | 'under_review' | 'needs_update' | 'rejected' | 'unpublished';
 
 interface StatusConfig {
   label: string;
@@ -27,6 +27,13 @@ const STATUS_CONFIG: Record<ProjectStatus, StatusConfig> = {
   },
   needs_update: {
     label: 'Needs Update',
+    color: '#92400E',
+    background: '#FFFBEB',
+    border: '#FDE68A',
+    icon: Clock,
+  },
+  rejected: {
+    label: 'Rejected',
     color: '#991B1B',
     background: '#FEF2F2',
     border: '#FECACA',

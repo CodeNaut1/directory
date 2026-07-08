@@ -8,6 +8,7 @@ import {
   AdminTabs,
   roleToBadgeVariant,
 } from '../../components/admin/AdminUI';
+import { useFeedback } from '../../contexts/FeedbackContext';
 
 interface User {
   id: string;
@@ -19,6 +20,7 @@ interface User {
 }
 
 export default function Users() {
+  const { alert } = useFeedback();
   const API_URL = import.meta.env.VITE_API_URL || '';
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
@@ -90,11 +92,11 @@ export default function Users() {
         await fetchUsers();
         handleCloseRoleModal();
       } else {
-        alert('Failed to update role');
+        await alert({ message: 'Failed to update role', variant: 'error' });
       }
     } catch (error) {
       console.error('Error updating role:', error);
-      alert('An error occurred');
+      await alert({ message: 'An error occurred', variant: 'error' });
     } finally {
       setIsSubmitting(false);
     }

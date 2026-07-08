@@ -31,6 +31,7 @@ enum ProjectStatus {
   pending // New submissions awaiting admin review (not public)
   approved // Live and visible to public
   rejected // Rejected by admin (not public)
+  changes_requested // Admin requested edits; owner should revise and resubmit (not public)
   unpublished // Was approved but admin took it down (not public)
 }
 
@@ -176,6 +177,10 @@ model Project {
   featured  Boolean           @default(false)
   verified  Boolean           @default(false)
   status    ProjectStatus @default(pending) // Visibility controlled by status only
+
+  // Admin moderation feedback (Request Changes)
+  adminFeedbackNotes String?   @db.Text
+  adminFeedbackAt    DateTime?
 
   // Classification - MADE OPTIONAL
   categoryId String?

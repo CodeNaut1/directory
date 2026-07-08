@@ -67,7 +67,7 @@ export default function LoginPage() {
           <div className="auth-layout">
             <div className="auth-hero">
               <p className="auth-hero-eyebrow">Welcome back</p>
-              <h1 className="auth-hero-title">Log in to manage your Bitcoin-only project.</h1>
+              <h1 className="auth-hero-title">Log in to manage your Bitcoin project.</h1>
               <p className="auth-hero-subtitle">
                 Update your listing, keep your information live and verified, and help builders
                 discover you across the African Bitcoin economy.

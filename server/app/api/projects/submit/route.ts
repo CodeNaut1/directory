@@ -10,6 +10,7 @@ import { writeFile } from 'fs/promises';
 import { join } from 'path';
 import { nanoid } from 'nanoid';
 import { prisma } from '@/lib/db';
+import { ConflictError } from '@/lib/utils/errors';
 
 /**
  * Submit a new project (with optional logo upload)
@@ -203,9 +204,16 @@ export async function POST(req: NextRequest) {
   } catch (error: any) {
     console.error('Error in POST /api/projects/submit:', error);
 
+    if (error instanceof ConflictError) {
+      return NextResponse.json(
+        { success: false, error: { message: error.message } },
+        { status: 409 }
+      );
+    }
+
     return NextResponse.json(
-      { success: false, error: error.message || 'Internal server error' },
-      { status: 500 }
+      { success: false, error: { message: error.message || 'Internal server error' } },
+      { status: error.statusCode || 500 }
     );
   }
 }

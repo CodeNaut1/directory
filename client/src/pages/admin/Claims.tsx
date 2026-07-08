@@ -11,6 +11,7 @@ import {
   AdminTabs,
   statusToBadgeVariant,
 } from '../../components/admin/AdminUI';
+import { useFeedback } from '../../contexts/FeedbackContext';
 
 interface Claim {
   id: string;
@@ -32,6 +33,7 @@ interface Claim {
 }
 
 export default function Claims() {
+  const { alert, confirm } = useFeedback();
   const API_URL = import.meta.env.VITE_API_URL || '';
   const [claims, setClaims] = useState<Claim[]>([]);
   const [loading, setLoading] = useState(true);
@@ -70,7 +72,11 @@ export default function Claims() {
   };
 
   const handleApprove = async (claimId: string) => {
-    if (!confirm('Are you sure you want to approve this claim? This will transfer project ownership.')) return;
+    const ok = await confirm({
+      title: 'Approve Claim',
+      message: 'Are you sure you want to approve this claim? This will transfer project ownership.',
+    });
+    if (!ok) return;
 
     setActionLoading(claimId);
     try {
@@ -81,15 +87,15 @@ export default function Claims() {
       });
 
       if (response.ok) {
-        alert('Claim approved and ownership transferred!');
+        await alert({ message: 'Claim approved and ownership transferred!', variant: 'success' });
         fetchClaims();
       } else {
         const data = await response.json();
-        alert(data.error?.message || 'Failed to approve claim');
+        await alert({ message: data.error?.message || 'Failed to approve claim', variant: 'error' });
       }
     } catch (error) {
       console.error('Error approving claim:', error);
-      alert('An error occurred');
+      await alert({ message: 'An error occurred', variant: 'error' });
     } finally {
       setActionLoading(null);
     }
@@ -122,18 +128,18 @@ export default function Claims() {
       });
 
       if (response.ok) {
-        alert('Ownership claim revoked');
+        await alert({ message: 'Ownership claim revoked', variant: 'success' });
         setShowRevokeModal(false);
         setRevokeReason('');
         setSelectedClaim(null);
         fetchClaims();
       } else {
         const data = await response.json();
-        alert(data.error?.message || 'Failed to revoke claim');
+        await alert({ message: data.error?.message || 'Failed to revoke claim', variant: 'error' });
       }
     } catch (error) {
       console.error('Error revoking claim:', error);
-      alert('An error occurred');
+      await alert({ message: 'An error occurred', variant: 'error' });
     } finally {
       setActionLoading(null);
     }
@@ -141,7 +147,7 @@ export default function Claims() {
 
   const submitRejection = async () => {
     if (!selectedClaim || !rejectionReason.trim()) {
-      alert('Please provide a rejection reason');
+      await alert({ message: 'Please provide a rejection reason', variant: 'warning' });
       return;
     }
 
@@ -158,18 +164,18 @@ export default function Claims() {
       });
 
       if (response.ok) {
-        alert('Claim rejected');
+        await alert({ message: 'Claim rejected', variant: 'success' });
         setShowRejectModal(false);
         setRejectionReason('');
         setSelectedClaim(null);
         fetchClaims();
       } else {
         const data = await response.json();
-        alert(data.error?.message || 'Failed to reject claim');
+        await alert({ message: data.error?.message || 'Failed to reject claim', variant: 'error' });
       }
     } catch (error) {
       console.error('Error rejecting claim:', error);
-      alert('An error occurred');
+      await alert({ message: 'An error occurred', variant: 'error' });
     } finally {
       setActionLoading(null);
     }

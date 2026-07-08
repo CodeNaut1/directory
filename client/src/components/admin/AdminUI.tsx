@@ -187,6 +187,8 @@ export function statusToBadgeVariant(status: string): BadgeVariant {
       return 'success';
     case 'pending':
       return 'warning';
+    case 'changes_requested':
+      return 'warning';
     case 'rejected':
     case 'unpublished':
       return 'danger';

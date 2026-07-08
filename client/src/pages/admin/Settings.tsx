@@ -3,8 +3,10 @@ import {
   AdminButton,
   AdminPageHeader,
 } from '../../components/admin/AdminUI';
+import { useFeedback } from '../../contexts/FeedbackContext';
 
 export default function Settings() {
+  const { alert, confirm } = useFeedback();
   const [settings, setSettings] = useState({
     siteName: 'African Bitcoin Directory',
     siteDescription: 'Discover Bitcoin-only projects across Africa',
@@ -16,9 +18,9 @@ export default function Settings() {
 
   const handleSave = async () => {
     setIsSaving(true);
-    setTimeout(() => {
+    setTimeout(async () => {
       setIsSaving(false);
-      alert('Settings saved successfully!');
+      await alert({ message: 'Settings saved successfully!', variant: 'success' });
     }, 1000);
   };
 
@@ -95,9 +97,14 @@ export default function Settings() {
         <div className="admin-actions-row">
           <AdminButton
             variant="danger"
-            onClick={() => {
-              if (confirm('Are you sure you want to clear all cache? This cannot be undone.')) {
-                alert('Cache cleared successfully!');
+            onClick={async () => {
+              const ok = await confirm({
+                title: 'Clear Cache',
+                message: 'Are you sure you want to clear all cache? This cannot be undone.',
+                variant: 'danger',
+              });
+              if (ok) {
+                await alert({ message: 'Cache cleared successfully!', variant: 'success' });
               }
             }}
           >
@@ -106,9 +113,14 @@ export default function Settings() {
 
           <AdminButton
             variant="danger"
-            onClick={() => {
-              if (confirm('Are you sure you want to reset all analytics? This cannot be undone.')) {
-                alert('Analytics reset!');
+            onClick={async () => {
+              const ok = await confirm({
+                title: 'Reset Analytics',
+                message: 'Are you sure you want to reset all analytics? This cannot be undone.',
+                variant: 'danger',
+              });
+              if (ok) {
+                await alert({ message: 'Analytics reset!', variant: 'success' });
               }
             }}
           >

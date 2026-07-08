@@ -35,7 +35,7 @@ export type ProjectCategory =
 /**
  * Project Status
  */
-export type ProjectStatus = 'pending' | 'approved' | 'rejected' | 'unpublished' | string;
+export type ProjectStatus = 'pending' | 'approved' | 'rejected' | 'changes_requested' | 'unpublished' | string;
 
 /**
  * Social Media Links

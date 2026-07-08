@@ -49,6 +49,8 @@ export async function POST(req: NextRequest, context: RouteParams) {
       data: {
         status: 'approved',
         publishedAt: new Date(),
+        adminFeedbackNotes: null,
+        adminFeedbackAt: null,
       },
       select: {
         id: true,

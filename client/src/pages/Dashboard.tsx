@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { HandHeart } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
@@ -13,6 +13,8 @@ interface Project {
   status: string;
   updatedAt: string;
   updated_at: string;
+  admin_feedback_notes?: string | null;
+  admin_feedback_at?: string | null;
 }
 
 type ProjectStatusType = ProjectStatus;
@@ -48,6 +50,10 @@ export default function Dashboard() {
     }
 
     if (project.status === 'rejected') {
+      return 'rejected';
+    }
+
+    if (project.status === 'changes_requested') {
       return 'needs_update';
     }
 
@@ -119,6 +125,51 @@ export default function Dashboard() {
     } catch {
       return 'N/A';
     }
+  };
+
+  const renderFeedbackNotes = (project: Project) => {
+    const notes = project.admin_feedback_notes?.trim();
+    if (!notes) return null;
+
+    const feedbackDate = project.admin_feedback_at
+      ? formatDate(project.admin_feedback_at)
+      : null;
+
+    return (
+      <div
+        style={{
+          marginTop: '0.5rem',
+          padding: '0.75rem 1rem',
+          background: '#FFF7ED',
+          border: '1px solid #FDBA74',
+          borderRadius: '8px',
+        }}
+      >
+        <p
+          style={{
+            margin: '0 0 0.5rem 0',
+            fontSize: '0.8125rem',
+            fontWeight: 600,
+            color: '#9A3412',
+            textTransform: 'uppercase',
+            letterSpacing: '0.04em',
+          }}
+        >
+          Admin feedback{feedbackDate ? ` · ${feedbackDate}` : ''}
+        </p>
+        <p
+          style={{
+            margin: 0,
+            fontSize: '0.9375rem',
+            color: '#7C2D12',
+            whiteSpace: 'pre-wrap',
+            lineHeight: 1.5,
+          }}
+        >
+          {notes}
+        </p>
+      </div>
+    );
   };
 
   const handleEmailChange = async (e: React.FormEvent) => {
@@ -351,33 +402,37 @@ export default function Dashboard() {
       );
     }
 
-    // For needs update, show "Revise & Resubmit"
-    return (
-      <button
-        onClick={() => navigate(`/edit-project/${project.id}`)}
-        style={{
-          padding: '0.5rem 1rem',
-          background: '#FFFFFF',
-          color: '#1F2937',
-          border: '1px solid #D1D5DB',
-          borderRadius: '6px',
-          fontSize: '0.875rem',
-          fontWeight: 500,
-          cursor: 'pointer',
-          transition: 'all 0.2s',
-        }}
-        onMouseEnter={(e) => {
-          e.currentTarget.style.background = '#F9FAFB';
-          e.currentTarget.style.borderColor = '#9CA3AF';
-        }}
-        onMouseLeave={(e) => {
-          e.currentTarget.style.background = '#FFFFFF';
-          e.currentTarget.style.borderColor = '#D1D5DB';
-        }}
-      >
-        Revise & Resubmit
-      </button>
-    );
+    // For needs update or rejected, show "Revise & Resubmit"
+    if (status === 'needs_update' || status === 'rejected') {
+      return (
+        <button
+          onClick={() => navigate(`/edit-project/${project.id}`)}
+          style={{
+            padding: '0.5rem 1rem',
+            background: '#FFFFFF',
+            color: '#1F2937',
+            border: '1px solid #D1D5DB',
+            borderRadius: '6px',
+            fontSize: '0.875rem',
+            fontWeight: 500,
+            cursor: 'pointer',
+            transition: 'all 0.2s',
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.background = '#F9FAFB';
+            e.currentTarget.style.borderColor = '#9CA3AF';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.background = '#FFFFFF';
+            e.currentTarget.style.borderColor = '#D1D5DB';
+          }}
+        >
+          Revise & Resubmit
+        </button>
+      );
+    }
+
+    return null;
   };
 
   return (
@@ -653,22 +708,23 @@ export default function Dashboard() {
                       <tbody>
                         {projects.map((project) => {
                           const status = getProjectStatus(project);
+                          const feedback = renderFeedbackNotes(project);
                           return (
+                            <Fragment key={project.id}>
                             <tr
-                              key={project.id}
                               style={{
-                                borderBottom: '1px solid #F3F4F6',
+                                borderBottom: feedback ? 'none' : '1px solid #F3F4F6',
                               }}
                             >
                               <td
                                 style={{
                                   padding: '1rem',
-                                  fontSize: '0.9375rem',
-                                  color: '#1F2937',
-                                  fontWeight: 500,
                                 }}
                               >
-                                {project.name}
+                                <div style={{ fontSize: '0.9375rem', color: '#1F2937', fontWeight: 500 }}>
+                                  {project.name}
+                                </div>
+                                {status === 'needs_update' && feedback}
                               </td>
                               <td
                                 style={{
@@ -694,6 +750,7 @@ export default function Dashboard() {
                                 {getActionButton(status, project)}
                               </td>
                             </tr>
+                            </Fragment>
                           );
                         })}
                       </tbody>
@@ -704,6 +761,7 @@ export default function Dashboard() {
                   <div className="projects-cards" style={{ display: 'none' }}>
                     {projects.map((project) => {
                       const status = getProjectStatus(project);
+                      const feedback = renderFeedbackNotes(project);
                       return (
                         <div
                           key={project.id}
@@ -721,6 +779,7 @@ export default function Dashboard() {
                           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
                             <ProjectStatusBadge status={status} />
                           </div>
+                          {status === 'needs_update' && feedback}
                           <p style={{ fontSize: '0.875rem', color: '#6B7280', margin: '0 0 1rem 0' }}>
                             Updated: {formatDate(project.updated_at || project.updatedAt)}
                           </p>

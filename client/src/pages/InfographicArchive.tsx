@@ -12,6 +12,7 @@ import infographicQ4 from '../assets/archives/infographic_q4_2025.png';
 import infographicQ12026 from '../assets/archives/infographic_q1_2026.png';
 import infographicQ22026 from '../assets/archives/infographic_q2_2026.png';
 import '../styles/global.css';
+import { useFeedback } from '../contexts/FeedbackContext';
 
 interface InfographicVersion {
   id: string;
@@ -20,6 +21,8 @@ interface InfographicVersion {
 }
 
 export default function InfographicArchive() {
+  const { alert } = useFeedback();
+
   useEffect(() => {
     document.title = 'Infographic Archives - Africa Bitcoin Directory';
   }, []);
@@ -125,7 +128,7 @@ export default function InfographicArchive() {
       URL.revokeObjectURL(url);
     } catch (error) {
       console.error('Error converting image to PDF:', error);
-      alert(`Unable to convert ${name} to PDF. Please try again later.`);
+      await alert(`Unable to convert ${name} to PDF. Please try again later.`);
     }
   };
 

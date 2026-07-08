@@ -9,6 +9,7 @@ import {
   AdminModal,
   AdminPageHeader,
 } from '../../components/admin/AdminUI';
+import { useFeedback } from '../../contexts/FeedbackContext';
 
 interface Project {
   id: string;
@@ -23,6 +24,7 @@ interface Project {
 }
 
 export default function PendingProjects() {
+  const { alert, confirm } = useFeedback();
   const API_URL = import.meta.env.VITE_API_URL || '';
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
@@ -56,7 +58,11 @@ export default function PendingProjects() {
   };
 
   const handleApprove = async (projectId: string) => {
-    if (!confirm('Are you sure you want to approve this project?')) return;
+    const ok = await confirm({
+      title: 'Approve Project',
+      message: 'Are you sure you want to approve this project?',
+    });
+    if (!ok) return;
 
     setActionLoading(projectId);
     try {
@@ -67,21 +73,26 @@ export default function PendingProjects() {
       });
 
       if (response.ok) {
-        alert('Project approved successfully!');
+        await alert({ message: 'Project approved successfully!', variant: 'success' });
         fetchPendingProjects();
       } else {
-        alert('Failed to approve project');
+        await alert({ message: 'Failed to approve project', variant: 'error' });
       }
     } catch (error) {
       console.error('Error approving project:', error);
-      alert('An error occurred');
+      await alert({ message: 'An error occurred', variant: 'error' });
     } finally {
       setActionLoading(null);
     }
   };
 
   const handleReject = async (projectId: string) => {
-    if (!confirm('Are you sure you want to reject this project?')) return;
+    const ok = await confirm({
+      title: 'Reject Project',
+      message: 'Are you sure you want to reject this project?',
+      variant: 'danger',
+    });
+    if (!ok) return;
 
     setActionLoading(projectId);
     try {
@@ -92,14 +103,14 @@ export default function PendingProjects() {
       });
 
       if (response.ok) {
-        alert('Project rejected');
+        await alert({ message: 'Project rejected', variant: 'success' });
         fetchPendingProjects();
       } else {
-        alert('Failed to reject project');
+        await alert({ message: 'Failed to reject project', variant: 'error' });
       }
     } catch (error) {
       console.error('Error rejecting project:', error);
-      alert('An error occurred');
+      await alert({ message: 'An error occurred', variant: 'error' });
     } finally {
       setActionLoading(null);
     }
@@ -112,7 +123,7 @@ export default function PendingProjects() {
 
   const submitFeedback = async () => {
     if (!selectedProject || !feedbackNotes.trim()) {
-      alert('Please enter feedback notes');
+      await alert({ message: 'Please enter feedback notes', variant: 'warning' });
       return;
     }
 
@@ -129,17 +140,17 @@ export default function PendingProjects() {
       });
 
       if (response.ok) {
-        alert('Feedback sent to user!');
+        await alert({ message: 'Feedback sent to user!', variant: 'success' });
         setShowFeedbackModal(false);
         setFeedbackNotes('');
         setSelectedProject(null);
         fetchPendingProjects();
       } else {
-        alert('Failed to send feedback');
+        await alert({ message: 'Failed to send feedback', variant: 'error' });
       }
     } catch (error) {
       console.error('Error sending feedback:', error);
-      alert('An error occurred');
+      await alert({ message: 'An error occurred', variant: 'error' });
     } finally {
       setActionLoading(null);
     }
