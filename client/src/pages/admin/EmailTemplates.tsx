@@ -16,9 +16,17 @@ interface EmailTemplate {
   description: string;
   subject: string;
   category: string;
+  recipientGroup: string;
   isActive: boolean;
   isDefaultContent: boolean;
 }
+
+const RECIPIENT_GROUP_LABELS: Record<string, string> = {
+  user: 'End user',
+  admin: 'Admin',
+  sensitive: 'Sensitive',
+  team: 'Team',
+};
 
 const CATEGORY_LABELS: Record<string, string> = {
   submission: 'Submission',
@@ -89,7 +97,7 @@ export default function EmailTemplates() {
     <div>
       <AdminPageHeader
         title="Email Templates"
-        subtitle="Edit notification content sent to users and team members. Recipients are configured via environment variables."
+        subtitle="Edit notification content and choose which recipient group each template is sent to."
       />
 
       <div className="admin-toolbar" style={{ marginBottom: '1.5rem' }}>
@@ -121,6 +129,7 @@ export default function EmailTemplates() {
                   <tr>
                     <th>Template</th>
                     <th>Subject</th>
+                    <th>Recipients</th>
                     <th>Status</th>
                     <th style={{ width: 160 }}>Actions</th>
                   </tr>
@@ -141,6 +150,18 @@ export default function EmailTemplates() {
                       </td>
                       <td style={{ fontSize: '0.875rem', color: '#374151', maxWidth: 280 }}>
                         {template.subject}
+                      </td>
+                      <td>
+                        <AdminBadge variant="neutral">
+                          {RECIPIENT_GROUP_LABELS[template.recipientGroup] || template.recipientGroup}
+                        </AdminBadge>
+                        {template.recipientGroup !== 'user' && (
+                          <div style={{ fontSize: '0.75rem', color: '#9CA3AF', marginTop: '0.375rem' }}>
+                            {template.recipientGroup === 'admin' && 'ADMIN_EMAIL'}
+                            {template.recipientGroup === 'sensitive' && 'SENSITIVE_EMAIL'}
+                            {template.recipientGroup === 'team' && 'TEAM_EMAIL'}
+                          </div>
+                        )}
                       </td>
                       <td>
                         <AdminBadge variant={template.isActive ? 'success' : 'neutral'}>

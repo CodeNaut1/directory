@@ -25,9 +25,18 @@ interface EmailTemplateDetail {
   htmlBody: string;
   variables: TemplateVariable[];
   category: string;
+  recipientGroup: string;
   isActive: boolean;
   isDefaultContent: boolean;
 }
+
+type RecipientGroup = 'user' | 'admin' | 'sensitive' | 'team';
+
+const RECIPIENT_GROUP_OPTIONS: { value: RecipientGroup; label: string; envVar?: string }[] = [
+  { value: 'admin', label: 'Admin', envVar: 'ADMIN_EMAIL' },
+  { value: 'sensitive', label: 'Sensitive', envVar: 'SENSITIVE_EMAIL' },
+  { value: 'team', label: 'Team', envVar: 'TEAM_EMAIL' },
+];
 
 export default function EditEmailTemplate() {
   const { id } = useParams<{ id: string }>();
@@ -38,6 +47,7 @@ export default function EditEmailTemplate() {
   const [template, setTemplate] = useState<EmailTemplateDetail | null>(null);
   const [subject, setSubject] = useState('');
   const [htmlBody, setHtmlBody] = useState('');
+  const [recipientGroup, setRecipientGroup] = useState<RecipientGroup>('team');
   const [isActive, setIsActive] = useState(true);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -67,6 +77,7 @@ export default function EditEmailTemplate() {
           setTemplate(data.data);
           setSubject(data.data.subject);
           setHtmlBody(data.data.htmlBody);
+          setRecipientGroup(data.data.recipientGroup);
           setIsActive(data.data.isActive);
 
           if (searchParams.get('preview') === '1') {
@@ -94,7 +105,7 @@ export default function EditEmailTemplate() {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ subject, htmlBody, isActive }),
+        body: JSON.stringify({ subject, htmlBody, isActive, recipientGroup }),
       });
 
       const data = await response.json();
@@ -231,6 +242,33 @@ export default function EditEmailTemplate() {
 
       <div className="admin-edit-grid">
         <div className="admin-edit-main">
+          <div className="admin-form-group">
+            <label htmlFor="recipientGroup" className="admin-form-label">Recipient group</label>
+            {recipientGroup === 'user' ? (
+              <p className="admin-sidebar-panel-text" style={{ margin: 0 }}>
+                End user (submitter, owner, or claimant) — this template always goes to the person involved in the action.
+              </p>
+            ) : (
+              <>
+                <select
+                  id="recipientGroup"
+                  value={recipientGroup}
+                  onChange={(e) => setRecipientGroup(e.target.value as RecipientGroup)}
+                  className="admin-input"
+                >
+                  {RECIPIENT_GROUP_OPTIONS.map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {option.label} ({option.envVar})
+                    </option>
+                  ))}
+                </select>
+                <p className="admin-sidebar-panel-text" style={{ marginTop: '0.5rem', marginBottom: 0 }}>
+                  Addresses are read from the {RECIPIENT_GROUP_OPTIONS.find((o) => o.value === recipientGroup)?.envVar} environment variable.
+                </p>
+              </>
+            )}
+          </div>
+
           <div className="admin-form-group">
             <label htmlFor="subject" className="admin-form-label">Subject line</label>
             <input

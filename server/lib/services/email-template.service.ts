@@ -1,9 +1,10 @@
 import { prisma } from '@/lib/db';
-import { AuditAction, Prisma } from '@prisma/client';
+import { AuditAction, EmailRecipientGroup, Prisma } from '@prisma/client';
 import {
   DEFAULT_EMAIL_TEMPLATES,
   DEFAULT_TEMPLATES_BY_KEY,
   buildDefaultHtmlBody,
+  getDefaultRecipientGroup,
   type TemplateVariableDef,
 } from '@/lib/email/default-templates';
 import {
@@ -21,6 +22,7 @@ export interface RenderedEmail {
   html: string;
   isActive: boolean;
   source: 'database' | 'fallback';
+  recipientGroup: EmailRecipientGroup;
 }
 
 function getRequiredVariableNames(variables: unknown): string[] {
@@ -54,6 +56,7 @@ export async function renderEmailTemplate(
       html: sanitizeEmailHtml(substituteTemplate(htmlBody, mergedVars)),
       isActive: dbTemplate.isActive,
       source: useCurrentDefaults ? 'fallback' : 'database',
+      recipientGroup: dbTemplate.recipientGroup,
     };
   }
 
@@ -68,6 +71,7 @@ export async function renderEmailTemplate(
     html: sanitizeEmailHtml(substituteTemplate(htmlBody, mergedVars)),
     isActive: true,
     source: 'fallback',
+    recipientGroup: getDefaultRecipientGroup(key),
   };
 }
 
@@ -103,11 +107,24 @@ export async function getEmailTemplateById(id: string) {
 
 export async function updateEmailTemplate(
   id: string,
-  data: { subject?: string; htmlBody?: string; isActive?: boolean },
+  data: {
+    subject?: string;
+    htmlBody?: string;
+    isActive?: boolean;
+    recipientGroup?: EmailRecipientGroup;
+  },
   userId: string
 ) {
   const existing = await prisma.emailTemplate.findUnique({ where: { id } });
   if (!existing) return null;
+
+  if (
+    data.recipientGroup !== undefined &&
+    existing.recipientGroup === 'user' &&
+    data.recipientGroup !== 'user'
+  ) {
+    throw new Error('User-facing templates must always be sent to the end user');
+  }
 
   const subject = data.subject ?? existing.subject;
   const htmlBody = data.htmlBody ?? existing.htmlBody;
@@ -131,6 +148,7 @@ export async function updateEmailTemplate(
       ...(data.subject !== undefined && { subject }),
       ...(data.htmlBody !== undefined && { htmlBody: sanitizedHtml }),
       ...(data.isActive !== undefined && { isActive: data.isActive }),
+      ...(data.recipientGroup !== undefined && { recipientGroup: data.recipientGroup }),
     },
   });
 
@@ -147,6 +165,9 @@ export async function updateEmailTemplate(
           ...(data.htmlBody !== undefined && { htmlBody: 'updated' }),
           ...(data.isActive !== undefined && {
             isActive: { from: existing.isActive, to: data.isActive },
+          }),
+          ...(data.recipientGroup !== undefined && {
+            recipientGroup: { from: existing.recipientGroup, to: data.recipientGroup },
           }),
         },
       },
@@ -185,6 +206,7 @@ export async function seedEmailTemplates() {
           htmlBody,
           variables: def.variables as unknown as Prisma.InputJsonValue,
           category: def.category,
+          recipientGroup: getDefaultRecipientGroup(def.key),
           isActive: true,
         },
       });

@@ -63,6 +63,14 @@ enum EmailTemplateCategory {
   other
 }
 
+// Email recipient groups (maps to env vars: ADMIN_EMAIL, SENSITIVE_EMAIL, TEAM_EMAIL)
+enum EmailRecipientGroup {
+  user
+  admin
+  sensitive
+  team
+}
+
 // User model - Authentication and authorization
 model User {
   id           String   @id @default(cuid())
@@ -367,9 +375,10 @@ model EmailTemplate {
   description String               @db.Text
   subject     String
   htmlBody    String               @db.Text
-  variables   Json
-  category    EmailTemplateCategory
-  isActive    Boolean              @default(true)
+  variables      Json
+  category       EmailTemplateCategory
+  recipientGroup EmailRecipientGroup  @default(team)
+  isActive       Boolean              @default(true)
   createdAt   DateTime             @default(now())
   updatedAt   DateTime             @updatedAt
 

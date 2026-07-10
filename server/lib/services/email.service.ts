@@ -149,11 +149,30 @@ const getAdminEmails = (): string[] => {
     : [];
 };
 
+const getSensitiveEmails = (): string[] => {
+  return process.env.SENSITIVE_EMAIL
+    ? process.env.SENSITIVE_EMAIL.split(',').map((email) => email.trim())
+    : [];
+};
+
 const getTeamEmails = (): string[] => {
   return process.env.TEAM_EMAIL
     ? process.env.TEAM_EMAIL.split(',').map((email) => email.trim())
     : [];
 };
+
+function getRecipientsForGroup(group: string): string[] {
+  switch (group) {
+    case 'admin':
+      return getAdminEmails();
+    case 'sensitive':
+      return getSensitiveEmails();
+    case 'team':
+      return getTeamEmails();
+    default:
+      return [];
+  }
+}
 
 export async function sendEmail(
   to: string | string[],
@@ -228,7 +247,19 @@ async function dispatchTemplateEmail(
       console.warn(`⚠️ [${templateKey}] using hardcoded fallback template`);
     }
 
-    await sendTemplatedEmail(templateKey, to, rendered.subject, rendered.html, options);
+    const recipients =
+      rendered.recipientGroup === 'user'
+        ? parseRecipients(to)
+        : getRecipientsForGroup(rendered.recipientGroup);
+
+    if (recipients.length === 0) {
+      const groupLabel =
+        rendered.recipientGroup === 'user' ? 'user' : `${rendered.recipientGroup.toUpperCase()}_EMAIL`;
+      console.warn(`⚠️ [${templateKey}] skipped — no recipients configured for ${groupLabel}`);
+      return;
+    }
+
+    await sendTemplatedEmail(templateKey, recipients, rendered.subject, rendered.html, options);
   } catch (error) {
     console.error(`❌ [${templateKey}] dispatch failed:`, error);
   }
@@ -290,10 +321,7 @@ export async function sendSubmissionConfirmationToUser(data: SubmissionEmailData
 }
 
 export async function sendNewSubmissionToTeam(data: SubmissionEmailData) {
-  const teamEmails = getTeamEmails();
-  if (teamEmails.length === 0) return;
-
-  await dispatchTemplateEmail('project_submission_team', teamEmails, {
+  await dispatchTemplateEmail('project_submission_team', [], {
     userName: data.userName,
     userEmail: data.userEmail,
     projectName: data.projectName,
@@ -319,10 +347,7 @@ export async function sendProjectUpdateToUser(data: SubmissionEmailData) {
 }
 
 export async function sendProjectUpdateToTeam(data: SubmissionEmailData) {
-  const teamEmails = getTeamEmails();
-  if (teamEmails.length === 0) return;
-
-  await dispatchTemplateEmail('project_update_team', teamEmails, {
+  await dispatchTemplateEmail('project_update_team', [], {
     userName: data.userName,
     userEmail: data.userEmail,
     projectName: data.projectName,
@@ -346,10 +371,7 @@ export async function sendProjectApprovedToUser(data: ProjectActionEmailData) {
 }
 
 export async function sendProjectApprovedToTeam(data: ProjectActionEmailData) {
-  const teamEmails = getTeamEmails();
-  if (teamEmails.length === 0) return;
-
-  await dispatchTemplateEmail('project_approved_team', teamEmails, {
+  await dispatchTemplateEmail('project_approved_team', [], {
     userName: data.userName,
     userEmail: data.userEmail,
     projectName: data.projectName,
@@ -365,10 +387,7 @@ export async function sendProjectRejectedToUser(data: ProjectActionEmailData) {
 }
 
 export async function sendProjectRejectedToTeam(data: ProjectActionEmailData) {
-  const teamEmails = getTeamEmails();
-  if (teamEmails.length === 0) return;
-
-  await dispatchTemplateEmail('project_rejected_team', teamEmails, {
+  await dispatchTemplateEmail('project_rejected_team', [], {
     userName: data.userName,
     userEmail: data.userEmail,
     projectName: data.projectName,
@@ -384,10 +403,7 @@ export async function sendChangesRequestedToUser(data: ChangesRequestedEmailData
 }
 
 export async function sendChangesRequestedToTeam(data: ChangesRequestedEmailData) {
-  const teamEmails = getTeamEmails();
-  if (teamEmails.length === 0) return;
-
-  await dispatchTemplateEmail('project_changes_requested_team', teamEmails, {
+  await dispatchTemplateEmail('project_changes_requested_team', [], {
     userName: data.userName,
     userEmail: data.userEmail,
     projectName: data.projectName,
@@ -403,10 +419,7 @@ export async function sendProjectUnpublishedToUser(data: ProjectActionEmailData)
 }
 
 export async function sendProjectUnpublishedToTeam(data: ProjectActionEmailData) {
-  const teamEmails = getTeamEmails();
-  if (teamEmails.length === 0) return;
-
-  await dispatchTemplateEmail('project_unpublished_team', teamEmails, {
+  await dispatchTemplateEmail('project_unpublished_team', [], {
     userName: data.userName || 'None',
     userEmail: data.userEmail || '—',
     projectName: data.projectName,
@@ -422,10 +435,7 @@ export async function sendProjectRepublishedToUser(data: ProjectActionEmailData)
 }
 
 export async function sendProjectRepublishedToTeam(data: ProjectActionEmailData) {
-  const teamEmails = getTeamEmails();
-  if (teamEmails.length === 0) return;
-
-  await dispatchTemplateEmail('project_republished_team', teamEmails, {
+  await dispatchTemplateEmail('project_republished_team', [], {
     projectName: data.projectName,
     projectUrl: projectUrl(data.projectSlug),
   });
@@ -440,10 +450,7 @@ export async function sendClaimSubmittedToUser(data: ClaimEmailData) {
 }
 
 export async function sendClaimSubmittedToAdmin(data: ClaimEmailData) {
-  const adminEmails = getAdminEmails();
-  if (adminEmails.length === 0) return;
-
-  await dispatchTemplateEmail('claim_submitted_admin', adminEmails, {
+  await dispatchTemplateEmail('claim_submitted_admin', [], {
     claimantName: data.claimantName,
     claimantEmail: data.claimantEmail,
     projectName: data.projectName,
@@ -459,10 +466,7 @@ export async function sendClaimApprovedToUser(data: ClaimEmailData) {
 }
 
 export async function sendClaimApprovedToTeam(data: ClaimEmailData) {
-  const teamEmails = getTeamEmails();
-  if (teamEmails.length === 0) return;
-
-  await dispatchTemplateEmail('claim_approved_team', teamEmails, {
+  await dispatchTemplateEmail('claim_approved_team', [], {
     claimantName: data.claimantName,
     claimantEmail: data.claimantEmail,
     projectName: data.projectName,
@@ -477,10 +481,7 @@ export async function sendClaimRejectedToUser(data: ClaimEmailData) {
 }
 
 export async function sendClaimRejectedToTeam(data: ClaimEmailData) {
-  const teamEmails = getTeamEmails();
-  if (teamEmails.length === 0) return;
-
-  await dispatchTemplateEmail('claim_rejected_team', teamEmails, {
+  await dispatchTemplateEmail('claim_rejected_team', [], {
     claimantName: data.claimantName,
     claimantEmail: data.claimantEmail,
     projectName: data.projectName,
@@ -509,10 +510,7 @@ export async function sendClaimRevokedToUser(data: ClaimEmailData, reason?: stri
 }
 
 export async function sendClaimRevokedToTeam(data: ClaimEmailData, reason?: string) {
-  const teamEmails = getTeamEmails();
-  if (teamEmails.length === 0) return;
-
-  await dispatchTemplateEmail('claim_revoked_team', teamEmails, {
+  await dispatchTemplateEmail('claim_revoked_team', [], {
     claimantName: data.claimantName,
     claimantEmail: data.claimantEmail,
     projectName: data.projectName,

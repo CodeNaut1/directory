@@ -675,3 +675,9 @@ export function buildDefaultHtmlBody(template: DefaultEmailTemplate): string {
 export const DEFAULT_TEMPLATES_BY_KEY = Object.fromEntries(
   DEFAULT_EMAIL_TEMPLATES.map((t) => [t.key, t])
 );
+
+export function getDefaultRecipientGroup(key: string): 'user' | 'admin' | 'sensitive' | 'team' {
+  if (key.endsWith('_user')) return 'user';
+  if (key.endsWith('_admin')) return 'admin';
+  return 'team';
+}

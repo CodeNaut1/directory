@@ -15,6 +15,7 @@ const updateSchema = z.object({
   subject: z.string().min(1).max(500).optional(),
   htmlBody: z.string().min(1).optional(),
   isActive: z.boolean().optional(),
+  recipientGroup: z.enum(['user', 'admin', 'sensitive', 'team']).optional(),
 });
 
 export async function GET(req: NextRequest, context: RouteParams) {
